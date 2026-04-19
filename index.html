@@ -706,7 +706,7 @@ p{ margin:0; color:var(--ink-1); }
    ------------------------------------------------------------- */
 .anatomy-section {
   height: 300vh;
-  background: #112a35;
+  background: var(--bg-light);
   position: relative;
 }
 .anatomy-sticky {
@@ -732,14 +732,14 @@ p{ margin:0; color:var(--ink-1); }
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.1;
-  color: #ffffff;
+  color: var(--dark-ink-0);
   margin: 0 0 16px 0;
 }
 .anatomy-heading .muted {
-  color: #a8c4cc;
+  color: var(--dark-ink-1);
 }
 .anatomy-sub {
-  color: #a8c4cc;
+  color: var(--dark-ink-2);
   font-size: 15px;
   margin-bottom: 40px;
 }
@@ -756,10 +756,10 @@ p{ margin:0; color:var(--ink-1); }
   grid-template-columns: 40px 1fr;
   gap: 24px;
   padding: 20px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--line-light);
 }
 .anatomy-callout:last-child {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--line-light);
 }
 .anatomy-num {
   color: #3bb6e8;
@@ -771,12 +771,12 @@ p{ margin:0; color:var(--ink-1); }
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: #ffffff;
+  color: var(--dark-ink-0);
   margin: 0 0 8px 0;
 }
 .anatomy-callout p {
   font-size: 14px;
-  color: #a8c4cc;
+  color: var(--dark-ink-2);
   line-height: 1.6;
   margin: 0;
 }
@@ -1418,7 +1418,7 @@ p{ margin:0; color:var(--ink-1); }
       <div class="anatomy-video-wrap">
         <video
           id="anatomy-video"
-          src="./assets/engine-reveal.mp4"
+          src="./assets/engine-reveal-light.mp4"
           muted
           playsinline
           preload="auto">
