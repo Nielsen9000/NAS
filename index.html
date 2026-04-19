@@ -794,6 +794,14 @@ p{ margin:0; color:var(--ink-1); }
   display: block;
   transform: scale(1.12);
   transform-origin: center center;
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%),
+    radial-gradient(ellipse at center, black 55%, transparent 95%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%),
+    radial-gradient(ellipse at center, black 55%, transparent 95%);
+  mask-composite: intersect;
 }
 
 @media (max-width: 768px) {
