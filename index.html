@@ -706,7 +706,7 @@ p{ margin:0; color:var(--ink-1); }
    ------------------------------------------------------------- */
 .anatomy-section {
   height: 300vh;
-  background: var(--bg-light);
+  background: #ffffff;
   position: relative;
 }
 .anatomy-sticky {
@@ -806,8 +806,8 @@ p{ margin:0; color:var(--ink-1); }
    Company (light)
    ------------------------------------------------------------- */
 .company{
-  background:#fbfbfd;
-  color:var(--dark-ink-0);
+  background:var(--bg-elev);
+  color:var(--ink-0);
   padding:130px 0 80px;
   position:relative;
 }
@@ -818,22 +818,22 @@ p{ margin:0; color:var(--ink-1); }
   align-items:start;
 }
 .company-left p{
-  color:var(--dark-ink-1);
+  color:var(--ink-1);
   font-size:16px;
   line-height:1.75;
   max-width:360px;
   margin-top:24px;
 }
 .company-right h2{
-  color:var(--dark-ink-0);
+  color:var(--ink-0);
   font-family:'Inter', system-ui, -apple-system, sans-serif;
   font-weight:600;
   letter-spacing:-0.02em;
 }
-.company-right h2 .muted-dark{ color:var(--dark-ink-2); }
+.company-right h2 .muted-dark{ color:var(--ink-2); }
 .company-values{
   margin-top:48px;
-  border-top:1px solid var(--line-light);
+  border-top:1px solid var(--line-dark);
   display:grid;
   grid-template-columns:repeat(3, 1fr);
   gap:32px;
@@ -851,7 +851,7 @@ p{ margin:0; color:var(--ink-1); }
   font-family:"JetBrains Mono", ui-monospace, monospace;
   font-size:11px;
   letter-spacing:0.28em;
-  color:var(--dark-ink-2);
+  color:var(--ink-3);
 }
 .value-body .title{
   font-family:'Inter', system-ui, -apple-system, sans-serif;
@@ -859,11 +859,11 @@ p{ margin:0; color:var(--ink-1); }
   font-weight:600;
   letter-spacing:-0.02em;
   line-height:1.2;
-  color:var(--dark-ink-0);
+  color:var(--ink-0);
   margin-bottom:6px;
 }
 .value-body .desc{
-  color:var(--dark-ink-2);
+  color:var(--ink-2);
   font-size:15px;
   line-height:1.6;
   max-width:520px;
@@ -871,17 +871,17 @@ p{ margin:0; color:var(--ink-1); }
 .value-arrow{
   width:38px; height:38px;
   border-radius:50%;
-  border:1px solid var(--line-light);
+  border:1px solid rgba(243,247,248,0.18);
   display:grid; place-items:center;
-  color:var(--dark-ink-1);
+  color:var(--ink-0);
   align-self:flex-start;
   margin-top:8px;
   transition:background-color .25s ease, color .25s ease, transform .3s var(--ease-spring), border-color .25s ease;
 }
 .value-row:hover .value-arrow{
-  background:var(--dark-ink-0);
-  color:#fff;
-  border-color:var(--dark-ink-0);
+  background:var(--ink-0);
+  color:var(--bg-elev);
+  border-color:var(--ink-0);
   transform:translate(2px,-2px);
 }
 
@@ -1429,7 +1429,7 @@ p{ margin:0; color:var(--ink-1); }
   </div>
 </section>
 
-<div class="section-divider section-divider--dark-to-light" aria-hidden="true"></div>
+<div class="section-divider section-divider--light-to-dark" aria-hidden="true"></div>
 
 <!-- =========================================
      5. COMPANY
@@ -1494,8 +1494,6 @@ p{ margin:0; color:var(--ink-1); }
     </div>
   </div>
 </section>
-
-<div class="section-divider section-divider--light-to-dark" aria-hidden="true"></div>
 
 <!-- =========================================
      6. CONTACT
