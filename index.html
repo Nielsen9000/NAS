@@ -611,8 +611,8 @@ p{ margin:0; color:var(--ink-1); }
   content:"";
   position:absolute; inset:0;
   background:
-    radial-gradient(700px 500px at 10% 20%, rgba(59,182,232,0.04), transparent 55%),
-    radial-gradient(700px 500px at 100% 90%, rgba(59,182,232,0.03), transparent 55%);
+    radial-gradient(900px 600px at 50% 50%, rgba(15,63,168,0.28), transparent 65%),
+    radial-gradient(500px 400px at 10% 80%, rgba(15,63,168,0.12), transparent 60%);
   pointer-events:none;
 }
 .platforms-head{
@@ -636,12 +636,14 @@ p{ margin:0; color:var(--ink-1); }
   position:relative;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0) 70%),
-    var(--bg-mid);
-  border:1px solid rgba(59,182,232,0.15);
+    #0d1f3d;
+  border:1px solid rgba(15,63,168,0.7);
   border-radius:24px;
   overflow:hidden;
   box-shadow:
     0 1px 0 rgba(255,255,255,0.04) inset,
+    0 0 40px rgba(15,63,168,0.35),
+    0 0 120px rgba(15,63,168,0.20),
     0 40px 80px -30px rgba(0,0,0,0.45);
   transform-style:preserve-3d;
   will-change:transform;
@@ -650,7 +652,7 @@ p{ margin:0; color:var(--ink-1); }
   display:grid;
   grid-template-columns:1fr 1px 1fr;
 }
-.compare-col{ padding:48px 52px; position:relative; }
+.compare-col{ padding:48px 52px; position:relative; background:#0d1f3d; }
 
 /* Circuit-trace hover — each column traces independently */
 .compare-col::before,
@@ -726,7 +728,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 
 .compare-divider{
-  background:linear-gradient(180deg, transparent, rgba(59,182,232,0.45) 20%, rgba(59,182,232,0.45) 80%, transparent);
+  background:linear-gradient(180deg, transparent, rgba(15,63,168,0.6) 20%, rgba(15,63,168,0.6) 80%, transparent);
 }
 .compare-col .chip-eyebrow{
   display:inline-flex;
@@ -776,7 +778,7 @@ p{ margin:0; color:var(--ink-1); }
   border-bottom:1px solid var(--line-dark);
 }
 .mini-specs .cell{
-  background:var(--bg-mid);
+  background:#0d1f3d;
   padding:18px 0;
   padding-right:16px;
 }
@@ -994,6 +996,13 @@ p{ margin:0; color:var(--ink-1); }
   color:var(--ink-0);
   padding:130px 0 100px;
   position:relative;
+}
+.company::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    radial-gradient(800px 500px at 50% 40%, rgba(15,63,168,0.22), transparent 60%);
+  pointer-events:none;
 }
 .company-head{
   max-width:900px;
@@ -1724,6 +1733,8 @@ p{ margin:0; color:var(--ink-1); }
     </div>
   </div>
 </section>
+
+<div class="section-divider section-divider--dark-to-light" aria-hidden="true"></div>
 
 <!-- =========================================
      4. ANATOMY — SCROLL-SCRUB VIDEO
