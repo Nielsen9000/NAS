@@ -437,6 +437,33 @@ p{ margin:0; color:var(--ink-1); }
 }
 .hero-heading{ margin-bottom:28px; }
 .hero-heading .line-2{ display:block; color:var(--ink-2); }
+
+/* Kinetic hero heading */
+.word-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
+}
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(120%) rotate(1.5deg);
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-heading.animate .word { opacity: 1; transform: translateY(0) rotate(0deg); }
+.hero-heading.animate .word:nth-child(1) { transition-delay: 0.08s; }
+.hero-heading.animate .word:nth-child(2) { transition-delay: 0.22s; }
+.hero-heading.animate .word:nth-child(3) { transition-delay: 0.36s; }
+.word-line.line-2 .word:nth-child(1)     { transition-delay: 0.52s; }
+.word-line.line-2 .word:nth-child(2)     { transition-delay: 0.66s; }
+.word-line.line-2 .word:nth-child(3)     { transition-delay: 0.80s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .word { opacity: 1; transform: none; transition: none; }
+}
 .hero-sub{
   max-width:620px;
   margin:0 auto 36px;
@@ -1345,9 +1372,17 @@ p{ margin:0; color:var(--ink-1); }
 
     <div class="hero-left reveal">
       <div class="hero-eyebrow eyebrow">TYR 2 Series · NDAA-compliant</div>
-      <h1 class="hero-heading">
-        Engineered for endurance
-        <span class="line-2">Built on integrity</span>
+      <h1 class="hero-heading" aria-label="Engineered for endurance Built on integrity">
+        <span class="word-line" aria-hidden="true">
+          <span class="word">Engineered</span>
+          <span class="word">for</span>
+          <span class="word">endurance</span>
+        </span>
+        <span class="word-line line-2" aria-hidden="true">
+          <span class="word muted">Built</span>
+          <span class="word muted">on</span>
+          <span class="word muted">integrity</span>
+        </span>
       </h1>
       <p class="hero-sub">
         Long-endurance dual-cylinder boxer engines for platforms requiring over 1000 km range. Engineered for altitude shifts and harsh weather.
@@ -1785,6 +1820,64 @@ p{ margin:0; color:var(--ink-1); }
         card.style.transition = 'transform 0.1s ease';
       }, 500);
     });
+  })();
+
+  // Kinetic hero heading
+  const heroHeading = document.querySelector('.hero-heading');
+  if (heroHeading) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      heroHeading.classList.add('animate');
+    } else {
+      requestAnimationFrame(() => {
+        setTimeout(() => heroHeading.classList.add('animate'), 120);
+      });
+    }
+  }
+
+  // Scramble decode effect on hero eyebrow
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const el = document.querySelector('.hero-eyebrow');
+    if (!el) return;
+
+    const original = el.textContent.trim();
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789·';
+    const duration = 1400;
+    const fps = 30;
+    const interval = 1000 / fps;
+    let start = null;
+
+    const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
+
+    const scramble = (timestamp) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+
+      const resolved = Math.floor(progress * original.length);
+
+      let display = '';
+      for (let i = 0; i < original.length; i++) {
+        if (i < resolved) {
+          display += original[i];
+        } else if (original[i] === ' ') {
+          display += ' ';
+        } else {
+          display += randomChar();
+        }
+      }
+
+      el.textContent = display;
+
+      if (progress < 1) {
+        setTimeout(() => requestAnimationFrame(scramble), interval);
+      } else {
+        el.textContent = original;
+      }
+    };
+
+    setTimeout(() => requestAnimationFrame(scramble), 80);
   })();
 })();
 </script>
