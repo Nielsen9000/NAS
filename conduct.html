@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Code of Conduct — Nordic Advanced Systems</title>
+<meta name="description" content="Nordic Advanced Systems Code of Conduct and Compliance. Ethical business conduct, quality management, data protection, and responsible operations." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-base:#08202a;
+  --bg-elev:#0d2a31;
+  --bg-float:#113740;
+  --bg-mid:#1a4651;
+  --ink-0:#f3f7f8;
+  --ink-1:#d9e3e5;
+  --ink-2:rgba(243,247,248,0.62);
+  --ink-3:rgba(243,247,248,0.38);
+  --line-dark:rgba(148,205,221,0.14);
+  --accent:#3bb6e8;
+  --accent-ink:#072a37;
+  --maxw:1400px;
+  --pad-x:100px;
+  --radius-lg:20px;
+  --radius-md:14px;
+  --radius-pill:999px;
+  --ease-spring:cubic-bezier(0.22,1.12,0.34,1);
+  --ease-smooth:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; }
+body{
+  margin:0;
+  background:var(--bg-base);
+  color:var(--ink-0);
+  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+img{ display:block; max-width:100%; }
+.wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad-x); width:100%; }
+
+.stage-bg{
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(1100px 700px at 85% -10%,rgba(59,182,232,0.08),transparent 60%),
+    radial-gradient(900px 620px at -10% 20%,rgba(14,70,85,0.55),transparent 65%),
+    var(--bg-base);
+  pointer-events:none;
+}
+
+/* Header */
+.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(8,32,42,0.85);
+  border-bottom:1px solid var(--line-dark);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.header-inner{
+  display:flex; align-items:center;
+  justify-content:space-between;
+  gap:32px; padding-block:20px;
+}
+.brand{ display:flex; align-items:center; gap:14px; }
+.site-header .brand-logo{ width:auto; height:auto; background:none; border:0; border-radius:0; }
+.site-header .brand-logo img{ width:auto; height:42px; display:block; }
+.brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+.brand-wordmark{
+  font-family:"Space Grotesk",sans-serif;
+  font-style:italic; font-weight:600; font-size:16px;
+  letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
+}
+.brand-subline{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--ink-3); margin-top:4px;
+}
+.nav{ display:flex; align-items:center; gap:32px; }
+.nav a{
+  font-size:15px; color:var(--ink-1); font-weight:500;
+  position:relative; padding:6px 0; transition:color .2s ease;
+}
+.nav a::after{
+  content:""; position:absolute; left:0; right:0; bottom:-2px;
+  height:1px; background:var(--accent);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .3s var(--ease-spring);
+}
+.nav a:hover{ color:var(--accent); }
+.nav a:hover::after{ transform:scaleX(1); }
+.nav a.active{ color:var(--accent); }
+.nav a.active::after{ transform:scaleX(1); }
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 18px; border-radius:var(--radius-pill);
+  font-weight:600; font-size:13px; cursor:pointer;
+  transition:transform .25s var(--ease-spring), background-color .25s ease;
+  border:1px solid transparent;
+}
+.btn-pill-accent{ background:#0d2030; color:#ffffff; }
+.btn-pill-accent:hover{ background:#1a2f42; }
+.btn .arrow{ transition:transform .3s var(--ease-spring); }
+.btn:hover .arrow{ transform:translateX(3px); }
+
+/* Hero */
+.conduct-hero{
+  min-height:100vh;
+  padding:140px 0 80px;
+  border-bottom:1px solid var(--line-dark);
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.conduct-hero-inner{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:80px;
+  align-items:center;
+  width:100%;
+}
+.conduct-eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:28px;
+  display:flex; align-items:center; gap:12px;
+}
+.conduct-eyebrow::before{
+  content:""; display:block;
+  width:40px; height:1px; background:var(--accent);
+}
+.conduct-hero h1{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(40px,5vw,68px);
+  font-weight:600; letter-spacing:-0.03em;
+  line-height:1.04; margin:0 0 0 0;
+  color:var(--ink-0);
+}
+.conduct-hero h1 span{
+  color:var(--accent);
+  font-size:0.82em;
+  display:block;
+}
+.conduct-hero-meta{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding-bottom:6px;
+}
+.conduct-meta-item{
+  display:flex; flex-direction:column; gap:4px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--line-dark);
+}
+.conduct-meta-item:last-child{ border-bottom:0; padding-bottom:0; }
+.conduct-meta-item .k{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--ink-3);
+  margin-bottom:4px;
+}
+.conduct-meta-item .v{
+  color:var(--ink-1); font-size:14px; font-weight:500;
+}
+
+/* TOC sidebar + content layout */
+.conduct-body{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:80px;
+  padding:80px 0 120px;
+  align-items:start;
+}
+.conduct-toc{
+  position:sticky;
+  top:108px;
+}
+.toc-label{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--ink-3);
+  margin-bottom:20px;
+}
+.toc-list{
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.toc-list a{
+  display:flex; align-items:center; gap:10px;
+  font-size:13px; color:var(--ink-3);
+  padding:7px 0;
+  border-left:1px solid var(--line-dark);
+  padding-left:14px;
+  transition:color .2s ease, border-color .2s ease;
+  line-height:1.4;
+}
+.toc-list a:hover{ color:var(--ink-1); border-left-color:var(--accent); }
+.toc-list a.active{ color:var(--accent); border-left-color:var(--accent); }
+
+/* Sections */
+.conduct-sections{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.conduct-section{
+  padding:52px 0;
+  border-bottom:1px solid var(--line-dark);
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 600ms var(--ease-smooth), transform 600ms var(--ease-smooth);
+}
+.conduct-section:first-child{ padding-top:0; }
+.conduct-section.in{ opacity:1; transform:translateY(0); }
+.conduct-section-num{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; letter-spacing:0.28em;
+  text-transform:uppercase; color:var(--ink-3);
+  margin-bottom:16px;
+}
+.conduct-section h2{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(20px,2vw,26px);
+  font-weight:600; letter-spacing:-0.02em;
+  line-height:1.15; margin:0 0 20px;
+  color:var(--ink-0);
+}
+.conduct-section p{
+  color:var(--ink-2);
+  font-size:16px;
+  line-height:1.8;
+  max-width:680px;
+  margin:0;
+}
+
+/* Footer */
+.site-footer{
+  background:var(--bg-base); border-top:1px solid var(--line-dark);
+  padding:40px 0; color:var(--ink-2); font-size:13px;
+}
+.footer-grid{
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  align-items:center; gap:24px;
+}
+.footer-brand{ display:flex; align-items:center; gap:10px; color:var(--ink-1); }
+.footer-brand .brand-logo-sm{
+  width:28px; height:28px; border-radius:6px;
+  background:var(--bg-elev); border:1px solid var(--line-dark);
+  display:grid; place-items:center; overflow:hidden;
+}
+.footer-brand .brand-logo-sm img{ width:70%; height:70%; object-fit:contain; }
+.footer-brand span{ font-style:italic; letter-spacing:0.2em; text-transform:uppercase; font-size:11px; font-weight:600; }
+.footer-mid{ text-align:center; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.12em; color:var(--ink-3); text-transform:uppercase; }
+.footer-right{ text-align:right; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; color:var(--ink-3); text-transform:uppercase; }
+
+@media (max-width:900px){
+  :root{ --pad-x:24px; }
+  .conduct-hero-inner{ grid-template-columns:1fr; gap:48px; }
+  .conduct-body{ grid-template-columns:1fr; gap:40px; }
+  .conduct-toc{ display:none; }
+  .nav{ display:none; }
+  .footer-grid{ grid-template-columns:1fr; gap:14px; }
+  .footer-mid,.footer-right{ text-align:left; }
+}
+</style>
+</head>
+<body>
+
+<div class="stage-bg"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="./index.html" aria-label="Nordic Advanced Systems home">
+      <span class="brand-logo"><img src="./assets/logo.png" alt="" /></span>
+      <span class="brand-text">
+        <span class="brand-wordmark">Nordic Advanced Systems</span>
+        <span class="brand-subline">Built on integrity</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="./index.html#platforms">Platforms</a>
+      <a href="./index.html#anatomy">Anatomy</a>
+      <a href="./index.html#company">Company</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./conduct.html" class="active">Conduct</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-pill-accent" href="./contact.html">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="conduct-hero">
+    <div class="wrap conduct-hero-inner">
+      <div>
+        <div class="conduct-eyebrow">Nordic Advanced Systems</div>
+        <h1>
+          Code of Conduct.
+          <span>And Compliance.</span>
+        </h1>
+      </div>
+      <div class="conduct-hero-meta">
+        <div class="conduct-meta-item">
+          <div class="k">Issued by</div>
+          <div class="v">Nordic Advanced Systems ApS</div>
+        </div>
+        <div class="conduct-meta-item">
+          <div class="k">Registration</div>
+          <div class="v">CVR. 45976645</div>
+        </div>
+        <div class="conduct-meta-item">
+          <div class="k">Jurisdiction</div>
+          <div class="v">Danish law · EU regulations · International standards</div>
+        </div>
+        <div class="conduct-meta-item">
+          <div class="k">Sections</div>
+          <div class="v">10 principles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap conduct-body">
+
+    <nav class="conduct-toc" aria-label="Table of contents">
+      <div class="toc-label">Contents</div>
+      <ul class="toc-list">
+        <li><a href="#ethical">Ethical Business Conduct</a></li>
+        <li><a href="#quality">Quality & Continuous Improvement</a></li>
+        <li><a href="#data">Data Protection & Confidentiality</a></li>
+        <li><a href="#conflicts">Conflicts of Interest</a></li>
+        <li><a href="#workplace">Work Environment & Diversity</a></li>
+        <li><a href="#trade">International Trade Compliance</a></li>
+        <li><a href="#supply">Responsible Supply Chain</a></li>
+        <li><a href="#rights">Human Rights & Sustainability</a></li>
+        <li><a href="#financial">Financial Integrity</a></li>
+        <li><a href="#laws">Compliance with Laws</a></li>
+      </ul>
+    </nav>
+
+    <div class="conduct-sections">
+
+      <div class="conduct-section" id="ethical">
+        <div class="conduct-section-num">/ 01</div>
+        <h2>Ethical Business Conduct</h2>
+        <p>At NAS (Nordic Advanced Systems), we are committed to conducting business with integrity, transparency, and responsibility. We follow all applicable laws and internal policies to ensure that we operate according to the highest ethical standards. We do not tolerate any form of bribery, corruption, facilitation payments, or improper advantage.</p>
+      </div>
+
+      <div class="conduct-section" id="quality">
+        <div class="conduct-section-num">/ 02</div>
+        <h2>Quality and Continuous Improvement</h2>
+        <p>We operate under a self-developed and certified Quality Management System (QMS), which ensures that our products and services meet the highest quality standards. The QMS is based on continuous improvement, audits, and strict quality control. This ensures that we consistently deliver reliable and high-performing solutions to our partners.</p>
+      </div>
+
+      <div class="conduct-section" id="data">
+        <div class="conduct-section-num">/ 03</div>
+        <h2>Data Protection and Confidentiality</h2>
+        <p>We handle all data with great care and in compliance with applicable data protection regulations, including GDPR. Confidentiality is a fundamental principle at NAS, and we ensure that information from partners, employees, and stakeholders is treated with the highest level of security and discretion.</p>
+      </div>
+
+      <div class="conduct-section" id="conflicts">
+        <div class="conduct-section-num">/ 04</div>
+        <h2>Conflicts of Interest</h2>
+        <p>Employees and representatives of NAS must avoid situations where personal interests conflict with company interests. Any potential conflict must be reported immediately so that an appropriate and transparent solution can be found.</p>
+      </div>
+
+      <div class="conduct-section" id="workplace">
+        <div class="conduct-section-num">/ 05</div>
+        <h2>Work Environment, Diversity, and Respect</h2>
+        <p>NAS strives to create an inclusive, safe, and respectful workplace for all employees. Discrimination, harassment, or bullying are not tolerated. We promote equal opportunities regardless of nationality, gender, age, or background. As an international company, we value the diversity of our global team and ensure that all employees are onboarded and employed in accordance with Danish law and international labor standards.</p>
+      </div>
+
+      <div class="conduct-section" id="trade">
+        <div class="conduct-section-num">/ 06</div>
+        <h2>International Trade Compliance</h2>
+        <p>NAS complies with all applicable international trade laws, customs requirements, and sanctions regimes. We ensure that all production and trade activities are carried out in alignment with EU and local regulations in the countries where we operate.</p>
+      </div>
+
+      <div class="conduct-section" id="supply">
+        <div class="conduct-section-num">/ 07</div>
+        <h2>Responsible Supply Chain</h2>
+        <p>We expect our suppliers and partners to comply with the same ethical, legal, and quality standards as NAS. We conduct due diligence in our supply chain to prevent corruption, human rights violations, and environmental harm, and we work only with responsible and reliable partners.</p>
+      </div>
+
+      <div class="conduct-section" id="rights">
+        <div class="conduct-section-num">/ 08</div>
+        <h2>Human Rights and Sustainability</h2>
+        <p>NAS is committed to respecting internationally recognized human rights and labor standards, including the UN Guiding Principles on Business and Human Rights. We also seek to minimize our environmental footprint and continuously work towards sustainable solutions in both production and international trade.</p>
+      </div>
+
+      <div class="conduct-section" id="financial">
+        <div class="conduct-section-num">/ 09</div>
+        <h2>Financial Integrity</h2>
+        <p>NAS is committed to financial transparency and integrity. We comply with all applicable anti-money laundering (AML) and financial regulations, ensuring that our business activities and relationships are conducted with accountability and trustworthiness.</p>
+      </div>
+
+      <div class="conduct-section" id="laws">
+        <div class="conduct-section-num">/ 10</div>
+        <h2>Compliance with Laws and Regulations</h2>
+        <p>NAS complies with all relevant laws and regulations in the countries where we operate. This includes requirements for safety, health, and environmental protection. By adhering to both international and local standards, we ensure that our activities are fully aligned with responsible business practices.</p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <span class="brand-logo-sm"><img src="./assets/logo.png" alt="" /></span>
+      <span>Nordic Advanced Systems ApS</span>
+    </div>
+    <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
+    <div class="footer-right">© 2026 All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Reveal sections on scroll
+  const sections = document.querySelectorAll('.conduct-section');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    sections.forEach(el => io.observe(el));
+  } else {
+    sections.forEach(el => el.classList.add('in'));
+  }
+
+  // Active TOC link on scroll
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const sectionEls = document.querySelectorAll('.conduct-section');
+
+  if (tocLinks.length && 'IntersectionObserver' in window){
+    const tocObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          const id = entry.target.id;
+          tocLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin:'-20% 0px -70% 0px' });
+    sectionEls.forEach(el => tocObs.observe(el));
+  }
+
+  // Magnetic nav
+  const magnetics = document.querySelectorAll('.nav a, .header-cta .btn');
+  magnetics.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      const strength = el.closest('.nav') ? 0.3 : 0.45;
+      el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+      el.style.transition = 'transform 0.15s cubic-bezier(0.16,1,0.3,1)';
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+      el.style.transform = 'translate(0px,0px)';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
