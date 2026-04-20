@@ -1244,6 +1244,31 @@ p{ margin:0; color:var(--ink-1); }
   color:var(--dark-ink-0);
   font-size:16px;
 }
+
+/* Built for Flight — clip-path reveal */
+.flight-image{
+  clip-path: inset(100% 0 0 0 round 16px);
+  transition: clip-path 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.flight-media.in-view .flight-image{
+  clip-path: inset(0% 0 0 0 round 16px);
+}
+.flight-content{
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 300ms;
+}
+.flight-content.in-view{
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (prefers-reduced-motion: reduce){
+  .flight-image{ clip-path: none; transition: none; }
+  .flight-content{ opacity: 1; transform: none; transition: none; }
+}
+
 @media (max-width: 768px){
   .flight-section{ padding:80px 0; }
   .flight-grid{ grid-template-columns:1fr; gap:40px; padding:0 24px; }
@@ -1346,15 +1371,15 @@ p{ margin:0; color:var(--ink-1); }
       <img class="flight-image" src="./assets/drone-hero.jpg" alt="TYR 2 series engine mounted with carbon fiber propeller">
     </div>
     <div class="flight-content">
-      <div class="section-eyebrow reveal">/ 02 — BUILT FOR FLIGHT</div>
-      <h2 class="flight-heading reveal">
+      <div class="section-eyebrow">/ 02 — BUILT FOR FLIGHT</div>
+      <h2 class="flight-heading">
         Mission-ready.
         <span class="muted">Mounted, tested, proven.</span>
       </h2>
-      <p class="flight-sub reveal">
+      <p class="flight-sub">
         The TYR 2 series integrates seamlessly with fixed-wing UAV platforms. Boxer-cylinder architecture and rear-mounted output shaft enable efficient propeller integration with minimal vibration.
       </p>
-      <div class="flight-stats reveal">
+      <div class="flight-stats">
         <div class="flight-stat">
           <div class="label">Vibration</div>
           <div class="value">Low</div>
@@ -1704,6 +1729,24 @@ p{ margin:0; color:var(--ink-1); }
       });
     }, { threshold: 0.2 });
     compareCols.forEach((col) => colObs.observe(col));
+  }
+
+  // Built for flight — clip-path reveal
+  const flightMedia = document.querySelector('.flight-media');
+  const flightContent = document.querySelector('.flight-content');
+
+  if (flightMedia && 'IntersectionObserver' in window){
+    const flightObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          flightObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    flightObs.observe(flightMedia);
+    if (flightContent) flightObs.observe(flightContent);
   }
 
   // 3D tilt on compare card
