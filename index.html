@@ -992,89 +992,79 @@ p{ margin:0; color:var(--ink-1); }
 .company{
   background:var(--bg-elev);
   color:var(--ink-0);
-  padding:130px 0 80px;
+  padding:130px 0 100px;
   position:relative;
 }
-.company-grid{
-  display:grid;
-  grid-template-columns:minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap:80px;
-  align-items:start;
+.company-head{
+  max-width:900px;
+  margin-bottom:72px;
 }
-.company-left p{
-  color:var(--ink-1);
-  font-size:16px;
-  line-height:1.75;
-  max-width:360px;
-  margin-top:24px;
-}
-.company-right h2{
+.company-head h2{
   color:var(--ink-0);
-  font-family:'Inter', system-ui, -apple-system, sans-serif;
+  font-family:'Inter',system-ui,sans-serif;
   font-weight:600;
   letter-spacing:-0.02em;
+  margin-bottom:24px;
 }
-.company-right h2 .muted-dark{ color:var(--ink-2); }
-.company-right h2 .muted-dark { color: var(--accent) !important; font-size: 0.82em; }
+.company-head h2 .muted-dark{ color:var(--accent); font-size:0.82em; }
+.company-intro{
+  color:var(--ink-2);
+  font-size:17px;
+  line-height:1.75;
+  max-width:640px;
+}
 .company-values{
-  margin-top:48px;
   border-top:1px solid var(--line-dark);
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
-  gap:32px;
-  padding-top:32px;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
 }
 .value-row{
   display:flex;
   flex-direction:column;
-  gap:10px;
-  padding:0;
+  gap:12px;
+  padding:40px 40px 40px 0;
+  border-right:1px solid var(--line-dark);
   transition:background-color .25s ease;
 }
-.value-row:hover{ background:transparent; }
+.value-row:last-child{
+  border-right:0;
+  padding-right:0;
+  padding-left:40px;
+}
+.value-row:nth-child(2){
+  padding-left:40px;
+}
 .value-num{
-  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:11px;
   letter-spacing:0.28em;
   color:var(--ink-3);
 }
 .value-body .title{
-  font-family:'Inter', system-ui, -apple-system, sans-serif;
+  font-family:'Inter',system-ui,sans-serif;
   font-size:22px;
   font-weight:600;
   letter-spacing:-0.02em;
   line-height:1.2;
   color:var(--ink-0);
-  margin-bottom:6px;
+  margin-bottom:8px;
 }
 .value-body .desc{
   color:var(--ink-2);
   font-size:15px;
   line-height:1.6;
-  max-width:520px;
-}
-.value-arrow{
-  width:38px; height:38px;
-  border-radius:50%;
-  border:1px solid rgba(243,247,248,0.18);
-  display:grid; place-items:center;
-  color:var(--ink-0);
-  align-self:flex-start;
-  margin-top:8px;
-  transition:background-color .25s ease, color .25s ease, transform .3s var(--ease-spring), border-color .25s ease;
-}
-.value-row:hover .value-arrow{
-  background:var(--ink-0);
-  color:var(--bg-elev);
-  border-color:var(--ink-0);
-  transform:translate(2px,-2px);
 }
 
-@media (max-width: 900px){
+@media (max-width:900px){
   .company{ padding:90px 0 70px; }
-  .company-grid{ grid-template-columns:1fr; gap:44px; }
-  .company-values{ grid-template-columns:1fr; gap:28px; }
-  .value-body .title{ font-size:19px; }
+  .company-values{ grid-template-columns:1fr; }
+  .value-row{
+    border-right:0;
+    border-bottom:1px solid var(--line-dark);
+    padding:32px 0 !important;
+  }
+  .value-row:last-child{ border-bottom:0; }
 }
 
 /* -------------------------------------------------------------
@@ -1393,9 +1383,139 @@ p{ margin:0; color:var(--ink-1); }
   :root{ --pad-x: 24px; }
   h1{ font-size:clamp(40px, 9vw, 58px); }
 }
+
+/* Loading screen */
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-loader.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+.loader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.loader-wordmark {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+.loader-bar-wrap {
+  width: 200px;
+  height: 1px;
+  background: rgba(243,247,248,0.08);
+  position: relative;
+  overflow: hidden;
+}
+.loader-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+  box-shadow: 0 0 8px var(--accent);
+}
+.loader-status {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-loader { display: none; }
+}
+
+/* Cursor follower */
+* { cursor: none; }
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: normal;
+}
+.cursor-ring {
+  position: absolute;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(59,182,232,0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 300ms var(--ease-spring),
+              height 300ms var(--ease-spring),
+              border-color 300ms ease,
+              opacity 300ms ease;
+}
+.cursor-dot {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.cursor-cross span {
+  position: absolute;
+  background: rgba(59,182,232,0.5);
+  transform: translate(-50%, -50%);
+}
+.cursor-cross span:nth-child(1) {
+  width: 10px; height: 1px;
+  top: 0; left: 0;
+}
+.cursor-cross span:nth-child(2) {
+  width: 1px; height: 10px;
+  top: 0; left: 0;
+}
+.cursor.is-hovering .cursor-ring {
+  width: 52px; height: 52px;
+  border-color: rgba(59,182,232,0.9);
+}
+.cursor.is-hidden {
+  opacity: 0;
+}
+@media (hover: none) {
+  * { cursor: auto; }
+  .cursor { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
+  * { cursor: auto; }
+}
 </style>
 </head>
 <body>
+
+<div class="site-loader" id="site-loader" aria-hidden="true">
+  <div class="loader-inner">
+    <div class="loader-wordmark">NORDIC ADVANCED SYSTEMS</div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar" id="loader-bar"></div>
+    </div>
+    <div class="loader-status" id="loader-status">INITIALISING</div>
+  </div>
+</div>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-ring"></div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-cross">
+    <span></span>
+    <span></span>
+  </div>
+</div>
 
 <div class="stage-bg"></div>
 <div class="grain"></div>
@@ -1416,10 +1536,10 @@ p{ margin:0; color:var(--ink-1); }
       <a href="#platforms">Platforms</a>
       <a href="#anatomy">Anatomy</a>
       <a href="#company">Company</a>
-      <a href="#contact">Contact</a>
+      <a href="./contact.html">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="#contact">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="./contact.html">Request brief <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </div>
 </header>
@@ -1666,100 +1786,43 @@ p{ margin:0; color:var(--ink-1); }
      5. COMPANY
      ========================================= -->
 <section class="company" id="company">
-  <div class="wrap company-grid">
+  <div class="wrap">
 
-    <div class="company-left reveal">
+    <div class="company-head reveal">
       <div class="section-eyebrow">/ 05 — COMPANY</div>
-      <p>
-        Nordic Advanced Systems is a Danish technology company with Nordic engineering roots — designing and producing specialised systems for operators who cannot compromise on reliability, safety, or provenance.
-      </p>
-    </div>
-
-    <div class="company-right reveal">
       <h2>
         A Danish technology company
         <span class="muted-dark">solving the non-negotiable.</span>
       </h2>
-      <div class="company-values">
+      <p class="company-intro">
+        Nordic Advanced Systems is a Danish technology company with Nordic engineering roots — designing and producing specialised systems for operators who cannot compromise on reliability, safety, or provenance.
+      </p>
+    </div>
 
-        <div class="value-row">
-          <div class="value-num">/ 01</div>
-          <div class="value-body">
-            <div class="title">Trusted Expertise</div>
-            <div class="desc">Long-term experience across demanding, mission-critical industries.</div>
-          </div>
-          <a class="value-arrow" href="#contact" aria-label="Learn more about trusted expertise">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 5l7 7-7 7"/>
-            </svg>
-          </a>
+    <div class="company-values reveal">
+      <div class="value-row">
+        <div class="value-num">/ 01</div>
+        <div class="value-body">
+          <div class="title">Trusted Expertise</div>
+          <div class="desc">Long-term experience across demanding, mission-critical industries.</div>
         </div>
-
-        <div class="value-row">
-          <div class="value-num">/ 02</div>
-          <div class="value-body">
-            <div class="title">Engineered Precision</div>
-            <div class="desc">Every solution is built to the highest standards of safety, reliability, and performance.</div>
-          </div>
-          <a class="value-arrow" href="#contact" aria-label="Learn more about engineered precision">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 5l7 7-7 7"/>
-            </svg>
-          </a>
+      </div>
+      <div class="value-row">
+        <div class="value-num">/ 02</div>
+        <div class="value-body">
+          <div class="title">Engineered Precision</div>
+          <div class="desc">Every solution is built to the highest standards of safety, reliability, and performance.</div>
         </div>
-
-        <div class="value-row">
-          <div class="value-num">/ 03</div>
-          <div class="value-body">
-            <div class="title">Innovating with Purpose</div>
-            <div class="desc">We push boundaries while staying true to core values of responsibility and trust.</div>
-          </div>
-          <a class="value-arrow" href="#contact" aria-label="Learn more about innovating with purpose">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M13 5l7 7-7 7"/>
-            </svg>
-          </a>
+      </div>
+      <div class="value-row">
+        <div class="value-num">/ 03</div>
+        <div class="value-body">
+          <div class="title">Innovating with Purpose</div>
+          <div class="desc">We push boundaries while staying true to core values of responsibility and trust.</div>
         </div>
-
       </div>
     </div>
-  </div>
-</section>
 
-<!-- =========================================
-     6. CONTACT
-     ========================================= -->
-<section class="contact" id="contact">
-  <div class="wrap contact-inner reveal">
-    <div class="section-eyebrow">/ 06 — CONTACT</div>
-    <h2>Request technical documentation.</h2>
-    <p class="sub">For specifications, integration details, and procurement inquiries.</p>
-
-    <form class="inquiry-form" id="inquiry-form" novalidate>
-      <div class="field">
-        <input type="text" id="f-name" name="name" placeholder=" " autocomplete="name" required />
-        <label for="f-name">Full name</label>
-      </div>
-      <div class="field">
-        <input type="text" id="f-company" name="company" placeholder=" " autocomplete="organization" required />
-        <label for="f-company">Company / Organization</label>
-      </div>
-      <div class="field">
-        <input type="email" id="f-email" name="email" placeholder=" " autocomplete="email" required />
-        <label for="f-email">Email</label>
-      </div>
-      <div class="field">
-        <input type="text" id="f-country" name="country" placeholder=" " autocomplete="country-name" required />
-        <label for="f-country">Country</label>
-      </div>
-      <div class="field">
-        <textarea id="f-message" name="message" placeholder=" " rows="3" required></textarea>
-        <label for="f-message">Message</label>
-      </div>
-      <div class="submit-row">
-        <button class="btn btn-primary" type="submit">Send inquiry <span class="arrow" aria-hidden="true">→</span></button>
-      </div>
-    </form>
   </div>
 </section>
 
@@ -1938,15 +2001,15 @@ p{ margin:0; color:var(--ink-1); }
     });
   })();
 
-  // Kinetic hero heading
+  // Kinetic hero heading — gated behind loader:done
   const heroHeading = document.querySelector('.hero-heading');
   if (heroHeading) {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       heroHeading.classList.add('animate');
     } else {
-      requestAnimationFrame(() => {
-        setTimeout(() => heroHeading.classList.add('animate'), 120);
-      });
+      window.addEventListener('loader:done', () => {
+        heroHeading.classList.add('animate');
+      }, { once: true });
     }
   }
 
@@ -1993,7 +2056,9 @@ p{ margin:0; color:var(--ink-1); }
       }
     };
 
-    setTimeout(() => requestAnimationFrame(scramble), 80);
+    window.addEventListener('loader:done', () => {
+      requestAnimationFrame(scramble);
+    }, { once: true });
   })();
 
   // Magnetic nav links + CTA button
@@ -2042,6 +2107,48 @@ p{ margin:0; color:var(--ink-1); }
 
     obs.observe(anatomyContent);
     obs.observe(anatomyVideo);
+  })();
+
+  // Cursor follower
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    const cursor = document.getElementById('cursor');
+    if (!cursor) return;
+
+    let mouseX = 0, mouseY = 0;
+    let curX = 0, curY = 0;
+    let rafId = null;
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    const animate = () => {
+      curX = lerp(curX, mouseX, 0.12);
+      curY = lerp(curY, mouseY, 0.12);
+      cursor.style.transform = `translate(${curX}px, ${curY}px)`;
+      rafId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.classList.remove('is-hidden');
+      if (!rafId) rafId = requestAnimationFrame(animate);
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      cursor.classList.add('is-hidden');
+    });
+    document.addEventListener('mouseenter', () => {
+      cursor.classList.remove('is-hidden');
+    });
+
+    const interactives = 'a, button, .compare-col, .value-row, .anatomy-callout';
+    document.querySelectorAll(interactives).forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('is-hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('is-hovering'));
+    });
   })();
 })();
 </script>
@@ -2142,6 +2249,46 @@ p{ margin:0; color:var(--ink-1); }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
   onScroll();
+})();
+</script>
+
+<script>
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const loader = document.getElementById('site-loader');
+  const bar = document.getElementById('loader-bar');
+  const status = document.getElementById('loader-status');
+  if (!loader || !bar || !status) return;
+
+  document.body.style.overflow = 'hidden';
+
+  const steps = [
+    { pct: 15, label: 'LOADING ASSETS' },
+    { pct: 40, label: 'CALIBRATING' },
+    { pct: 70, label: 'SYSTEMS CHECK' },
+    { pct: 90, label: 'READY' },
+    { pct: 100, label: 'READY' },
+  ];
+
+  const delays = [0, 200, 450, 700, 950];
+
+  steps.forEach((step, i) => {
+    setTimeout(() => {
+      bar.style.width = step.pct + '%';
+      status.textContent = step.label;
+    }, delays[i]);
+  });
+
+  setTimeout(() => {
+    loader.classList.add('hide');
+    document.body.style.overflow = '';
+
+    setTimeout(() => {
+      loader.remove();
+      window.dispatchEvent(new Event('loader:done'));
+    }, 650);
+  }, 1150);
 })();
 </script>
 

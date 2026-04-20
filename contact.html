@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — Nordic Advanced Systems</title>
+<meta name="description" content="Request technical documentation, specifications, and procurement inquiries for the TYR 2 Series." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-base:#08202a;
+  --bg-elev:#0d2a31;
+  --bg-float:#113740;
+  --bg-mid:#1a4651;
+  --ink-0:#f3f7f8;
+  --ink-1:#d9e3e5;
+  --ink-2:rgba(243,247,248,0.62);
+  --ink-3:rgba(243,247,248,0.38);
+  --line-dark:rgba(148,205,221,0.14);
+  --accent:#3bb6e8;
+  --accent-ink:#072a37;
+  --available:#6ee0a1;
+  --maxw:1400px;
+  --pad-x:100px;
+  --radius-lg:20px;
+  --radius-md:14px;
+  --radius-pill:999px;
+  --ease-spring:cubic-bezier(0.22,1.12,0.34,1);
+  --ease-smooth:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+body{
+  margin:0;
+  background:var(--bg-base);
+  color:var(--ink-0);
+  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+img{ display:block; max-width:100%; }
+
+.wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad-x); width:100%; }
+
+.stage-bg{
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(1100px 700px at 85% -10%,rgba(59,182,232,0.10),transparent 60%),
+    radial-gradient(900px 620px at -10% 20%,rgba(14,70,85,0.55),transparent 65%),
+    var(--bg-base);
+  pointer-events:none;
+}
+
+/* Header */
+.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(8,32,42,0.85);
+  border-bottom:1px solid var(--line-dark);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.header-inner{
+  display:flex; align-items:center;
+  justify-content:space-between;
+  gap:32px; padding-block:20px;
+}
+.brand{ display:flex; align-items:center; gap:14px; }
+.brand-logo{
+  width:36px; height:36px; border-radius:8px;
+  background:var(--bg-elev);
+  border:1px solid var(--line-dark);
+  display:grid; place-items:center; overflow:hidden;
+}
+.brand-logo img{ width:70%; height:70%; object-fit:contain; }
+.site-header .brand-logo{ width:auto; height:auto; background:none; border:0; border-radius:0; }
+.site-header .brand-logo img{ width:auto; height:42px; }
+.brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+.brand-wordmark{
+  font-family:"Space Grotesk",sans-serif;
+  font-style:italic; font-weight:600; font-size:16px;
+  letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
+}
+.brand-subline{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--ink-3); margin-top:4px;
+}
+.nav{ display:flex; align-items:center; gap:32px; }
+.nav a{
+  font-size:15px; color:var(--ink-1); font-weight:500;
+  position:relative; padding:6px 0; transition:color .2s ease;
+}
+.nav a::after{
+  content:""; position:absolute; left:0; right:0; bottom:-2px;
+  height:1px; background:var(--accent);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .3s var(--ease-spring);
+}
+.nav a:hover{ color:var(--accent); }
+.nav a:hover::after{ transform:scaleX(1); }
+.nav a.active{ color:var(--accent); }
+.nav a.active::after{ transform:scaleX(1); }
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:14px 22px; border-radius:var(--radius-pill);
+  font-weight:500; font-size:14px; cursor:pointer;
+  transition:transform .25s var(--ease-spring), background-color .25s ease;
+  border:1px solid transparent;
+}
+.btn-pill-accent{
+  background:#0d2030; color:#ffffff;
+  box-shadow:0 6px 18px -10px rgba(13,32,48,0.45);
+  padding:10px 18px; font-size:13px; font-weight:600;
+}
+.btn-pill-accent:hover{ background:#1a2f42; }
+.btn .arrow{ transition:transform .3s var(--ease-spring); }
+.btn:hover .arrow{ transform:translateX(3px); }
+
+/* Contact page */
+.contact-page{
+  min-height:100vh;
+  padding:160px 0 120px;
+  display:flex;
+  align-items:center;
+}
+.contact-page-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:120px;
+  align-items:start;
+}
+.contact-left .eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:32px;
+  display:flex; align-items:center; gap:12px;
+}
+.contact-left .eyebrow::before{
+  content:""; display:block;
+  width:40px; height:1px; background:var(--accent);
+}
+.contact-left h1{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(36px,4vw,56px);
+  font-weight:600; letter-spacing:-0.02em;
+  line-height:1.06; margin:0 0 24px;
+  color:var(--ink-0);
+}
+.contact-left h1 span{
+  color:var(--accent);
+  font-size:0.82em;
+  display:block;
+}
+.contact-left p{
+  color:var(--ink-2); font-size:16px;
+  line-height:1.75; max-width:400px;
+  margin:0 0 48px;
+}
+.contact-details{
+  display:flex; flex-direction:column; gap:20px;
+}
+.contact-detail{
+  display:flex; flex-direction:column; gap:4px;
+}
+.contact-detail .k{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--ink-3);
+}
+.contact-detail .v{
+  color:var(--ink-1); font-size:15px; font-weight:500;
+}
+
+/* Form */
+.inquiry-form{
+  display:flex; flex-direction:column; gap:28px;
+}
+.field{ position:relative; }
+.field input,
+.field textarea{
+  width:100%; background:transparent; color:var(--ink-0);
+  border:0; border-bottom:1px solid rgba(243,247,248,0.22);
+  padding:26px 0 10px; font-size:16px; outline:none;
+  transition:border-color .25s ease; resize:vertical;
+  font-family:inherit;
+}
+.field textarea{ min-height:110px; }
+.field label{
+  position:absolute; left:0; top:26px;
+  font-size:16px; color:var(--ink-2);
+  pointer-events:none; transform-origin:left top;
+  transition:transform .3s var(--ease-spring), color .25s ease;
+}
+.field input:focus,
+.field textarea:focus,
+.field input:not(:placeholder-shown),
+.field textarea:not(:placeholder-shown){
+  border-bottom-color:var(--accent);
+  border-bottom-width:2px; padding-bottom:9px;
+}
+.field input:focus ~ label,
+.field textarea:focus ~ label,
+.field input:not(:placeholder-shown) ~ label,
+.field textarea:not(:placeholder-shown) ~ label{
+  transform:translateY(-22px) scale(0.72);
+  color:var(--accent);
+}
+.field input::placeholder,
+.field textarea::placeholder{ color:transparent; }
+.submit-row{ display:flex; justify-content:flex-start; margin-top:8px; }
+.btn-primary{
+  background:var(--accent); color:var(--accent-ink);
+  border-color:transparent; font-weight:600;
+  box-shadow:0 10px 30px -10px rgba(59,182,232,0.45);
+}
+.btn-primary:hover{ background:#55c3ea; transform:scale(1.02); }
+.form-success{
+  padding:40px 0; color:var(--ink-0);
+}
+.form-success .tick{
+  width:46px; height:46px; border-radius:50%;
+  background:rgba(110,224,161,0.12); color:var(--available);
+  display:grid; place-items:center; margin:0 0 18px;
+  border:1px solid rgba(110,224,161,0.3);
+}
+.form-success p{ color:var(--ink-1); font-size:17px; margin:0; }
+
+/* Footer */
+.site-footer{
+  background:var(--bg-base); border-top:1px solid var(--line-dark);
+  padding:40px 0; color:var(--ink-2); font-size:13px;
+}
+.footer-grid{
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  align-items:center; gap:24px;
+}
+.footer-brand{ display:flex; align-items:center; gap:10px; color:var(--ink-1); }
+.footer-brand .brand-logo{ width:28px; height:28px; border-radius:6px; }
+.footer-brand span{ font-style:italic; letter-spacing:0.2em; text-transform:uppercase; font-size:11px; font-weight:600; }
+.footer-mid{ text-align:center; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.12em; color:var(--ink-3); text-transform:uppercase; }
+.footer-right{ text-align:right; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; color:var(--ink-3); text-transform:uppercase; }
+
+/* Reveal */
+.reveal{ opacity:0; transform:translateY(20px); transition:opacity .6s ease-out, transform .6s var(--ease-smooth); }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+@media (max-width:900px){
+  :root{ --pad-x:24px; }
+  .contact-page-grid{ grid-template-columns:1fr; gap:60px; }
+  .nav{ display:none; }
+  .footer-grid{ grid-template-columns:1fr; text-align:left; gap:14px; }
+  .footer-mid,.footer-right{ text-align:left; }
+}
+</style>
+</head>
+<body>
+
+<div class="stage-bg"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="./index.html" aria-label="Nordic Advanced Systems home">
+      <span class="brand-logo"><img src="./assets/logo.png" alt="" /></span>
+      <span class="brand-text">
+        <span class="brand-wordmark">Nordic Advanced Systems</span>
+        <span class="brand-subline">Built on integrity</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="./index.html#platforms">Platforms</a>
+      <a href="./index.html#anatomy">Anatomy</a>
+      <a href="./index.html#company">Company</a>
+      <a href="./contact.html" class="active">Contact</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-pill-accent" href="./contact.html">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="contact-page">
+    <div class="wrap contact-page-grid">
+
+      <div class="contact-left reveal">
+        <div class="eyebrow">Contact</div>
+        <h1>
+          Request a brief.
+          <span>Let's talk mission requirements.</span>
+        </h1>
+        <p>
+          For specifications, integration details, and procurement inquiries. We work directly with operators, integrators, and programme offices.
+        </p>
+        <div class="contact-details">
+          <div class="contact-detail">
+            <div class="k">Location</div>
+            <div class="v">Lufthavnvej 131, Beldringe, DK-5270 Odense N</div>
+          </div>
+          <div class="contact-detail">
+            <div class="k">Registration</div>
+            <div class="v">CVR. 45976645</div>
+          </div>
+          <div class="contact-detail">
+            <div class="k">Origin</div>
+            <div class="v">Danish · European · NDAA-compliant</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form class="inquiry-form" id="inquiry-form" novalidate>
+          <div class="field">
+            <input type="text" id="f-name" name="name" placeholder=" " autocomplete="name" required />
+            <label for="f-name">Full name</label>
+          </div>
+          <div class="field">
+            <input type="text" id="f-company" name="company" placeholder=" " autocomplete="organization" required />
+            <label for="f-company">Company / Organization</label>
+          </div>
+          <div class="field">
+            <input type="email" id="f-email" name="email" placeholder=" " autocomplete="email" required />
+            <label for="f-email">Email</label>
+          </div>
+          <div class="field">
+            <input type="text" id="f-country" name="country" placeholder=" " autocomplete="country-name" required />
+            <label for="f-country">Country</label>
+          </div>
+          <div class="field">
+            <textarea id="f-message" name="message" placeholder=" " rows="4" required></textarea>
+            <label for="f-message">Message</label>
+          </div>
+          <div class="submit-row">
+            <button class="btn btn-primary" type="submit">
+              Send inquiry <span class="arrow" aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <span class="brand-logo"><img src="./assets/logo.png" alt="" /></span>
+      <span>Nordic Advanced Systems ApS</span>
+    </div>
+    <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
+    <div class="footer-right">© 2026 All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -10% 0px', threshold:0.08 });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  // Form
+  const form = document.getElementById('inquiry-form');
+  if (form){
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const success = document.createElement('div');
+      success.className = 'form-success reveal in';
+      success.innerHTML = `
+        <div class="tick">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+        </div>
+        <p>Thank you. A member of our team will be in touch.</p>
+      `;
+      form.replaceWith(success);
+    });
+  }
+
+  // Magnetic nav
+  const magnetics = document.querySelectorAll('.nav a, .header-cta .btn');
+  magnetics.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      const strength = el.closest('.nav') ? 0.3 : 0.45;
+      el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+      el.style.transition = 'transform 0.15s cubic-bezier(0.16,1,0.3,1)';
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+      el.style.transform = 'translate(0px,0px)';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
