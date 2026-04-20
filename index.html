@@ -218,12 +218,14 @@ p{ margin:0; color:var(--ink-1); }
   z-index:100;
   background:transparent;
   border-bottom:1px solid transparent;
-  transition:border-color .35s ease, background-color .35s ease, box-shadow .35s ease;
+  transition:border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .site-header.is-scrolled{
-  background:rgba(255,255,255,0.97);
+  background:rgba(255,255,255,0.85);
   border-bottom-color:rgba(0,0,0,0.06);
   box-shadow:0 4px 20px rgba(0,0,0,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 /* Transparent header over hero — swap text/logo/button to white */
@@ -232,7 +234,7 @@ p{ margin:0; color:var(--ink-1); }
 .site-header .nav a,
 .site-header .brand-logo img,
 .site-header .btn-pill-accent{
-  transition:color .3s ease, background-color .3s ease, filter .3s ease, border-color .3s ease;
+  transition:color 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .site-header:not(.is-scrolled) .brand-wordmark{ color:#ffffff; }
 .site-header:not(.is-scrolled) .brand-subline{ color:rgba(255,255,255,0.65); }
