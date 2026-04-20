@@ -112,7 +112,6 @@ input,textarea,select{ font:inherit; color:inherit; }
 }
 .contact .section-eyebrow{ text-align:center; }
 .contact .section-eyebrow::before{ margin-inline:auto; }
-.muted{ color:var(--ink-2); }
 .muted-dark{ color:var(--dark-ink-2); }
 
 h1,h2,h3,h4{
@@ -436,7 +435,7 @@ p{ margin:0; color:var(--ink-1); }
   display:inline-block;
 }
 .hero-heading{ margin-bottom:28px; }
-.hero-heading .line-2{ display:block; color:var(--ink-2); }
+.hero-heading .line-2{ display:block; color:var(--accent); }
 
 /* Kinetic hero heading */
 .word-line {
@@ -460,6 +459,7 @@ p{ margin:0; color:var(--ink-1); }
 .word-line.line-2 .word:nth-child(1)     { transition-delay: 0.52s; }
 .word-line.line-2 .word:nth-child(2)     { transition-delay: 0.66s; }
 .word-line.line-2 .word:nth-child(3)     { transition-delay: 0.80s; }
+.word-line.line-2 .word { color: var(--accent) !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .word { opacity: 1; transform: none; transition: none; }
@@ -624,6 +624,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .platforms-head h2{ color:var(--ink-0); }
 .platforms-head h2 .muted{ color:var(--ink-2); }
+.platforms-head h2 .muted { color: var(--accent) !important; font-size: 0.82em; }
 .platforms-head p{
   max-width:640px;
   color:var(--ink-2);
@@ -768,7 +769,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .mini-specs{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr;
   gap:1px;
   background:var(--line-dark);
   border-top:1px solid var(--line-dark);
@@ -843,10 +844,33 @@ p{ margin:0; color:var(--ink-1); }
 .anatomy-heading .muted {
   color: var(--dark-ink-1);
 }
+.anatomy-heading .muted { color: var(--accent) !important; font-size: 0.82em; }
 .anatomy-sub {
   color: var(--dark-ink-2);
   font-size: 14px;
   margin-bottom: 24px;
+}
+.scroll-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 16px;
+  height: 48px;
+  overflow: hidden;
+}
+.scroll-hint-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scroll-sweep 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  transform-origin: top;
+}
+@keyframes scroll-sweep {
+  0%   { transform: translateY(-100%); opacity: 1; }
+  100% { transform: translateY(100%);  opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-line { animation: none; opacity: 0.4; }
 }
 .anatomy-content{
   position: relative;
@@ -863,10 +887,20 @@ p{ margin:0; color:var(--ink-1); }
   gap: 24px;
   padding: 14px 0;
   border-top: 1px solid var(--line-light);
+  opacity: 0;
+  transform: translateX(-120px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 700ms cubic-bezier(0.22, 1.12, 0.34, 1);
 }
 .anatomy-callout:last-child {
   border-bottom: 1px solid var(--line-light);
 }
+.anatomy-callout.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+.anatomy-callout:nth-child(2) { transition-delay: 0ms; }
+.anatomy-callout:nth-child(3) { transition-delay: 0ms; }
 .anatomy-num {
   color: #3bb6e8;
   font-size: 13px;
@@ -909,6 +943,43 @@ p{ margin:0; color:var(--ink-1); }
   mask-composite: intersect;
 }
 
+/* Anatomy section entrance */
+.anatomy-content {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.anatomy-content.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+.anatomy-video-wrap {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: 200ms;
+}
+.anatomy-video-wrap.in-view {
+  opacity: 1;
+  transform: translateY(40px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .anatomy-content {
+    opacity: 1;
+    transform: none;
+  }
+  .anatomy-video-wrap {
+    opacity: 1;
+    transform: translateY(40px);
+  }
+  .anatomy-callout {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (max-width: 768px) {
   .anatomy-section { height: auto; }
   .anatomy-sticky { position: static; height: auto; padding: 80px 0; }
@@ -944,6 +1015,7 @@ p{ margin:0; color:var(--ink-1); }
   letter-spacing:-0.02em;
 }
 .company-right h2 .muted-dark{ color:var(--ink-2); }
+.company-right h2 .muted-dark { color: var(--accent) !important; font-size: 0.82em; }
 .company-values{
   margin-top:48px;
   border-top:1px solid var(--line-dark);
@@ -1240,6 +1312,8 @@ p{ margin:0; color:var(--ink-1); }
   color:var(--dark-ink-2);
   display:block;
 }
+.flight-heading .muted { color: var(--accent) !important; }
+.flight-heading .muted { font-size: 0.82em; }
 .flight-sub{
   color:var(--dark-ink-2);
   line-height:1.6;
@@ -1418,16 +1492,16 @@ p{ margin:0; color:var(--ink-1); }
       </p>
       <div class="flight-stats">
         <div class="flight-stat">
-          <div class="label">Vibration</div>
-          <div class="value">Low</div>
+          <div class="label">Power output</div>
+          <div class="value"><span class="count" data-target="35" data-suffix=" hp">0</span></div>
         </div>
         <div class="flight-stat">
-          <div class="label">Architecture</div>
-          <div class="value">Boxer 2-cyl</div>
+          <div class="label">Displacement</div>
+          <div class="value"><span class="count" data-target="340" data-suffix=" cm³">0</span></div>
         </div>
         <div class="flight-stat">
-          <div class="label">Integration</div>
-          <div class="value">Direct mount</div>
+          <div class="label">Dry weight</div>
+          <div class="value"><span class="count" data-target="9" data-suffix=" kg">0</span></div>
         </div>
       </div>
     </div>
@@ -1464,20 +1538,28 @@ p{ margin:0; color:var(--ink-1); }
           <p class="model-sub">Dual-cylinder, 2-stroke boxer engine with carburettor. Proven simplicity for reliable continuous operation.</p>
           <div class="mini-specs">
             <div class="cell">
-              <div class="k">DISPLACEMENT</div>
-              <div class="v">340 cm³</div>
+              <div class="k">FUEL SYSTEM</div>
+              <div class="v">Carburettor</div>
             </div>
             <div class="cell">
-              <div class="k">POWER OUTPUT</div>
-              <div class="v">35 hp / 26 kW</div>
-            </div>
-            <div class="cell">
-              <div class="k">DRY WEIGHT</div>
-              <div class="v">9 kg</div>
-            </div>
-            <div class="cell">
-              <div class="k">ALTITUDE CONTROL</div>
+              <div class="k">ALTITUDE</div>
               <div class="v">Manual tuning</div>
+            </div>
+            <div class="cell">
+              <div class="k">WEATHER</div>
+              <div class="v">Standard</div>
+            </div>
+            <div class="cell">
+              <div class="k">TELEMETRY</div>
+              <div class="v">None</div>
+            </div>
+            <div class="cell">
+              <div class="k">IGNITION</div>
+              <div class="v">Dual CDI coils</div>
+            </div>
+            <div class="cell">
+              <div class="k">RESTART</div>
+              <div class="v">Not supported</div>
             </div>
           </div>
         </div>
@@ -1491,20 +1573,28 @@ p{ margin:0; color:var(--ink-1); }
           <p class="model-sub">Electronic fuel injection with altitude-independent ignition adjustment via barometric-compensated ECU.</p>
           <div class="mini-specs">
             <div class="cell">
-              <div class="k">DISPLACEMENT</div>
-              <div class="v">340 cm³</div>
+              <div class="k">FUEL SYSTEM</div>
+              <div class="v">EFI + sensors</div>
             </div>
             <div class="cell">
-              <div class="k">POWER OUTPUT</div>
-              <div class="v">35 hp / 26 kW</div>
-            </div>
-            <div class="cell">
-              <div class="k">DRY WEIGHT</div>
-              <div class="v">9 kg</div>
-            </div>
-            <div class="cell">
-              <div class="k">ALTITUDE CONTROL</div>
+              <div class="k">ALTITUDE</div>
               <div class="v">Auto · Barometric ECU</div>
+            </div>
+            <div class="cell">
+              <div class="k">WEATHER</div>
+              <div class="v">All-weather</div>
+            </div>
+            <div class="cell">
+              <div class="k">TELEMETRY</div>
+              <div class="v">Live CAN/UART</div>
+            </div>
+            <div class="cell">
+              <div class="k">IGNITION</div>
+              <div class="v">ECU-tuned curve</div>
+            </div>
+            <div class="cell">
+              <div class="k">RESTART</div>
+              <div class="v">Windmilling auto</div>
             </div>
           </div>
         </div>
@@ -1526,6 +1616,9 @@ p{ margin:0; color:var(--ink-1); }
           Every part, <span class="muted">purposeful.</span>
         </h2>
         <p class="anatomy-sub">Scroll to reveal the architecture.</p>
+        <div class="scroll-hint" aria-hidden="true">
+          <div class="scroll-hint-line"></div>
+        </div>
         <div class="anatomy-callouts">
 
           <div class="anatomy-callout">
@@ -1549,14 +1642,6 @@ p{ margin:0; color:var(--ink-1); }
             <div>
               <h3>HIGH-PRECISION RODS</h3>
               <p>Needle bearings at both ends deliver efficiency and long endurance.</p>
-            </div>
-          </div>
-
-          <div class="anatomy-callout">
-            <span class="anatomy-num">04</span>
-            <div>
-              <h3>REAR OUTPUT SHAFT</h3>
-              <p>Enables integration of generators or auxiliary systems.</p>
             </div>
           </div>
 
@@ -1786,6 +1871,37 @@ p{ margin:0; color:var(--ink-1); }
     if (flightContent) flightObs.observe(flightContent);
   }
 
+  // Count-up stats
+  const counters = document.querySelectorAll('.count');
+  if (counters.length && 'IntersectionObserver' in window){
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const countObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        countObs.unobserve(el);
+        const target = parseFloat(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        if (reducedMotion){
+          el.textContent = target + suffix;
+          return;
+        }
+        const duration = 1200;
+        const startTime = performance.now();
+        const step = (now) => {
+          const p = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const value = Math.round(target * eased);
+          el.textContent = value + suffix;
+          if (p < 1) requestAnimationFrame(step);
+          else el.textContent = target + suffix;
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => countObs.observe(c));
+  }
+
   // 3D tilt on compare card
   (function(){
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -1879,6 +1995,54 @@ p{ margin:0; color:var(--ink-1); }
 
     setTimeout(() => requestAnimationFrame(scramble), 80);
   })();
+
+  // Magnetic nav links + CTA button
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const magnetics = document.querySelectorAll('.nav a, .header-cta .btn');
+
+    magnetics.forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+
+        const strength = el.closest('.nav') ? 0.3 : 0.45;
+
+        el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+        el.style.transition = 'transform 0.15s cubic-bezier(0.16, 1, 0.3, 1)';
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        el.style.transform = 'translate(0px, 0px)';
+      });
+    });
+  })();
+
+  // Anatomy entrance animation
+  (function(){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const anatomyContent = document.querySelector('.anatomy-content');
+    const anatomyVideo = document.querySelector('.anatomy-video-wrap');
+    if (!anatomyContent || !anatomyVideo) return;
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    obs.observe(anatomyContent);
+    obs.observe(anatomyVideo);
+  })();
 })();
 </script>
 
@@ -1889,6 +2053,7 @@ p{ margin:0; color:var(--ink-1); }
 (function() {
   const video = document.getElementById('anatomy-video');
   const section = document.querySelector('.anatomy-section');
+  const callouts = document.querySelectorAll('.anatomy-callout');
   if (!video || !section) return;
 
   const isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -1898,6 +2063,7 @@ p{ margin:0; color:var(--ink-1); }
     video.setAttribute('autoplay', '');
     video.setAttribute('loop', '');
     video.play().catch(() => {});
+    callouts.forEach(c => c.classList.add('active'));
     return;
   }
 
@@ -1911,13 +2077,8 @@ p{ margin:0; color:var(--ink-1); }
     isReady = true;
     try { video.pause(); } catch(_){}
     try { video.currentTime = 0; } catch(_){}
-    console.info('[anatomy] scrub ready, duration:', videoDuration.toFixed(2), 's');
   }
-  // Handle the case where the video is already cached and metadata was
-  // parsed before this listener attached (loadedmetadata only fires once).
-  if (video.readyState >= 1) {
-    markReady();
-  }
+  if (video.readyState >= 1) markReady();
   video.addEventListener('loadedmetadata', markReady);
   video.addEventListener('loadeddata', markReady);
   video.addEventListener('canplay', markReady);
@@ -1925,6 +2086,19 @@ p{ margin:0; color:var(--ink-1); }
   let rafId = null;
   let targetTime = 0;
   let currentTime = 0;
+
+  const segments = callouts.length;
+
+  function updateCallouts(progress) {
+    callouts.forEach((callout, i) => {
+      const threshold = i === 0 ? 0.10 : i / segments;
+      if (progress >= threshold) {
+        callout.classList.add('active');
+      } else {
+        callout.classList.remove('active');
+      }
+    });
+  }
 
   function updateVideoTime() {
     if (!isReady) {
@@ -1935,7 +2109,6 @@ p{ margin:0; color:var(--ink-1); }
     const rect = section.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
 
-    // Skip work entirely when section is far from viewport
     if (rect.bottom < -viewportHeight || rect.top > viewportHeight * 2) {
       rafId = null;
       return;
@@ -1943,12 +2116,13 @@ p{ margin:0; color:var(--ink-1); }
 
     const sectionHeight = section.offsetHeight;
     const scrollableDistance = sectionHeight - viewportHeight;
-
     const scrolled = Math.max(0, -rect.top);
     const progress = Math.min(1, Math.max(0, scrolled / scrollableDistance));
 
     targetTime = progress * videoDuration;
     currentTime += (targetTime - currentTime) * 0.15;
+
+    updateCallouts(progress);
 
     if (Math.abs(targetTime - currentTime) > 0.01) {
       video.currentTime = currentTime;
