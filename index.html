@@ -1532,94 +1532,124 @@ p{ margin:0; color:var(--ink-1); }
 }
 
 /* -------------------------------------------------------------
-   Built for flight
+   Built for flight — dark technical product showcase
    ------------------------------------------------------------- */
 .flight-section{
-  background:var(--bg-light);
-  padding:120px 0;
-  position:relative;
-}
-.flight-grid{
-  display:grid;
-  grid-template-columns:60% 40%;
-  gap:80px;
-  align-items:center;
-  max-width:var(--maxw);
-  margin:0 auto;
-  padding:0 var(--pad-x);
-}
-.flight-media{
-  display:flex;
-  justify-content:center;
-}
-.flight-image{
-  width:100%;
-  max-width:520px;
-  height:auto;
-  object-fit:contain;
-  border-radius:16px;
-  box-shadow:
-    0 30px 60px rgba(11,31,38,0.18),
-    0 10px 30px rgba(11,31,38,0.12);
-  display:block;
-}
-.flight-heading{
-  font-family:'Inter', system-ui, -apple-system, sans-serif;
-  font-weight:600;
-  letter-spacing:-0.02em;
-  font-size:clamp(2rem, 3.5vw, 3rem);
-  line-height:1.1;
-  color:var(--dark-ink-0);
-  margin:0 0 24px 0;
-}
-.flight-heading .muted{
-  color:var(--dark-ink-2);
-  display:block;
-}
-.flight-heading .muted { color: var(--accent) !important; }
-.flight-heading .muted { font-size: 0.82em; }
-.flight-sub{
-  color:var(--dark-ink-2);
-  line-height:1.6;
-  max-width:400px;
-  margin:0 0 40px 0;
-  font-size:15px;
-}
-.flight-stats{
-  display:flex;
-  gap:24px;
-}
-.flight-stat{
-  flex:1;
-  padding-left:24px;
-  border-left:1px solid rgba(59,182,232,0.3);
-}
-.flight-stat:first-child{
-  padding-left:0;
-  border-left:0;
-}
-.flight-stat .label{
-  color:var(--dark-ink-2);
-  text-transform:uppercase;
-  letter-spacing:0.15em;
-  font-size:11px;
-  font-weight:500;
-  margin-bottom:8px;
-}
-.flight-stat .value{
-  font-weight:600;
-  color:var(--dark-ink-0);
-  font-size:16px;
+  background: linear-gradient(180deg,
+    var(--bg-base) 0%,
+    #0a2530 50%,
+    var(--bg-base) 100%);
+  padding: 140px 0;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-/* Built for Flight — clip-path reveal */
+.flight-bg-grid{
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59, 182, 232, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 182, 232, 0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.flight-grid{
+  display: grid;
+  grid-template-columns: 55% 45%;
+  gap: 60px;
+  align-items: center;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  position: relative;
+  z-index: 1;
+}
+
+.flight-media{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+}
+
+.flight-image-glow{
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center,
+    rgba(59, 182, 232, 0.25) 0%,
+    rgba(59, 182, 232, 0.08) 30%,
+    transparent 60%);
+  filter: blur(40px);
+  z-index: 0;
+  pointer-events: none;
+}
+
 .flight-image{
-  clip-path: inset(100% 0 0 0 round 16px);
-  transition: clip-path 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+  display: block;
 }
-.flight-media.in-view .flight-image{
-  clip-path: inset(0% 0 0 0 round 16px);
+
+.flight-reticle{
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 600ms ease-out 800ms;
 }
+.flight-media.in-view .flight-reticle{
+  opacity: 1;
+}
+.flight-reticle-line{
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(59, 182, 232, 0.6) 0%,
+    rgba(59, 182, 232, 0.2) 100%);
+}
+.flight-reticle-label{
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(59, 182, 232, 0.85);
+  background: rgba(8, 32, 42, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 4px 8px;
+  border: 1px solid rgba(59, 182, 232, 0.25);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.flight-reticle-1{
+  top: 30%;
+  left: 5%;
+}
+.flight-reticle-2{
+  bottom: 25%;
+  right: 10%;
+  flex-direction: row-reverse;
+}
+.flight-reticle-2 .flight-reticle-line{
+  background: linear-gradient(90deg,
+    rgba(59, 182, 232, 0.2) 0%,
+    rgba(59, 182, 232, 0.6) 100%);
+}
+
 .flight-content{
   opacity: 0;
   transform: translateX(32px);
@@ -1631,14 +1661,93 @@ p{ margin:0; color:var(--ink-1); }
   opacity: 1;
   transform: translateX(0);
 }
-@media (prefers-reduced-motion: reduce){
-  .flight-image{ clip-path: none; transition: none; }
-  .flight-content{ opacity: 1; transform: none; transition: none; }
+
+.flight-section .section-eyebrow{
+  color: var(--accent);
+  margin-bottom: 24px;
 }
 
-@media (max-width: 768px){
-  .flight-section{ padding:80px 0; }
-  .flight-grid{ grid-template-columns:1fr; gap:40px; padding:0 24px; }
+.flight-heading{
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.1;
+  color: var(--ink-0);
+  margin: 0 0 24px 0;
+}
+.flight-heading .muted{
+  color: var(--accent) !important;
+  display: block;
+  font-size: 0.82em;
+}
+
+.flight-sub{
+  color: var(--ink-1);
+  line-height: 1.6;
+  max-width: 440px;
+  margin: 0 0 56px 0;
+  font-size: 16px;
+}
+
+.flight-stats{
+  display: flex;
+  gap: 32px;
+  border-top: 1px solid rgba(59, 182, 232, 0.15);
+  padding-top: 32px;
+}
+.flight-stat{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.flight-stat .value{
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  color: var(--ink-0);
+  font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.flight-stat .unit{
+  font-size: 0.4em;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+.flight-stat .label{
+  color: var(--ink-2);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .flight-content{ opacity: 1; transform: none; transition: none; }
+  .flight-reticle{ opacity: 1; transition: none; }
+}
+
+@media (max-width: 880px){
+  .flight-section{ padding: 80px 0; }
+  .flight-grid{
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 0 24px;
+  }
+  .flight-media{ min-height: 380px; }
+  .flight-image{ max-width: 360px; }
+  .flight-reticle-1, .flight-reticle-2{ display: none; }
+  .flight-stats{
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .flight-stat{ min-width: calc(50% - 12px); }
+  .flight-stat .value{ font-size: 2.25rem; }
 }
 
 /* Skip rendering off-screen sections until they approach the viewport.
@@ -1905,15 +2014,23 @@ p{ margin:0; color:var(--ink-1); }
   </div>
 </section>
 
-<div class="section-divider section-divider--dark-to-light" aria-hidden="true"></div>
-
 <!-- =========================================
      2. BUILT FOR FLIGHT
      ========================================= -->
 <section class="flight-section" id="flight">
+  <div class="flight-bg-grid" aria-hidden="true"></div>
   <div class="flight-grid">
     <div class="flight-media reveal">
-      <img class="flight-image" src="./assets/drone-hero.jpg" alt="TYR 2 series engine mounted with carbon fiber propeller">
+      <div class="flight-image-glow" aria-hidden="true"></div>
+      <img class="flight-image" src="./assets/drone-hero-cutout.png" alt="TYR 2 series engine mounted with carbon fiber propeller">
+      <div class="flight-reticle flight-reticle-1" aria-hidden="true">
+        <div class="flight-reticle-line"></div>
+        <span class="flight-reticle-label">BOXER · 340CC</span>
+      </div>
+      <div class="flight-reticle flight-reticle-2" aria-hidden="true">
+        <div class="flight-reticle-line"></div>
+        <span class="flight-reticle-label">CFRP PROP</span>
+      </div>
     </div>
     <div class="flight-content">
       <div class="section-eyebrow">/ 02 — BUILT FOR FLIGHT</div>
@@ -1926,23 +2043,21 @@ p{ margin:0; color:var(--ink-1); }
       </p>
       <div class="flight-stats">
         <div class="flight-stat">
+          <div class="value"><span class="count" data-target="35" data-suffix="">0</span><span class="unit">hp</span></div>
           <div class="label">Power output</div>
-          <div class="value"><span class="count" data-target="35" data-suffix=" hp">0</span></div>
         </div>
         <div class="flight-stat">
+          <div class="value"><span class="count" data-target="340" data-suffix="">0</span><span class="unit">cm³</span></div>
           <div class="label">Displacement</div>
-          <div class="value"><span class="count" data-target="340" data-suffix=" cm³">0</span></div>
         </div>
         <div class="flight-stat">
+          <div class="value"><span class="count" data-target="9" data-suffix="">0</span><span class="unit">kg</span></div>
           <div class="label">Dry weight</div>
-          <div class="value"><span class="count" data-target="9" data-suffix=" kg">0</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
-
-<div class="section-divider section-divider--light-to-dark" aria-hidden="true"></div>
 
 <!-- =========================================
      3. PLATFORMS
