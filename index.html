@@ -1575,7 +1575,8 @@ p{ margin:0; color:var(--ink-1); }
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 500px;
+  min-height: 560px;
+  padding: 40px 0;
 }
 
 .flight-image-glow{
@@ -1615,7 +1616,7 @@ p{ margin:0; color:var(--ink-1); }
   opacity: 1;
 }
 .flight-reticle-line{
-  width: 60px;
+  width: 40px;
   height: 1px;
   background: linear-gradient(90deg,
     rgba(59, 182, 232, 0.6) 0%,
@@ -1636,12 +1637,12 @@ p{ margin:0; color:var(--ink-1); }
   white-space: nowrap;
 }
 .flight-reticle-1{
-  top: 30%;
-  left: 5%;
+  top: 28%;
+  left: 12%;
 }
 .flight-reticle-2{
-  bottom: 25%;
-  right: 10%;
+  bottom: 30%;
+  right: 15%;
   flex-direction: row-reverse;
 }
 .flight-reticle-2 .flight-reticle-line{
@@ -1692,15 +1693,25 @@ p{ margin:0; color:var(--ink-1); }
 
 .flight-stats{
   display: flex;
-  gap: 32px;
+  gap: 48px;
   border-top: 1px solid rgba(59, 182, 232, 0.15);
-  padding-top: 32px;
+  padding-top: 40px;
 }
 .flight-stat{
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  position: relative;
+}
+.flight-stat:not(:first-child)::before{
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: rgba(59, 182, 232, 0.12);
 }
 .flight-stat .value{
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -1748,6 +1759,7 @@ p{ margin:0; color:var(--ink-1); }
   }
   .flight-stat{ min-width: calc(50% - 12px); }
   .flight-stat .value{ font-size: 2.25rem; }
+  .flight-stat:not(:first-child)::before{ display: none; }
 }
 
 /* Skip rendering off-screen sections until they approach the viewport.
