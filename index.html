@@ -590,6 +590,76 @@ p{ margin:0; color:var(--ink-1); }
   }
 }
 
+/* Live REC HUD module (bottom-left of hero) */
+.hero-rec {
+  position: absolute;
+  bottom: 32px;
+  left: 32px;
+  z-index: 2;
+  padding: 12px 16px;
+  background: rgba(8, 32, 42, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(59, 182, 232, 0.3);
+  border-radius: 4px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(243, 247, 248, 0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: none;
+}
+.hero-rec-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: rec-pulse 1.5s ease-in-out infinite;
+}
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.85); }
+}
+.hero-rec-label {
+  color: #ef4444;
+  font-weight: 600;
+}
+.hero-rec-id {
+  color: rgba(59, 182, 232, 0.9);
+  margin-left: 4px;
+}
+.hero-rec-time {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+.hero-rec-meta {
+  color: rgba(243, 247, 248, 0.55);
+  font-size: 10px;
+}
+@media (max-width: 880px) {
+  .hero-rec {
+    bottom: 16px;
+    left: 16px;
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+  .hero-rec-time { font-size: 11px; }
+  .hero-rec-meta { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rec-dot { animation: none; }
+}
+
 .hero-grid{
   position:relative;
   z-index:3;
@@ -1785,6 +1855,16 @@ p{ margin:0; color:var(--ink-1); }
     <line x1="11" y1="8" x2="16" y2="8"  stroke="currentColor" stroke-width="0.8"/>
   </svg>
 
+  <div class="hero-rec" aria-hidden="true">
+    <div class="hero-rec-header">
+      <span class="hero-rec-dot"></span>
+      <span class="hero-rec-label">REC</span>
+      <span class="hero-rec-id">TYR 2C · LIVE</span>
+    </div>
+    <div class="hero-rec-time" id="hero-rec-time">02:47:14 UTC</div>
+    <div class="hero-rec-meta">CH-04 · 1080P · 24FPS</div>
+  </div>
+
   <div class="wrap hero-grid">
 
     <div class="hero-left reveal">
@@ -2648,6 +2728,24 @@ p{ margin:0; color:var(--ink-1); }
     }
     setTimeout(step, 8000 + Math.random() * 2000);
   }
+})();
+
+/* Live REC HUD: increment timer once per second */
+(function() {
+  const timeEl = document.getElementById('hero-rec-time');
+  if (!timeEl) return;
+
+  let totalSeconds = 2 * 3600 + 47 * 60 + 14;
+
+  function updateTime() {
+    totalSeconds++;
+    const h = String(Math.floor(totalSeconds / 3600) % 24).padStart(2, '0');
+    const m = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
+    const s = String(totalSeconds % 60).padStart(2, '0');
+    timeEl.textContent = `${h}:${m}:${s} UTC`;
+  }
+
+  setInterval(updateTime, 1000);
 })();
 </script>
 
