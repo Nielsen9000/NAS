@@ -863,25 +863,10 @@ p{ margin:0; color:var(--ink-1); }
    Platforms (section 3)
    ------------------------------------------------------------- */
 .platforms{
-  background: linear-gradient(180deg,
-    var(--bg-light) 0%,
-    var(--bg-light) 100%);
+  background: var(--bg-light);
   padding: 140px 0 80px;
   position: relative;
   overflow: hidden;
-}
-.platforms::after{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 80px;
-  background: linear-gradient(180deg,
-    rgba(8, 32, 42, 0.15) 0%,
-    transparent 100%);
-  pointer-events: none;
-  z-index: 0;
 }
 .platforms::before{
   content: "";
@@ -1558,8 +1543,7 @@ p{ margin:0; color:var(--ink-1); }
   background: linear-gradient(180deg,
     var(--bg-base) 0%,
     #0a2530 50%,
-    var(--bg-base) 85%,
-    var(--bg-light) 100%);
+    var(--bg-base) 100%);
   padding: 140px 0;
   position: relative;
   overflow: hidden;
@@ -2116,6 +2100,8 @@ p{ margin:0; color:var(--ink-1); }
     </div>
   </div>
 </section>
+
+<div class="section-divider section-divider--dark-to-light" aria-hidden="true"></div>
 
 <!-- =========================================
      3. PLATFORMS
