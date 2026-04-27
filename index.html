@@ -2640,16 +2640,18 @@ p{ margin:0; color:var(--ink-1); }
     'NDAA · VERIFIED',
   ];
 
-  // Edge slots — avoid the central column where headline + CTAs sit
+  // Edge slots — avoid the central column where headline + CTAs sit.
+  // Right-side slots use `right` anchoring so long strings grow leftward
+  // instead of clipping off the viewport.
   const tagSlots = [
-    { top:'18%', left:'6%'  },
-    { top:'24%', left:'78%' },
-    { top:'74%', left:'10%' },
-    { top:'82%', left:'76%' },
-    { top:'40%', left:'4%'  },
-    { top:'60%', left:'82%' },
-    { top:'14%', left:'40%' },
-    { top:'88%', left:'46%' },
+    { top:'18%', left:'6%'   },
+    { top:'24%', right:'6%'  },
+    { top:'74%', left:'10%'  },
+    { top:'82%', right:'8%'  },
+    { top:'40%', left:'4%'   },
+    { top:'60%', right:'4%'  },
+    { top:'14%', left:'40%'  },
+    { top:'88%', left:'46%'  },
   ];
 
   const allTags = Array.from(document.querySelectorAll('.hero-tag'));
@@ -2690,8 +2692,14 @@ p{ margin:0; color:var(--ink-1); }
 
         const slot = tagSlots[sIdx];
         tag.textContent = tagContents[cIdx];
-        tag.style.top  = slot.top;
-        tag.style.left = slot.left;
+        tag.style.top = slot.top;
+        if (slot.left !== undefined){
+          tag.style.left = slot.left;
+          tag.style.right = '';
+        } else {
+          tag.style.right = slot.right;
+          tag.style.left = '';
+        }
 
         requestAnimationFrame(() => tag.classList.add('is-on'));
 
