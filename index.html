@@ -2917,7 +2917,11 @@ p{ margin:0; color:var(--ink-1); }
     video.setAttribute('autoplay', '');
     video.setAttribute('loop', '');
     video.play().catch(() => {});
-    callouts.forEach(c => c.classList.add('active'));
+    // Callouts are absolute-positioned and cycle through one slot.
+    // Activating all three would stack them — only show the final payoff.
+    callouts.forEach((c, i) => {
+      if (i === callouts.length - 1) c.classList.add('active');
+    });
     return;
   }
 
