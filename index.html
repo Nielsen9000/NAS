@@ -2948,9 +2948,14 @@ p{ margin:0; color:var(--ink-1); }
   const segments = callouts.length;
 
   function updateCallouts(progress) {
+    // Explicit thresholds distributed across the full scroll distance,
+    // with the final payoff landing at 75% so the engine reveal completes
+    // alongside the payoff (no dead zone at the end).
+    const thresholds = [0.15, 0.45, 0.75];
+
     let activeIndex = -1;
     callouts.forEach((callout, i) => {
-      const threshold = i === 0 ? 0.10 : i / segments;
+      const threshold = thresholds[i] !== undefined ? thresholds[i] : (i / callouts.length);
       if (progress >= threshold) {
         activeIndex = i;
       }
@@ -2964,6 +2969,16 @@ p{ margin:0; color:var(--ink-1); }
         callout.classList.add('fade-out');
       }
     });
+
+    // Fade out intro elements once any callout is active
+    const content = document.querySelector('.anatomy-content');
+    if (content) {
+      if (activeIndex >= 0) {
+        content.classList.add('intro-faded');
+      } else {
+        content.classList.remove('intro-faded');
+      }
+    }
   }
 
   function updateVideoTime() {
