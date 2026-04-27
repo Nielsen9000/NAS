@@ -884,20 +884,43 @@ p{ margin:0; color:var(--ink-1); }
   color: var(--accent);
 }
 .platforms-head{
-  display:grid;
-  grid-template-columns:220px 1fr;
-  gap:48px;
-  margin-bottom:72px;
-  position:relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+  position: relative;
 }
-.platforms-head h2{ color: var(--dark-ink-0); }
-.platforms-head h2 .muted{ color: var(--dark-ink-2); }
-.platforms-head h2 .muted { color: var(--accent) !important; font-size: 0.82em; }
-.platforms-head p{
-  max-width: 640px;
+.platforms-head-inner{
+  max-width: 720px;
+  text-align: center;
+}
+.platforms-head-inner .section-eyebrow{
+  margin: 0 auto 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--accent);
+}
+.platforms-head-inner .section-eyebrow::before{
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+  display: inline-block;
+}
+.platforms-head-inner h2{
+  margin: 0 0 24px;
+  color: var(--dark-ink-0);
+}
+.platforms-head-inner h2 .muted{
+  color: var(--accent) !important;
+  font-size: 0.82em;
+}
+.platforms-head-inner p{
+  margin: 0 auto;
+  max-width: 580px;
   color: var(--dark-ink-2);
   font-size: 17px;
-  margin-top: 22px;
 }
 
 .compare-card{
@@ -1014,11 +1037,11 @@ p{ margin:0; color:var(--ink-1); }
 }
 .model-name{
   font-family:'Inter', system-ui, -apple-system, sans-serif;
-  font-size:clamp(56px, 6.8vw, 96px);
+  font-size:clamp(40px, 4.2vw, 56px);
   font-weight:700;
   letter-spacing:-0.02em;
-  line-height:0.96;
-  margin:22px 0 16px;
+  line-height:1;
+  margin:16px 0 12px;
   color:var(--ink-0);
 }
 .model-name sup{
@@ -1039,7 +1062,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .mini-specs{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:1fr 1fr;
   gap:1px;
   background:var(--line-dark);
   border-top:1px solid var(--line-dark);
@@ -1047,8 +1070,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .mini-specs .cell{
   background:#0d1f3d;
-  padding:18px 0;
-  padding-right:16px;
+  padding:22px 24px;
 }
 .mini-specs .k{
   font-family:"JetBrains Mono", ui-monospace, monospace;
@@ -1056,18 +1078,46 @@ p{ margin:0; color:var(--ink-1); }
   letter-spacing:0.22em;
   color:var(--ink-3);
   text-transform:uppercase;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .mini-specs .v{
   font-weight:500;
   color:var(--ink-0);
-  font-size:15px;
+  font-size:16px;
   letter-spacing:-0.005em;
+}
+
+.card-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-top:32px;
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.18em;
+  color:var(--accent);
+  text-decoration:none;
+  padding:12px 0;
+  border-bottom:1px solid rgba(59, 182, 232, 0.3);
+  transition:border-color 200ms ease, gap 200ms ease;
+  align-self:flex-start;
+}
+.card-cta:hover{
+  border-color:var(--accent);
+  gap:14px;
+}
+.card-cta-arrow{
+  transition:transform 200ms ease;
+}
+.card-cta:hover .card-cta-arrow{
+  transform:translateX(2px);
 }
 
 @media (max-width: 900px){
   .platforms{ padding:90px 0; }
-  .platforms-head{ grid-template-columns:1fr; gap:20px; margin-bottom:48px; }
+  .platforms-head{ margin-bottom:56px; }
+  .model-name{ font-size:44px; }
   .compare-grid{ grid-template-columns:1fr; }
   .compare-divider{
     height:1px;
@@ -2271,8 +2321,8 @@ p{ margin:0; color:var(--ink-1); }
 <section class="platforms" id="platforms">
   <div class="wrap">
     <div class="platforms-head">
-      <div class="section-eyebrow reveal">/ 04 — PLATFORMS</div>
-      <div class="reveal">
+      <div class="platforms-head-inner reveal">
+        <div class="section-eyebrow">/ 04 — PLATFORMS</div>
         <h2>
           The TYR 2 Series.
           <span class="muted">Long-endurance by design.</span>
@@ -2301,22 +2351,18 @@ p{ margin:0; color:var(--ink-1); }
               <div class="v">Manual tuning</div>
             </div>
             <div class="cell">
-              <div class="k">WEATHER</div>
-              <div class="v">Standard</div>
+              <div class="k">IGNITION</div>
+              <div class="v">Dual CDI coils</div>
             </div>
             <div class="cell">
               <div class="k">TELEMETRY</div>
               <div class="v">None</div>
             </div>
-            <div class="cell">
-              <div class="k">IGNITION</div>
-              <div class="v">Dual CDI coils</div>
-            </div>
-            <div class="cell">
-              <div class="k">RESTART</div>
-              <div class="v">Not supported</div>
-            </div>
           </div>
+          <a href="#contact" class="card-cta">
+            Request TYR 2C datasheet
+            <span class="card-cta-arrow" aria-hidden="true">→</span>
+          </a>
         </div>
 
         <div class="compare-divider" aria-hidden="true"></div>
@@ -2333,25 +2379,21 @@ p{ margin:0; color:var(--ink-1); }
             </div>
             <div class="cell">
               <div class="k">ALTITUDE</div>
-              <div class="v">Auto · Barometric ECU</div>
-            </div>
-            <div class="cell">
-              <div class="k">WEATHER</div>
-              <div class="v">All-weather</div>
-            </div>
-            <div class="cell">
-              <div class="k">TELEMETRY</div>
-              <div class="v">Live CAN/UART</div>
+              <div class="v">Auto · Barometric</div>
             </div>
             <div class="cell">
               <div class="k">IGNITION</div>
               <div class="v">ECU-tuned curve</div>
             </div>
             <div class="cell">
-              <div class="k">RESTART</div>
-              <div class="v">Windmilling auto</div>
+              <div class="k">TELEMETRY</div>
+              <div class="v">Live CAN/UART</div>
             </div>
           </div>
+          <a href="#contact" class="card-cta">
+            Request TYR 2E datasheet
+            <span class="card-cta-arrow" aria-hidden="true">→</span>
+          </a>
         </div>
 
       </div>
