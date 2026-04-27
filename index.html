@@ -505,6 +505,12 @@ p{ margin:0; color:var(--ink-1); }
   display:inline-flex;
   align-items:center;
   gap:8px;
+  padding: 4px 10px;
+  background: rgba(8, 32, 42, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(59, 182, 232, 0.2);
+  border-radius: 3px;
   font-family:"JetBrains Mono", ui-monospace, monospace;
   font-size:11px;
   font-weight:500;
@@ -524,7 +530,7 @@ p{ margin:0; color:var(--ink-1); }
   color: var(--accent);
   opacity:0.85;
 }
-.hero-tag.is-on{ opacity:0.55; }
+.hero-tag.is-on{ opacity:0.85; }
 
 /* Scan lines: subtle CRT/HUD bands drifting downward */
 .hero-scanlines{
@@ -2616,12 +2622,22 @@ p{ margin:0; color:var(--ink-1); }
   }
 
   const tagContents = [
-    'TYR 2C · TEST 04 · 1,247KM',
-    'ALT 3,200M · PASS',
-    'ENDURANCE · 14.2HR',
+    // Engine telemetry
+    'RPM 6,200 · NOMINAL',
+    'EGT 487°C · OPTIMAL',
+    'FUEL FLOW 8.2 L/HR',
+    'VIBRATION · 0.04G',
+    'OIL TEMP 78°C',
+    'HEAD TEMP 142°C',
+    'POWER 32.4 HP',
+    'COMPRESSION · STABLE',
+    // Mission context
+    'ALT 3,247M · CRUISE',
+    'ENDURANCE 14.2HR REMAINING',
+    'RANGE 847 / 1,000 KM',
+    'TYR 2C · OPERATIONAL',
+    'TEMP -18°C · WITHIN ENVELOPE',
     'NDAA · VERIFIED',
-    'MISSION 047 · NOMINAL',
-    'VEL 38M/S · STABLE',
   ];
 
   // Edge slots — avoid the central column where headline + CTAs sit
