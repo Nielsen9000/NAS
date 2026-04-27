@@ -2587,17 +2587,27 @@ p{ margin:0; color:var(--ink-1); }
      ========================================= -->
 <script>
 (function(){
-  // Header scroll state (rAF-throttled)
-  // Transparent over the hero; switches to white once the hero is (almost) scrolled past.
+  // Header theme (rAF-throttled) — white frosted when probe is over a light
+  // section, transparent (with light text) over dark sections. Probe sits
+  // just below the header. A 60px buffer matches the section-dividers'
+  // midpoint, so the swap lands at the cleanest blend point of the gradient.
   const header = document.getElementById('site-header');
-  const hero = document.getElementById('top');
+  const lightSections = document.querySelectorAll('.anatomy-section');
   let headerTicking = false;
   const updateHeader = () => {
-    const headerH = header.offsetHeight || 80;
-    const heroH = hero ? hero.offsetHeight : 600;
-    // Trigger when roughly the bottom of the hero passes the bottom of the header
-    const threshold = Math.max(80, heroH - headerH - 40);
-    if (window.scrollY > threshold) header.classList.add('is-scrolled');
+    const headerH = header.offsetHeight || 50;
+    const probeY = headerH + 4;
+    const buffer = 60;
+
+    let overLight = false;
+    lightSections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top - buffer <= probeY && rect.bottom + buffer > probeY) {
+        overLight = true;
+      }
+    });
+
+    if (overLight) header.classList.add('is-scrolled');
     else header.classList.remove('is-scrolled');
     headerTicking = false;
   };
