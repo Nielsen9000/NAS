@@ -1393,8 +1393,9 @@ p{ margin:0; color:var(--ink-1); }
 .company{
   background:var(--bg-base);
   color:var(--ink-0);
-  padding:130px 0 100px;
-  position:relative;
+  padding: 80px 0 100px;
+  position: relative;
+  border: none;
 }
 .company::before{
   content:"";
@@ -1632,18 +1633,29 @@ p{ margin:0; color:var(--ink-1); }
    Section transition bands
    ------------------------------------------------------------- */
 .section-divider{
-  height:120px;
-  width:100%;
-  display:block;
-  position:relative;
-  z-index:2;
-  pointer-events:none;
+  height: 120px;
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+  margin: 0;
 }
 .section-divider--dark-to-light{
-  background:linear-gradient(to bottom, var(--bg-base) 0%, #ffffff 100%);
+  background: linear-gradient(to bottom,
+    #08202a 0%,
+    rgba(8, 32, 42, 0.85) 25%,
+    rgba(8, 32, 42, 0.5)  50%,
+    rgba(255, 255, 255, 0.4) 75%,
+    #ffffff 100%);
 }
 .section-divider--light-to-dark{
-  background:linear-gradient(to bottom, #ffffff 0%, var(--bg-base) 100%);
+  background: linear-gradient(to bottom,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.4) 25%,
+    rgba(8, 32, 42, 0.5)  50%,
+    rgba(8, 32, 42, 0.85) 75%,
+    #08202a 100%);
 }
 
 /* -------------------------------------------------------------
