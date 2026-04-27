@@ -1580,7 +1580,7 @@ p{ margin:0; color:var(--ink-1); }
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 560px;
+  min-height: 640px;
   padding: 40px 0;
 }
 
@@ -1588,19 +1588,112 @@ p{ margin:0; color:var(--ink-1); }
   position: absolute;
   inset: 0;
   background: radial-gradient(circle at center,
-    rgba(59, 182, 232, 0.25) 0%,
-    rgba(59, 182, 232, 0.08) 30%,
-    transparent 60%);
-  filter: blur(40px);
+    rgba(59, 182, 232, 0.3) 0%,
+    rgba(59, 182, 232, 0.1) 35%,
+    transparent 65%);
+  filter: blur(50px);
   z-index: 0;
   pointer-events: none;
+}
+
+.flight-hud-elements{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.flight-hud-corner{
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(59, 182, 232, 0.3);
+  opacity: 0;
+  transition: opacity 800ms ease-out 600ms;
+}
+.flight-media.in-view .flight-hud-corner{
+  opacity: 1;
+}
+.flight-hud-corner-tl{
+  top: 8%;
+  left: 4%;
+  border-right: 0;
+  border-bottom: 0;
+}
+.flight-hud-corner-tr{
+  top: 8%;
+  right: 4%;
+  border-left: 0;
+  border-bottom: 0;
+}
+.flight-hud-corner-bl{
+  bottom: 8%;
+  left: 4%;
+  border-right: 0;
+  border-top: 0;
+}
+.flight-hud-corner-br{
+  bottom: 8%;
+  right: 4%;
+  border-left: 0;
+  border-top: 0;
+}
+.flight-hud-readout{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(59, 182, 232, 0.55);
+  background: rgba(8, 32, 42, 0.5);
+  padding: 4px 8px;
+  border: 1px solid rgba(59, 182, 232, 0.15);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 800ms ease-out 1000ms;
+}
+.flight-media.in-view .flight-hud-readout{
+  opacity: 1;
+}
+.flight-hud-readout-1{
+  top: 14%;
+  right: 8%;
+}
+.flight-hud-readout-2{
+  bottom: 14%;
+  left: 8%;
+}
+.flight-hud-dot{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6ee0a1;
+  animation: hud-pulse 2s ease-in-out infinite;
+}
+@keyframes hud-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+@media (max-width: 1100px){
+  .flight-hud-corner,
+  .flight-hud-readout{ display: none; }
+}
+@media (prefers-reduced-motion: reduce){
+  .flight-hud-corner,
+  .flight-hud-readout{
+    opacity: 1;
+    transition: none;
+  }
+  .flight-hud-dot{ animation: none; }
 }
 
 .flight-image{
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 560px;
+  max-width: 720px;
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
@@ -1642,12 +1735,12 @@ p{ margin:0; color:var(--ink-1); }
   white-space: nowrap;
 }
 .flight-reticle-1{
-  top: 28%;
-  left: 12%;
+  top: 30%;
+  left: 6%;
 }
 .flight-reticle-2{
-  bottom: 30%;
-  right: 15%;
+  bottom: 28%;
+  right: 8%;
   flex-direction: row-reverse;
 }
 .flight-reticle-2 .flight-reticle-line{
@@ -2064,6 +2157,19 @@ p{ margin:0; color:var(--ink-1); }
   <div class="flight-grid">
     <div class="flight-media reveal">
       <div class="flight-image-glow" aria-hidden="true"></div>
+      <div class="flight-hud-elements" aria-hidden="true">
+        <div class="flight-hud-corner flight-hud-corner-tl"></div>
+        <div class="flight-hud-corner flight-hud-corner-tr"></div>
+        <div class="flight-hud-corner flight-hud-corner-bl"></div>
+        <div class="flight-hud-corner flight-hud-corner-br"></div>
+        <div class="flight-hud-readout flight-hud-readout-1">
+          <span class="flight-hud-dot"></span>
+          <span>SYS · ACTIVE</span>
+        </div>
+        <div class="flight-hud-readout flight-hud-readout-2">
+          <span>SCAN · 100%</span>
+        </div>
+      </div>
       <img class="flight-image" src="./assets/drone-hero-cutout.png" alt="TYR 2 series engine mounted with carbon fiber propeller">
       <div class="flight-reticle flight-reticle-1" aria-hidden="true">
         <div class="flight-reticle-line"></div>
