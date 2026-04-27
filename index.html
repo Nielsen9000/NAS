@@ -252,11 +252,16 @@ p{ margin:0; color:var(--ink-1); }
   border-color:rgba(255,255,255,0.35);
 }
 .header-inner{
+  max-width:none;
+  padding-inline:36px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:32px;
   padding-block:20px;
+}
+@media (max-width: 900px){
+  .header-inner{ padding-inline:20px; }
 }
 .brand{
   display:flex;
