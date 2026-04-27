@@ -1134,6 +1134,7 @@ p{ margin:0; color:var(--ink-1); }
   height: 300vh;
   background: #ffffff;
   position: relative;
+  overflow: hidden;
 }
 .anatomy-sticky {
   position: sticky;
@@ -1141,171 +1142,179 @@ p{ margin:0; color:var(--ink-1); }
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
-.anatomy-grid {
-  display: grid;
-  grid-template-columns: 34% 66%;
-  gap: 64px;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 100px;
-  align-items: center;
+.anatomy-bg-progress {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    #ffffff 0%,
+    #f5f7f8 50%,
+    #eef1f2 100%);
+  z-index: 0;
+  pointer-events: none;
 }
-.anatomy-heading {
-  font-size: clamp(2rem, 3.2vw, 3.25rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  color: var(--dark-ink-0);
-  margin: 0 0 10px 0;
-}
-.anatomy-heading .muted {
-  color: var(--dark-ink-1);
-}
-.anatomy-heading .muted { color: var(--accent) !important; font-size: 0.82em; }
-.anatomy-sub {
-  color: var(--dark-ink-2);
-  font-size: 14px;
-  margin-bottom: 24px;
-}
-.scroll-hint {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 16px;
-  height: 48px;
-  overflow: hidden;
-}
-.scroll-hint-line {
-  width: 1px;
-  height: 48px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: scroll-sweep 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  transform-origin: top;
-}
-@keyframes scroll-sweep {
-  0%   { transform: translateY(-100%); opacity: 1; }
-  100% { transform: translateY(100%);  opacity: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-hint-line { animation: none; opacity: 0.4; }
-}
-.anatomy-content{
+.anatomy-stage {
   position: relative;
-  z-index: 2;
-  padding-top: 40px;
-}
-.anatomy-callouts {
-  display: flex;
-  flex-direction: column;
-}
-.anatomy-callout {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-  gap: 24px;
-  padding: 14px 0;
-  border-top: 1px solid var(--line-light);
-  opacity: 0;
-  transform: translateX(-120px);
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 700ms cubic-bezier(0.22, 1.12, 0.34, 1);
-}
-.anatomy-callout:last-child {
-  border-bottom: 1px solid var(--line-light);
-}
-.anatomy-callout.active {
-  opacity: 1;
-  transform: translateX(0);
-}
-.anatomy-callout:nth-child(2) { transition-delay: 0ms; }
-.anatomy-callout:nth-child(3) { transition-delay: 0ms; }
-.anatomy-num {
-  color: #3bb6e8;
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  font-weight: 500;
-}
-.anatomy-callout h3 {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--dark-ink-0);
-  margin: 0 0 8px 0;
-}
-.anatomy-callout p {
-  font-size: 14px;
-  color: var(--dark-ink-2);
-  line-height: 1.45;
-  margin: 0;
-}
-.anatomy-video-wrap {
   width: 100%;
-  background: transparent;
-  position: relative;
+  height: 100%;
   z-index: 1;
-  transform: translateY(40px);
+}
+
+/* Eyebrow tag in top-left */
+.anatomy-eyebrow-wrap {
+  position: absolute;
+  top: 48px;
+  left: 100px;
+  z-index: 5;
+}
+.anatomy-eyebrow-wrap .section-eyebrow {
+  color: var(--accent);
+}
+
+/* Video centered in viewport */
+.anatomy-video-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
 }
 #anatomy-video {
   width: 100%;
-  height: auto;
+  height: 100%;
+  max-width: 1400px;
+  object-fit: contain;
   display: block;
-  transform: scale(1.12);
-  transform-origin: center center;
-  -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0%, black 8%,  black 92%, transparent 100%),
-    linear-gradient(to right,  transparent 0%, black 6%,  black 94%, transparent 100%),
-    radial-gradient(ellipse at center, black 65%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to bottom, transparent 0%, black 8%,  black 92%, transparent 100%),
-    linear-gradient(to right,  transparent 0%, black 6%,  black 94%, transparent 100%),
-    radial-gradient(ellipse at center, black 65%, transparent 100%);
-  mask-composite: intersect;
 }
 
-/* Anatomy section entrance */
-.anatomy-content {
+/* Display typography overlay */
+.anatomy-display-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.anatomy-callout.anatomy-display {
+  position: absolute;
+  bottom: 80px;
+  left: 100px;
+  right: 100px;
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
   opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-.anatomy-content.in-view {
+.anatomy-callout.anatomy-display.active {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
-.anatomy-video-wrap {
+.anatomy-display-num {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+.anatomy-display-name {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: clamp(56px, 7vw, 110px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  color: var(--dark-ink-0);
+  margin: 0;
+  text-transform: uppercase;
+}
+.anatomy-display-accent {
+  color: var(--accent);
+  font-weight: 600;
+  font-style: italic;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+/* Earlier displays fade out when a later one becomes active */
+.anatomy-display-1.active.fade-out,
+.anatomy-display-2.active.fade-out {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: 200ms;
+  transform: translateY(-10px);
 }
-.anatomy-video-wrap.in-view {
-  opacity: 1;
-  transform: translateY(40px);
+
+/* Scroll indicator bottom-right */
+.anatomy-scroll-indicator {
+  position: absolute;
+  bottom: 80px;
+  right: 100px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  pointer-events: none;
 }
-@media (prefers-reduced-motion: reduce) {
-  .anatomy-content {
-    opacity: 1;
-    transform: none;
+.anatomy-scroll-label {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: var(--dark-ink-2);
+  text-transform: uppercase;
+}
+.anatomy-scroll-line {
+  width: 80px;
+  height: 1px;
+  background: rgba(11, 31, 38, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+.anatomy-scroll-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 200ms linear;
+}
+
+@media (max-width: 880px) {
+  .anatomy-eyebrow-wrap {
+    top: 32px;
+    left: 24px;
   }
-  .anatomy-video-wrap {
-    opacity: 1;
-    transform: translateY(40px);
+  .anatomy-callout.anatomy-display {
+    bottom: 48px;
+    left: 24px;
+    right: 24px;
   }
-  .anatomy-callout {
-    opacity: 1;
-    transform: none;
+  .anatomy-display-name {
+    font-size: 44px;
+  }
+  .anatomy-scroll-indicator {
+    bottom: 48px;
+    right: 24px;
+  }
+  .anatomy-scroll-line {
+    width: 50px;
   }
 }
 
 @media (max-width: 768px) {
   .anatomy-section { height: auto; }
   .anatomy-sticky { position: static; height: auto; padding: 80px 0; }
-  .anatomy-grid { grid-template-columns: 1fr; padding: 0 24px; gap: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anatomy-callout.anatomy-display {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* -------------------------------------------------------------
@@ -2264,44 +2273,15 @@ p{ margin:0; color:var(--ink-1); }
      ========================================= -->
 <section class="anatomy-section" id="anatomy">
   <div class="anatomy-sticky">
-    <div class="anatomy-grid">
-      <div class="anatomy-content">
+
+    <div class="anatomy-bg-progress" aria-hidden="true"></div>
+
+    <div class="anatomy-stage">
+
+      <div class="anatomy-eyebrow-wrap">
         <div class="section-eyebrow">/ 03 — ANATOMY</div>
-        <h2 class="anatomy-heading">
-          Every part, <span class="muted">purposeful.</span>
-        </h2>
-        <p class="anatomy-sub">Scroll to reveal the architecture.</p>
-        <div class="scroll-hint" aria-hidden="true">
-          <div class="scroll-hint-line"></div>
-        </div>
-        <div class="anatomy-callouts">
-
-          <div class="anatomy-callout">
-            <span class="anatomy-num">01</span>
-            <div>
-              <h3>DUAL-SPARK SYSTEM</h3>
-              <p>Reduces misfire risk and improves combustion stability under continuous load.</p>
-            </div>
-          </div>
-
-          <div class="anatomy-callout">
-            <span class="anatomy-num">02</span>
-            <div>
-              <h3>HIGH-STRENGTH CRANKSHAFT</h3>
-              <p>Large bearing surfaces support sustained high-RPM operation.</p>
-            </div>
-          </div>
-
-          <div class="anatomy-callout">
-            <span class="anatomy-num">03</span>
-            <div>
-              <h3>HIGH-PRECISION RODS</h3>
-              <p>Needle bearings at both ends deliver efficiency and long endurance.</p>
-            </div>
-          </div>
-
-        </div>
       </div>
+
       <div class="anatomy-video-wrap">
         <video
           id="anatomy-video"
@@ -2311,6 +2291,33 @@ p{ margin:0; color:var(--ink-1); }
           preload="auto">
         </video>
       </div>
+
+      <div class="anatomy-display-wrap" aria-hidden="true">
+
+        <div class="anatomy-callout anatomy-display anatomy-display-1">
+          <span class="anatomy-display-num">01</span>
+          <h3 class="anatomy-display-name">DUAL-SPARK<br>SYSTEM</h3>
+        </div>
+
+        <div class="anatomy-callout anatomy-display anatomy-display-2">
+          <span class="anatomy-display-num">02</span>
+          <h3 class="anatomy-display-name">PRECISION<br>CRANKSHAFT</h3>
+        </div>
+
+        <div class="anatomy-callout anatomy-display anatomy-display-final">
+          <span class="anatomy-display-num">—</span>
+          <h3 class="anatomy-display-name">ARCHITECTURE<br><span class="anatomy-display-accent">by design.</span></h3>
+        </div>
+
+      </div>
+
+      <div class="anatomy-scroll-indicator" aria-hidden="true">
+        <span class="anatomy-scroll-label">SCROLL</span>
+        <div class="anatomy-scroll-line">
+          <div class="anatomy-scroll-progress"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -2796,7 +2803,11 @@ p{ margin:0; color:var(--ink-1); }
     video.setAttribute('autoplay', '');
     video.setAttribute('loop', '');
     video.play().catch(() => {});
-    callouts.forEach(c => c.classList.add('active'));
+    // Show only the final display so the three absolutely-positioned
+    // callouts don't stack on top of each other.
+    callouts.forEach((c, i) => {
+      if (i === callouts.length - 1) c.classList.add('active');
+    });
     return;
   }
 
@@ -2823,14 +2834,27 @@ p{ margin:0; color:var(--ink-1); }
   const segments = callouts.length;
 
   function updateCallouts(progress) {
+    let activeIndex = -1;
     callouts.forEach((callout, i) => {
       const threshold = i === 0 ? 0.10 : i / segments;
       if (progress >= threshold) {
-        callout.classList.add('active');
-      } else {
-        callout.classList.remove('active');
+        activeIndex = i;
       }
     });
+
+    callouts.forEach((callout, i) => {
+      callout.classList.remove('active', 'fade-out');
+      if (i === activeIndex) {
+        callout.classList.add('active');
+      } else if (i < activeIndex) {
+        callout.classList.add('active', 'fade-out');
+      }
+    });
+
+    const progressEl = document.querySelector('.anatomy-scroll-progress');
+    if (progressEl) {
+      progressEl.style.width = (progress * 100) + '%';
+    }
   }
 
   function updateVideoTime() {
