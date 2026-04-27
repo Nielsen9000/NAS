@@ -863,20 +863,25 @@ p{ margin:0; color:var(--ink-1); }
    Platforms (section 3)
    ------------------------------------------------------------- */
 .platforms{
-  background:var(--bg-base);
-  padding:120px 0 130px;
-  border-top:1px solid var(--line-dark);
-  border-bottom:1px solid var(--line-dark);
-  position:relative;
-  overflow:hidden;
+  background: var(--bg-light);
+  padding: 140px 0 150px;
+  position: relative;
+  overflow: hidden;
 }
 .platforms::before{
-  content:"";
-  position:absolute; inset:0;
-  background:
-    radial-gradient(900px 600px at 50% 50%, rgba(15,63,168,0.28), transparent 65%),
-    radial-gradient(500px 400px at 10% 80%, rgba(15,63,168,0.12), transparent 60%);
-  pointer-events:none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(11, 31, 38, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 31, 38, 0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+}
+.platforms .section-eyebrow{
+  color: var(--accent);
 }
 .platforms-head{
   display:grid;
@@ -885,14 +890,14 @@ p{ margin:0; color:var(--ink-1); }
   margin-bottom:72px;
   position:relative;
 }
-.platforms-head h2{ color:var(--ink-0); }
-.platforms-head h2 .muted{ color:var(--ink-2); }
+.platforms-head h2{ color: var(--dark-ink-0); }
+.platforms-head h2 .muted{ color: var(--dark-ink-2); }
 .platforms-head h2 .muted { color: var(--accent) !important; font-size: 0.82em; }
 .platforms-head p{
-  max-width:640px;
-  color:var(--ink-2);
-  font-size:17px;
-  margin-top:22px;
+  max-width: 640px;
+  color: var(--dark-ink-2);
+  font-size: 17px;
+  margin-top: 22px;
 }
 
 .compare-card{
@@ -904,10 +909,10 @@ p{ margin:0; color:var(--ink-1); }
   border-radius:24px;
   overflow:hidden;
   box-shadow:
-    0 1px 0 rgba(255,255,255,0.04) inset,
-    0 0 40px rgba(15,63,168,0.35),
-    0 0 120px rgba(15,63,168,0.20),
-    0 40px 80px -30px rgba(0,0,0,0.45);
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 0 40px rgba(15, 63, 168, 0.15),
+    0 30px 60px rgba(11, 31, 38, 0.18),
+    0 10px 30px rgba(11, 31, 38, 0.12);
   transform-style:preserve-3d;
   will-change:transform;
 }
@@ -2096,6 +2101,8 @@ p{ margin:0; color:var(--ink-1); }
   </div>
 </section>
 
+<div class="section-divider section-divider--dark-to-light" aria-hidden="true"></div>
+
 <!-- =========================================
      3. PLATFORMS
      ========================================= -->
@@ -2189,8 +2196,6 @@ p{ margin:0; color:var(--ink-1); }
     </div>
   </div>
 </section>
-
-<div class="section-divider section-divider--dark-to-light" aria-hidden="true"></div>
 
 <!-- =========================================
      4. ANATOMY — SCROLL-SCRUB VIDEO
