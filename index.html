@@ -878,8 +878,8 @@ p{ margin:0; color:var(--ink-1); }
    Platforms (section 3)
    ------------------------------------------------------------- */
 .platforms{
-  background: #ffffff;
-  padding: 60px 0 80px;
+  background: var(--bg-base);
+  padding: 100px 0 120px;
   position: relative;
   overflow: hidden;
 }
@@ -888,8 +888,8 @@ p{ margin:0; color:var(--ink-1); }
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(11, 31, 38, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(11, 31, 38, 0.09) 1px, transparent 1px);
+    linear-gradient(rgba(59, 182, 232, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 182, 232, 0.08) 1px, transparent 1px);
   background-size: 64px 64px;
   pointer-events: none;
   mask-image: linear-gradient(180deg,
@@ -949,7 +949,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .platforms-head-inner h2{
   margin: 0 0 24px;
-  color: var(--dark-ink-0);
+  color: var(--ink-0);
 }
 .platforms-head-inner h2 .muted{
   color: var(--accent) !important;
@@ -958,7 +958,7 @@ p{ margin:0; color:var(--ink-1); }
 .platforms-head-inner p{
   margin: 0 auto;
   max-width: 580px;
-  color: var(--dark-ink-2);
+  color: var(--ink-2);
   font-size: 17px;
 }
 
@@ -2436,6 +2436,8 @@ p{ margin:0; color:var(--ink-1); }
   </div>
 </section>
 
+<div class="section-divider section-divider--light-to-dark" aria-hidden="true"></div>
+
 <!-- =========================================
      4. PLATFORMS
      ========================================= -->
@@ -2521,8 +2523,6 @@ p{ margin:0; color:var(--ink-1); }
     </div>
   </div>
 </section>
-
-<div class="section-divider section-divider--light-to-dark" aria-hidden="true"></div>
 
 <!-- =========================================
      5. COMPANY
