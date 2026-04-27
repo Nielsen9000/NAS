@@ -1658,23 +1658,47 @@ p{ margin:0; color:var(--ink-1); }
     var(--bg-base) 0%,
     #0a2530 50%,
     var(--bg-base) 100%);
-  padding: 140px 0;
+  padding: 100px 0 140px;
   position: relative;
   overflow: hidden;
   isolation: isolate;
+}
+.flight-section::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.6;
+  z-index: 2;
 }
 
 .flight-bg-grid{
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(59, 182, 232, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 182, 232, 0.04) 1px, transparent 1px);
-  background-size: 80px 80px;
+    linear-gradient(rgba(59, 182, 232, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 182, 232, 0.10) 1px, transparent 1px);
+  background-size: 64px 64px;
   pointer-events: none;
   z-index: 0;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  mask-image: linear-gradient(180deg,
+    transparent      0%,
+    rgba(0,0,0,0.4)  4%,
+    rgba(0,0,0,0.85) 12%,
+    rgba(0,0,0,0.6)  35%,
+    rgba(0,0,0,0.25) 70%,
+    transparent      100%);
+  -webkit-mask-image: linear-gradient(180deg,
+    transparent      0%,
+    rgba(0,0,0,0.4)  4%,
+    rgba(0,0,0,0.85) 12%,
+    rgba(0,0,0,0.6)  35%,
+    rgba(0,0,0,0.25) 70%,
+    transparent      100%);
 }
 
 .flight-grid{
