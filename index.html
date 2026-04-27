@@ -1145,7 +1145,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .anatomy-grid {
   display: grid;
-  grid-template-columns: 34% 66%;
+  grid-template-columns: 42% 58%;
   gap: 64px;
   width: 100%;
   max-width: 1400px;
@@ -1239,6 +1239,22 @@ p{ margin:0; color:var(--ink-1); }
   color: var(--dark-ink-0);
   text-transform: uppercase;
   margin: 0 0 12px 0;
+  hyphens: none;
+  word-break: keep-all;
+}
+.anatomy-callout-payoff h3 {
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 0.95;
+}
+.payoff-accent {
+  color: var(--accent);
+  font-weight: 600;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: -0.02em;
+}
+.anatomy-callout-payoff .anatomy-num {
+  color: var(--dark-ink-3);
 }
 .anatomy-callout p {
   font-family: "Space Grotesk", sans-serif;
@@ -2287,24 +2303,24 @@ p{ margin:0; color:var(--ink-1); }
           <div class="anatomy-callout">
             <span class="anatomy-num">01</span>
             <div>
-              <h3>DUAL-SPARK SYSTEM</h3>
-              <p>Reduces misfire risk and improves combustion stability under continuous load.</p>
+              <h3>DUAL-SPARK IGNITION</h3>
+              <p>Redundant ignition system reduces misfire risk and improves combustion stability under continuous high-altitude operation.</p>
             </div>
           </div>
 
           <div class="anatomy-callout">
             <span class="anatomy-num">02</span>
             <div>
-              <h3>HIGH-STRENGTH CRANKSHAFT</h3>
-              <p>Large bearing surfaces support sustained high-RPM operation.</p>
+              <h3>PRECISION CRANKSHAFT</h3>
+              <p>Large bearing surfaces and high-precision needle-bearing rods support sustained high-RPM operation across the full mission envelope.</p>
             </div>
           </div>
 
-          <div class="anatomy-callout">
-            <span class="anatomy-num">03</span>
+          <div class="anatomy-callout anatomy-callout-payoff">
+            <span class="anatomy-num">—</span>
             <div>
-              <h3>HIGH-PRECISION RODS</h3>
-              <p>Needle bearings at both ends deliver efficiency and long endurance.</p>
+              <h3>ARCHITECTURE<br><span class="payoff-accent">by design.</span></h3>
+              <p>Every component engineered for one purpose: continuous mission-critical operation, mile after mile, hour after hour.</p>
             </div>
           </div>
 
