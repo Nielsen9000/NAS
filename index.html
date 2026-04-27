@@ -408,6 +408,161 @@ p{ margin:0; color:var(--ink-1); }
 @media (prefers-reduced-motion: reduce){
   .hero-contours{ animation: none; }
 }
+
+/* -------------------------------------------------------------
+   Hero HUD overlay — radar sweep, data tags, scan lines, reticle
+   ------------------------------------------------------------- */
+
+/* Radar sweep: thin gradient line rotating around an origin point */
+.hero-radar{
+  position:absolute;
+  top:50%;
+  left:75%;
+  width:65vw;
+  height:1px;
+  z-index:1;
+  pointer-events:none;
+  transform-origin: 0 50%;
+  background: linear-gradient(
+    to right,
+    rgba(59,182,232,0.12) 0%,
+    rgba(59,182,232,0.06) 28%,
+    rgba(59,182,232,0)    100%
+  );
+  animation: hero-radar-sweep 12s linear infinite;
+}
+.hero-radar::before{
+  content:"";
+  position:absolute;
+  inset:-14px 0 -14px 0;
+  background: radial-gradient(
+    closest-side at 0% 50%,
+    rgba(59,182,232,0.06),
+    rgba(59,182,232,0) 70%
+  );
+  pointer-events:none;
+}
+.hero-radar-origin{
+  position:absolute;
+  top:50%;
+  left:75%;
+  width:5px;
+  height:5px;
+  margin:-2.5px 0 0 -2.5px;
+  border-radius:50%;
+  background: var(--accent);
+  opacity:0.30;
+  z-index:1;
+  pointer-events:none;
+  box-shadow: 0 0 10px rgba(59,182,232,0.35);
+  animation: hero-radar-origin-pulse 2.4s ease-in-out infinite;
+}
+@keyframes hero-radar-sweep{
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes hero-radar-origin-pulse{
+  0%,100% { opacity:0.22; transform: scale(1); }
+  50%     { opacity:0.50; transform: scale(1.3); }
+}
+
+/* Data tags */
+.hero-tags{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+}
+.hero-tag{
+  position:absolute;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color: var(--accent);
+  opacity:0;
+  white-space:nowrap;
+  text-shadow: 0 0 12px rgba(59,182,232,0.20);
+  transition: opacity 0.8s ease;
+}
+.hero-tag::before{
+  content:"+";
+  display:inline-block;
+  font-size:12px;
+  line-height:1;
+  color: var(--accent);
+  opacity:0.85;
+}
+.hero-tag.is-on{ opacity:0.55; }
+
+/* Scan lines: subtle CRT/HUD bands drifting downward */
+.hero-scanlines{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(59,182,232,0.05) 0px,
+    rgba(59,182,232,0.05) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  animation: hero-scanlines-drift 8s linear infinite;
+}
+@keyframes hero-scanlines-drift{
+  from { background-position-y: 0; }
+  to   { background-position-y: 4px; }
+}
+
+/* Blinking reticle */
+.hero-reticle{
+  position:absolute;
+  width:16px;
+  height:16px;
+  z-index:2;
+  pointer-events:none;
+  color: var(--accent);
+  opacity:0;
+  transition: opacity 0.6s ease;
+}
+.hero-reticle.is-on{ opacity:0.4; }
+
+/* When hero scrolls out of view: remove the HUD layers entirely so they
+   release GPU resources and stop competing with the anatomy scroll-scrub. */
+.hero.is-paused .hero-radar,
+.hero.is-paused .hero-radar-origin,
+.hero.is-paused .hero-scanlines,
+.hero.is-paused .hero-tags,
+.hero.is-paused .hero-reticle{
+  display: none;
+}
+
+/* Mobile: keep radar + first 2 tags, drop scan lines and reticle */
+@media (max-width: 880px){
+  .hero-scanlines,
+  .hero-reticle{ display:none; }
+  .hero-tag:nth-of-type(n+3){ display:none; }
+  .hero-radar{ width:80vw; left:70%; }
+  .hero-radar-origin{ left:70%; }
+}
+
+/* Reduced motion: kill all HUD animation and visibility */
+@media (prefers-reduced-motion: reduce){
+  .hero-radar,
+  .hero-radar-origin,
+  .hero-scanlines,
+  .hero-tag,
+  .hero-reticle{
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
 .hero-grid{
   position:relative;
   z-index:3;
@@ -936,12 +1091,14 @@ p{ margin:0; color:var(--ink-1); }
   transform: scale(1.12);
   transform-origin: center center;
   -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%),
-    radial-gradient(ellipse at center, black 55%, transparent 95%);
+    linear-gradient(to bottom, transparent 0%, black 8%,  black 92%, transparent 100%),
+    linear-gradient(to right,  transparent 0%, black 6%,  black 94%, transparent 100%),
+    radial-gradient(ellipse at center, black 65%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%),
-    radial-gradient(ellipse at center, black 55%, transparent 95%);
+    linear-gradient(to bottom, transparent 0%, black 8%,  black 92%, transparent 100%),
+    linear-gradient(to right,  transparent 0%, black 6%,  black 94%, transparent 100%),
+    radial-gradient(ellipse at center, black 65%, transparent 100%);
   mask-composite: intersect;
 }
 
@@ -1570,6 +1727,25 @@ p{ margin:0; color:var(--ink-1); }
     <path d="M 1770 876 C 1748 1060 1620 1158 1490 1239 C 1360 1320 1184 1361 1028 1339 C 872 1317 707 1234 598 1113 C 489 992 404 812 405 650 C 406 488 482 308 602 190 C 722 72 914 -26 1091 -27 C 1268 -28 1494 29 1613 187 C 1732 345 1792 692 1770 876 Z"/>
     <path d="M 1960 650 C 1940 791 1901 1034 1786 1184 C 1671 1334 1505 1469 1301 1507 C 1097 1546 804 1527 622 1404 C 440 1282 288 1024 259 807 C 230 590 323 332 454 162 C 585 -8 813 -130 1006 -167 C 1199 -204 1398 -146 1555 -51 C 1712 44 1831 253 1902 376 C 1973 499 1980 509 1960 650 Z"/>
     <path d="M 2126 911 C 2068 1083 1996 1307 1825 1454 C 1654 1601 1396 1738 1150 1750 C 904 1762 603 1683 417 1523 C 231 1363 115 1082 86 838 C 57 594 142 333 249 130 C 356 -73 490 -222 698 -320 C 906 -418 1215 -479 1440 -432 C 1665 -385 1860 -209 1985 -51 C 2110 107 2130 305 2155 473 C 2180 641 2184 739 2126 911 Z"/>
+  </svg>
+
+  <!-- HUD overlay: radar sweep, scan lines, data tags, reticle -->
+  <div class="hero-scanlines" aria-hidden="true"></div>
+  <div class="hero-radar" aria-hidden="true"></div>
+  <div class="hero-radar-origin" aria-hidden="true"></div>
+  <div class="hero-tags" aria-hidden="true">
+    <div class="hero-tag"></div>
+    <div class="hero-tag"></div>
+    <div class="hero-tag"></div>
+    <div class="hero-tag"></div>
+    <div class="hero-tag"></div>
+  </div>
+  <svg class="hero-reticle" id="hero-reticle" viewBox="0 0 16 16" aria-hidden="true">
+    <circle cx="8" cy="8" r="2.4" fill="none" stroke="currentColor" stroke-width="0.8"/>
+    <line x1="8" y1="0"  x2="8"  y2="5"  stroke="currentColor" stroke-width="0.8"/>
+    <line x1="8" y1="11" x2="8"  y2="16" stroke="currentColor" stroke-width="0.8"/>
+    <line x1="0" y1="8"  x2="5"  y2="8"  stroke="currentColor" stroke-width="0.8"/>
+    <line x1="11" y1="8" x2="16" y2="8"  stroke="currentColor" stroke-width="0.8"/>
   </svg>
 
   <div class="wrap hero-grid">
@@ -2301,6 +2477,140 @@ p{ margin:0; color:var(--ink-1); }
       window.dispatchEvent(new Event('loader:done'));
     }, 650);
   }, 1150);
+})();
+</script>
+
+<script>
+/* Hero HUD: rotate data tag content/positions and re-place reticle */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const hero = document.querySelector('.hero');
+  let heroVisible = true;
+
+  // Pause CSS animations + skip JS cycle work whenever the hero is off-screen,
+  // so we don't compete with the anatomy scroll-scrub for frame budget.
+  if (hero && 'IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      heroVisible = entries[0].isIntersecting;
+      hero.classList.toggle('is-paused', !heroVisible);
+    }, { rootMargin: '300px 0px 300px 0px', threshold: 0 });
+    io.observe(hero);
+  }
+
+  const tagContents = [
+    'TYR 2C · TEST 04 · 1,247KM',
+    'ALT 3,200M · PASS',
+    'ENDURANCE · 14.2HR',
+    'NDAA · VERIFIED',
+    'MISSION 047 · NOMINAL',
+    'VEL 38M/S · STABLE',
+  ];
+
+  // Edge slots — avoid the central column where headline + CTAs sit
+  const tagSlots = [
+    { top:'18%', left:'6%'  },
+    { top:'24%', left:'78%' },
+    { top:'74%', left:'10%' },
+    { top:'82%', left:'76%' },
+    { top:'40%', left:'4%'  },
+    { top:'60%', left:'82%' },
+    { top:'14%', left:'40%' },
+    { top:'88%', left:'46%' },
+  ];
+
+  const allTags = Array.from(document.querySelectorAll('.hero-tag'));
+  // Skip tags hidden by CSS (mobile)
+  const tags = allTags.filter(t => t.offsetParent !== null);
+
+  if (tags.length){
+    const usedSlots = new Set();
+
+    function pickSlot(){
+      const free = tagSlots
+        .map((_, i) => i)
+        .filter(i => !usedSlots.has(i));
+      const pool = free.length ? free : tagSlots.map((_, i) => i);
+      return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    function cycleTag(tag, initialDelay){
+      let lastContent = -1;
+      let lastSlot = -1;
+
+      function next(){
+        // Hero off-screen: skip this cycle, recheck shortly.
+        if (!heroVisible){
+          setTimeout(next, 1500);
+          return;
+        }
+
+        let cIdx;
+        do { cIdx = Math.floor(Math.random() * tagContents.length); }
+        while (cIdx === lastContent && tagContents.length > 1);
+        lastContent = cIdx;
+
+        if (lastSlot >= 0) usedSlots.delete(lastSlot);
+        const sIdx = pickSlot();
+        usedSlots.add(sIdx);
+        lastSlot = sIdx;
+
+        const slot = tagSlots[sIdx];
+        tag.textContent = tagContents[cIdx];
+        tag.style.top  = slot.top;
+        tag.style.left = slot.left;
+
+        requestAnimationFrame(() => tag.classList.add('is-on'));
+
+        // fade-in 0.8s + hold 3s → start fade-out
+        setTimeout(() => tag.classList.remove('is-on'), 800 + 3000);
+
+        // fade-in + hold + fade-out + 4-6s gap
+        const wait = 4000 + Math.random() * 2000;
+        setTimeout(next, 800 + 3000 + 800 + wait);
+      }
+
+      setTimeout(next, initialDelay);
+    }
+
+    // Stagger so 2-3 are visible at once
+    tags.forEach((t, i) => cycleTag(t, i * 1700));
+  }
+
+  // Reticle re-position
+  const reticle = document.getElementById('hero-reticle');
+  if (reticle && reticle.offsetParent !== null){
+    const reticleSlots = [
+      { top:'12%', left:'14%' },
+      { top:'22%', left:'88%' },
+      { top:'78%', left:'18%' },
+      { top:'86%', left:'70%' },
+      { top:'32%', left:'92%' },
+      { top:'68%', left:'6%'  },
+      { top:'8%',  left:'52%' },
+      { top:'92%', left:'40%' },
+    ];
+    let rIdx = Math.floor(Math.random() * reticleSlots.length);
+
+    function place(){
+      reticle.style.top  = reticleSlots[rIdx].top;
+      reticle.style.left = reticleSlots[rIdx].left;
+      reticle.classList.add('is-on');
+    }
+    place();
+
+    function step(){
+      if (!heroVisible){ setTimeout(step, 1500); return; }
+      reticle.classList.remove('is-on');
+      setTimeout(() => {
+        // jump to a different slot
+        rIdx = (rIdx + 1 + Math.floor(Math.random() * (reticleSlots.length - 1))) % reticleSlots.length;
+        place();
+        setTimeout(step, 8000 + Math.random() * 2000);
+      }, 600);
+    }
+    setTimeout(step, 8000 + Math.random() * 2000);
+  }
 })();
 </script>
 
