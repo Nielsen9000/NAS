@@ -1198,29 +1198,31 @@ p{ margin:0; color:var(--ink-1); }
   padding-top: 40px;
 }
 .anatomy-callouts {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  width: 100%;
+  min-height: 320px;
 }
 .anatomy-callout {
-  display: grid;
-  grid-template-columns: 40px 1fr;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
   gap: 24px;
-  padding: 24px 0;
-  border-top: 1px solid var(--line-light);
   opacity: 0;
-  transform: translateX(-120px);
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 700ms cubic-bezier(0.22, 1.12, 0.34, 1);
-}
-.anatomy-callout:last-child {
-  border-bottom: 1px solid var(--line-light);
+  transform: translateY(20px);
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
 .anatomy-callout.active {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateY(0);
 }
-.anatomy-callout:nth-child(2) { transition-delay: 0ms; }
-.anatomy-callout:nth-child(3) { transition-delay: 0ms; }
+.anatomy-callout.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
 .anatomy-num {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 12px;
@@ -1232,19 +1234,19 @@ p{ margin:0; color:var(--ink-1); }
 }
 .anatomy-callout h3 {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: clamp(28px, 3.2vw, 44px);
+  font-size: clamp(40px, 4.5vw, 64px);
   font-weight: 700;
   letter-spacing: -0.02em;
-  line-height: 1.0;
+  line-height: 0.95;
   color: var(--dark-ink-0);
   text-transform: uppercase;
-  margin: 0 0 12px 0;
   hyphens: none;
   word-break: keep-all;
+  margin: 0 0 16px 0;
 }
 .anatomy-callout-payoff h3 {
-  font-size: clamp(36px, 4vw, 56px);
-  line-height: 0.95;
+  font-size: clamp(48px, 5.5vw, 80px);
+  line-height: 0.92;
 }
 .payoff-accent {
   color: var(--accent);
@@ -1258,10 +1260,10 @@ p{ margin:0; color:var(--ink-1); }
 }
 .anatomy-callout p {
   font-family: "Space Grotesk", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.5;
   color: var(--dark-ink-2);
-  max-width: 320px;
+  max-width: 380px;
   margin: 0;
 }
 .anatomy-video-wrap {
@@ -2847,12 +2849,20 @@ p{ margin:0; color:var(--ink-1); }
   const segments = callouts.length;
 
   function updateCallouts(progress) {
+    let activeIndex = -1;
     callouts.forEach((callout, i) => {
       const threshold = i === 0 ? 0.10 : i / segments;
       if (progress >= threshold) {
+        activeIndex = i;
+      }
+    });
+
+    callouts.forEach((callout, i) => {
+      callout.classList.remove('active', 'fade-out');
+      if (i === activeIndex) {
         callout.classList.add('active');
-      } else {
-        callout.classList.remove('active');
+      } else if (i < activeIndex) {
+        callout.classList.add('fade-out');
       }
     });
   }
