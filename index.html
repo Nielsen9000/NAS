@@ -381,6 +381,33 @@ p{ margin:0; color:var(--ink-1); }
   pointer-events:none;
   z-index:0;
 }
+.hero-loop-video,
+.hero-loop-fallback{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+  pointer-events:none;
+}
+.hero-loop-tint{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    linear-gradient(to bottom,
+      rgba(8,32,42,0.40) 0%,
+      rgba(8,32,42,0.65) 100%),
+    radial-gradient(ellipse at center,
+      transparent 35%,
+      rgba(8,32,42,0.80) 100%);
+}
+@media (prefers-reduced-motion: reduce){
+  .hero-loop-video,
+  .hero-loop-tint{ display:none; }
+}
 .hero-contours{
   position:absolute;
   inset:0;
@@ -1715,6 +1742,16 @@ p{ margin:0; color:var(--ink-1); }
      2. HERO
      ========================================= -->
 <section class="hero" id="top">
+
+  <video class="hero-loop-video"
+         poster="./assets/hero-poster.jpg"
+         autoplay muted loop playsinline
+         preload="auto"
+         aria-hidden="true">
+    <source src="./assets/hero-loop.mp4" type="video/mp4">
+    <img class="hero-loop-fallback" src="./assets/hero-poster.jpg" alt="" aria-hidden="true">
+  </video>
+  <div class="hero-loop-tint" aria-hidden="true"></div>
 
   <svg class="hero-contours" aria-hidden="true" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
     <path d="M 1253 668 C 1255 699 1257 725 1238 738 C 1219 751 1171 753 1142 745 C 1113 737 1085 717 1072 695 C 1059 673 1058 643 1067 620 C 1076 597 1099 571 1126 561 C 1153 551 1202 543 1224 562 C 1246 581 1251 637 1253 668 Z"/>
