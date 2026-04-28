@@ -356,10 +356,112 @@ p{ margin:0; color:var(--ink-1); }
 }
 .site-header .btn-pill-accent:hover{ background:#1a2f42; }
 
+/* Hamburger toggle (mobile) */
+.nav-toggle{
+  display:none;
+  width:40px;
+  height:40px;
+  background:none;
+  border:0;
+  padding:0;
+  cursor:pointer;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:5px;
+  position:relative;
+  z-index:200;
+  color:#0d2030;
+  transition:color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-header:not(.is-scrolled) .nav-toggle{ color:#ffffff; }
+.nav-toggle-line{
+  width:22px;
+  height:1.5px;
+  background:currentColor;
+  transition:transform 250ms cubic-bezier(0.16, 1, 0.3, 1),
+             opacity 200ms ease;
+  transform-origin:center;
+}
+.nav-toggle.is-open .nav-toggle-line:nth-child(1){
+  transform:translateY(6.5px) rotate(45deg);
+}
+.nav-toggle.is-open .nav-toggle-line:nth-child(2){
+  opacity:0;
+}
+.nav-toggle.is-open .nav-toggle-line:nth-child(3){
+  transform:translateY(-6.5px) rotate(-45deg);
+}
+
+/* Mobile menu overlay */
+.mobile-menu{
+  position:fixed;
+  inset:0;
+  z-index:150;
+  background:rgba(8, 32, 42, 0.96);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  visibility:hidden;
+  transition:opacity 350ms cubic-bezier(0.16, 1, 0.3, 1),
+             visibility 350ms;
+}
+.mobile-menu.is-open{
+  opacity:1;
+  visibility:visible;
+}
+.mobile-nav{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  align-items:center;
+  text-align:center;
+}
+.mobile-nav a{
+  font-family:'Inter', system-ui, -apple-system, sans-serif;
+  font-size:clamp(28px, 7vw, 40px);
+  font-weight:600;
+  letter-spacing:-0.02em;
+  color:var(--ink-0);
+  text-decoration:none;
+  transition:color 200ms ease;
+}
+.mobile-nav a:hover,
+.mobile-nav a:focus-visible{ color:var(--accent); }
+.mobile-nav .mobile-cta{
+  margin-top:16px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 28px;
+  background:var(--accent);
+  color:var(--accent-ink);
+  border-radius:999px;
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size:13px;
+  font-weight:500;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+}
+.mobile-nav .mobile-cta:hover{ color:var(--accent-ink); background:#5cc4ed; }
+
 /* Mobile header */
 @media (max-width: 900px){
   .nav{ display:none; }
   .brand-subline{ display:none; }
+  .nav-toggle{ display:flex; }
+}
+@media (max-width: 700px){
+  .header-cta{ display:none; }
+  .brand-wordmark{ display:none; }
+}
+
+/* Mobile section-divider tightening */
+@media (max-width: 768px){
+  .section-divider{ height:60px; }
 }
 
 /* -------------------------------------------------------------
@@ -2226,8 +2328,24 @@ p{ margin:0; color:var(--ink-1); }
     <div class="header-cta">
       <a class="btn btn-pill-accent" href="./contact.html">Request brief <span class="arrow" aria-hidden="true">→</span></a>
     </div>
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+      <span class="nav-toggle-line"></span>
+    </button>
   </div>
 </header>
+
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="#platforms">Platforms</a>
+    <a href="#anatomy">Anatomy</a>
+    <a href="#company">Company</a>
+    <a href="./conduct.html">Conduct</a>
+    <a href="./contact.html">Contact</a>
+    <a class="mobile-cta" href="./contact.html">Request brief <span aria-hidden="true">→</span></a>
+  </nav>
+</div>
 
 <!-- =========================================
      2. HERO
@@ -3243,6 +3361,38 @@ p{ margin:0; color:var(--ink-1); }
   }
 
   setInterval(updateTime, 1000);
+})();
+
+/* Mobile nav: hamburger toggle + overlay menu */
+(function(){
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (!toggle || !menu) return;
+
+  function setOpen(open){
+    toggle.classList.toggle('is-open', open);
+    menu.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  toggle.addEventListener('click', () => {
+    setOpen(!menu.classList.contains('is-open'));
+  });
+
+  // Close when any link is tapped
+  menu.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => setOpen(false));
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+      setOpen(false);
+    }
+  });
 })();
 
 /* Hero loop: ease playbackRate near the forward<->reverse seam so the
