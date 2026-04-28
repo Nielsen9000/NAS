@@ -3244,6 +3244,39 @@ p{ margin:0; color:var(--ink-1); }
 
   setInterval(updateTime, 1000);
 })();
+
+/* Hero loop: ease playbackRate near the forward<->reverse seam so the
+   direction change reads as a soft breath instead of a hard yo-yo. */
+(function(){
+  const video = document.querySelector('.hero-loop-video');
+  if (!video) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const easeWindow = 1.5;   // seconds on each side of the midpoint
+  const minRate    = 0.55;  // playback rate at the seam itself
+  let rafId = null;
+
+  // Smoothstep — soft ease in/out
+  const smooth = (t) => t * t * (3 - 2 * t);
+
+  function tick(){
+    const dur = video.duration;
+    if (isFinite(dur) && dur > 0){
+      const dist = Math.abs(video.currentTime - dur / 2);
+      if (dist < easeWindow){
+        const ratio = dist / easeWindow;       // 0 at seam, 1 at edge of window
+        video.playbackRate = minRate + (1 - minRate) * smooth(ratio);
+      } else if (video.playbackRate !== 1){
+        video.playbackRate = 1;
+      }
+    }
+    rafId = video.paused ? null : requestAnimationFrame(tick);
+  }
+
+  video.addEventListener('play',  () => { if (!rafId) rafId = requestAnimationFrame(tick); });
+  video.addEventListener('pause', () => { if (rafId){ cancelAnimationFrame(rafId); rafId = null; } });
+  if (!video.paused) rafId = requestAnimationFrame(tick);
+})();
 </script>
 
 </body>
