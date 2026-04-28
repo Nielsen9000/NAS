@@ -3267,7 +3267,16 @@ p{ margin:0; color:var(--ink-1); }
   // Edge slots — avoid the central column where headline + CTAs sit.
   // Right-side slots use `right` anchoring so long strings grow leftward
   // instead of clipping off the viewport.
-  const tagSlots = [
+  // Mobile uses a smaller pool of 4 corner slots only (top/bottom strips),
+  // because the headline takes the full width on narrow viewports so any
+  // mid-vertical or central-horizontal slot would overlap the text.
+  const isNarrow = window.matchMedia('(max-width: 880px)').matches;
+  const tagSlots = isNarrow ? [
+    { top:'12%', left:'4%'  },
+    { top:'12%', right:'4%' },
+    { top:'84%', left:'4%'  },
+    { top:'84%', right:'4%' },
+  ] : [
     { top:'18%', left:'6%'   },
     { top:'24%', right:'6%'  },
     { top:'74%', left:'10%'  },
