@@ -1487,6 +1487,26 @@ p{ margin:0; color:var(--ink-1); }
   .anatomy-section { height: auto; }
   .anatomy-sticky { position: static; height: auto; padding: 80px 0; }
   .anatomy-grid { grid-template-columns: 1fr; padding: 0 24px; gap: 40px; }
+  /* Callouts stack vertically and fade in via IntersectionObserver */
+  .anatomy-callouts {
+    position: static;
+    max-width: none;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+  .anatomy-callout { position: static; }
+  .anatomy-callout h3 { font-size: clamp(32px, 8vw, 44px); }
+  .anatomy-callout-payoff h3 { font-size: clamp(36px, 9vw, 48px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anatomy-callout {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* -------------------------------------------------------------
@@ -3045,11 +3065,23 @@ p{ margin:0; color:var(--ink-1); }
     video.setAttribute('autoplay', '');
     video.setAttribute('loop', '');
     video.play().catch(() => {});
-    // Callouts are absolute-positioned and cycle through one slot.
-    // Activating all three would stack them — only show the final payoff.
-    callouts.forEach((c, i) => {
-      if (i === callouts.length - 1) c.classList.add('active');
-    });
+
+    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+      // No scroll-driven reveal — just show all three callouts immediately.
+      callouts.forEach(c => c.classList.add('active'));
+    } else {
+      // Mobile layout stacks callouts vertically (see @media 768px CSS).
+      // Fade each in as it scrolls into view.
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      callouts.forEach(c => observer.observe(c));
+    }
     return;
   }
 
