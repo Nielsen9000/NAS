@@ -144,7 +144,7 @@ p{ margin:0; color:var(--ink-1); }
 /* -------------------------------------------------------------
    Common section structure
    ------------------------------------------------------------- */
-.company-section{ padding:140px 0; position:relative; }
+.company-section{ padding:90px 0; position:relative; }
 .company-section + .company-section{ border-top:1px solid var(--line-dark); }
 .section-eyebrow{
   display:flex; align-items:center; gap:14px;
@@ -176,22 +176,22 @@ p{ margin:0; color:var(--ink-1); }
 /* Section headline (used by redesigned sections) */
 .section-headline{
   font-family:'Inter',system-ui,-apple-system,sans-serif;
-  font-size:clamp(48px, 5.5vw, 80px);
+  font-size:clamp(36px, 4vw, 56px);
   font-weight:700;
   letter-spacing:-0.02em;
-  line-height:1.0;
+  line-height:1.05;
   color:var(--ink-0);
-  margin:24px 0 80px;
-  max-width:900px;
+  margin:16px 0 48px;
+  max-width:800px;
 }
 .section-headline .accent{ color:var(--accent); }
 
 /* About section — pull-quote moment */
 .company-pullquote{
-  max-width:900px;
-  margin:0 auto 80px;
+  max-width:800px;
+  margin:0 auto 56px;
   text-align:center;
-  padding:60px 40px;
+  padding:40px 32px;
   position:relative;
   border-top:1px solid var(--line-dark);
   border-bottom:1px solid var(--line-dark);
@@ -215,12 +215,12 @@ p{ margin:0; color:var(--ink-1); }
 }
 .company-pullquote blockquote{
   font-family:'Inter',system-ui,sans-serif;
-  font-size:clamp(22px, 2.4vw, 32px);
+  font-size:clamp(18px, 1.8vw, 24px);
   font-weight:400;
   font-style:italic;
   line-height:1.4;
   color:var(--ink-0);
-  margin:0 0 24px;
+  margin:0 0 16px;
   letter-spacing:-0.01em;
 }
 .pullquote-attribution{
@@ -233,8 +233,8 @@ p{ margin:0; color:var(--ink-1); }
 .company-body-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:60px;
-  max-width:1100px;
+  gap:48px;
+  max-width:1000px;
   margin:0 auto;
 }
 .company-body-grid p{
@@ -254,9 +254,9 @@ p{ margin:0; color:var(--ink-1); }
 }
 .method-statement{
   display:grid;
-  grid-template-columns:120px 1fr;
-  gap:60px;
-  padding:48px 0;
+  grid-template-columns:100px 1fr;
+  gap:40px;
+  padding:32px 0;
   border-top:1px solid var(--line-dark);
   align-items:start;
 }
@@ -271,12 +271,12 @@ p{ margin:0; color:var(--ink-1); }
 }
 .method-title{
   font-family:'Inter',system-ui,sans-serif;
-  font-size:clamp(28px, 3vw, 40px);
+  font-size:clamp(20px, 2.2vw, 28px);
   font-weight:600;
   letter-spacing:-0.015em;
-  line-height:1.1;
+  line-height:1.2;
   color:var(--ink-0);
-  margin:0 0 16px 0;
+  margin:0 0 12px 0;
 }
 .method-text{
   color:var(--ink-1);
@@ -288,8 +288,8 @@ p{ margin:0; color:var(--ink-1); }
 
 /* Production & Quality — process diagram */
 .production-intro{
-  max-width:800px;
-  margin:0 auto 100px;
+  max-width:700px;
+  margin:0 auto 56px;
   text-align:center;
 }
 .production-intro p{
@@ -303,15 +303,15 @@ p{ margin:0; color:var(--ink-1); }
   grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
   gap:0;
   align-items:center;
-  margin:0 auto 100px;
-  max-width:1300px;
+  margin:0 auto 56px;
+  max-width:1200px;
 }
 .process-node{
   display:flex;
   flex-direction:column;
   align-items:center;
   text-align:center;
-  padding:40px 24px;
+  padding:28px 20px;
   background:var(--bg-elev);
   border:1px solid rgba(59,182,232,0.15);
   border-radius:8px;
@@ -425,9 +425,9 @@ p{ margin:0; color:var(--ink-1); }
 .testrig-frame{
   position:relative;
   width:100%;
-  max-width:1400px;
-  margin:0 auto 100px;
-  aspect-ratio:16 / 9;
+  max-width:1200px;
+  margin:0 auto 56px;
+  aspect-ratio:21 / 9;
   border:1px solid rgba(59,182,232,0.2);
   overflow:hidden;
   background:var(--bg-elev);
