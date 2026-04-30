@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Company — Nordic Advanced Systems</title>
+<meta name="description" content="Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-base:#08202a;
+  --bg-elev:#0d2a31;
+  --bg-float:#113740;
+  --bg-mid:#1a4651;
+  --ink-0:#f3f7f8;
+  --ink-1:#d9e3e5;
+  --ink-2:rgba(243,247,248,0.62);
+  --ink-3:rgba(243,247,248,0.38);
+  --line-dark:rgba(148,205,221,0.14);
+  --accent:#3bb6e8;
+  --accent-ink:#072a37;
+  --accent-dim:rgba(59,182,232,0.18);
+  --accent-glow:rgba(59,182,232,0.28);
+  --available:#6ee0a1;
+  --maxw:1400px;
+  --pad-x:100px;
+  --radius-lg:20px;
+  --radius-md:14px;
+  --radius-sm:10px;
+  --radius-pill:999px;
+  --ease-spring:cubic-bezier(0.22,1.12,0.34,1);
+  --ease-smooth:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; text-rendering:optimizeLegibility; }
+body{
+  margin:0;
+  background:var(--bg-base);
+  color:var(--ink-0);
+  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+img{ display:block; max-width:100%; }
+h1,h2,h3,h4{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-weight:600;
+  line-height:1.06;
+  letter-spacing:-0.02em;
+  margin:0;
+  color:var(--ink-0);
+}
+p{ margin:0; color:var(--ink-1); }
+
+.wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad-x); width:100%; }
+
+.stage-bg{
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(1100px 700px at 85% -10%,rgba(59,182,232,0.10),transparent 60%),
+    radial-gradient(900px 620px at -10% 20%,rgba(14,70,85,0.55),transparent 65%),
+    radial-gradient(1200px 800px at 50% 120%,rgba(59,182,232,0.06),transparent 60%),
+    var(--bg-base);
+  pointer-events:none;
+}
+
+/* -------------------------------------------------------------
+   Header
+   ------------------------------------------------------------- */
+.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(8,32,42,0.85);
+  border-bottom:1px solid var(--line-dark);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.header-inner{
+  display:flex; align-items:center;
+  justify-content:space-between;
+  gap:32px; padding-block:20px;
+}
+.brand{ display:flex; align-items:center; gap:14px; }
+.site-header .brand-logo{ width:auto; height:auto; background:none; border:0; border-radius:0; }
+.site-header .brand-logo img{ width:auto; height:42px; display:block; }
+.brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+.brand-wordmark{
+  font-family:"Space Grotesk",sans-serif;
+  font-style:italic; font-weight:600; font-size:16px;
+  letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
+}
+.brand-subline{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--ink-3); margin-top:4px;
+}
+.nav{ display:flex; align-items:center; gap:32px; }
+.nav a{
+  font-size:15px; color:var(--ink-1); font-weight:500;
+  position:relative; padding:6px 0; transition:color .2s ease;
+}
+.nav a::after{
+  content:""; position:absolute; left:0; right:0; bottom:-2px;
+  height:1px; background:var(--accent);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .3s var(--ease-spring);
+}
+.nav a:hover{ color:var(--accent); }
+.nav a:hover::after{ transform:scaleX(1); }
+.nav a.active{ color:var(--accent); }
+.nav a.active::after{ transform:scaleX(1); }
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:14px 22px; border-radius:var(--radius-pill);
+  font-weight:500; font-size:14px; cursor:pointer;
+  transition:transform .25s var(--ease-spring), background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  border:1px solid transparent;
+}
+.btn:hover{ transform:scale(1.02); }
+.btn .arrow{ transition:transform .3s var(--ease-spring); }
+.btn:hover .arrow{ transform:translateX(3px); }
+.btn-pill-accent{
+  background:#0d2030; color:#ffffff;
+  box-shadow:0 6px 18px -10px rgba(13,32,48,0.45);
+  padding:10px 18px; font-size:13px; font-weight:600;
+}
+.btn-pill-accent:hover{ background:#1a2f42; }
+.btn-primary{
+  background:var(--accent); color:var(--accent-ink);
+  border-color:transparent; font-weight:600;
+  box-shadow:0 10px 30px -10px rgba(59,182,232,0.45);
+}
+.btn-primary:hover{ background:#55c3ea; }
+.btn-ghost{
+  background:transparent; color:var(--ink-0);
+  border:1px solid rgba(243,247,248,0.22);
+}
+.btn-ghost:hover{ border-color:rgba(243,247,248,0.45); background:rgba(243,247,248,0.04); }
+
+/* -------------------------------------------------------------
+   Common section structure
+   ------------------------------------------------------------- */
+.section{ padding:120px 0; border-top:1px solid var(--line-dark); position:relative; }
+.section-eyebrow{
+  display:flex; align-items:center; gap:14px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:28px;
+}
+.section-eyebrow::before{
+  content:""; display:block;
+  width:40px; height:1px; background:var(--accent);
+}
+.section h2{
+  font-size:clamp(32px,3.6vw,52px);
+  letter-spacing:-0.02em; line-height:1.06;
+  margin:0 0 28px; max-width:780px;
+}
+.section h2 .accent{ color:var(--accent); }
+.section .lead{
+  color:var(--ink-1); font-size:18px;
+  line-height:1.65; max-width:680px; margin:0 0 40px;
+}
+.section .body p{
+  color:var(--ink-1); font-size:16px;
+  line-height:1.8; margin:0 0 20px;
+}
+.section .body p:last-child{ margin-bottom:0; }
+
+/* Two-column: heading-left / body-right */
+.two-col{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:80px;
+  align-items:start;
+}
+.two-col .body{ max-width:560px; }
+
+/* Two-column: image-left / text-right (or reversed) */
+.media-col{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:80px;
+  align-items:center;
+}
+.media-col.reverse .text{ order:-1; }
+.media-col .text h2{ margin-bottom:24px; }
+.media-col .text .body{ max-width:520px; }
+
+/* -------------------------------------------------------------
+   Hero
+   ------------------------------------------------------------- */
+.company-hero{
+  position:relative;
+  padding:200px 0 140px;
+  overflow:hidden;
+  background:
+    radial-gradient(1200px 800px at 80% -10%, rgba(59,182,232,0.18), transparent 60%),
+    radial-gradient(900px 700px at -10% 30%, rgba(16,82,97,0.55), transparent 65%),
+    var(--bg-base);
+  border-bottom:1px solid var(--line-dark);
+}
+.company-hero::before{
+  /* Subtle HUD-style decorative element: corner crosshair */
+  content:"";
+  position:absolute;
+  top:140px; right:80px;
+  width:120px; height:120px;
+  background:
+    linear-gradient(to right, var(--accent) 0 24px, transparent 24px) top left/100% 1px no-repeat,
+    linear-gradient(to bottom, var(--accent) 0 24px, transparent 24px) top left/1px 100% no-repeat,
+    linear-gradient(to left, var(--accent) 0 24px, transparent 24px) top right/100% 1px no-repeat,
+    linear-gradient(to bottom, var(--accent) 0 24px, transparent 24px) top right/1px 100% no-repeat,
+    linear-gradient(to right, var(--accent) 0 24px, transparent 24px) bottom left/100% 1px no-repeat,
+    linear-gradient(to top, var(--accent) 0 24px, transparent 24px) bottom left/1px 100% no-repeat,
+    linear-gradient(to left, var(--accent) 0 24px, transparent 24px) bottom right/100% 1px no-repeat,
+    linear-gradient(to top, var(--accent) 0 24px, transparent 24px) bottom right/1px 100% no-repeat;
+  opacity:0.45;
+  pointer-events:none;
+}
+.company-hero::after{
+  content:"";
+  position:absolute;
+  top:200px; right:140px;
+  width:1px; height:300px;
+  background:linear-gradient(to bottom, transparent, rgba(59,182,232,0.35), transparent);
+  pointer-events:none;
+}
+.company-hero-inner{ position:relative; max-width:980px; }
+.company-hero .eyebrow{
+  display:inline-flex; align-items:center; gap:14px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:36px;
+}
+.company-hero .eyebrow::before{
+  content:""; width:48px; height:1px; background:var(--accent); display:inline-block;
+}
+.company-hero h1{
+  font-size:clamp(48px,7vw,92px);
+  font-weight:700; letter-spacing:-0.03em;
+  line-height:1.02; margin:0 0 32px;
+  color:var(--ink-0);
+}
+.company-hero h1 .accent{ color:var(--accent); }
+.company-hero p.lead{
+  font-size:clamp(17px,1.4vw,20px);
+  color:var(--ink-1); line-height:1.6;
+  max-width:680px; margin:0;
+}
+
+/* -------------------------------------------------------------
+   Spec card grid (Section 4 — Design Philosophy)
+   ------------------------------------------------------------- */
+.spec-card-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:20px;
+  margin:48px 0 40px;
+}
+.spec-card{
+  position:relative;
+  background:linear-gradient(180deg, rgba(59,182,232,0.04) 0%, transparent 60%), var(--bg-elev);
+  border:1px solid var(--line-dark);
+  border-radius:var(--radius-md);
+  padding:28px 24px 32px;
+  display:flex; flex-direction:column; gap:14px;
+  min-height:220px;
+  transition: border-color .3s ease, transform .3s var(--ease-smooth);
+}
+.spec-card:hover{
+  border-color:rgba(59,182,232,0.35);
+  transform:translateY(-2px);
+}
+.spec-card .num{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; font-weight:500;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--accent);
+}
+.spec-card .title{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:15px; font-weight:600;
+  letter-spacing:0.04em; text-transform:uppercase;
+  color:var(--ink-0); line-height:1.3;
+}
+.spec-card .desc{
+  color:var(--ink-2); font-size:14.5px;
+  line-height:1.6; margin-top:auto;
+}
+.spec-card-closing{
+  color:var(--ink-2); font-size:16px;
+  line-height:1.75; max-width:760px; margin:32px 0 0;
+}
+
+/* -------------------------------------------------------------
+   Placeholder image
+   ------------------------------------------------------------- */
+.placeholder-image{
+  width:100%;
+  aspect-ratio:16 / 10;
+  background:
+    linear-gradient(135deg, rgba(59,182,232,0.05) 0%, transparent 50%),
+    var(--bg-elev);
+  border:1px solid rgba(59,182,232,0.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px;
+  letter-spacing:0.22em;
+  color:var(--accent);
+  text-transform:uppercase;
+  position:relative;
+  overflow:hidden;
+  border-radius:var(--radius-md);
+}
+.placeholder-image::before{
+  content:"IMAGE PLACEHOLDER · " attr(data-image-name);
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
+}
+.placeholder-image::after{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px dashed rgba(59,182,232,0.15);
+  pointer-events:none;
+}
+
+/* -------------------------------------------------------------
+   Spec list (Section 5)
+   ------------------------------------------------------------- */
+.spec-list{
+  list-style:none; margin:32px 0 0; padding:0;
+  display:flex; flex-direction:column;
+  border-top:1px solid var(--line-dark);
+}
+.spec-list li{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:24px;
+  padding:18px 0;
+  border-bottom:1px solid var(--line-dark);
+  align-items:baseline;
+}
+.spec-list .k{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent);
+}
+.spec-list .v{
+  color:var(--ink-1); font-size:15px; line-height:1.6;
+}
+
+/* -------------------------------------------------------------
+   Pull-quote (Section 6)
+   ------------------------------------------------------------- */
+.pull-quote{
+  margin:48px 0 0;
+  padding:32px 0 32px 32px;
+  border-left:2px solid var(--accent);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(22px,2.4vw,30px);
+  font-style:italic; font-weight:500;
+  letter-spacing:-0.01em; line-height:1.3;
+  color:var(--ink-0);
+  max-width:780px;
+}
+
+/* -------------------------------------------------------------
+   Address block (Section 8)
+   ------------------------------------------------------------- */
+.address-block{
+  margin:32px 0;
+  padding:28px 32px;
+  background:rgba(59,182,232,0.04);
+  border:1px solid rgba(59,182,232,0.18);
+  border-radius:var(--radius-md);
+  max-width:460px;
+}
+.address-block .label{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; font-weight:500;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:14px;
+}
+.address-block .lines{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:18px; font-weight:500;
+  line-height:1.5; color:var(--ink-0);
+}
+.address-block .coords{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(59,182,232,0.18);
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; letter-spacing:0.18em;
+  color:var(--ink-2); text-transform:uppercase;
+}
+
+/* -------------------------------------------------------------
+   Product spec grid (Section 9)
+   ------------------------------------------------------------- */
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:1px;
+  margin:48px 0;
+  background:var(--line-dark);
+  border:1px solid var(--line-dark);
+}
+.product-item{
+  background:var(--bg-base);
+  padding:28px 24px;
+  display:flex; flex-direction:column; gap:8px;
+  min-height:130px;
+}
+.product-item .num{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; font-weight:500;
+  letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--accent);
+}
+.product-item .title{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:18px; font-weight:600;
+  letter-spacing:-0.01em; line-height:1.3;
+  color:var(--ink-0);
+}
+.product-cta-row{ margin-top:8px; }
+
+/* -------------------------------------------------------------
+   Closing CTA (Section 10)
+   ------------------------------------------------------------- */
+.closing-cta{
+  padding:160px 0;
+  text-align:center;
+  border-top:1px solid var(--line-dark);
+  position:relative;
+  background:
+    radial-gradient(900px 500px at 50% 30%, rgba(59,182,232,0.10), transparent 60%),
+    var(--bg-base);
+}
+.closing-cta .statement{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(28px,4vw,52px);
+  font-style:italic; font-weight:500;
+  letter-spacing:-0.02em; line-height:1.2;
+  color:var(--ink-0);
+  max-width:920px;
+  margin:0 auto 56px;
+}
+.closing-cta .statement .accent{ color:var(--accent); }
+
+/* -------------------------------------------------------------
+   Inline CTA link
+   ------------------------------------------------------------- */
+.cta-link{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent);
+  padding:12px 0;
+  border-bottom:1px solid var(--accent);
+  transition:gap .25s var(--ease-spring);
+}
+.cta-link:hover{ gap:14px; }
+
+/* -------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------- */
+.site-footer{
+  background:var(--bg-base); border-top:1px solid var(--line-dark);
+  padding:40px 0; color:var(--ink-2); font-size:13px;
+}
+.footer-grid{
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  align-items:center; gap:24px;
+}
+.footer-brand{ display:flex; align-items:center; gap:10px; color:var(--ink-1); }
+.footer-brand .brand-logo-sm{
+  width:28px; height:28px; border-radius:6px;
+  background:var(--bg-elev); border:1px solid var(--line-dark);
+  display:grid; place-items:center; overflow:hidden;
+}
+.footer-brand .brand-logo-sm img{ width:70%; height:70%; object-fit:contain; }
+.footer-brand span{ font-style:italic; letter-spacing:0.2em; text-transform:uppercase; font-size:11px; font-weight:600; }
+.footer-mid{ text-align:center; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.12em; color:var(--ink-3); text-transform:uppercase; }
+.footer-right{ text-align:right; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; color:var(--ink-3); text-transform:uppercase; }
+
+/* Reveal */
+.reveal{ opacity:0; transform:translateY(20px); transition:opacity .6s ease-out, transform .6s var(--ease-smooth); }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+/* -------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------- */
+@media (max-width:1100px){
+  .spec-card-grid{ grid-template-columns:repeat(2, 1fr); }
+  .product-grid{ grid-template-columns:repeat(2, 1fr); }
+}
+@media (max-width:900px){
+  :root{ --pad-x:24px; }
+  .nav{ display:none; }
+  .header-cta .btn{ padding:8px 14px; font-size:12px; }
+  .section{ padding:80px 0; }
+  .company-hero{ padding:140px 0 90px; }
+  .company-hero::before,
+  .company-hero::after{ display:none; }
+  .two-col,
+  .media-col{ grid-template-columns:1fr; gap:40px; }
+  .media-col.reverse .text{ order:0; }
+  .spec-list li{ grid-template-columns:1fr; gap:6px; padding:16px 0; }
+  .closing-cta{ padding:100px 0; }
+  .pull-quote{ padding-left:20px; }
+  .footer-grid{ grid-template-columns:1fr; text-align:left; gap:14px; }
+  .footer-mid,.footer-right{ text-align:left; }
+  .brand-subline{ display:none; }
+}
+@media (max-width:640px){
+  .spec-card-grid{ grid-template-columns:1fr; }
+  .product-grid{ grid-template-columns:1fr; }
+  .brand-wordmark{ font-size:14px; }
+  .site-header .brand-logo img{ height:36px; }
+}
+</style>
+</head>
+<body>
+
+<div class="stage-bg"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label="Nordic Advanced Systems home">
+      <span class="brand-logo"><img src="../assets/logo.png" alt="" /></span>
+      <span class="brand-text">
+        <span class="brand-wordmark">Nordic Advanced Systems</span>
+        <span class="brand-subline">Built on integrity</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/#platforms">Platforms</a>
+      <a href="/#anatomy">Anatomy</a>
+      <a href="/company" class="active">Company</a>
+      <a href="/#conduct">Conduct</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-pill-accent" href="/#contact">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- =========================================
+       1. HERO
+       ========================================= -->
+  <section class="company-hero">
+    <div class="wrap company-hero-inner reveal">
+      <div class="eyebrow">/ Company · NAS Profile 2026</div>
+      <h1>Built on operational <span class="accent">experience.</span></h1>
+      <p class="lead">
+        Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion.
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================
+       2. ABOUT NAS
+       ========================================= -->
+  <section class="section">
+    <div class="wrap two-col reveal">
+      <div>
+        <div class="section-eyebrow">/ 01 — About</div>
+        <h2>Engines built for actual <span class="accent">operations.</span></h2>
+      </div>
+      <div class="body">
+        <p>Nordic Advanced Systems is a Danish company that develops and manufactures propulsion systems for UAV platforms. The engines are used in operations where propulsion must function correctly and predictably throughout the mission. The focus is on stable operation, consistent quality, and known behavior under load.</p>
+        <p>In many UAV operations, it is essential that the propulsion system behaves consistently from unit to unit and can be produced and delivered in series with known characteristics. NAS develops engines based on this premise. The products are designed to provide predictable mechanical and thermal behavior, ensuring that overall platform performance is well understood in operational use.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       3. HOW WE WORK
+       ========================================= -->
+  <section class="section">
+    <div class="wrap two-col reveal">
+      <div>
+        <div class="section-eyebrow">/ 02 — Method</div>
+        <h2>An industrial supplier with <span class="accent">clear responsibility.</span></h2>
+      </div>
+      <div class="body">
+        <p>NAS is organized as an industrial supplier with established processes and clear responsibility.</p>
+        <p>The company draws on experience from operational military environments. This experience has helped shape the approach to function, testing, and accountability for what is delivered.</p>
+        <p>The working method is characterized by clear decision-making and clear ownership of both design and delivery.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       4. DESIGN PHILOSOPHY
+       ========================================= -->
+  <section class="section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 03 — Design Philosophy</div>
+      <h2>Designed for <span class="accent">real operating conditions.</span></h2>
+      <p class="lead">
+        The engines are developed based on actual operating conditions and known load profiles.
+      </p>
+
+      <div class="spec-card-grid">
+        <div class="spec-card">
+          <div class="num">/ 01</div>
+          <div class="title">Stable Rotational Speed</div>
+          <div class="desc">Throughout the mission, without unexpected drops or surges.</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 02</div>
+          <div class="title">Controlled Vibration</div>
+          <div class="desc">During operation, minimizing structural stress on the platform.</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 03</div>
+          <div class="title">Predictable Thermal Behavior</div>
+          <div class="desc">Until mission completion, with known limits and margins.</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 04</div>
+          <div class="title">Consistent Performance</div>
+          <div class="desc">Across series production, unit to unit.</div>
+        </div>
+      </div>
+
+      <p class="spec-card-closing">
+        Design choices are made to ensure stable and predictable function for the duration of the mission, based on known load profiles and operating conditions.
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================
+       5. PRODUCTION & QUALITY
+       ========================================= -->
+  <section class="section">
+    <div class="wrap media-col reveal">
+      <div class="media">
+        <div class="placeholder-image" data-image-name="production-facility"></div>
+      </div>
+      <div class="text">
+        <div class="section-eyebrow">/ 04 — Production & Quality</div>
+        <h2>Assembled and tested <span class="accent">in Denmark.</span></h2>
+        <div class="body">
+          <p>All engines are assembled and tested in Denmark.</p>
+          <p>Each unit undergoes controlled cold-run and hot-run testing as well as mechanical and visual inspection. Documentation and unit-level traceability are provided.</p>
+          <p>Production is located within an existing industrial facility with established quality and process controls.</p>
+        </div>
+        <ul class="spec-list">
+          <li><span class="k">Cold-Run Testing</span><span class="v">Mechanical verification under controlled conditions</span></li>
+          <li><span class="k">Hot-Run Testing</span><span class="v">Performance validation at operational load</span></li>
+          <li><span class="k">Visual Inspection</span><span class="v">Final review before unit release</span></li>
+          <li><span class="k">Unit Traceability</span><span class="v">Documentation provided with every delivery</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       6. COLLABORATION FRAMEWORK
+       ========================================= -->
+  <section class="section">
+    <div class="wrap two-col reveal">
+      <div>
+        <div class="section-eyebrow">/ 05 — Collaboration</div>
+        <h2>Clear specifications. <span class="accent">Defined frameworks.</span></h2>
+      </div>
+      <div class="body">
+        <p>NAS works with clear specifications and defined frameworks.</p>
+        <p>Configurations are finalized before production. Any changes are handled in a structured manner and through direct dialogue between technical counterparts.</p>
+        <p>Deliveries are carried out at the agreed pace and in the agreed form. If underlying conditions change, this is communicated early.</p>
+        <blockquote class="pull-quote">
+          When underlying conditions change, this is communicated early.
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       7. PRODUCTION FACILITY
+       ========================================= -->
+  <section class="section">
+    <div class="wrap media-col reveal">
+      <div class="media">
+        <div class="placeholder-image" data-image-name="production-floor"></div>
+      </div>
+      <div class="text">
+        <div class="section-eyebrow">/ 06 — Facility</div>
+        <h2>Structured for <span class="accent">series production.</span></h2>
+        <div class="body">
+          <p>Production is structured for series assembly in a controlled environment, with defined workflows and inspection points.</p>
+          <p>This supports consistent output and repeatable quality across deliveries.</p>
+          <p>Production is located in Denmark, approximately two hours by car from our official address in Odense. For security and discretion, the production address is not publicly disclosed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       8. REGISTERED OFFICE
+       ========================================= -->
+  <section class="section">
+    <div class="wrap media-col reverse reveal">
+      <div class="media">
+        <div class="placeholder-image" data-image-name="location-map"></div>
+      </div>
+      <div class="text">
+        <div class="section-eyebrow">/ 07 — Location</div>
+        <h2>Co-located with <span class="accent">UAS Denmark Test Center.</span></h2>
+        <div class="address-block">
+          <div class="label">Official Address</div>
+          <div class="lines">
+            Lufthavnvej 131, Beldringe<br>
+            5270 Odense N<br>
+            Denmark
+          </div>
+          <div class="coords">55.4732° N · 10.3308° E</div>
+        </div>
+        <div class="body">
+          <p>Our registered office is located at Hans Christian Andersen Airport in Odense, co-located with UAS Denmark Test Center — an unmanned systems technology test and development center, run as a collaboration between Hans Christian Andersen Airport, Odense Municipality, and the University of Southern Denmark.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       9. TYR SERIES INTRO
+       ========================================= -->
+  <section class="section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 08 — Product</div>
+      <h2>The <span class="accent">TYR Series.</span></h2>
+      <p class="lead">
+        Purpose-built UAV engines for continuous operation.
+      </p>
+      <div class="body" style="max-width:780px;">
+        <p>TYR 2C and TYR 2E are not modified hobby or industrial engines. They are purpose-built UAV engines, designed from the ground up for:</p>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-item">
+          <div class="num">/ 01</div>
+          <div class="title">Constant high load</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 02</div>
+          <div class="title">Direct propeller coupling</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 03</div>
+          <div class="title">Long endurance</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 04</div>
+          <div class="title">Mechanical and thermal stability</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 05</div>
+          <div class="title">Precision-balanced crankshaft</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 06</div>
+          <div class="title">High-grade bearings rated for continuous cyclic loads</div>
+        </div>
+      </div>
+
+      <div class="product-cta-row">
+        <a class="cta-link" href="/#platforms">View full TYR 2 specifications <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       10. CLOSING CTA
+       ========================================= -->
+  <section class="closing-cta">
+    <div class="wrap reveal">
+      <p class="statement">
+        Predictable function. Clear agreements. <span class="accent">Accountability through to mission completion.</span>
+      </p>
+      <a class="btn btn-primary" href="/#contact">
+        Speak with engineering <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <span class="brand-logo-sm"><img src="../assets/logo.png" alt="" /></span>
+      <span>Nordic Advanced Systems ApS</span>
+    </div>
+    <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
+    <div class="footer-right">© 2026 All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    reveals.forEach(el => io.observe(el));
+  } else {
+    reveals.forEach(el => el.classList.add('in'));
+  }
+
+  // Magnetic nav
+  const magnetics = document.querySelectorAll('.nav a, .header-cta .btn');
+  magnetics.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      const strength = el.closest('.nav') ? 0.3 : 0.45;
+      el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+      el.style.transition = 'transform 0.15s cubic-bezier(0.16,1,0.3,1)';
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+      el.style.transform = 'translate(0px,0px)';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
