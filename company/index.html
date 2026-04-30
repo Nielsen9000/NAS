@@ -421,6 +421,133 @@ p{ margin:0; color:var(--ink-1); }
   font-weight:500;
 }
 
+/* Test rig photo + HUD overlay */
+.testrig-frame{
+  position:relative;
+  width:100%;
+  max-width:1400px;
+  margin:0 auto 100px;
+  aspect-ratio:16 / 9;
+  border:1px solid rgba(59,182,232,0.2);
+  overflow:hidden;
+  background:var(--bg-elev);
+}
+.testrig-image{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  filter:brightness(0.95) contrast(1.05);
+}
+.testrig-hud{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+}
+.testrig-corner{
+  position:absolute;
+  width:24px;
+  height:24px;
+  border:1px solid var(--accent);
+  opacity:0.85;
+}
+.testrig-corner-tl{ top:16px; left:16px; border-right:0; border-bottom:0; }
+.testrig-corner-tr{ top:16px; right:16px; border-left:0; border-bottom:0; }
+.testrig-corner-bl{ bottom:16px; left:16px; border-right:0; border-top:0; }
+.testrig-corner-br{ bottom:16px; right:16px; border-left:0; border-top:0; }
+.testrig-readout{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  color:var(--accent);
+  text-transform:uppercase;
+  background:rgba(8,32,42,0.65);
+  padding:6px 12px;
+  border:1px solid rgba(59,182,232,0.2);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  font-weight:500;
+}
+.testrig-readout-tl{ top:32px; left:56px; }
+.testrig-readout-tr{ top:32px; right:56px; }
+.testrig-readout-bl{ bottom:32px; left:56px; }
+.testrig-readout-br{ bottom:32px; right:56px; }
+.testrig-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  display:inline-block;
+}
+.testrig-dot-red{
+  background:#ef5350;
+  animation:testrig-pulse-red 1.4s ease-in-out infinite;
+}
+.testrig-dot-green{
+  background:#6ee0a1;
+  animation:testrig-pulse-green 2s ease-in-out infinite;
+}
+@keyframes testrig-pulse-red{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:0.5; transform:scale(0.85); }
+}
+@keyframes testrig-pulse-green{
+  0%,100%{ opacity:1; }
+  50%{ opacity:0.4; }
+}
+.testrig-scanline{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:2px;
+  background:linear-gradient(to bottom,
+    transparent,
+    rgba(59,182,232,0.4),
+    transparent);
+  animation:testrig-scan 6s linear infinite;
+  opacity:0.7;
+}
+@keyframes testrig-scan{
+  0%   { transform:translateY(0); }
+  100% { transform:translateY(100vh); }
+}
+.testrig-caption{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:12px 24px;
+  background:linear-gradient(to top,
+    rgba(8,32,42,0.85),
+    transparent);
+  z-index:3;
+}
+.testrig-caption-label{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px;
+  letter-spacing:0.22em;
+  color:var(--accent);
+  text-transform:uppercase;
+  font-weight:500;
+  padding:4px 10px;
+  border:1px solid rgba(59,182,232,0.4);
+  background:rgba(59,182,232,0.08);
+}
+.testrig-caption-text{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:13px;
+  letter-spacing:0.05em;
+  color:var(--ink-1);
+}
+
 /* Location section — HUD coordinate display */
 .location-grid{
   display:grid;
@@ -692,43 +819,6 @@ p{ margin:0; color:var(--ink-1); }
 }
 
 /* -------------------------------------------------------------
-   Placeholder image
-   ------------------------------------------------------------- */
-.placeholder-image{
-  width:100%;
-  aspect-ratio:16 / 10;
-  background:
-    linear-gradient(135deg, rgba(59,182,232,0.05) 0%, transparent 50%),
-    var(--bg-elev);
-  border:1px solid rgba(59,182,232,0.2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:11px;
-  letter-spacing:0.22em;
-  color:var(--accent);
-  text-transform:uppercase;
-  position:relative;
-  overflow:hidden;
-  border-radius:var(--radius-md);
-}
-.placeholder-image::before{
-  content:"IMAGE PLACEHOLDER · " attr(data-image-name);
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  white-space:nowrap;
-}
-.placeholder-image::after{
-  content:"";
-  position:absolute;
-  inset:12px;
-  border:1px dashed rgba(59,182,232,0.15);
-  pointer-events:none;
-}
-
-/* -------------------------------------------------------------
    Spec list (Section 5)
    ------------------------------------------------------------- */
 .spec-list{
@@ -926,9 +1016,27 @@ p{ margin:0; color:var(--ink-1); }
   .method-num{ padding-top:0; }
   .location-grid{ grid-template-columns:1fr; gap:48px; }
   .location-coordinates{ max-width:400px; margin:0 auto; }
+  .testrig-frame{ margin-bottom:60px; }
+  .testrig-corner{ width:16px; height:16px; }
+  .testrig-corner-tl{ top:8px; left:8px; }
+  .testrig-corner-tr{ top:8px; right:8px; }
+  .testrig-corner-bl{ bottom:8px; left:8px; }
+  .testrig-corner-br{ bottom:8px; right:8px; }
+  .testrig-readout{ font-size:9px; padding:4px 8px; }
+  .testrig-readout-tl{ top:16px; left:32px; }
+  .testrig-readout-tr{ top:16px; right:32px; }
+  .testrig-readout-bl{ bottom:36px; left:32px; }
+  .testrig-readout-br{ bottom:36px; right:32px; }
+  .testrig-caption{ padding:8px 16px; }
+  .testrig-caption-text{ font-size:11px; }
   .footer-grid{ grid-template-columns:1fr; text-align:left; gap:14px; }
   .footer-mid,.footer-right{ text-align:left; }
   .brand-subline{ display:none; }
+}
+@media (prefers-reduced-motion: reduce){
+  .testrig-dot-red,
+  .testrig-dot-green,
+  .testrig-scanline{ animation:none; }
 }
 @media (max-width:640px){
   .spec-card-grid{ grid-template-columns:1fr; }
@@ -1113,6 +1221,45 @@ p{ margin:0; color:var(--ink-1); }
         <p>
           All engines are assembled and tested in Denmark. Production is structured for series assembly in a controlled environment with defined workflows and inspection points — supporting consistent output and repeatable quality across deliveries.
         </p>
+      </div>
+
+      <!-- Test rig photo with HUD overlay -->
+      <div class="testrig-frame reveal">
+        <img src="./assets/tyr-test-rig.jpg"
+             alt="TYR engine on test rig with dynamometer and exhaust ducting"
+             class="testrig-image" />
+
+        <div class="testrig-hud" aria-hidden="true">
+          <div class="testrig-corner testrig-corner-tl"></div>
+          <div class="testrig-corner testrig-corner-tr"></div>
+          <div class="testrig-corner testrig-corner-bl"></div>
+          <div class="testrig-corner testrig-corner-br"></div>
+
+          <div class="testrig-readout testrig-readout-tl">
+            <span class="testrig-dot testrig-dot-red"></span>
+            <span>REC · LIVE</span>
+          </div>
+
+          <div class="testrig-readout testrig-readout-tr">
+            <span>TEST CELL · 02</span>
+          </div>
+
+          <div class="testrig-readout testrig-readout-bl">
+            <span class="testrig-dot testrig-dot-green"></span>
+            <span>SYS · ACTIVE</span>
+          </div>
+
+          <div class="testrig-readout testrig-readout-br">
+            <span>RPM 6,200 · NOMINAL</span>
+          </div>
+
+          <div class="testrig-scanline"></div>
+        </div>
+
+        <div class="testrig-caption">
+          <span class="testrig-caption-label">DOCUMENTED</span>
+          <span class="testrig-caption-text">TYR engine on dynamometer test rig — Denmark</span>
+        </div>
       </div>
 
       <div class="process-diagram reveal" aria-label="Quality process flow">
