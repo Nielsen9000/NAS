@@ -657,62 +657,147 @@ p{ margin:0; color:var(--ink-1); }
    ------------------------------------------------------------- */
 .company-hero{
   position:relative;
-  padding:200px 0 140px;
+  padding:100px 0 120px;
+  min-height:80vh;
+  display:flex;
+  align-items:center;
+  background:var(--bg-base);
   overflow:hidden;
-  background:
-    radial-gradient(1200px 800px at 80% -10%, rgba(59,182,232,0.18), transparent 60%),
-    radial-gradient(900px 700px at -10% 30%, rgba(16,82,97,0.55), transparent 65%),
-    var(--bg-base);
   border-bottom:1px solid var(--line-dark);
 }
-.company-hero::before{
-  /* Subtle HUD-style decorative element: corner crosshair */
-  content:"";
-  position:absolute;
-  top:140px; right:80px;
-  width:120px; height:120px;
-  background:
-    linear-gradient(to right, var(--accent) 0 24px, transparent 24px) top left/100% 1px no-repeat,
-    linear-gradient(to bottom, var(--accent) 0 24px, transparent 24px) top left/1px 100% no-repeat,
-    linear-gradient(to left, var(--accent) 0 24px, transparent 24px) top right/100% 1px no-repeat,
-    linear-gradient(to bottom, var(--accent) 0 24px, transparent 24px) top right/1px 100% no-repeat,
-    linear-gradient(to right, var(--accent) 0 24px, transparent 24px) bottom left/100% 1px no-repeat,
-    linear-gradient(to top, var(--accent) 0 24px, transparent 24px) bottom left/1px 100% no-repeat,
-    linear-gradient(to left, var(--accent) 0 24px, transparent 24px) bottom right/100% 1px no-repeat,
-    linear-gradient(to top, var(--accent) 0 24px, transparent 24px) bottom right/1px 100% no-repeat;
-  opacity:0.45;
-  pointer-events:none;
+.company-hero-grid{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:80px;
+  align-items:start;
+  width:100%;
+  position:relative;
+  z-index:2;
 }
-.company-hero::after{
-  content:"";
-  position:absolute;
-  top:200px; right:140px;
-  width:1px; height:300px;
-  background:linear-gradient(to bottom, transparent, rgba(59,182,232,0.35), transparent);
-  pointer-events:none;
+.company-hero-content{
+  max-width:900px;
+  padding-top:12px;
 }
-.company-hero-inner{ position:relative; max-width:980px; }
-.company-hero .eyebrow{
-  display:inline-flex; align-items:center; gap:14px;
-  font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:12px; font-weight:500;
-  letter-spacing:0.22em; text-transform:uppercase;
-  color:var(--accent); margin-bottom:36px;
-}
-.company-hero .eyebrow::before{
-  content:""; width:48px; height:1px; background:var(--accent); display:inline-block;
-}
-.company-hero h1{
-  font-size:clamp(48px,7vw,92px);
-  font-weight:700; letter-spacing:-0.03em;
-  line-height:1.02; margin:0 0 32px;
+.company-hero-headline{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:clamp(56px, 7vw, 110px);
+  font-weight:700;
+  letter-spacing:-0.025em;
+  line-height:0.95;
   color:var(--ink-0);
+  margin:24px 0 32px;
 }
-.company-hero h1 .accent{ color:var(--accent); }
-.company-hero p.lead{
-  font-size:clamp(17px,1.4vw,20px);
-  color:var(--ink-1); line-height:1.6;
-  max-width:680px; margin:0;
+.company-hero-headline .accent{ color:var(--accent); }
+.company-hero-lead{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink-1);
+  max-width:580px;
+  margin:0;
+}
+
+/* Hero — HUD doc-stack */
+.hero-doc-stack{
+  position:sticky;
+  top:120px;
+}
+.doc-stack-frame{
+  position:relative;
+  background:rgba(13,42,49,0.4);
+  border:1px solid rgba(59,182,232,0.18);
+  padding:32px 28px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.doc-stack-corner{
+  position:absolute;
+  width:12px;
+  height:12px;
+  border:1px solid var(--accent);
+}
+.doc-stack-corner-tl{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+.doc-stack-corner-tr{ top:-1px; right:-1px; border-left:0; border-bottom:0; }
+.doc-stack-corner-bl{ bottom:-1px; left:-1px; border-right:0; border-top:0; }
+.doc-stack-corner-br{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+.doc-stack-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:16px;
+  margin-bottom:20px;
+  border-bottom:1px solid rgba(59,182,232,0.15);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+}
+.doc-stack-label{ color:var(--accent); font-weight:500; }
+.doc-stack-id{ color:var(--ink-3); }
+.doc-stack-body{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.doc-row{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.doc-row-label{
+  font-size:9px;
+  letter-spacing:0.22em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+  font-weight:500;
+}
+.doc-row-value{
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--ink-0);
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.doc-row-status .doc-row-value{ color:#6ee0a1; }
+.doc-status-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#6ee0a1;
+  animation:doc-status-pulse 1.8s ease-in-out infinite;
+}
+@keyframes doc-status-pulse{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:0.4; transform:scale(0.85); }
+}
+.doc-stack-footer{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-top:24px;
+  padding-top:16px;
+  border-top:1px solid rgba(59,182,232,0.15);
+  font-size:9px;
+  letter-spacing:0.18em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+}
+
+/* Hero scan lines */
+.company-hero-scanlines{
+  position:absolute;
+  inset:0;
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(59,182,232,0.015) 3px,
+    rgba(59,182,232,0.015) 4px
+  );
+  pointer-events:none;
+  z-index:1;
 }
 
 /* -------------------------------------------------------------
@@ -935,15 +1020,17 @@ p{ margin:0; color:var(--ink-1); }
   .product-grid{ grid-template-columns:repeat(2, 1fr); }
   .process-diagram{ grid-template-columns:1fr 1fr; gap:24px; }
   .process-connector{ display:none; }
+  .company-hero-grid{ grid-template-columns:280px 1fr; gap:48px; }
 }
 @media (max-width:900px){
   :root{ --pad-x:24px; }
   .nav{ display:none; }
   .header-cta .btn{ padding:8px 14px; font-size:12px; }
   .company-section{ padding:80px 0; }
-  .company-hero{ padding:140px 0 90px; }
-  .company-hero::before,
-  .company-hero::after{ display:none; }
+  .company-hero{ padding:60px 0 80px; min-height:auto; }
+  .company-hero-grid{ grid-template-columns:1fr; gap:40px; }
+  .hero-doc-stack{ position:static; max-width:320px; }
+  .company-hero-headline{ font-size:clamp(40px, 9vw, 72px); }
   .two-col,
   .media-col{ grid-template-columns:1fr; gap:40px; }
   .media-col.reverse .text{ order:0; }
@@ -977,6 +1064,9 @@ p{ margin:0; color:var(--ink-1); }
 }
 @media (max-width:600px){
   .process-diagram{ grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion: reduce){
+  .doc-status-dot{ animation:none; }
 }
 </style>
 </head>
@@ -1012,13 +1102,71 @@ p{ margin:0; color:var(--ink-1); }
        1. HERO
        ========================================= -->
   <section class="company-hero">
-    <div class="wrap company-hero-inner reveal">
-      <div class="eyebrow">/ Company · NAS Profile 2026</div>
-      <h1>Built on operational <span class="accent">experience.</span></h1>
-      <p class="lead">
-        Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion.
-      </p>
+    <div class="wrap">
+      <div class="company-hero-grid">
+
+        <aside class="hero-doc-stack reveal" aria-hidden="true">
+          <div class="doc-stack-frame">
+            <div class="doc-stack-corner doc-stack-corner-tl"></div>
+            <div class="doc-stack-corner doc-stack-corner-tr"></div>
+            <div class="doc-stack-corner doc-stack-corner-bl"></div>
+            <div class="doc-stack-corner doc-stack-corner-br"></div>
+
+            <div class="doc-stack-header">
+              <span class="doc-stack-label">NAS · DOC PROFILE</span>
+              <span class="doc-stack-id">/ 01-2026</span>
+            </div>
+
+            <div class="doc-stack-body">
+              <div class="doc-row">
+                <span class="doc-row-label">CLASSIFICATION</span>
+                <span class="doc-row-value">INTERNAL · CONTROLLED</span>
+              </div>
+              <div class="doc-row">
+                <span class="doc-row-label">REVISION</span>
+                <span class="doc-row-value">01 · 2026</span>
+              </div>
+              <div class="doc-row">
+                <span class="doc-row-label">FORMAT</span>
+                <span class="doc-row-value">COMPANY PROFILE</span>
+              </div>
+              <div class="doc-row">
+                <span class="doc-row-label">JURISDICTION</span>
+                <span class="doc-row-value">DENMARK · EU</span>
+              </div>
+              <div class="doc-row doc-row-status">
+                <span class="doc-row-label">STATUS</span>
+                <span class="doc-row-value">
+                  <span class="doc-status-dot"></span>
+                  ACTIVE
+                </span>
+              </div>
+            </div>
+
+            <div class="doc-stack-footer">
+              <span>NORDIC ADVANCED SYSTEMS APS</span>
+              <span>CVR · 45976645</span>
+            </div>
+          </div>
+        </aside>
+
+        <div class="company-hero-content">
+          <div class="section-eyebrow reveal">/ COMPANY · NAS PROFILE 2026</div>
+
+          <h1 class="company-hero-headline reveal">
+            Built on <span class="accent">operational</span><br>
+            <span class="accent">experience.</span>
+          </h1>
+
+          <p class="company-hero-lead reveal">
+            Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion.
+          </p>
+        </div>
+
+      </div>
     </div>
+
+    <div class="company-hero-scanlines" aria-hidden="true"></div>
   </section>
 
   <!-- =========================================
