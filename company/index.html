@@ -456,66 +456,6 @@ p{ margin:0; color:var(--ink-1); }
 .testrig-corner-tr{ top:16px; right:16px; border-left:0; border-bottom:0; }
 .testrig-corner-bl{ bottom:16px; left:16px; border-right:0; border-top:0; }
 .testrig-corner-br{ bottom:16px; right:16px; border-left:0; border-top:0; }
-.testrig-readout{
-  position:absolute;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:11px;
-  letter-spacing:0.18em;
-  color:var(--accent);
-  text-transform:uppercase;
-  background:rgba(8,32,42,0.65);
-  padding:6px 12px;
-  border:1px solid rgba(59,182,232,0.2);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  font-weight:500;
-}
-.testrig-readout-tl{ top:32px; left:56px; }
-.testrig-readout-tr{ top:32px; right:56px; }
-.testrig-readout-bl{ bottom:32px; left:56px; }
-.testrig-readout-br{ bottom:32px; right:56px; }
-.testrig-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  display:inline-block;
-}
-.testrig-dot-red{
-  background:#ef5350;
-  animation:testrig-pulse-red 1.4s ease-in-out infinite;
-}
-.testrig-dot-green{
-  background:#6ee0a1;
-  animation:testrig-pulse-green 2s ease-in-out infinite;
-}
-@keyframes testrig-pulse-red{
-  0%,100%{ opacity:1; transform:scale(1); }
-  50%{ opacity:0.5; transform:scale(0.85); }
-}
-@keyframes testrig-pulse-green{
-  0%,100%{ opacity:1; }
-  50%{ opacity:0.4; }
-}
-.testrig-scanline{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:2px;
-  background:linear-gradient(to bottom,
-    transparent,
-    rgba(59,182,232,0.4),
-    transparent);
-  animation:testrig-scan 6s linear infinite;
-  opacity:0.7;
-}
-@keyframes testrig-scan{
-  0%   { transform:translateY(0); }
-  100% { transform:translateY(100vh); }
-}
 .testrig-caption{
   position:absolute;
   bottom:0;
@@ -543,9 +483,10 @@ p{ margin:0; color:var(--ink-1); }
 }
 .testrig-caption-text{
   font-family:"Space Grotesk",sans-serif;
-  font-size:13px;
+  font-size:14px;
   letter-spacing:0.05em;
-  color:var(--ink-1);
+  color:var(--ink-0);
+  font-weight:400;
 }
 
 /* Location section — HUD coordinate display */
@@ -1022,21 +963,11 @@ p{ margin:0; color:var(--ink-1); }
   .testrig-corner-tr{ top:8px; right:8px; }
   .testrig-corner-bl{ bottom:8px; left:8px; }
   .testrig-corner-br{ bottom:8px; right:8px; }
-  .testrig-readout{ font-size:9px; padding:4px 8px; }
-  .testrig-readout-tl{ top:16px; left:32px; }
-  .testrig-readout-tr{ top:16px; right:32px; }
-  .testrig-readout-bl{ bottom:36px; left:32px; }
-  .testrig-readout-br{ bottom:36px; right:32px; }
   .testrig-caption{ padding:8px 16px; }
-  .testrig-caption-text{ font-size:11px; }
+  .testrig-caption-text{ font-size:12px; }
   .footer-grid{ grid-template-columns:1fr; text-align:left; gap:14px; }
   .footer-mid,.footer-right{ text-align:left; }
   .brand-subline{ display:none; }
-}
-@media (prefers-reduced-motion: reduce){
-  .testrig-dot-red,
-  .testrig-dot-green,
-  .testrig-scanline{ animation:none; }
 }
 @media (max-width:640px){
   .spec-card-grid{ grid-template-columns:1fr; }
@@ -1234,31 +1165,11 @@ p{ margin:0; color:var(--ink-1); }
           <div class="testrig-corner testrig-corner-tr"></div>
           <div class="testrig-corner testrig-corner-bl"></div>
           <div class="testrig-corner testrig-corner-br"></div>
-
-          <div class="testrig-readout testrig-readout-tl">
-            <span class="testrig-dot testrig-dot-red"></span>
-            <span>REC · LIVE</span>
-          </div>
-
-          <div class="testrig-readout testrig-readout-tr">
-            <span>TEST CELL · 02</span>
-          </div>
-
-          <div class="testrig-readout testrig-readout-bl">
-            <span class="testrig-dot testrig-dot-green"></span>
-            <span>SYS · ACTIVE</span>
-          </div>
-
-          <div class="testrig-readout testrig-readout-br">
-            <span>RPM 6,200 · NOMINAL</span>
-          </div>
-
-          <div class="testrig-scanline"></div>
         </div>
 
         <div class="testrig-caption">
           <span class="testrig-caption-label">DOCUMENTED</span>
-          <span class="testrig-caption-text">TYR engine on dynamometer test rig — Denmark</span>
+          <span class="testrig-caption-text">TYR engine · dynamometer test rig · Denmark</span>
         </div>
       </div>
 
