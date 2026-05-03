@@ -1986,10 +1986,11 @@ p{ margin:0; color:var(--ink-1); }
   height: auto;
   display: block;
   margin: 0 auto;
-  /* Knock out the white background of the source video against the
-     dark site background. Drop-shadow won't compose with blend modes,
-     so it's intentionally absent. */
-  mix-blend-mode: screen;
+  /* Source video has a dark/black background; 'lighten' keeps only
+     pixels brighter than the site bg, so the black plate disappears
+     and the engine + propeller stay visible. Drop-shadow won't
+     compose with blend modes, so it's intentionally absent. */
+  mix-blend-mode: lighten;
   will-change: transform;
 }
 
