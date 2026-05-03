@@ -1978,15 +1978,40 @@ p{ margin:0; color:var(--ink-1); }
   .flight-hud-dot{ animation: none; }
 }
 
-.flight-image{
+.flight-engine-stack{
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 720px;
-  height: auto;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flight-engine-image{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  z-index: 2;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
-  display: block;
+}
+.flight-propeller-image{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+  animation: propeller-spin 3s linear infinite;
+  transform-origin: center center;
+  will-change: transform;
+}
+@keyframes propeller-spin{
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .flight-reticle{
@@ -2153,6 +2178,7 @@ p{ margin:0; color:var(--ink-1); }
 @media (prefers-reduced-motion: reduce){
   .flight-content{ opacity: 1; transform: none; transition: none; }
   .flight-reticle{ opacity: 1; transition: none; }
+  .flight-propeller-image{ animation: none; }
 }
 
 @media (max-width: 880px){
@@ -2163,7 +2189,7 @@ p{ margin:0; color:var(--ink-1); }
     padding: 0 24px;
   }
   .flight-media{ min-height: 380px; }
-  .flight-image{ max-width: 360px; }
+  .flight-engine-stack{ max-width: 480px; }
   .flight-reticle-1, .flight-reticle-2{ display: none; }
   .flight-stats{
     flex-wrap: wrap;
@@ -2475,7 +2501,10 @@ p{ margin:0; color:var(--ink-1); }
           <span>SCAN · 100%</span>
         </div>
       </div>
-      <img class="flight-image" src="./assets/drone-hero-cutout.png" alt="TYR 2 series engine mounted with carbon fiber propeller">
+      <div class="flight-engine-stack">
+        <img class="flight-engine-image" src="./assets/motor.png" alt="TYR 2 series engine">
+        <img class="flight-propeller-image" src="./assets/propeller.png" alt="Carbon fiber propeller">
+      </div>
       <div class="flight-reticle flight-reticle-1" aria-hidden="true">
         <div class="flight-reticle-line"></div>
         <span class="flight-reticle-label">BOXER · 340CC</span>
