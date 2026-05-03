@@ -1978,29 +1978,16 @@ p{ margin:0; color:var(--ink-1); }
   .flight-hud-dot{ animation: none; }
 }
 
-.flight-video{
+.flight-image{
   position: relative;
   z-index: 1;
   width: 100%;
   max-width: 720px;
   height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
   display: block;
   margin: 0 auto;
-  /* Source has a black plate (AI video tools don't preserve alpha).
-     'lighten' kills the black plate inside, the radial mask softens
-     the rectangular edge, and the contrast filter pushes near-black
-     compression noise to true black so it blends cleanly. */
-  mix-blend-mode: lighten;
-  filter: contrast(1.12) brightness(1.05);
-  -webkit-mask-image: radial-gradient(circle at center,
-    black 0%,
-    black 60%,
-    transparent 92%);
-  mask-image: radial-gradient(circle at center,
-    black 0%,
-    black 60%,
-    transparent 92%);
-  will-change: transform;
 }
 
 .flight-reticle{
@@ -2177,7 +2164,7 @@ p{ margin:0; color:var(--ink-1); }
     padding: 0 24px;
   }
   .flight-media{ min-height: 380px; }
-  .flight-video{ max-width: 480px; }
+  .flight-image{ max-width: 360px; }
   .flight-reticle-1, .flight-reticle-2{ display: none; }
   .flight-stats{
     flex-wrap: wrap;
@@ -2491,16 +2478,7 @@ p{ margin:0; color:var(--ink-1); }
           <span>SCAN · 100%</span>
         </div>
       </div>
-      <video
-        class="flight-video"
-        src="./assets/engine_seamless.mp4"
-        autoplay
-        loop
-        muted
-        playsinline
-        preload="auto"
-        aria-label="NAS 2 series engine with rotating propeller">
-      </video>
+      <img class="flight-image" src="./assets/drone-hero-cutout.png" alt="NAS 2 series engine mounted with carbon fiber propeller">
       <div class="flight-reticle flight-reticle-1" aria-hidden="true">
         <div class="flight-reticle-line"></div>
         <span class="flight-reticle-label">BOXER · 340CC</span>
@@ -3450,16 +3428,6 @@ p{ margin:0; color:var(--ink-1); }
   video.addEventListener('pause', () => { if (rafId){ cancelAnimationFrame(rafId); rafId = null; } });
   if (!video.paused) rafId = requestAnimationFrame(tick);
 })();
-</script>
-
-<script>
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.flight-video').forEach(v => {
-      v.pause();
-      v.removeAttribute('autoplay');
-      v.removeAttribute('loop');
-    });
-  }
 </script>
 
 </body>
