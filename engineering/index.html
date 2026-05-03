@@ -1126,10 +1126,10 @@ p{ margin:0; color:var(--ink-1); }
 }
 .engineering-hero-headline{
   font-family:'Inter',system-ui,-apple-system,sans-serif;
-  font-size:clamp(56px, 8vw, 130px);
+  font-size:clamp(48px, 6vw, 96px);
   font-weight:700;
   letter-spacing:-0.025em;
-  line-height:0.92;
+  line-height:0.95;
   color:var(--ink-0);
   margin:24px 0 32px;
 }
@@ -1230,8 +1230,8 @@ p{ margin:0; color:var(--ink-1); }
   flex-wrap:wrap;
   justify-content:center;
 }
-.btn-pill-accent,
-.btn-pill-outline{
+.closing-cta-actions .btn-pill-accent,
+.closing-cta-actions .btn-pill-outline{
   display:inline-flex;
   align-items:center;
   padding:14px 28px;
@@ -1243,18 +1243,18 @@ p{ margin:0; color:var(--ink-1); }
   border-radius:999px;
   transition:background 200ms ease, color 200ms ease, border-color 200ms ease;
 }
-.btn-pill-accent{
+.closing-cta-actions .btn-pill-accent{
   background:var(--accent);
   color:#001218;
   border:1px solid var(--accent);
 }
-.btn-pill-accent:hover{ background:transparent; color:var(--accent); }
-.btn-pill-outline{
+.closing-cta-actions .btn-pill-accent:hover{ background:transparent; color:var(--accent); }
+.closing-cta-actions .btn-pill-outline{
   background:transparent;
   color:var(--ink-0);
   border:1px solid rgba(59,182,232,0.4);
 }
-.btn-pill-outline:hover{ border-color:var(--accent); color:var(--accent); }
+.closing-cta-actions .btn-pill-outline:hover{ border-color:var(--accent); color:var(--accent); }
 @media (max-width: 600px){
   .closing-cta-actions{ flex-direction:column; width:100%; }
 }
