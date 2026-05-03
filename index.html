@@ -1978,44 +1978,19 @@ p{ margin:0; color:var(--ink-1); }
   .flight-hud-dot{ animation: none; }
 }
 
-.flight-engine-stack{
+.flight-video{
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 520px;
-  margin: 0 auto;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.flight-engine-image{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  z-index: 2;
-  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
-}
-.flight-propeller-image{
-  position: absolute;
-  /* Anchor where the engine drive shaft sits in motor.png */
-  top: 62%;
-  left: 50%;
-  width: 130%;
+  max-width: 720px;
   height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-  z-index: 3;
-  transform: translate(-50%, -50%);
-  animation: propeller-spin 3s linear infinite;
-  transform-origin: center center;
+  display: block;
+  margin: 0 auto;
+  /* Knock out the white background of the source video against the
+     dark site background. Drop-shadow won't compose with blend modes,
+     so it's intentionally absent. */
+  mix-blend-mode: screen;
   will-change: transform;
-}
-@keyframes propeller-spin{
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .flight-reticle{
@@ -2182,7 +2157,6 @@ p{ margin:0; color:var(--ink-1); }
 @media (prefers-reduced-motion: reduce){
   .flight-content{ opacity: 1; transform: none; transition: none; }
   .flight-reticle{ opacity: 1; transition: none; }
-  .flight-propeller-image{ animation: none; }
 }
 
 @media (max-width: 880px){
@@ -2193,7 +2167,7 @@ p{ margin:0; color:var(--ink-1); }
     padding: 0 24px;
   }
   .flight-media{ min-height: 380px; }
-  .flight-engine-stack{ max-width: 480px; }
+  .flight-video{ max-width: 480px; }
   .flight-reticle-1, .flight-reticle-2{ display: none; }
   .flight-stats{
     flex-wrap: wrap;
@@ -2507,10 +2481,16 @@ p{ margin:0; color:var(--ink-1); }
           <span>SCAN · 100%</span>
         </div>
       </div>
-      <div class="flight-engine-stack">
-        <img class="flight-engine-image" src="./assets/motor.png" alt="NAS 2 series engine">
-        <img class="flight-propeller-image" src="./assets/propeller.png" alt="Carbon fiber propeller">
-      </div>
+      <video
+        class="flight-video"
+        src="./assets/engine-spinning.mp4"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+        aria-label="NAS 2 series engine with rotating propeller">
+      </video>
       <div class="flight-reticle flight-reticle-1" aria-hidden="true">
         <div class="flight-reticle-line"></div>
         <span class="flight-reticle-label">BOXER · 340CC</span>
@@ -3460,6 +3440,16 @@ p{ margin:0; color:var(--ink-1); }
   video.addEventListener('pause', () => { if (rafId){ cancelAnimationFrame(rafId); rafId = null; } });
   if (!video.paused) rafId = requestAnimationFrame(tick);
 })();
+</script>
+
+<script>
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.flight-video').forEach(v => {
+      v.pause();
+      v.removeAttribute('autoplay');
+      v.removeAttribute('loop');
+    });
+  }
 </script>
 
 </body>
