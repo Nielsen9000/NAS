@@ -1986,11 +1986,17 @@ p{ margin:0; color:var(--ink-1); }
   height: auto;
   display: block;
   margin: 0 auto;
-  /* Source video has a dark/black background; 'lighten' keeps only
-     pixels brighter than the site bg, so the black plate disappears
-     and the engine + propeller stay visible. Drop-shadow won't
-     compose with blend modes, so it's intentionally absent. */
-  mix-blend-mode: lighten;
+  /* Source has a black plate (AI video tools don't preserve alpha).
+     Radial mask fades the edges into transparency so the engine sits
+     cleanly inside the existing cyan glow and HUD framing. */
+  -webkit-mask-image: radial-gradient(circle at center,
+    black 0%,
+    black 52%,
+    transparent 88%);
+  mask-image: radial-gradient(circle at center,
+    black 0%,
+    black 52%,
+    transparent 88%);
   will-change: transform;
 }
 
