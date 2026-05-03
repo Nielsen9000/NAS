@@ -1105,6 +1105,165 @@ p{ margin:0; color:var(--ink-1); }
 @media (prefers-reduced-motion: reduce){
   .doc-status-dot{ animation:none; }
 }
+
+/* Engineering hero — engine spec module */
+.hero-engine-spec{ position:sticky; top:120px; }
+.engine-spec-frame{
+  position:relative;
+  background:rgba(13,42,49,0.4);
+  border:1px solid rgba(59,182,232,0.18);
+  padding:24px 24px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  transition:border-color 400ms ease, background 400ms ease;
+}
+.engine-spec-frame:hover{
+  border-color:rgba(59,182,232,0.32);
+  background:rgba(13,42,49,0.55);
+}
+.engine-spec-corner{
+  position:absolute;
+  width:12px; height:12px;
+  border:1px solid var(--accent);
+}
+.engine-spec-corner-tl{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+.engine-spec-corner-tr{ top:-1px; right:-1px; border-left:0; border-bottom:0; }
+.engine-spec-corner-bl{ bottom:-1px; left:-1px; border-right:0; border-top:0; }
+.engine-spec-corner-br{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+.engine-spec-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:14px;
+  margin-bottom:16px;
+  border-bottom:1px solid rgba(59,182,232,0.15);
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.engine-spec-label{ color:var(--accent); font-weight:500; }
+.engine-spec-id{ color:var(--ink-3); }
+.engine-spec-body{ display:flex; flex-direction:column; gap:10px; }
+.spec-row{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  opacity:0;
+  transform:translateX(-8px);
+  animation:spec-row-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.spec-row:nth-child(1){ animation-delay:0.4s; }
+.spec-row:nth-child(2){ animation-delay:0.5s; }
+.spec-row:nth-child(3){ animation-delay:0.6s; }
+.spec-row:nth-child(4){ animation-delay:0.7s; }
+.spec-row:nth-child(5){ animation-delay:0.8s; }
+.spec-row:nth-child(6){ animation-delay:0.9s; }
+@keyframes spec-row-reveal{
+  to { opacity:1; transform:translateX(0); }
+}
+.spec-row-label{
+  font-size:9px;
+  letter-spacing:0.22em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+  font-weight:500;
+}
+.spec-row-value{
+  font-size:11px;
+  letter-spacing:0.05em;
+  color:var(--ink-0);
+  font-weight:500;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.spec-row-status .spec-row-value{ color:#6ee0a1; }
+.spec-status-dot{
+  width:6px; height:6px;
+  border-radius:50%;
+  background:#6ee0a1;
+  animation:spec-status-pulse 1.8s ease-in-out infinite;
+}
+@keyframes spec-status-pulse{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%{ opacity:0.4; transform:scale(0.85); }
+}
+.engine-spec-footer{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid rgba(59,182,232,0.15);
+  font-size:9px;
+  letter-spacing:0.18em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+  opacity:0;
+  animation:spec-footer-reveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay:1.1s;
+}
+@keyframes spec-footer-reveal{ to { opacity:1; } }
+@media (prefers-reduced-motion: reduce){
+  .spec-row,
+  .engine-spec-footer{
+    opacity:1;
+    transform:none;
+    animation:none;
+  }
+  .spec-status-dot{ animation:none; }
+}
+
+/* Engineering closing CTA */
+.company-closing-cta{ padding:100px 0; text-align:center; }
+.closing-cta-content{ max-width:800px; margin:0 auto; }
+.closing-cta-statement{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(28px, 3.2vw, 44px);
+  font-weight:400;
+  font-style:italic;
+  line-height:1.3;
+  color:var(--ink-0);
+  letter-spacing:-0.01em;
+  margin:0 0 48px;
+}
+.closing-cta-statement .accent{ color:var(--accent); }
+.closing-cta-actions{
+  display:inline-flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.btn-pill-accent,
+.btn-pill-outline{
+  display:inline-flex;
+  align-items:center;
+  padding:14px 28px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  text-decoration:none;
+  border-radius:999px;
+  transition:background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.btn-pill-accent{
+  background:var(--accent);
+  color:#001218;
+  border:1px solid var(--accent);
+}
+.btn-pill-accent:hover{ background:transparent; color:var(--accent); }
+.btn-pill-outline{
+  background:transparent;
+  color:var(--ink-0);
+  border:1px solid rgba(59,182,232,0.4);
+}
+.btn-pill-outline:hover{ border-color:var(--accent); color:var(--accent); }
+@media (max-width: 600px){
+  .closing-cta-actions{ flex-direction:column; width:100%; }
+}
 </style>
 </head>
 <body>
@@ -1123,8 +1282,8 @@ p{ margin:0; color:var(--ink-1); }
     <nav class="nav" aria-label="Primary">
       <a href="/#platforms">Platforms</a>
       <a href="/#anatomy">Anatomy</a>
-      <a href="/engineering">Engineering</a>
-      <a href="/nas" class="active">NAS</a>
+      <a href="/engineering" class="active">Engineering</a>
+      <a href="/nas">NAS</a>
       <a href="/conduct.html">Conduct</a>
       <a href="/contact.html">Contact</a>
     </nav>
@@ -1143,61 +1302,65 @@ p{ margin:0; color:var(--ink-1); }
     <div class="wrap">
       <div class="company-hero-grid">
 
-        <aside class="hero-doc-stack reveal" aria-hidden="true">
-          <div class="doc-stack-frame">
-            <div class="doc-stack-corner doc-stack-corner-tl"></div>
-            <div class="doc-stack-corner doc-stack-corner-tr"></div>
-            <div class="doc-stack-corner doc-stack-corner-bl"></div>
-            <div class="doc-stack-corner doc-stack-corner-br"></div>
+        <aside class="hero-engine-spec reveal" aria-hidden="true">
+          <div class="engine-spec-frame">
+            <div class="engine-spec-corner engine-spec-corner-tl"></div>
+            <div class="engine-spec-corner engine-spec-corner-tr"></div>
+            <div class="engine-spec-corner engine-spec-corner-bl"></div>
+            <div class="engine-spec-corner engine-spec-corner-br"></div>
 
-            <div class="doc-stack-header">
-              <span class="doc-stack-label">NAS · DOC PROFILE</span>
-              <span class="doc-stack-id">/ 01-2026</span>
+            <div class="engine-spec-header">
+              <span class="engine-spec-label">TYR · ENGINE SPEC</span>
+              <span class="engine-spec-id">/ 2C·2E</span>
             </div>
 
-            <div class="doc-stack-body">
-              <div class="doc-row">
-                <span class="doc-row-label">CLASSIFICATION</span>
-                <span class="doc-row-value">INTERNAL · CONTROLLED</span>
+            <div class="engine-spec-body">
+              <div class="spec-row">
+                <span class="spec-row-label">POWER OUTPUT</span>
+                <span class="spec-row-value">35 hp</span>
               </div>
-              <div class="doc-row">
-                <span class="doc-row-label">REVISION</span>
-                <span class="doc-row-value">01 · 2026</span>
+              <div class="spec-row">
+                <span class="spec-row-label">DISPLACEMENT</span>
+                <span class="spec-row-value">340 cm³</span>
               </div>
-              <div class="doc-row">
-                <span class="doc-row-label">FORMAT</span>
-                <span class="doc-row-value">COMPANY PROFILE</span>
+              <div class="spec-row">
+                <span class="spec-row-label">DRY WEIGHT</span>
+                <span class="spec-row-value">9 kg</span>
               </div>
-              <div class="doc-row">
-                <span class="doc-row-label">JURISDICTION</span>
-                <span class="doc-row-value">DENMARK · EU</span>
+              <div class="spec-row">
+                <span class="spec-row-label">CONFIGURATION</span>
+                <span class="spec-row-value">2-CYL · BOXER</span>
               </div>
-              <div class="doc-row doc-row-status">
-                <span class="doc-row-label">STATUS</span>
-                <span class="doc-row-value">
-                  <span class="doc-status-dot"></span>
-                  ACTIVE
+              <div class="spec-row">
+                <span class="spec-row-label">COOLING</span>
+                <span class="spec-row-value">AIR</span>
+              </div>
+              <div class="spec-row spec-row-status">
+                <span class="spec-row-label">STATUS</span>
+                <span class="spec-row-value">
+                  <span class="spec-status-dot"></span>
+                  PRODUCTION
                 </span>
               </div>
             </div>
 
-            <div class="doc-stack-footer">
+            <div class="engine-spec-footer">
               <span>NORDIC ADVANCED SYSTEMS APS</span>
-              <span>CVR · 45976645</span>
+              <span>TYR SERIES · 2026</span>
             </div>
           </div>
         </aside>
 
         <div class="company-hero-content">
-          <div class="section-eyebrow reveal">/ NAS · COMPANY PROFILE 2026</div>
+          <div class="section-eyebrow reveal">/ ENGINEERING · TECHNICAL PROFILE</div>
 
           <h1 class="company-hero-headline reveal">
-            Built on <span class="accent">operational</span><br>
-            <span class="accent">experience</span>
+            Purpose-built<br>
+            <span class="accent">propulsion</span>
           </h1>
 
           <p class="company-hero-lead reveal">
-            Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion.
+            The TYR series is engineered from the ground up for continuous mission-critical operation. Not adapted from hobby or industrial engines — designed for one purpose: predictable performance under sustained operational load.
           </p>
         </div>
 
@@ -1208,180 +1371,178 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       2. ABOUT NAS
-       ========================================= -->
-  <section class="company-section company-about">
-    <div class="wrap">
-
-      <div class="section-eyebrow reveal">/ 01 — ABOUT</div>
-
-      <h2 class="section-headline reveal">
-        Engines built for <span class="accent">actual operations.</span>
-      </h2>
-
-      <div class="company-pullquote reveal">
-        <div class="pullquote-mark" aria-hidden="true">"</div>
-        <blockquote>
-          Predictable mechanical and thermal behavior, ensuring overall platform performance is well understood in operational use.
-        </blockquote>
-        <div class="pullquote-attribution">— DESIGN PRINCIPLE</div>
-      </div>
-
-      <div class="company-body-grid reveal">
-        <p>
-          Nordic Advanced Systems is a Danish company that develops and manufactures propulsion systems for UAV platforms. The engines are used in operations where propulsion must function correctly and predictably throughout the mission. The focus is on stable operation, consistent quality, and known behavior under load.
-        </p>
-        <p>
-          In many UAV operations, it is essential that the propulsion system behaves consistently from unit to unit and can be produced and delivered in series with known characteristics. NAS develops engines based on this premise.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =========================================
-       3. HOW WE WORK
-       ========================================= -->
-  <section class="company-section company-method">
-    <div class="wrap">
-
-      <div class="section-eyebrow reveal">/ 02 — METHOD</div>
-
-      <h2 class="section-headline reveal">
-        An industrial supplier with <span class="accent">clear responsibility.</span>
-      </h2>
-
-      <div class="method-statements">
-
-        <div class="method-statement reveal">
-          <div class="method-num">01</div>
-          <div class="method-content">
-            <h3 class="method-title">Established processes.</h3>
-            <p class="method-text">NAS is organized as an industrial supplier with established processes and clear ownership of both design and delivery.</p>
-          </div>
-        </div>
-
-        <div class="method-statement reveal">
-          <div class="method-num">02</div>
-          <div class="method-content">
-            <h3 class="method-title">Operational background.</h3>
-            <p class="method-text">The company draws on direct experience from operational military environments. This experience shapes our approach to function, testing, and accountability for what is delivered.</p>
-          </div>
-        </div>
-
-        <div class="method-statement reveal">
-          <div class="method-num">03</div>
-          <div class="method-content">
-            <h3 class="method-title">Clear decision-making.</h3>
-            <p class="method-text">The working method is characterized by clear decision-making and clear ownership — from initial specification through to final delivery.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =========================================
-       3. COLLABORATION FRAMEWORK
+       2. DESIGN PHILOSOPHY
        ========================================= -->
   <section class="company-section">
-    <div class="wrap two-col reveal">
-      <div>
-        <div class="section-eyebrow">/ 03 — COLLABORATION</div>
-        <h2>Clear specifications. <span class="accent">Defined frameworks.</span></h2>
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 01 — DESIGN PHILOSOPHY</div>
+      <h2>Designed for <span class="accent">real operating conditions.</span></h2>
+      <p class="lead">
+        The engines are developed based on actual operating conditions and known load profiles.
+      </p>
+
+      <div class="spec-card-grid">
+        <div class="spec-card">
+          <div class="num">/ 01</div>
+          <div class="title">Stable Rotational Speed</div>
+          <div class="desc">Throughout the mission, without unexpected drops or surges.</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 02</div>
+          <div class="title">Controlled Vibration</div>
+          <div class="desc">During operation, minimizing structural stress on the platform.</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 03</div>
+          <div class="title">Predictable Thermal Behavior</div>
+          <div class="desc">Until mission completion, with known limits and margins.</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 04</div>
+          <div class="title">Consistent Performance</div>
+          <div class="desc">Across series production, unit to unit.</div>
+        </div>
       </div>
-      <div class="body">
-        <p>NAS works with clear specifications and defined frameworks.</p>
-        <p>Configurations are finalized before production. Any changes are handled in a structured manner and through direct dialogue between technical counterparts.</p>
-        <p>Deliveries are carried out at the agreed pace and in the agreed form. If underlying conditions change, this is communicated early.</p>
-        <blockquote class="pull-quote">
-          When underlying conditions change, this is communicated early.
-        </blockquote>
-      </div>
+
+      <p class="spec-card-closing">
+        Design choices are made to ensure stable and predictable function for the duration of the mission, based on known load profiles and operating conditions.
+      </p>
     </div>
   </section>
 
   <!-- =========================================
-       4. REGISTERED OFFICE
+       3. PRODUCTION & QUALITY
        ========================================= -->
-  <section class="company-section company-location">
+  <section class="company-section company-production">
     <div class="wrap">
 
-      <div class="section-eyebrow reveal">/ 04 — LOCATION</div>
+      <div class="section-eyebrow reveal">/ 02 — PRODUCTION & QUALITY</div>
 
       <h2 class="section-headline reveal">
-        Co-located with <span class="accent">UAS Denmark Test Center.</span>
+        Assembled and tested <span class="accent">in Denmark.</span>
       </h2>
 
-      <div class="location-grid reveal">
-
-        <div class="location-info">
-          <div class="location-block">
-            <div class="location-label">REGISTERED OFFICE</div>
-            <div class="location-address">
-              Lufthavnvej 131, Beldringe<br>
-              5270 Odense N<br>
-              Denmark
-            </div>
-          </div>
-
-          <p class="location-desc">
-            Our registered office is located at Hans Christian Andersen Airport in Odense, co-located with UAS Denmark Test Center — an unmanned systems technology test and development center, run as a collaboration between Hans Christian Andersen Airport, Odense Municipality, and the University of Southern Denmark.
-          </p>
-        </div>
-
-        <div class="location-coordinates" aria-hidden="true">
-          <div class="coord-display">
-            <div class="coord-corner coord-corner-tl"></div>
-            <div class="coord-corner coord-corner-tr"></div>
-            <div class="coord-corner coord-corner-bl"></div>
-            <div class="coord-corner coord-corner-br"></div>
-
-            <div class="coord-crosshair">
-              <div class="coord-cross-h"></div>
-              <div class="coord-cross-v"></div>
-              <div class="coord-cross-circle"></div>
-            </div>
-
-            <div class="coord-readout coord-readout-lat">
-              <div class="coord-readout-label">LAT</div>
-              <div class="coord-readout-value">55.4732° N</div>
-            </div>
-
-            <div class="coord-readout coord-readout-lng">
-              <div class="coord-readout-label">LNG</div>
-              <div class="coord-readout-value">10.3308° E</div>
-            </div>
-
-            <div class="coord-readout coord-readout-elev">
-              <div class="coord-readout-label">ELEV</div>
-              <div class="coord-readout-value">17 M</div>
-            </div>
-
-            <div class="coord-readout coord-readout-status">
-              <div class="coord-status-dot"></div>
-              <div class="coord-readout-value">REGISTERED</div>
-            </div>
-          </div>
-        </div>
-
+      <div class="production-intro reveal">
+        <p>
+          All engines are assembled and tested in Denmark. Production is structured for series assembly in a controlled environment with defined workflows and inspection points — supporting consistent output and repeatable quality across deliveries.
+        </p>
       </div>
 
+      <div class="testrig-frame reveal">
+        <img src="../assets/tyr-test.jpg"
+             alt="TYR engine on test rig with dynamometer and exhaust ducting"
+             class="testrig-image" />
+
+        <div class="testrig-hud" aria-hidden="true">
+          <div class="testrig-corner testrig-corner-tl"></div>
+          <div class="testrig-corner testrig-corner-tr"></div>
+          <div class="testrig-corner testrig-corner-bl"></div>
+          <div class="testrig-corner testrig-corner-br"></div>
+        </div>
+
+        <div class="testrig-caption">
+          <span class="testrig-caption-label">DOCUMENTED</span>
+          <span class="testrig-caption-text">TYR engine · dynamometer test rig · Denmark</span>
+        </div>
+      </div>
+
+      <div class="process-diagram reveal" aria-label="Quality process flow">
+        <div class="process-node">
+          <div class="process-num">01</div>
+          <div class="process-label">COLD-RUN<br>TESTING</div>
+          <div class="process-desc">Mechanical verification under controlled conditions</div>
+        </div>
+        <div class="process-connector" aria-hidden="true"></div>
+        <div class="process-node">
+          <div class="process-num">02</div>
+          <div class="process-label">HOT-RUN<br>TESTING</div>
+          <div class="process-desc">Performance validation at operational load</div>
+        </div>
+        <div class="process-connector" aria-hidden="true"></div>
+        <div class="process-node">
+          <div class="process-num">03</div>
+          <div class="process-label">VISUAL<br>INSPECTION</div>
+          <div class="process-desc">Final review before unit release</div>
+        </div>
+        <div class="process-connector" aria-hidden="true"></div>
+        <div class="process-node">
+          <div class="process-num">04</div>
+          <div class="process-label">UNIT<br>TRACEABILITY</div>
+          <div class="process-desc">Documentation provided with every delivery</div>
+        </div>
+      </div>
+
+      <div class="production-facility-note reveal">
+        <div class="facility-note-label">FACILITY · CLASSIFIED</div>
+        <p class="facility-note-text">
+          Production is located within an existing industrial facility in Denmark, approximately two hours by car from our registered office in Odense. <strong>For security and discretion, the production address is not publicly disclosed.</strong>
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================
+       4. TYR SERIES INTRO
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 03 — PRODUCT</div>
+      <h2>The <span class="accent">TYR Series.</span></h2>
+      <p class="lead">
+        Purpose-built UAV engines for continuous operation.
+      </p>
+      <div class="body" style="max-width:780px;">
+        <p>TYR 2C and TYR 2E are not modified hobby or industrial engines. They are purpose-built UAV engines, designed from the ground up for:</p>
+      </div>
+
+      <div class="product-grid">
+        <div class="product-item">
+          <div class="num">/ 01</div>
+          <div class="title">Constant high load</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 02</div>
+          <div class="title">Direct propeller coupling</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 03</div>
+          <div class="title">Long endurance</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 04</div>
+          <div class="title">Mechanical and thermal stability</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 05</div>
+          <div class="title">Precision-balanced crankshaft</div>
+        </div>
+        <div class="product-item">
+          <div class="num">/ 06</div>
+          <div class="title">High-grade bearings rated for continuous cyclic loads</div>
+        </div>
+      </div>
+
+      <div class="product-cta-row">
+        <a class="cta-link" href="/#platforms">View full TYR 2 specifications <span aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
   <!-- =========================================
        5. CLOSING CTA
        ========================================= -->
-  <section class="closing-cta">
-    <div class="wrap reveal">
-      <p class="statement">
-        Predictable function. Clear agreements. <span class="accent">Accountability through to mission completion.</span>
-      </p>
-      <a class="btn btn-primary" href="/contact.html">
-        Speak with engineering <span class="arrow" aria-hidden="true">→</span>
-      </a>
+  <section class="company-section company-closing-cta">
+    <div class="wrap">
+      <div class="closing-cta-content reveal">
+        <p class="closing-cta-statement">
+          Engineered for endurance. <span class="accent">Tested for the mission.</span>
+        </p>
+        <div class="closing-cta-actions">
+          <a href="/#platforms" class="btn-pill-accent">Explore TYR 2 Series →</a>
+          <a href="/contact.html" class="btn-pill-outline">Speak with engineering</a>
+        </div>
+      </div>
     </div>
   </section>
 
