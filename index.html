@@ -1995,26 +1995,28 @@ p{ margin:0; color:var(--ink-1); }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  z-index: 1;
+  z-index: 2;
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
 }
 .flight-propeller-image{
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  height: auto;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
-  z-index: 2;
+  z-index: 3;
+  transform: translate(-50%, -50%);
   animation: propeller-spin 3s linear infinite;
   transform-origin: center center;
   will-change: transform;
 }
-/* Offset positions the propeller hub over the engine's drive shaft;
-   translate stays constant while rotate sweeps so the prop spins
-   around its own hub rather than orbiting. */
+/* Keyframes preserve the centering translate so the propeller spins
+   around its own hub at the anchor point. */
 @keyframes propeller-spin{
-  from { transform: translate(4%, 8%) rotate(0deg); }
-  to   { transform: translate(4%, 8%) rotate(360deg); }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .flight-reticle{
