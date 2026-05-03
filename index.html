@@ -207,7 +207,7 @@ p{ margin:0; color:var(--ink-1); }
 .btn-pill-accent:hover{ background:#55c3ea; }
 
 /* -------------------------------------------------------------
-   Header — dark teal translucent (shared style across all pages)
+   Header
    ------------------------------------------------------------- */
 .site-header{
   position:fixed;
@@ -215,17 +215,41 @@ p{ margin:0; color:var(--ink-1); }
   left:0;
   right:0;
   z-index:100;
-  background:rgba(8,32,42,0.85);
-  border-bottom:1px solid var(--line-dark);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
+  background:transparent;
+  border-bottom:1px solid transparent;
+  transition:border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), backdrop-filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.site-header.is-scrolled{
+  background:rgba(255,255,255,0.85);
+  border-bottom-color:rgba(0,0,0,0.06);
+  box-shadow:0 4px 20px rgba(0,0,0,0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Transparent header over hero — swap text/logo to white (button stays accent) */
+.site-header .brand-wordmark,
+.site-header .brand-subline,
+.site-header .nav a,
+.site-header .brand-logo img,
+.site-header .btn-pill-accent{
+  transition:color 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.site-header:not(.is-scrolled) .brand-wordmark{ color:#ffffff; }
+.site-header:not(.is-scrolled) .brand-subline{ color:rgba(255,255,255,0.65); }
+.site-header:not(.is-scrolled) .nav a{ color:#ffffff; }
+.site-header:not(.is-scrolled) .brand-logo img{ filter:brightness(0) invert(1); }
 .header-inner{
+  max-width:none;
+  padding-inline:36px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:32px;
-  padding-block:20px;
+  padding-block:14px;
+}
+@media (max-width: 900px){
+  .header-inner{ padding-inline:20px; }
 }
 .brand{
   display:flex;
@@ -258,7 +282,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .site-header .brand-logo img{
   width:auto;
-  height:42px;
+  height:52px;
   filter:none;
 }
 .brand-text{
@@ -273,14 +297,14 @@ p{ margin:0; color:var(--ink-1); }
   font-size:16px;
   letter-spacing:0.22em;
   text-transform:uppercase;
-  color:#ffffff;
+  color:#0d2030;
 }
 .brand-subline{
   font-family:"JetBrains Mono", ui-monospace, monospace;
   font-size:11px;
   letter-spacing:0.15em;
   text-transform:uppercase;
-  color:var(--ink-3);
+  color:#6e7b85;
   margin-top:4px;
 }
 
@@ -292,7 +316,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .nav a{
   font-size:15px;
-  color:var(--ink-1);
+  color:#0d2030;
   font-weight:500;
   position:relative;
   padding:6px 0;
@@ -310,8 +334,6 @@ p{ margin:0; color:var(--ink-1); }
 }
 .nav a:hover{ color:var(--accent); }
 .nav a:hover::after{ transform:scaleX(1); }
-.nav a.active{ color:var(--accent); }
-.nav a.active::after{ transform:scaleX(1); }
 .nav a:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; border-radius:2px; }
 
 .header-cta{ display:flex; align-items:center; }
@@ -331,8 +353,10 @@ p{ margin:0; color:var(--ink-1); }
   gap:5px;
   position:relative;
   z-index:200;
-  color:#ffffff;
+  color:#0d2030;
+  transition:color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.site-header:not(.is-scrolled) .nav-toggle{ color:#ffffff; }
 .nav-toggle-line{
   width:22px;
   height:1.5px;
@@ -2766,10 +2790,44 @@ p{ margin:0; color:var(--ink-1); }
 </footer>
 
 <!-- =========================================
-     Fade reveal + smooth nav + form
+     Header scroll state + fade reveal + smooth nav + form
      ========================================= -->
 <script>
 (function(){
+  // Header theme (rAF-throttled) — white frosted when probe is over a light
+  // section, transparent (with light text) over dark sections. Probe sits
+  // just below the header. A 60px buffer matches the section-dividers'
+  // midpoint, so the swap lands at the cleanest blend point of the gradient.
+  const header = document.getElementById('site-header');
+  const lightSections = document.querySelectorAll('.anatomy-section');
+  let headerTicking = false;
+  const updateHeader = () => {
+    const headerH = header.offsetHeight || 50;
+    const probeY = headerH + 4;
+    const buffer = 60;
+
+    let overLight = false;
+    lightSections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top - buffer <= probeY && rect.bottom + buffer > probeY) {
+        overLight = true;
+      }
+    });
+
+    if (overLight) header.classList.add('is-scrolled');
+    else header.classList.remove('is-scrolled');
+    headerTicking = false;
+  };
+  const onScroll = () => {
+    if (!headerTicking){
+      headerTicking = true;
+      requestAnimationFrame(updateHeader);
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+  window.addEventListener('resize', onScroll, { passive:true });
+  updateHeader();
+
   // IntersectionObserver reveal
   const reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window){
