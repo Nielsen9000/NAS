@@ -1987,16 +1987,19 @@ p{ margin:0; color:var(--ink-1); }
   display: block;
   margin: 0 auto;
   /* Source has a black plate (AI video tools don't preserve alpha).
-     Radial mask fades the edges into transparency so the engine sits
-     cleanly inside the existing cyan glow and HUD framing. */
+     'lighten' kills the black plate inside, the radial mask softens
+     the rectangular edge, and the contrast filter pushes near-black
+     compression noise to true black so it blends cleanly. */
+  mix-blend-mode: lighten;
+  filter: contrast(1.12) brightness(1.05);
   -webkit-mask-image: radial-gradient(circle at center,
     black 0%,
-    black 52%,
-    transparent 88%);
+    black 60%,
+    transparent 92%);
   mask-image: radial-gradient(circle at center,
     black 0%,
-    black 52%,
-    transparent 88%);
+    black 60%,
+    transparent 92%);
   will-change: transform;
 }
 
