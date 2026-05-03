@@ -1982,7 +1982,7 @@ p{ margin:0; color:var(--ink-1); }
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 720px;
+  max-width: 520px;
   margin: 0 auto;
   aspect-ratio: 1 / 1;
   display: flex;
@@ -2000,9 +2000,10 @@ p{ margin:0; color:var(--ink-1); }
 }
 .flight-propeller-image{
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 70%;
+  /* Anchor where the engine drive shaft sits in motor.png */
+  top: 54%;
+  left: 58%;
+  width: 85%;
   height: auto;
   aspect-ratio: 1 / 1;
   object-fit: contain;
@@ -2012,8 +2013,6 @@ p{ margin:0; color:var(--ink-1); }
   transform-origin: center center;
   will-change: transform;
 }
-/* Keyframes preserve the centering translate so the propeller spins
-   around its own hub at the anchor point. */
 @keyframes propeller-spin{
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to   { transform: translate(-50%, -50%) rotate(360deg); }
