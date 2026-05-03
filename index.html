@@ -2009,9 +2009,12 @@ p{ margin:0; color:var(--ink-1); }
   transform-origin: center center;
   will-change: transform;
 }
+/* Offset positions the propeller hub over the engine's drive shaft;
+   translate stays constant while rotate sweeps so the prop spins
+   around its own hub rather than orbiting. */
 @keyframes propeller-spin{
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: translate(4%, 8%) rotate(0deg); }
+  to   { transform: translate(4%, 8%) rotate(360deg); }
 }
 
 .flight-reticle{
