@@ -1023,7 +1023,7 @@ p{ margin:0; color:var(--ink-1); }
    ------------------------------------------------------------- */
 .product-split{
   display:grid;
-  grid-template-columns:1fr 1.22fr;  /* ≈ 45/55 */
+  grid-template-columns:35fr 65fr;
   gap:72px;
   align-items:start;
 }
@@ -1031,36 +1031,25 @@ p{ margin:0; color:var(--ink-1); }
   min-width:0;
 }
 .product-blueprint{
-  position:relative;
   width:100%;
-  aspect-ratio:3 / 4;
-  border:1px solid rgba(59,182,232,0.3);
-  overflow:hidden;
-  background:rgba(8,32,42,0.4);
   display:block;
 }
 .product-blueprint-img{
   width:100%;
-  height:100%;
-  object-fit:cover;
+  height:auto;
+  object-fit:contain;
   display:block;
 }
 .product-blueprint-caption{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
   display:flex;
   align-items:center;
   gap:12px;
-  padding:12px 56px;
-  background:linear-gradient(to top, rgba(8,32,42,0.85), transparent);
+  margin-top:14px;
   font-family:"JetBrains Mono",ui-monospace,monospace;
   font-size:10px;
   letter-spacing:0.22em;
   text-transform:uppercase;
   color:var(--ink-1);
-  z-index:2;
 }
 .product-blueprint-caption .tag{
   color:var(--accent);
@@ -1458,17 +1447,13 @@ p{ margin:0; color:var(--ink-1); }
 
         <div class="product-media">
           <div class="product-blueprint">
-            <div class="testrig-corner testrig-corner-tl"></div>
-            <div class="testrig-corner testrig-corner-tr"></div>
-            <div class="testrig-corner testrig-corner-bl"></div>
-            <div class="testrig-corner testrig-corner-br"></div>
             <img src="../assets/blueprint.png"
                  alt="NAS 2 dual-cylinder boxer engine — technical schematic"
                  class="product-blueprint-img" />
-            <div class="product-blueprint-caption" aria-hidden="true">
-              <span class="tag">SCHEMATIC</span>
-              <span>NAS 2 · DUAL-CYLINDER BOXER · DOC-2026</span>
-            </div>
+          </div>
+          <div class="product-blueprint-caption" aria-hidden="true">
+            <span class="tag">BLUEPRINT</span>
+            <span>NAS 2 · BOXER-TWIN ARCHITECTURE</span>
           </div>
         </div>
 
