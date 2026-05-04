@@ -370,46 +370,6 @@ p{ margin:0; color:var(--ink-1); }
   font-size:14px;
   opacity:0.7;
 }
-.production-facility-note{
-  max-width:800px;
-  margin:0 auto;
-  padding:40px 48px;
-  background:rgba(59,182,232,0.04);
-  border:1px solid rgba(59,182,232,0.15);
-  border-radius:8px;
-  position:relative;
-}
-.production-facility-note::before{
-  content:"";
-  position:absolute;
-  top:24px;
-  left:24px;
-  width:8px;
-  height:8px;
-  background:#ef5350;
-  border-radius:50%;
-  animation:process-pulse 2s ease-in-out infinite;
-}
-.facility-note-label{
-  font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:11px;
-  letter-spacing:0.22em;
-  color:#ef5350;
-  margin-bottom:16px;
-  margin-left:24px;
-  font-weight:500;
-}
-.facility-note-text{
-  color:var(--ink-1);
-  font-size:16px;
-  line-height:1.6;
-  margin:0;
-}
-.facility-note-text strong{
-  color:var(--ink-0);
-  font-weight:500;
-}
-
 /* Production hero — full-bleed test rig with dark gradient overlay */
 .production-hero{
   position:relative;
@@ -575,9 +535,6 @@ p{ margin:0; color:var(--ink-1); }
 }
 .company-production-protocol .process-diagram{
   margin-bottom:96px;
-}
-.company-production-protocol .production-facility-note{
-  margin:0 auto;
 }
 @media (prefers-reduced-motion: reduce){
   .production-hero-scroll-line{ animation:none; }
@@ -1439,13 +1396,6 @@ p{ margin:0; color:var(--ink-1); }
           <div class="process-label">UNIT<br>TRACEABILITY</div>
           <div class="process-desc">Documentation provided with every delivery</div>
         </div>
-      </div>
-
-      <div class="production-facility-note">
-        <div class="facility-note-label">FACILITY · CLASSIFIED</div>
-        <p class="facility-note-text">
-          Production is located within an existing industrial facility in Denmark, approximately two hours by car from our registered office in Odense. <strong>For security and discretion, the production address is not publicly disclosed.</strong>
-        </p>
       </div>
 
     </div>
