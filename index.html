@@ -2280,6 +2280,13 @@ p{ margin:0; color:var(--ink-1); }
   align-items: center;
   gap: 24px;
 }
+.loader-logo {
+  width: 56px;
+  height: auto;
+  margin-bottom: 4px;
+  filter: brightness(0) invert(1);
+  opacity: 0.95;
+}
 .loader-wordmark {
   font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 12px;
@@ -2374,6 +2381,7 @@ p{ margin:0; color:var(--ink-1); }
 
 <div class="site-loader" id="site-loader" aria-hidden="true">
   <div class="loader-inner">
+    <img class="loader-logo" src="assets/logo.png" alt="" />
     <div class="loader-wordmark">NORDIC ADVANCED SYSTEMS</div>
     <div class="loader-bar-wrap">
       <div class="loader-bar" id="loader-bar"></div>
