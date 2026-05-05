@@ -1023,40 +1023,166 @@ p{ margin:0; color:var(--ink-1); }
    ------------------------------------------------------------- */
 .product-split{
   display:grid;
-  grid-template-columns:35fr 65fr;
-  gap:72px;
-  align-items:start;
+  grid-template-columns:45fr 55fr;
+  gap:64px;
+  align-items:stretch;
 }
 .product-media{
   min-width:0;
-}
-.product-blueprint{
-  width:100%;
-  display:block;
-}
-.product-blueprint-img{
-  width:100%;
-  height:auto;
-  object-fit:contain;
-  display:block;
-}
-.product-blueprint-caption{
   display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* Engine Profile spec card — replaces raw blueprint with branded HUD frame */
+.engine-profile-card{
+  position:relative;
+  background:var(--bg-base);
+  border:1px solid rgba(59,182,232,0.18);
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  transition:border-color 400ms ease;
+}
+.engine-profile-card:hover{
+  border-color:rgba(59,182,232,0.32);
+}
+.ep-corner{
+  position:absolute;
+  width:14px; height:14px;
+  border:1px solid var(--accent);
+  z-index:3;
+  pointer-events:none;
+}
+.ep-corner-tl{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+.ep-corner-tr{ top:-1px; right:-1px; border-left:0; border-bottom:0; }
+.ep-corner-bl{ bottom:-1px; left:-1px; border-right:0; border-top:0; }
+.ep-corner-br{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+
+.ep-header{
+  display:flex;
+  justify-content:space-between;
   align-items:center;
-  gap:12px;
-  margin-top:14px;
-  font-family:"JetBrains Mono",ui-monospace,monospace;
+  padding:16px 22px;
+  border-bottom:1px solid rgba(59,182,232,0.15);
   font-size:10px;
   letter-spacing:0.22em;
   text-transform:uppercase;
-  color:var(--ink-1);
+  white-space:nowrap;
 }
-.product-blueprint-caption .tag{
-  color:var(--accent);
-  padding:3px 8px;
-  border:1px solid rgba(59,182,232,0.4);
-  background:rgba(59,182,232,0.08);
+.ep-label{ color:var(--accent); font-weight:500; }
+.ep-id{ color:var(--ink-3); }
+
+.ep-visual{
+  position:relative;
+  padding:28px 22px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:240px;
+  overflow:hidden;
+}
+.ep-visual::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(to right, rgba(59,182,232,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59,182,232,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  pointer-events:none;
+  opacity:0.7;
+}
+.ep-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(59,182,232,0.02) 3px,
+    rgba(59,182,232,0.02) 4px
+  );
+  pointer-events:none;
+}
+.ep-engine{
+  position:relative;
+  z-index:1;
+  width:90%;
+  max-width:90%;
+  max-height:90%;
+  height:auto;
+  margin:auto;
+  object-fit:contain;
+  display:block;
+}
+.ep-tick-axes{
+  position:absolute;
+  inset:18px 14px;
+  pointer-events:none;
+  z-index:0;
+  border:1px dashed rgba(59,182,232,0.10);
+}
+
+.ep-specs{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  border-top:1px solid rgba(59,182,232,0.15);
+}
+.ep-spec{
+  padding:14px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  border-right:1px solid rgba(59,182,232,0.10);
+}
+.ep-spec:last-child{ border-right:0; }
+.ep-spec-label{
+  font-size:9px;
+  letter-spacing:0.22em;
+  color:var(--ink-3);
+  text-transform:uppercase;
   font-weight:500;
+}
+.ep-spec-value{
+  font-size:13px;
+  letter-spacing:0.05em;
+  color:var(--ink-0);
+  font-weight:500;
+}
+
+.ep-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 22px;
+  border-top:1px solid rgba(59,182,232,0.15);
+  font-size:10px;
+  letter-spacing:0.22em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+}
+.ep-status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#6ee0a1;
+}
+.ep-status-dot{
+  width:6px; height:6px;
+  border-radius:50%;
+  background:#6ee0a1;
+  animation:ep-status-pulse 1.8s ease-in-out infinite;
+}
+@keyframes ep-status-pulse{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%   { opacity:0.4; transform:scale(0.85); }
+}
+@media (prefers-reduced-motion: reduce){
+  .ep-status-dot{ animation:none; }
 }
 .product-content{
   display:flex;
@@ -1064,35 +1190,35 @@ p{ margin:0; color:var(--ink-1); }
   min-width:0;
 }
 .product-content .section-eyebrow{
-  margin-bottom:24px;
+  margin-bottom:18px;
 }
 .product-content h2{
-  font-size:clamp(26px, 2.6vw, 38px);
+  font-size:clamp(22px, 2.1vw, 32px);
   letter-spacing:-0.02em;
   line-height:1.15;
-  margin:0 0 24px;
+  margin:0 0 16px;
   max-width:none;
 }
 .product-content h2 .accent{ color:var(--accent); }
 .product-lead{
   color:var(--ink-1);
-  font-size:16px;
-  line-height:1.65;
-  margin:0 0 32px;
+  font-size:14.5px;
+  line-height:1.55;
+  margin:0 0 20px;
   max-width:none;
 }
 .product-grid{
   display:grid;
   grid-template-columns:repeat(2, 1fr);
   gap:1px;
-  margin:0 0 32px;
+  margin:0 0 14px;
   background:var(--line-dark);
   border:1px solid var(--line-dark);
 }
 .product-item{
   background:var(--bg-base);
-  padding:22px 20px;
-  display:flex; flex-direction:column; gap:8px;
+  padding:14px 16px;
+  display:flex; flex-direction:column; gap:4px;
   min-height:0;
 }
 .product-item .num{
@@ -1103,11 +1229,19 @@ p{ margin:0; color:var(--ink-1); }
 }
 .product-item .title{
   font-family:'Inter',system-ui,sans-serif;
-  font-size:15px; font-weight:600;
-  letter-spacing:-0.01em; line-height:1.3;
+  font-size:14px; font-weight:600;
+  letter-spacing:-0.01em; line-height:1.25;
   color:var(--ink-0);
 }
-.product-cta-row{ margin-top:0; }
+.product-item .desc{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:12.5px;
+  line-height:1.45;
+  color:var(--ink-2);
+  margin:1px 0 0;
+}
+.product-cta-row{ margin-top:4px; }
+.company-section.company-product{ padding:64px 0; }
 
 /* -------------------------------------------------------------
    Closing CTA (Section 10)
@@ -1410,7 +1544,7 @@ p{ margin:0; color:var(--ink-1); }
           <div class="num">/ 01</div>
           <div class="title">Stable Rotational Speed</div>
           <div class="desc">Throughout the mission, without unexpected drops or surges.</div>
-          <div class="spec-card-spec">± 50 RPM under load</div>
+          <div class="spec-card-spec">RPM under load</div>
         </div>
         <div class="spec-card">
           <div class="num">/ 02</div>
@@ -1441,25 +1575,57 @@ p{ margin:0; color:var(--ink-1); }
   <!-- =========================================
        4. NAS SERIES INTRO — split 2-column with image placeholder
        ========================================= -->
-  <section class="company-section company-product">
+  <section class="company-section company-product" id="nas-series">
     <div class="wrap">
       <div class="product-split reveal">
 
         <div class="product-media">
-          <div class="product-blueprint">
-            <img src="../assets/blueprint.png"
-                 alt="NAS 2 dual-cylinder boxer engine — technical schematic"
-                 class="product-blueprint-img" />
-          </div>
-          <div class="product-blueprint-caption" aria-hidden="true">
-            <span class="tag">BLUEPRINT</span>
-            <span>NAS 2 · BOXER-TWIN ARCHITECTURE</span>
+          <div class="engine-profile-card" aria-label="NAS 2 engine profile card">
+            <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
+            <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
+            <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
+            <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
+
+            <div class="ep-header">
+              <span class="ep-label">NAS · Engine Profile</span>
+              <span class="ep-id">/ 02-2026</span>
+            </div>
+
+            <div class="ep-visual">
+              <div class="ep-tick-axes" aria-hidden="true"></div>
+              <img src="../assets/motor_blueprint_TRUE_alpha.png"
+                   alt="NAS 2 dual-cylinder boxer engine — technical schematic"
+                   class="ep-engine" />
+            </div>
+
+            <div class="ep-specs">
+              <div class="ep-spec">
+                <span class="ep-spec-label">Config</span>
+                <span class="ep-spec-value">Boxer · Twin</span>
+              </div>
+              <div class="ep-spec">
+                <span class="ep-spec-label">Cylinders</span>
+                <span class="ep-spec-value">2</span>
+              </div>
+              <div class="ep-spec">
+                <span class="ep-spec-label">Drive</span>
+                <span class="ep-spec-value">Direct</span>
+              </div>
+            </div>
+
+            <div class="ep-footer">
+              <span>Boxer-twin architecture</span>
+              <span class="ep-status">
+                <span class="ep-status-dot" aria-hidden="true"></span>
+                Active
+              </span>
+            </div>
           </div>
         </div>
 
         <div class="product-content">
           <div class="section-eyebrow">/ 03 — PRODUCT</div>
-          <h2>The <span class="accent">NAS Series</span> — Purpose-built UAV engines for continuous operation</h2>
+          <h2>The <span class="accent">NAS Series</span> — Purpose-built<br>UAV engines for continuous operation</h2>
           <p class="product-lead">
             NAS 2C and NAS 2E are not modified hobby or industrial engines. They are purpose-built UAV engines, designed from the ground up for:
           </p>
@@ -1468,26 +1634,32 @@ p{ margin:0; color:var(--ink-1); }
             <div class="product-item">
               <div class="num">/ 01</div>
               <div class="title">Constant high load</div>
+              <p class="desc">Designed for sustained operating loads, not peak duty cycles.</p>
             </div>
             <div class="product-item">
               <div class="num">/ 02</div>
               <div class="title">Direct propeller coupling</div>
+              <p class="desc">No reduction stage — fewer parts, less drivetrain loss.</p>
             </div>
             <div class="product-item">
               <div class="num">/ 03</div>
               <div class="title">Long endurance</div>
+              <p class="desc">Built for extended missions, not short bursts.</p>
             </div>
             <div class="product-item">
               <div class="num">/ 04</div>
               <div class="title">Mechanical and thermal stability</div>
+              <p class="desc">Predictable behavior across the full operating envelope.</p>
             </div>
             <div class="product-item">
               <div class="num">/ 05</div>
               <div class="title">Precision-balanced crankshaft</div>
+              <p class="desc">Counterweighted for low vibration under continuous load.</p>
             </div>
             <div class="product-item">
               <div class="num">/ 06</div>
-              <div class="title">High-grade bearings rated for continuous cyclic loads</div>
+              <div class="title">High-grade bearings</div>
+              <p class="desc">Rated for continuous cyclic loads — specified for the duty cycle, not approximated.</p>
             </div>
           </div>
 
