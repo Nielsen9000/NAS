@@ -670,7 +670,7 @@ p{ margin:0; color:var(--ink-1); }
 .hero-reticle.is-on{ opacity:0.4; }
 
 /* When hero scrolls out of view: remove the HUD layers entirely so they
-   release GPU resources and stop competing with the anatomy scroll-scrub. */
+   release GPU resources when offscreen. */
 .hero.is-paused .hero-radar,
 .hero.is-paused .hero-radar-origin,
 .hero.is-paused .hero-scanlines,
@@ -1251,244 +1251,230 @@ p{ margin:0; color:var(--ink-1); }
 }
 
 /* -------------------------------------------------------------
-   Anatomy (scroll-scrub)
+   Anatomy — 2-column static (text + framed engine image)
    ------------------------------------------------------------- */
-.anatomy-section {
-  height: 240vh;
-  background: #ffffff;
-  position: relative;
+.anatomy-section{
+  background:#ffffff;
+  padding: 80px 0 88px;
+  position:relative;
 }
-.anatomy-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
+.anatomy-grid{
+  display:grid;
+  grid-template-columns: minmax(0, 33%) minmax(0, 67%);
+  gap: 96px;
+  align-items:center;
 }
-.anatomy-grid {
-  display: grid;
-  grid-template-columns: 42% 58%;
-  gap: 64px;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 100px;
-  align-items: center;
-}
-.anatomy-heading {
-  font-size: clamp(2rem, 3.2vw, 3.25rem);
+.anatomy-figure{ justify-content:flex-end; }
+.anatomy-content{ padding-block: 8px; }
+.anatomy-heading{
+  font-family:'Inter', system-ui, -apple-system, sans-serif;
+  font-size: clamp(2.25rem, 3.6vw, 3.5rem);
   font-weight: 600;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.05;
   color: var(--dark-ink-0);
-  margin: 0 0 10px 0;
+  margin: 14px 0 28px;
 }
-.anatomy-heading .muted {
-  color: var(--dark-ink-1);
-}
-.anatomy-heading .muted { color: var(--accent) !important; font-size: 0.82em; }
-.anatomy-sub {
-  color: var(--dark-ink-2);
-  font-size: 14px;
-  margin-bottom: 24px;
-}
-.scroll-hint {
-  display: inline-flex;
-  align-items: center;
+.anatomy-body{
+  display:flex; flex-direction:column;
   gap: 14px;
-  margin-top: 28px;
-  color: var(--accent);
-  opacity: 0.85;
-}
-.scroll-hint-label {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
-}
-.scroll-hint-arrow {
-  width: 12px;
-  height: 20px;
-  color: var(--accent);
-  animation: scroll-arrow-bounce 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-.scroll-hint-arrow svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-@keyframes scroll-arrow-bounce {
-  0%, 20% { transform: translateY(0);   opacity: 1; }
-  50%     { transform: translateY(6px); opacity: 0.6; }
-  100%    { transform: translateY(0);   opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .scroll-hint-arrow { animation: none; opacity: 0.6; }
-}
-.anatomy-content{
-  position: relative;
-  z-index: 2;
-  padding-top: 40px;
-}
-.anatomy-callouts {
-  position: relative;
-  width: 100%;
   max-width: 520px;
-  min-height: 320px;
 }
-.anatomy-callout {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  gap: 24px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-}
-.anatomy-callout.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-.anatomy-callout.fade-out {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-.anatomy-num {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 12px;
-  letter-spacing: 0.22em;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 8px;
-  display: block;
-}
-.anatomy-callout h3 {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  font-size: clamp(40px, 4.5vw, 64px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
-  color: var(--dark-ink-0);
-  text-transform: uppercase;
-  hyphens: none;
-  word-break: keep-all;
-  margin: 0 0 16px 0;
-}
-.anatomy-callout-payoff h3 {
-  font-size: clamp(40px, 4.2vw, 60px);
-  line-height: 0.95;
-}
-.payoff-accent {
-  color: var(--accent);
-  font-weight: 600;
-  font-style: italic;
-  text-transform: none;
-  letter-spacing: -0.02em;
-}
-.anatomy-callout-payoff .anatomy-num {
-  color: var(--dark-ink-3);
-}
-.anatomy-callout p {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--dark-ink-2);
-  max-width: 380px;
+.anatomy-body p{
+  font-family:"Space Grotesk", sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--dark-ink-1);
   margin: 0;
 }
-.anatomy-video-wrap {
+.anatomy-coda{
+  font-size: 15px !important;
+  color: var(--dark-ink-0) !important;
+  font-weight: 500;
+  margin-top: 6px !important;
+}
+/* Specs strip — sits below the body copy, picks up the empty bottom space
+   left over from the taller engine column, and ties the section together
+   with four key NAS 2 numbers. */
+.anatomy-specs{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin: 26px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(11, 31, 38, 0.12);
+  max-width: 520px;
+}
+.anatomy-specs dt,
+.anatomy-specs dd{ margin: 0; }
+.spec-label{
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.spec-value{
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--dark-ink-0);
+  line-height: 1;
+  white-space: nowrap;
+}
+.spec-value .unit{
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--dark-ink-2);
+  letter-spacing: 0.08em;
+  margin-left: 2px;
+}
+.spec-value .sup{
+  font-size: 0.78em;
+  vertical-align: super;
+  line-height: 0;
+  letter-spacing: 0;
+}
+.anatomy-figure{
+  display:flex; justify-content:center;
+}
+.anatomy-frame{
+  position: relative;
   width: 100%;
-  background: transparent;
+  max-width: 820px;
+  padding: 14px 12px 30px;
+}
+.anatomy-img{
   position: relative;
   z-index: 1;
-  transform: translateY(40px);
-}
-#anatomy-video {
   width: 100%;
   height: auto;
+  object-fit: contain;
   display: block;
-  transform: scale(1.12);
-  transform-origin: center center;
-  -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0%, black 8%,  black 92%, transparent 100%),
-    linear-gradient(to right,  transparent 0%, black 6%,  black 94%, transparent 100%),
-    radial-gradient(ellipse at center, black 65%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to bottom, transparent 0%, black 8%,  black 92%, transparent 100%),
-    linear-gradient(to right,  transparent 0%, black 6%,  black 94%, transparent 100%),
-    radial-gradient(ellipse at center, black 65%, transparent 100%);
-  mask-composite: intersect;
+}
+.anatomy-label{
+  position:absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dark-ink-0);
+  white-space: nowrap;
+  z-index: 4;
 }
 
-/* Anatomy section entrance */
-.anatomy-content {
-  opacity: 0;
-  transform: translateX(-40px);
-  transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.anatomy-content.in-view {
-  opacity: 1;
-  transform: translateX(0);
-}
-.anatomy-video-wrap {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
-  transition-delay: 200ms;
-}
-.anatomy-video-wrap.in-view {
-  opacity: 1;
-  transform: translateY(40px);
-}
-@media (prefers-reduced-motion: reduce) {
-  .anatomy-content {
-    opacity: 1;
-    transform: none;
-  }
-  .anatomy-video-wrap {
-    opacity: 1;
-    transform: translateY(40px);
-  }
-  .anatomy-callout {
-    opacity: 1;
-    transform: none;
-  }
+/* Blueprint grid backdrop — subtle cyan graph paper behind image */
+.anatomy-grid-bg{
+  position: absolute;
+  inset: 5% 4% 9% 4%;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(59,182,232,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,182,232,0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 50%, transparent 92%);
+          mask-image: radial-gradient(ellipse at center, #000 50%, transparent 92%);
 }
 
-@media (max-width: 768px) {
-  .anatomy-section { height: auto; }
-  .anatomy-sticky { position: static; height: auto; padding: 80px 0; }
-  .anatomy-grid { grid-template-columns: 1fr; padding: 0 24px; gap: 40px; }
-  /* Callouts stack vertically and fade in via IntersectionObserver */
-  .anatomy-callouts {
-    position: static;
-    max-width: none;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
+/* Cyan haze under the engine */
+.anatomy-glow{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(48% 38% at 54% 52%, rgba(59,182,232,0.22), transparent 70%);
+  filter: blur(20px);
+}
+
+/* HUD leader lines (SVG) */
+.anatomy-leaders{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: visible;
+}
+.anatomy-leaders line{
+  stroke: var(--accent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.7;
+}
+
+/* Pulsing marker dots */
+.anatomy-marker{
+  position: absolute;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 3px rgba(59,182,232,0.18),
+    0 0 12px rgba(59,182,232,0.55);
+  animation: anatomy-pulse 2.6s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+@keyframes anatomy-pulse{
+  0%, 100% { box-shadow: 0 0 0 3px rgba(59,182,232,0.18), 0 0 10px rgba(59,182,232,0.45); }
+  50%      { box-shadow: 0 0 0 5px rgba(59,182,232,0.10), 0 0 18px rgba(59,182,232,0.85); }
+}
+@media (prefers-reduced-motion: reduce){
+  .anatomy-marker{ animation: none; }
+}
+.anatomy-marker-1{ top: 26%; left: 49%; }   /* crankshaft gear */
+.anatomy-marker-2{ top: 62%; left: 30%; }   /* left cylinder fins */
+.anatomy-marker-3{ top: 51%; left: 72%; }   /* ignition coil module */
+.anatomy-marker-4{ top: 58%; left: 86%; }   /* fuel-line fittings */
+
+/* HUD text tags — dark text on the white section background for maximum readability */
+.anatomy-tag{
+  position: absolute;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dark-ink-0);
+  white-space: nowrap;
+  z-index: 3;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+.anatomy-tag-1{ top: 10%; left: 6%; }
+.anatomy-tag-2{ top: 76%; left: 6%; }
+.anatomy-tag-3{ top: 28%; right: 6%; }
+.anatomy-tag-4{ top: 82%; right: 6%; }
+
+@media (max-width: 1024px){
+  .anatomy-section{ padding: 96px 0; }
+  .anatomy-grid{
+    grid-template-columns: 1fr;
     gap: 56px;
   }
-  .anatomy-callout { position: static; }
-  .anatomy-callout h3 { font-size: clamp(32px, 8vw, 44px); }
-  .anatomy-callout-payoff h3 { font-size: clamp(36px, 9vw, 48px); }
+  .anatomy-body{ max-width: 640px; }
+  .anatomy-frame{ padding: 14px 12px 32px; }
+  .anatomy-specs{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* HUD overlay clutters small layouts — keep only glow + grid for atmosphere */
+  .anatomy-leaders,
+  .anatomy-marker,
+  .anatomy-tag{ display: none; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .anatomy-callout {
-    transition: none;
-    opacity: 1;
-    transform: none;
-  }
+@media (max-width: 600px){
+  .anatomy-section{ padding: 72px 0; }
+  .anatomy-frame{ padding: 12px 10px 28px; }
+  .anatomy-label{ font-size: 10px; bottom: 8px; letter-spacing: 0.2em; }
+  .anatomy-grid-bg{ display: none; }
 }
 
 /* -------------------------------------------------------------
@@ -2241,9 +2227,9 @@ p{ margin:0; color:var(--ink-1); }
   .flight-capabilities{ gap: 14px; }
 }
 
-/* Skip rendering off-screen sections until they approach the viewport.
-   Anatomy is excluded because it relies on position:sticky. */
+/* Skip rendering off-screen sections until they approach the viewport. */
 .flight-section,
+.anatomy-section,
 .platforms,
 .company,
 .contact,
@@ -2635,61 +2621,63 @@ p{ margin:0; color:var(--ink-1); }
 <div class="section-divider section-divider--dark-to-light" aria-hidden="true"></div>
 
 <!-- =========================================
-     3. ANATOMY — SCROLL-SCRUB VIDEO
+     3. ANATOMY — Static 2-column (text + framed engine image)
      ========================================= -->
 <section class="anatomy-section" id="anatomy">
-  <div class="anatomy-sticky">
+  <div class="wrap">
     <div class="anatomy-grid">
-      <div class="anatomy-content">
+      <div class="anatomy-content reveal">
         <div class="section-eyebrow">/ 03 — ANATOMY</div>
-        <h2 class="anatomy-heading">
-          Every part, <span class="muted">purposeful</span>
-        </h2>
-        <p class="anatomy-sub">Scroll to reveal the architecture.</p>
-        <div class="scroll-hint" aria-hidden="true">
-          <span class="scroll-hint-label">SCROLL</span>
-          <div class="scroll-hint-arrow">
-            <svg viewBox="0 0 12 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 1V18M6 18L1 13M6 18L11 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
+        <h2 class="anatomy-heading">Inside the NAS&nbsp;2.</h2>
+        <div class="anatomy-body">
+          <p>Two cylinders. One purpose-built crankshaft. Every component specified, tested, and traceable to a serial number.</p>
+          <p>The NAS 2 is engineered from the ground up for continuous operation — not adapted from a hobby or industrial platform. Each part is selected for predictable mechanical and thermal behavior under sustained load.</p>
+          <p class="anatomy-coda">Nothing here is incidental.</p>
         </div>
-        <div class="anatomy-callouts">
-
-          <div class="anatomy-callout">
-            <span class="anatomy-num">01</span>
-            <div>
-              <h3>DUAL-SPARK IGNITION</h3>
-              <p>Redundant ignition system reduces misfire risk and improves combustion stability under continuous high-altitude operation.</p>
-            </div>
+        <dl class="anatomy-specs" aria-label="NAS 2 — key specifications">
+          <div>
+            <dt class="spec-label">Displacement</dt>
+            <dd class="spec-value">340<span class="unit">cm<span class="sup">3</span></span></dd>
           </div>
-
-          <div class="anatomy-callout">
-            <span class="anatomy-num">02</span>
-            <div>
-              <h3>Built without excess</h3>
-              <p>Built around controlled tolerances, robust architecture and mission-ready reliability, without unnecessary complexity.</p>
-            </div>
+          <div>
+            <dt class="spec-label">Output</dt>
+            <dd class="spec-value">35<span class="unit">HP</span>&thinsp;/&thinsp;26<span class="unit">kW</span></dd>
           </div>
-
-          <div class="anatomy-callout anatomy-callout-payoff">
-            <span class="anatomy-num">—</span>
-            <div>
-              <h3>ARCHITECTURE<br><span class="payoff-accent">by design</span></h3>
-              <p>Every component engineered for one purpose: continuous mission-critical operation, mile after mile, hour after hour.</p>
-            </div>
+          <div>
+            <dt class="spec-label">Weight</dt>
+            <dd class="spec-value">9<span class="unit">kg</span></dd>
           </div>
-
-        </div>
+          <div>
+            <dt class="spec-label">Range</dt>
+            <dd class="spec-value">&gt;1000<span class="unit">km</span></dd>
+          </div>
+        </dl>
       </div>
-      <div class="anatomy-video-wrap">
-        <video
-          id="anatomy-video"
-          src="./assets/engine-reveal-light.mp4"
-          muted
-          playsinline
-          preload="auto">
-        </video>
+      <div class="anatomy-figure reveal">
+        <div class="anatomy-frame">
+          <div class="anatomy-grid-bg" aria-hidden="true"></div>
+          <div class="anatomy-glow" aria-hidden="true"></div>
+          <img class="anatomy-img" src="./assets/anatomy-static.jpg" alt="NAS 2 dual-cylinder boxer engine — assembled three-quarter view showing crankshaft gear, twin cylinders and integrated ignition / fuel system." loading="lazy" decoding="async" />
+
+          <svg class="anatomy-leaders" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="22" y1="10" x2="49" y2="26" />
+            <line x1="32" y1="76" x2="30" y2="62" />
+            <line x1="72" y1="28" x2="72" y2="51" />
+            <line x1="74" y1="82" x2="86" y2="58" />
+          </svg>
+
+          <span class="anatomy-marker anatomy-marker-1" aria-hidden="true"></span>
+          <span class="anatomy-marker anatomy-marker-2" aria-hidden="true"></span>
+          <span class="anatomy-marker anatomy-marker-3" aria-hidden="true"></span>
+          <span class="anatomy-marker anatomy-marker-4" aria-hidden="true"></span>
+
+          <div class="anatomy-tag anatomy-tag-1">/ CRANKSHAFT</div>
+          <div class="anatomy-tag anatomy-tag-2">/ TWIN-CYLINDER BOXER</div>
+          <div class="anatomy-tag anatomy-tag-3">/ DUAL-SPARK IGNITION</div>
+          <div class="anatomy-tag anatomy-tag-4">/ FUEL SYSTEM</div>
+
+          <div class="anatomy-label">/ NAS 2 · ANATOMY</div>
+        </div>
       </div>
     </div>
   </div>
@@ -3060,27 +3048,6 @@ p{ margin:0; color:var(--ink-1); }
     });
   })();
 
-  // Anatomy entrance animation
-  (function(){
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const anatomyContent = document.querySelector('.anatomy-content');
-    const anatomyVideo = document.querySelector('.anatomy-video-wrap');
-    if (!anatomyContent || !anatomyVideo) return;
-
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    obs.observe(anatomyContent);
-    obs.observe(anatomyVideo);
-  })();
-
   // Cursor follower
   (function(){
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -3116,150 +3083,12 @@ p{ margin:0; color:var(--ink-1); }
       cursor.classList.remove('is-hidden');
     });
 
-    const interactives = 'a, button, .compare-col, .value-row, .anatomy-callout';
+    const interactives = 'a, button, .compare-col, .value-row';
     document.querySelectorAll(interactives).forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('is-hovering'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('is-hovering'));
     });
   })();
-})();
-</script>
-
-<!-- =========================================
-     Anatomy scroll-scrub (verbatim per spec)
-     ========================================= -->
-<script>
-(function() {
-  const video = document.getElementById('anatomy-video');
-  const section = document.querySelector('.anatomy-section');
-  const callouts = document.querySelectorAll('.anatomy-callout');
-  if (!video || !section) return;
-
-  const isMobile = window.matchMedia('(max-width: 768px)').matches;
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (isMobile || prefersReducedMotion) {
-    video.setAttribute('autoplay', '');
-    video.setAttribute('loop', '');
-    video.play().catch(() => {});
-
-    if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-      // No scroll-driven reveal — just show all three callouts immediately.
-      callouts.forEach(c => c.classList.add('active'));
-    } else {
-      // Mobile layout stacks callouts vertically (see @media 768px CSS).
-      // Fade each in as it scrolls into view.
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-      callouts.forEach(c => observer.observe(c));
-    }
-    return;
-  }
-
-  let videoDuration = 0;
-  let isReady = false;
-
-  function markReady(){
-    if (isReady) return;
-    videoDuration = video.duration;
-    if (!isFinite(videoDuration) || videoDuration <= 0) return;
-    isReady = true;
-    try { video.pause(); } catch(_){}
-    try { video.currentTime = 0; } catch(_){}
-  }
-  if (video.readyState >= 1) markReady();
-  video.addEventListener('loadedmetadata', markReady);
-  video.addEventListener('loadeddata', markReady);
-  video.addEventListener('canplay', markReady);
-
-  let rafId = null;
-  let targetTime = 0;
-  let currentTime = 0;
-
-  const segments = callouts.length;
-
-  function updateCallouts(progress) {
-    // Explicit thresholds distributed across the full scroll distance,
-    // with the final payoff landing at 75% so the engine reveal completes
-    // alongside the payoff (no dead zone at the end).
-    const thresholds = [0.15, 0.45, 0.75];
-
-    let activeIndex = -1;
-    callouts.forEach((callout, i) => {
-      const threshold = thresholds[i] !== undefined ? thresholds[i] : (i / callouts.length);
-      if (progress >= threshold) {
-        activeIndex = i;
-      }
-    });
-
-    callouts.forEach((callout, i) => {
-      callout.classList.remove('active', 'fade-out');
-      if (i === activeIndex) {
-        callout.classList.add('active');
-      } else if (i < activeIndex) {
-        callout.classList.add('fade-out');
-      }
-    });
-
-    // Fade out intro elements once any callout is active
-    const content = document.querySelector('.anatomy-content');
-    if (content) {
-      if (activeIndex >= 0) {
-        content.classList.add('intro-faded');
-      } else {
-        content.classList.remove('intro-faded');
-      }
-    }
-  }
-
-  function updateVideoTime() {
-    if (!isReady) {
-      rafId = requestAnimationFrame(updateVideoTime);
-      return;
-    }
-
-    const rect = section.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
-
-    if (rect.bottom < -viewportHeight || rect.top > viewportHeight * 2) {
-      rafId = null;
-      return;
-    }
-
-    const sectionHeight = section.offsetHeight;
-    const scrollableDistance = sectionHeight - viewportHeight;
-    const scrolled = Math.max(0, -rect.top);
-    const progress = Math.min(1, Math.max(0, scrolled / scrollableDistance));
-
-    targetTime = progress * videoDuration;
-    currentTime += (targetTime - currentTime) * 0.15;
-
-    updateCallouts(progress);
-
-    if (Math.abs(targetTime - currentTime) > 0.01) {
-      video.currentTime = currentTime;
-      rafId = requestAnimationFrame(updateVideoTime);
-    } else {
-      video.currentTime = targetTime;
-      rafId = null;
-    }
-  }
-
-  function onScroll() {
-    if (rafId === null) {
-      rafId = requestAnimationFrame(updateVideoTime);
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-  onScroll();
 })();
 </script>
 
@@ -3311,8 +3140,7 @@ p{ margin:0; color:var(--ink-1); }
   const hero = document.querySelector('.hero');
   let heroVisible = true;
 
-  // Pause CSS animations + skip JS cycle work whenever the hero is off-screen,
-  // so we don't compete with the anatomy scroll-scrub for frame budget.
+  // Pause CSS animations + skip JS cycle work whenever the hero is off-screen.
   if (hero && 'IntersectionObserver' in window){
     const io = new IntersectionObserver((entries) => {
       heroVisible = entries[0].isIntersecting;
