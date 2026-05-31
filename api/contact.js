@@ -5,7 +5,7 @@ const ALLOWED_ORIGINS = [
   'https://nordicadvancedsystems.com',
   'https://www.nordicadvancedsystems.com',
 ];
-const FROM = 'NAS Contact <contact@nordicadvancedsystems.com>';
+const FROM = 'NAS Contact <noreply@nordicadvancedsystems.com>';
 const TO = 'contact@nordicadvancedsystems.com';
 
 function escapeHtml(s = '') {
