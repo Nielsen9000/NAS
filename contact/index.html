@@ -223,16 +223,64 @@ img{ display:block; max-width:100%; }
   box-shadow:0 10px 30px -10px rgba(59,182,232,0.45);
 }
 .btn-primary:hover{ background:#55c3ea; transform:scale(1.02); }
+.form-success,.form-error-card{
+  padding:32px; color:var(--ink-0);
+  border-radius:var(--radius-md);
+}
 .form-success{
-  padding:40px 0; color:var(--ink-0);
+  background:rgba(59,182,232,0.05);
+  border:1px solid rgba(59,182,232,0.35);
 }
 .form-success .tick{
   width:46px; height:46px; border-radius:50%;
-  background:rgba(110,224,161,0.12); color:var(--available);
+  background:rgba(59,182,232,0.10); color:var(--accent);
   display:grid; place-items:center; margin:0 0 18px;
-  border:1px solid rgba(110,224,161,0.3);
+  border:1px solid rgba(59,182,232,0.4);
 }
-.form-success p{ color:var(--ink-1); font-size:17px; margin:0; }
+.form-success p{ color:var(--ink-1); font-size:17px; margin:0; line-height:1.6; }
+
+/* Honeypot — visible to bots, hidden to humans (NOT type=hidden) */
+.hp-field{
+  position:absolute; left:-9999px; top:auto; width:1px; height:1px;
+  overflow:hidden;
+}
+
+/* Inline error banner above the form */
+.form-error{
+  display:none;
+  margin-bottom:8px; padding:14px 16px;
+  border-radius:var(--radius-md);
+  background:rgba(232,118,71,0.08);
+  border:1px solid rgba(232,118,71,0.4);
+  color:#f3d3c4;
+  font-size:14px; line-height:1.55;
+  display:flex; gap:12px; align-items:flex-start;
+}
+.form-error[hidden]{ display:none !important; }
+.form-error .warn{
+  flex:0 0 auto; width:18px; height:18px;
+  color:#e87647;
+}
+.form-error a{ color:var(--accent); text-decoration:underline; }
+
+/* Submit button states */
+.btn-primary[disabled]{
+  opacity:0.7; cursor:not-allowed; pointer-events:none;
+}
+.btn-primary .btn-label-loading{
+  display:none;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  letter-spacing:0.18em; font-size:13px;
+}
+.btn-primary.is-loading .btn-label-idle{ display:none; }
+.btn-primary.is-loading .btn-label-loading{ display:inline-flex; align-items:center; gap:8px; }
+.btn-primary .spinner{
+  width:12px; height:12px; border-radius:50%;
+  border:1.5px solid rgba(7,42,55,0.3);
+  border-top-color:var(--accent-ink);
+  animation:spin 0.7s linear infinite;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
 
 /* Footer */
 .site-footer{
@@ -376,7 +424,15 @@ img{ display:block; max-width:100%; }
       </div>
 
       <div class="reveal">
+        <div class="form-error" id="form-error" role="alert" hidden>
+          <svg class="warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          <span id="form-error-text">Something went wrong. Please try again or email us directly at <a href="mailto:contact@nordicadvancedsystems.com">contact@nordicadvancedsystems.com</a></span>
+        </div>
         <form class="inquiry-form" id="inquiry-form" novalidate>
+          <div class="hp-field" aria-hidden="true">
+            <label for="f-gotcha">Leave this field empty</label>
+            <input type="text" id="f-gotcha" name="_gotcha" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="field">
             <input type="text" id="f-name" name="name" placeholder=" " autocomplete="name" required />
             <label for="f-name">Full name</label>
@@ -394,12 +450,13 @@ img{ display:block; max-width:100%; }
             <label for="f-country">Country</label>
           </div>
           <div class="field">
-            <textarea id="f-message" name="message" placeholder=" " rows="4" required></textarea>
+            <textarea id="f-message" name="message" placeholder=" " rows="4" maxlength="5000" required></textarea>
             <label for="f-message">Message</label>
           </div>
           <div class="submit-row">
-            <button class="btn btn-primary" type="submit">
-              Send inquiry <span class="arrow" aria-hidden="true">→</span>
+            <button class="btn btn-primary" id="submit-btn" type="submit">
+              <span class="btn-label-idle">Send inquiry <span class="arrow" aria-hidden="true">→</span></span>
+              <span class="btn-label-loading"><span class="spinner" aria-hidden="true"></span>TRANSMITTING...</span>
             </button>
           </div>
         </form>
@@ -433,20 +490,95 @@ img{ display:block; max-width:100%; }
     reveals.forEach(el => el.classList.add('in'));
   }
 
-  // Form
+  // Contact form
   const form = document.getElementById('inquiry-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const errorBanner = document.getElementById('form-error');
+  const errorText = document.getElementById('form-error-text');
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const GENERIC_ERROR =
+    'Something went wrong. Please try again or email us directly at ' +
+    '<a href="mailto:contact@nordicadvancedsystems.com">contact@nordicadvancedsystems.com</a>';
+
+  function showError(html){
+    if (!errorBanner) return;
+    errorText.innerHTML = html;
+    errorBanner.hidden = false;
+    errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function hideError(){
+    if (!errorBanner) return;
+    errorBanner.hidden = true;
+  }
+  function setLoading(on){
+    if (!submitBtn) return;
+    submitBtn.disabled = on;
+    submitBtn.classList.toggle('is-loading', on);
+  }
+
   if (form){
-    form.addEventListener('submit', (ev) => {
+    form.addEventListener('submit', async (ev) => {
       ev.preventDefault();
-      const success = document.createElement('div');
-      success.className = 'form-success reveal in';
-      success.innerHTML = `
-        <div class="tick">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
-        </div>
-        <p>Thank you. A member of our team will be in touch.</p>
-      `;
-      form.replaceWith(success);
+      hideError();
+
+      const data = {
+        name: form.name.value.trim(),
+        company: form.company.value.trim(),
+        email: form.email.value.trim(),
+        country: form.country.value.trim(),
+        message: form.message.value.trim(),
+        _gotcha: form._gotcha ? form._gotcha.value : '',
+      };
+
+      if (!data.name || !data.email || !data.message){
+        showError('Please fill in your name, email, and a message.');
+        return;
+      }
+      if (!EMAIL_RE.test(data.email)){
+        showError('Please enter a valid email address.');
+        return;
+      }
+      if (data.message.length > 5000){
+        showError('Message must be 5000 characters or fewer.');
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const resp = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        let payload = null;
+        try { payload = await resp.json(); } catch { /* non-JSON response */ }
+
+        if (!resp.ok || !payload || payload.success !== true){
+          const msg = payload && typeof payload.error === 'string'
+            ? payload.error
+            : GENERIC_ERROR;
+          showError(msg);
+          setLoading(false);
+          return;
+        }
+
+        // Success — replace form with confirmation, keep error banner hidden
+        const success = document.createElement('div');
+        success.className = 'form-success reveal in';
+        success.setAttribute('role', 'status');
+        success.innerHTML = `
+          <div class="tick">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>
+          </div>
+          <p>Message sent. We'll respond within 2 business days.</p>
+        `;
+        if (errorBanner) errorBanner.hidden = true;
+        form.replaceWith(success);
+      } catch (err) {
+        showError(GENERIC_ERROR);
+        setLoading(false);
+      }
     });
   }
 

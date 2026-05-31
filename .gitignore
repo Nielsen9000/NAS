@@ -1,1 +1,17 @@
 .DS_Store
+
+# Dependencies
+node_modules/
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Vercel
+.vercel
+
+# Editor / OS
+.idea/
+.vscode/
+Thumbs.db
