@@ -5,11 +5,7 @@
   "description": "Nordic Advanced Systems — TYR 2 Series marketing site.",
   "type": "module",
   "scripts": {
-    "start": "node serve.mjs",
-    "dev": "vercel dev"
-  },
-  "dependencies": {
-    "resend": "^4.0.0"
+    "start": "node serve.mjs"
   },
   "engines": {
     "node": ">=20"
