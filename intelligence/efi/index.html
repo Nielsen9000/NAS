@@ -167,14 +167,14 @@ p{ margin:0; color:var(--ink-1); }
    ============================================================= */
 /* ---- Hero: compact 2-column ---- */
 .efi-hero{ position:relative; padding:128px 0 24px; }
-.efi-hero-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; align-items:center; gap:80px; }
+.efi-hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; align-items:center; gap:80px; }
 .efi-hero-headline{ font-family:'Inter',system-ui,sans-serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:700; letter-spacing:-0.03em; line-height:1.0; margin:22px 0 20px; }
 .efi-hero-headline .accent{ color:var(--accent); }
 .efi-hero-sub{ color:var(--ink-1); font-size:clamp(15px,1.3vw,18px); line-height:1.6; max-width:460px; }
 .efi-telemetry{ display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:30px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-2); }
 .efi-telemetry span{ display:flex; align-items:center; gap:8px; }
 .efi-telemetry span::before{ content:""; width:6px; height:6px; background:var(--accent); box-shadow:0 0 8px var(--accent-glow); }
-.efi-render{ position:relative; min-height:340px; height:100%; border:1.5px dashed rgba(59,182,232,0.4); border-radius:var(--radius-md); background:repeating-linear-gradient(45deg,#0c2a37 0 8px,#0e2e3c 8px 16px); display:grid; place-items:center; overflow:hidden; }
+.efi-render{ position:relative; aspect-ratio:3/2; min-height:300px; border:1.5px dashed rgba(59,182,232,0.4); border-radius:var(--radius-md); background:repeating-linear-gradient(45deg,#0c2a37 0 8px,#0e2e3c 8px 16px); display:grid; place-items:center; overflow:hidden; }
 .efi-render-label{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); padding:9px 16px; border:1px solid rgba(59,182,232,0.4); background:rgba(8,32,42,0.55); text-align:center; }
 .efi-render .hud-corner{ opacity:0.7; }
 .efi-render .hud-corner-tl{ top:12px; left:12px; }
@@ -232,7 +232,7 @@ p{ margin:0; color:var(--ink-1); }
   .footer-mid,.footer-right{ text-align:left; }
   .efi-hero{ padding:112px 0 20px; }
   .efi-hero-grid{ grid-template-columns:1fr; gap:36px; }
-  .efi-render{ min-height:240px; order:-1; }
+  .efi-render{ aspect-ratio:auto; min-height:240px; order:-1; }
   .efi-diagram{ padding:24px 18px; }
   .efi-pillars{ grid-template-columns:repeat(2,1fr); }
   .efi-components{ grid-template-columns:1fr; max-width:420px; }
