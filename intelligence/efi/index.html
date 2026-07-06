@@ -260,6 +260,13 @@ p{ margin:0; color:var(--ink-1); }
 .iems-pillars .pillar-label{ font-size:20px; letter-spacing:0.03em; }
 .pillar-desc{ color:var(--ink-2); font-size:14px; line-height:1.62; margin:10px 0 0; }
 @media (max-width:900px){ .iems-pillars{ grid-template-columns:1fr; } }
+/* ---- 04 — Platform (three text blocks) ---- */
+.iems-blocks{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:8px; }
+.iems-block{ position:relative; padding:30px 28px; background:linear-gradient(180deg,rgba(59,182,232,0.04) 0%,transparent 55%),var(--bg-elev); border:1px solid var(--line-dark); border-radius:var(--radius-md); }
+.iems-block-num{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; letter-spacing:0.22em; color:var(--accent); }
+.iems-block-title{ font-family:'Inter',system-ui,sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.01em; color:var(--ink-0); margin:12px 0 14px; }
+.iems-block-body{ color:var(--ink-2); font-size:14.5px; line-height:1.72; margin:0; }
+@media (max-width:900px){ .iems-blocks{ grid-template-columns:1fr; max-width:640px; } }
 </style>
 </head>
 <body>
@@ -436,6 +443,36 @@ p{ margin:0; color:var(--ink-1); }
             <text x="1034" y="224" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="1.2" fill="#8fa6ac">TARGET ENGINE</text>
           </svg>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       04 — PLATFORM (three text blocks)
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 04 — PLATFORM</div>
+      <div class="iems-blocks">
+
+        <div class="iems-block">
+          <div class="iems-block-num">/ 01</div>
+          <h3 class="iems-block-title">Proprietary Technology</h3>
+          <p class="iems-block-body">NAS IEMS is developed entirely around Nordic Advanced Systems' proprietary EFI, CDI and ECU hardware, embedded software and control strategies, protected by our own Intellectual Property (IP). Built on an NDAA-compliant architecture, the platform provides customers with a secure, scalable and future-ready engine management solution for professional UAV and defence applications.</p>
+        </div>
+
+        <div class="iems-block">
+          <div class="iems-block-num">/ 02</div>
+          <h3 class="iems-block-title">Flexible Integration</h3>
+          <p class="iems-block-body">NAS IEMS is available both as part of a complete Nordic Advanced Systems propulsion package and as a standalone engine management solution for compatible third-party engines. Working closely with OEMs and UAV manufacturers, our engineering team supports platform integration, ECU calibration and engine mapping to ensure optimum performance on each individual propulsion system.</p>
+        </div>
+
+        <div class="iems-block">
+          <div class="iems-block-num">/ 03</div>
+          <h3 class="iems-block-title">Validation &amp; Calibration</h3>
+          <p class="iems-block-body">Every engine platform has unique operating characteristics. Using our dedicated engine test facilities, Nordic Advanced Systems performs platform-specific calibration, validation and performance optimization to deliver a fully integrated, mission-ready propulsion solution.</p>
+        </div>
+
       </div>
     </div>
   </section>
