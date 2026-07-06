@@ -280,6 +280,13 @@ p{ margin:0; color:var(--ink-1); }
 .iems-why-check{ flex:none; width:22px; height:22px; color:var(--accent); margin-top:0; }
 .iems-why-check svg{ width:100%; height:100%; display:block; }
 @media (max-width:760px){ .iems-why-list{ grid-template-columns:1fr; } .iems-why{ padding:32px 24px; } }
+/* ---- Inline link + secondary button + 07 CTA ---- */
+.link-inline{ color:var(--accent); border-bottom:1px solid rgba(59,182,232,0.4); transition:border-color .2s ease, color .2s ease; }
+.link-inline:hover{ border-bottom-color:var(--accent); color:#5cc6ee; }
+.btn-outline{ background:transparent; color:var(--ink-0); border:1px solid rgba(59,182,232,0.4); }
+.btn-outline:hover{ border-color:var(--accent); color:var(--accent); background:rgba(59,182,232,0.06); }
+.iems-cta{ position:relative; max-width:840px; }
+.iems-cta-body{ color:var(--ink-1); font-size:17px; line-height:1.78; margin:0 0 30px; }
 </style>
 </head>
 <body>
@@ -534,6 +541,19 @@ p{ margin:0; color:var(--ink-1); }
         <li class="iems-why-item"><span class="iems-why-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-opacity="0.4"/><path d="M7.5 12.2l3 3 6-6.4"/></svg></span><span>Dedicated engineering, calibration and validation</span></li>
         <li class="iems-why-item"><span class="iems-why-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-opacity="0.4"/><path d="M7.5 12.2l3 3 6-6.4"/></svg></span><span>Mission-ready performance</span></li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       07 — ENGINEERING SUPPORT (CTA)
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 07 — ENGINEERING SUPPORT</div>
+      <div class="iems-cta">
+        <p class="iems-cta-body">Whether you require a complete propulsion system or wish to integrate NAS IEMS with your existing engine platform, Nordic Advanced Systems provides engineering support from initial integration through <a class="link-inline" href="/engineering/">production-ready validation</a>. Technical documentation and platform-specific configurations are available upon request and, where appropriate, under a Non-Disclosure Agreement (NDA).</p>
+        <a class="btn btn-outline" href="/contact/">Contact engineering <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
