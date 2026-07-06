@@ -1470,37 +1470,47 @@ p{ margin:0; color:var(--ink-1); }
 /* -------------------------------------------------------------
    Careers
    ------------------------------------------------------------- */
-.careers-hero{ position:relative; padding:180px 0 96px; overflow:hidden; }
-.careers-hero-frame{
+.careers-hero{
   position:relative;
-  border:1px solid var(--line-dark);
-  border-radius:var(--radius-lg);
-  background:linear-gradient(180deg, rgba(59,182,232,0.06) 0%, transparent 55%), var(--bg-elev);
-  padding:76px 64px;
+  min-height:82vh;
+  display:flex; align-items:center;
+  padding:180px 0 130px;
   overflow:hidden;
+  background-image:url('/careers/assets/hero-drone.png');
+  background-size:cover;
+  background-position:center right;
+  background-repeat:no-repeat;
 }
-.careers-hero-stripes{
+/* two-layer fade: bottom-fade into next section + horizontal fade into marine dark on the left */
+.careers-hero-overlay{
   position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image:repeating-linear-gradient(-45deg, rgba(59,182,232,0.06) 0 1px, transparent 1px 13px);
-  -webkit-mask-image:radial-gradient(130% 130% at 100% 0%, #000 0%, transparent 62%);
-  mask-image:radial-gradient(130% 130% at 100% 0%, #000 0%, transparent 62%);
+  background:
+    linear-gradient(180deg, transparent 70%, #0A2530 100%),
+    linear-gradient(90deg, #0A2530 0%, #0A2530 30%, rgba(10,37,48,0.6) 60%, rgba(10,37,48,0.15) 100%);
 }
+.careers-hero .wrap{ position:relative; z-index:1; }
+.careers-hero .testrig-corner{ z-index:2; }
+/* clear the fixed header so the top HUD corners stay visible */
+.careers-hero .testrig-corner-tl,
+.careers-hero .testrig-corner-tr{ top:100px; }
 .careers-hero-crosshair{
-  position:absolute; top:22px; right:26px; z-index:2;
+  position:absolute; top:100px; right:30px; z-index:2;
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-3);
+  font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-2);
 }
-.careers-hero-inner{ position:relative; z-index:1; max-width:900px; }
+.careers-hero-inner{ position:relative; z-index:1; max-width:600px; }
 .careers-hero-headline{
   font-family:'Inter',system-ui,-apple-system,sans-serif;
   font-size:clamp(44px, 6.4vw, 88px);
   font-weight:700; letter-spacing:-0.03em; line-height:1.0;
   color:var(--ink-0); margin:20px 0 28px;
+  text-shadow:0 2px 34px rgba(4,18,24,0.55);
 }
 .careers-hero-headline .accent{ color:var(--accent); }
 .careers-hero-lead{
   color:var(--ink-1); font-size:clamp(17px,1.5vw,20px);
-  line-height:1.6; max-width:620px; margin:0;
+  line-height:1.6; max-width:520px; margin:0;
+  text-shadow:0 1px 20px rgba(4,18,24,0.5);
 }
 .position-grid{
   display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr));
@@ -1533,8 +1543,13 @@ p{ margin:0; color:var(--ink-1); }
 .position-card .arrow{ transition:transform .3s var(--ease-spring); }
 .position-card:hover .arrow{ transform:translateX(4px); }
 @media (max-width:640px){
-  .careers-hero{ padding:132px 0 64px; }
-  .careers-hero-frame{ padding:44px 26px; }
+  .careers-hero{ padding:128px 0 76px; min-height:70vh; background-position:78% center; }
+  /* stronger, more opaque marine overlay so the image never drowns the text on narrow screens */
+  .careers-hero-overlay{
+    background:
+      linear-gradient(180deg, transparent 55%, #0A2530 100%),
+      linear-gradient(90deg, #0A2530 0%, #0A2530 44%, rgba(10,37,48,0.9) 74%, rgba(10,37,48,0.6) 100%);
+  }
   .position-grid{ grid-template-columns:1fr; }
 }
 </style>
@@ -1579,25 +1594,23 @@ p{ margin:0; color:var(--ink-1); }
 <main>
 
   <!-- =========================================
-       1. CAREERS HERO
+       1. CAREERS HERO — full-bleed drone background
        ========================================= -->
   <section class="careers-hero">
+    <div class="careers-hero-overlay" aria-hidden="true"></div>
+    <div class="testrig-corner testrig-corner-tl" aria-hidden="true"></div>
+    <div class="testrig-corner testrig-corner-tr" aria-hidden="true"></div>
+    <div class="testrig-corner testrig-corner-bl" aria-hidden="true"></div>
+    <div class="testrig-corner testrig-corner-br" aria-hidden="true"></div>
+    <div class="careers-hero-crosshair" aria-hidden="true">+ CAREERS · NAS</div>
     <div class="wrap">
-      <div class="careers-hero-frame reveal">
-        <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
-        <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
-        <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
-        <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
-        <div class="careers-hero-stripes" aria-hidden="true"></div>
-        <div class="careers-hero-crosshair" aria-hidden="true">+ CAREERS · NAS</div>
-        <div class="careers-hero-inner">
-          <div class="section-eyebrow">/ CAREERS</div>
-          <h1 class="careers-hero-headline">
-            Build the engines<br>
-            <span class="accent">that fly further.</span>
-          </h1>
-          <p class="careers-hero-lead">NAS is growing. We're looking for people who want to build the future of engine production.</p>
-        </div>
+      <div class="careers-hero-inner reveal">
+        <div class="section-eyebrow">/ CAREERS</div>
+        <h1 class="careers-hero-headline">
+          Build the engines<br>
+          <span class="accent">that fly further.</span>
+        </h1>
+        <p class="careers-hero-lead">NAS is growing. We're looking for people who want to build the future of engine production.</p>
       </div>
     </div>
   </section>
