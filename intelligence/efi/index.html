@@ -273,6 +273,13 @@ p{ margin:0; color:var(--ink-1); }
 .iems-features .feat::before{ content:""; flex:none; width:7px; height:7px; margin-top:6px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 @media (max-width:1200px){ .iems-features{ grid-template-columns:repeat(2,1fr); } }
 @media (max-width:640px){ .iems-features{ grid-template-columns:1fr; } }
+/* ---- 06 — Why NAS IEMS (highlighted block) ---- */
+.iems-why{ position:relative; margin-top:8px; padding:46px 48px; background:linear-gradient(180deg,rgba(59,182,232,0.10) 0%,transparent 70%),var(--bg-elev); border:1px solid rgba(59,182,232,0.28); border-radius:var(--radius-lg); }
+.iems-why-list{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,1fr); gap:20px 44px; }
+.iems-why-item{ display:flex; align-items:flex-start; gap:14px; color:var(--ink-0); font-size:16px; line-height:1.5; }
+.iems-why-check{ flex:none; width:22px; height:22px; color:var(--accent); margin-top:0; }
+.iems-why-check svg{ width:100%; height:100%; display:block; }
+@media (max-width:760px){ .iems-why-list{ grid-template-columns:1fr; } .iems-why{ padding:32px 24px; } }
 </style>
 </head>
 <body>
@@ -506,6 +513,28 @@ p{ margin:0; color:var(--ink-1); }
         <li class="feat">NDAA-compliant architecture</li>
         <li class="feat">Nordic Advanced Systems proprietary IP</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- =========================================
+       06 — WHY NAS IEMS
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 06 — WHY NAS IEMS</div>
+      <div class="iems-why">
+        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+        <ul class="iems-why-list">
+        <li class="iems-why-item"><span class="iems-why-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-opacity="0.4"/><path d="M7.5 12.2l3 3 6-6.4"/></svg></span><span>Proprietary Nordic Advanced Systems technology</span></li>
+        <li class="iems-why-item"><span class="iems-why-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-opacity="0.4"/><path d="M7.5 12.2l3 3 6-6.4"/></svg></span><span>NDAA-compliant architecture</span></li>
+        <li class="iems-why-item"><span class="iems-why-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-opacity="0.4"/><path d="M7.5 12.2l3 3 6-6.4"/></svg></span><span>Available for NAS engines and compatible third-party engines</span></li>
+        <li class="iems-why-item"><span class="iems-why-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-opacity="0.4"/><path d="M7.5 12.2l3 3 6-6.4"/></svg></span><span>Dedicated engineering, calibration and validation</span></li>
+        <li class="iems-why-item"><span class="iems-why-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" stroke-opacity="0.4"/><path d="M7.5 12.2l3 3 6-6.4"/></svg></span><span>Mission-ready performance</span></li>
+        </ul>
+      </div>
     </div>
   </section>
 
