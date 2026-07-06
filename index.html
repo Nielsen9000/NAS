@@ -1439,9 +1439,12 @@ p{ margin:0; color:var(--ink-1); }
   z-index: 3;
   pointer-events: none;
   transform: translateY(-50%);
+  /* White halo keeps the label crisp where it crosses the engine */
+  text-shadow:
+    0 0 4px #f7fafb, 0 0 4px #f7fafb, 0 0 8px #f7fafb, 0 0 8px #f7fafb;
 }
 .anatomy-tag-1{ top: 10%; left: 6%; }
-.anatomy-tag-2{ top: 76%; left: 6%; }
+.anatomy-tag-2{ top: 78%; left: 5%; }
 .anatomy-tag-3{ top: 28%; right: 6%; }
 .anatomy-tag-4{ top: 82%; right: 6%; }
 
@@ -2239,7 +2242,7 @@ p{ margin:0; color:var(--ink-1); }
 
 /* ---------- Intelligence Solutions dropdown ---------- */
 .nav-dd{ position:relative; display:flex; align-items:center; }
-.nav-dd-trigger{ font-family:inherit; font-size:15px; font-weight:500; color:var(--ink-1); position:relative; padding:6px 0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:color .2s ease; }
+.nav-dd-trigger{ font-family:inherit; font-size:15px; font-weight:500; color:#0d2030; position:relative; padding:6px 0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:color .2s ease; }
 .nav-dd-trigger::after{ content:""; position:absolute; left:0; right:18px; bottom:-2px; height:1px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease-spring); }
 .nav-dd:hover .nav-dd-trigger, .nav-dd:focus-within .nav-dd-trigger, .nav-dd-trigger.active{ color:var(--accent); }
 .nav-dd:hover .nav-dd-trigger::after, .nav-dd:focus-within .nav-dd-trigger::after, .nav-dd-trigger.active::after{ transform:scaleX(1); }
