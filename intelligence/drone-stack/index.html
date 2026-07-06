@@ -260,7 +260,8 @@ p{ margin:0; color:var(--ink-1); }
 .ds-badge::before{ content:""; flex:none; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 /* ---- 03 — Connectivity (FC pinout + specs) ---- */
 .ds-conn-intro{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(22px,2.6vw,34px); font-weight:700; letter-spacing:-0.02em; line-height:1.12; color:var(--ink-0); margin:0 0 32px; max-width:720px; }
-.ds-conn-panel{ position:relative; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); padding:28px; overflow:hidden; max-width:840px; margin-inline:auto; }
+.ds-conn-layout{ display:grid; grid-template-columns:1.15fr 0.85fr; align-items:center; gap:54px; }
+.ds-conn-panel{ position:relative; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); padding:26px; overflow:hidden; }
 .ds-conn-panel .hud-corner-tl{ top:14px; left:14px; }
 .ds-conn-panel .hud-corner-tr{ top:14px; right:14px; }
 .ds-conn-panel .hud-corner-bl{ bottom:14px; left:14px; }
@@ -269,13 +270,12 @@ p{ margin:0; color:var(--ink-1); }
 .ds-conn-caption::before{ content:""; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 .ds-conn-figure{ background:#ffffff; border:1px solid rgba(0,0,0,0.06); border-radius:var(--radius-md); padding:26px 30px; }
 .ds-conn-figure img{ width:100%; height:auto; max-height:500px; object-fit:contain; display:block; margin-inline:auto; }
-.ds-conn-specs{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px 34px; margin:38px auto 0; max-width:840px; }
+.ds-conn-specs{ display:grid; grid-template-columns:1fr; gap:22px; margin:0; }
 .conn-spec{ position:relative; padding-left:24px; }
 .conn-spec::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 .conn-spec-label{ font-family:'Inter',system-ui,sans-serif; font-size:16px; font-weight:700; color:var(--ink-0); letter-spacing:0.02em; margin-bottom:6px; }
 .conn-spec-desc{ color:var(--ink-2); font-size:14px; line-height:1.62; margin:0; }
-@media (min-width:901px) and (max-width:1200px){ .ds-conn-specs{ grid-template-columns:repeat(2,1fr); } }
-@media (max-width:900px){ .ds-conn-specs{ grid-template-columns:1fr; max-width:640px; } .ds-conn-figure{ padding:16px; } }
+@media (max-width:1000px){ .ds-conn-layout{ grid-template-columns:1fr; gap:34px; } .ds-conn-figure{ padding:16px; } }
 </style>
 </head>
 <body>
@@ -452,6 +452,7 @@ p{ margin:0; color:var(--ink-1); }
       <div class="section-eyebrow">/ 03 — CONNECTIVITY</div>
       <h2 class="ds-conn-intro">Flight Controller Pinout and Connectivity Overview.</h2>
 
+      <div class="ds-conn-layout">
       <div class="ds-conn-panel">
         <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
@@ -484,6 +485,7 @@ p{ margin:0; color:var(--ink-1); }
           <div class="conn-spec-label">I2C</div>
           <p class="conn-spec-desc">I2C increases flexibility and enables communication with external components such as compasses, GPS modules, LiDAR/sonar systems, weapons systems, etc.</p>
         </div>
+      </div>
       </div>
     </div>
   </section>
