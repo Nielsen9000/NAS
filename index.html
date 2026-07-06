@@ -2315,6 +2315,7 @@ p{ margin:0; color:var(--ink-1); }
       <a href="/engineering">Engineering</a>
       <a href="/nas">NAS</a>
       <a href="/conduct">Conduct</a>
+      <a href="/careers">Careers</a>
       <a href="/contact">Contact</a>
     </nav>
     <div class="header-cta">
@@ -2337,6 +2338,7 @@ p{ margin:0; color:var(--ink-1); }
     <a href="/engineering">Engineering</a>
     <a href="/nas">NAS</a>
     <a href="/conduct">Conduct</a>
+    <a href="/careers">Careers</a>
     <a href="/contact">Contact</a>
     <a class="mobile-cta" href="/contact">Request brief <span aria-hidden="true">→</span></a>
   </nav>
@@ -2352,6 +2354,7 @@ p{ margin:0; color:var(--ink-1); }
          autoplay muted loop playsinline
          preload="auto"
          aria-hidden="true">
+    <source src="./assets/hero-loop.webm" type="video/webm">
     <source src="./assets/hero-loop.mp4" type="video/mp4">
     <img class="hero-loop-fallback" src="./assets/hero-poster.jpg" alt="" aria-hidden="true">
   </video>
@@ -3237,38 +3240,6 @@ p{ margin:0; color:var(--ink-1); }
   });
 })();
 
-/* Hero loop: ease playbackRate near the forward<->reverse seam so the
-   direction change reads as a soft breath instead of a hard yo-yo. */
-(function(){
-  const video = document.querySelector('.hero-loop-video');
-  if (!video) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const easeWindow = 1.5;   // seconds on each side of the midpoint
-  const minRate    = 0.55;  // playback rate at the seam itself
-  let rafId = null;
-
-  // Smoothstep — soft ease in/out
-  const smooth = (t) => t * t * (3 - 2 * t);
-
-  function tick(){
-    const dur = video.duration;
-    if (isFinite(dur) && dur > 0){
-      const dist = Math.abs(video.currentTime - dur / 2);
-      if (dist < easeWindow){
-        const ratio = dist / easeWindow;       // 0 at seam, 1 at edge of window
-        video.playbackRate = minRate + (1 - minRate) * smooth(ratio);
-      } else if (video.playbackRate !== 1){
-        video.playbackRate = 1;
-      }
-    }
-    rafId = video.paused ? null : requestAnimationFrame(tick);
-  }
-
-  video.addEventListener('play',  () => { if (!rafId) rafId = requestAnimationFrame(tick); });
-  video.addEventListener('pause', () => { if (rafId){ cancelAnimationFrame(rafId); rafId = null; } });
-  if (!video.paused) rafId = requestAnimationFrame(tick);
-})();
 </script>
 
 </body>
