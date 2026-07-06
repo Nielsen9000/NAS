@@ -260,7 +260,7 @@ p{ margin:0; color:var(--ink-1); }
 .ds-badge::before{ content:""; flex:none; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 /* ---- 03 — Connectivity (FC pinout + specs) ---- */
 .ds-conn-intro{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(22px,2.6vw,34px); font-weight:700; letter-spacing:-0.02em; line-height:1.12; color:var(--ink-0); margin:0 0 32px; max-width:720px; }
-.ds-conn-panel{ position:relative; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); padding:28px; overflow:hidden; }
+.ds-conn-panel{ position:relative; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); padding:28px; overflow:hidden; max-width:840px; margin-inline:auto; }
 .ds-conn-panel .hud-corner-tl{ top:14px; left:14px; }
 .ds-conn-panel .hud-corner-tr{ top:14px; right:14px; }
 .ds-conn-panel .hud-corner-bl{ bottom:14px; left:14px; }
@@ -268,8 +268,8 @@ p{ margin:0; color:var(--ink-1); }
 .ds-conn-caption{ display:flex; align-items:center; gap:10px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin:0 0 18px; padding-left:2px; }
 .ds-conn-caption::before{ content:""; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 .ds-conn-figure{ background:#ffffff; border:1px solid rgba(0,0,0,0.06); border-radius:var(--radius-md); padding:26px 30px; }
-.ds-conn-figure img{ width:100%; height:auto; display:block; }
-.ds-conn-specs{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px 34px; margin-top:38px; }
+.ds-conn-figure img{ width:100%; height:auto; max-height:500px; object-fit:contain; display:block; margin-inline:auto; }
+.ds-conn-specs{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px 34px; margin:38px auto 0; max-width:840px; }
 .conn-spec{ position:relative; padding-left:24px; }
 .conn-spec::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 .conn-spec-label{ font-family:'Inter',system-ui,sans-serif; font-size:16px; font-weight:700; color:var(--ink-0); letter-spacing:0.02em; margin-bottom:6px; }
