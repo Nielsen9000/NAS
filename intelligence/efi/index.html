@@ -267,6 +267,12 @@ p{ margin:0; color:var(--ink-1); }
 .iems-block-title{ font-family:'Inter',system-ui,sans-serif; font-size:18px; font-weight:600; letter-spacing:-0.01em; color:var(--ink-0); margin:12px 0 14px; }
 .iems-block-body{ color:var(--ink-2); font-size:14.5px; line-height:1.72; margin:0; }
 @media (max-width:900px){ .iems-blocks{ grid-template-columns:1fr; max-width:640px; } }
+/* ---- 05 — Key features (marker grid) ---- */
+.iems-features{ list-style:none; margin:8px 0 0; padding:0; display:grid; grid-template-columns:repeat(3,1fr); gap:0 44px; max-width:1160px; }
+.iems-features .feat{ position:relative; display:flex; align-items:flex-start; gap:13px; padding:15px 0; border-top:1px solid var(--line-dark); color:var(--ink-1); font-size:15px; line-height:1.5; }
+.iems-features .feat::before{ content:""; flex:none; width:7px; height:7px; margin-top:6px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
+@media (max-width:1200px){ .iems-features{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:640px){ .iems-features{ grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -474,6 +480,32 @@ p{ margin:0; color:var(--ink-1); }
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       05 — KEY FEATURES
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 05 — KEY FEATURES</div>
+      <ul class="iems-features">
+        <li class="feat">Proprietary Electronic Fuel Injection (EFI)</li>
+        <li class="feat">Proprietary Capacitor Discharge Ignition (CDI)</li>
+        <li class="feat">Proprietary ECU hardware &amp; embedded software</li>
+        <li class="feat">Intelligent digital engine management</li>
+        <li class="feat">Adaptive fuel &amp; ignition control</li>
+        <li class="feat">Automatic altitude compensation</li>
+        <li class="feat">Automatic temperature compensation</li>
+        <li class="feat">ECU-controlled ignition timing</li>
+        <li class="feat">Optimized cold-start performance</li>
+        <li class="feat">CAN &amp; UART communication</li>
+        <li class="feat">Platform-specific calibration &amp; engine mapping</li>
+        <li class="feat">Validation on dedicated engine test facilities</li>
+        <li class="feat">Designed for professional UAV &amp; defence applications</li>
+        <li class="feat">NDAA-compliant architecture</li>
+        <li class="feat">Nordic Advanced Systems proprietary IP</li>
+      </ul>
     </div>
   </section>
 
