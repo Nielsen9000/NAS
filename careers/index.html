@@ -1476,6 +1476,7 @@ p{ margin:0; color:var(--ink-1); }
   display:flex; align-items:center;
   padding:180px 0 130px;
   overflow:hidden;
+  background-color:#0A2530;
   background-image:url('/careers/assets/hero-drone.png');
   background-size:cover;
   background-position:center right;
@@ -1485,9 +1486,11 @@ p{ margin:0; color:var(--ink-1); }
 .careers-hero-overlay{
   position:absolute; inset:0; z-index:0; pointer-events:none;
   background:
-    linear-gradient(180deg, transparent 70%, #0A2530 100%),
+    linear-gradient(180deg, transparent 55%, rgba(10,37,48,0.7) 80%, #0A2530 100%),
     linear-gradient(90deg, #0A2530 0%, #0A2530 30%, rgba(10,37,48,0.6) 60%, rgba(10,37,48,0.15) 100%);
 }
+/* hero + Open Positions share the exact same marine base so the bottom fade lands seamlessly */
+.careers-positions{ background:#0A2530; }
 .careers-hero .wrap{ position:relative; z-index:1; }
 .careers-hero .testrig-corner{ z-index:2; }
 /* clear the fixed header so the top HUD corners stay visible */
@@ -1547,7 +1550,7 @@ p{ margin:0; color:var(--ink-1); }
   /* stronger, more opaque marine overlay so the image never drowns the text on narrow screens */
   .careers-hero-overlay{
     background:
-      linear-gradient(180deg, transparent 55%, #0A2530 100%),
+      linear-gradient(180deg, transparent 55%, rgba(10,37,48,0.8) 80%, #0A2530 100%),
       linear-gradient(90deg, #0A2530 0%, #0A2530 44%, rgba(10,37,48,0.9) 74%, rgba(10,37,48,0.6) 100%);
   }
   .position-grid{ grid-template-columns:1fr; }
@@ -1618,7 +1621,7 @@ p{ margin:0; color:var(--ink-1); }
   <!-- =========================================
        2. OPEN POSITIONS
        ========================================= -->
-  <section class="company-section">
+  <section class="company-section careers-positions">
     <div class="wrap reveal">
       <div class="section-eyebrow">/ 02 — OPEN POSITIONS</div>
 
