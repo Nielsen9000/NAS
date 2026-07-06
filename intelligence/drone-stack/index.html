@@ -258,6 +258,24 @@ p{ margin:0; color:var(--ink-1); }
 .ds-badges{ display:flex; flex-wrap:wrap; gap:12px; margin:0 0 26px; }
 .ds-badge{ display:inline-flex; align-items:center; gap:9px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent); padding:9px 15px; border:1px solid rgba(59,182,232,0.5); border-radius:6px; background:rgba(59,182,232,0.08); box-shadow:inset 0 0 18px -6px rgba(59,182,232,0.55); }
 .ds-badge::before{ content:""; flex:none; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
+/* ---- 03 — Connectivity (FC pinout + specs) ---- */
+.ds-conn-intro{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(22px,2.6vw,34px); font-weight:700; letter-spacing:-0.02em; line-height:1.12; color:var(--ink-0); margin:0 0 32px; max-width:720px; }
+.ds-conn-panel{ position:relative; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); padding:28px; overflow:hidden; }
+.ds-conn-panel .hud-corner-tl{ top:14px; left:14px; }
+.ds-conn-panel .hud-corner-tr{ top:14px; right:14px; }
+.ds-conn-panel .hud-corner-bl{ bottom:14px; left:14px; }
+.ds-conn-panel .hud-corner-br{ bottom:14px; right:14px; }
+.ds-conn-caption{ display:flex; align-items:center; gap:10px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin:0 0 18px; padding-left:2px; }
+.ds-conn-caption::before{ content:""; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
+.ds-conn-figure{ background:#ffffff; border:1px solid rgba(0,0,0,0.06); border-radius:var(--radius-md); padding:26px 30px; }
+.ds-conn-figure img{ width:100%; height:auto; display:block; }
+.ds-conn-specs{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px 34px; margin-top:38px; }
+.conn-spec{ position:relative; padding-left:24px; }
+.conn-spec::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
+.conn-spec-label{ font-family:'Inter',system-ui,sans-serif; font-size:16px; font-weight:700; color:var(--ink-0); letter-spacing:0.02em; margin-bottom:6px; }
+.conn-spec-desc{ color:var(--ink-2); font-size:14px; line-height:1.62; margin:0; }
+@media (min-width:901px) and (max-width:1200px){ .ds-conn-specs{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:900px){ .ds-conn-specs{ grid-template-columns:1fr; max-width:640px; } .ds-conn-figure{ padding:16px; } }
 </style>
 </head>
 <body>
@@ -427,11 +445,55 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       03 — DETAIL: board macro grid
+       03 — CONNECTIVITY: FC pinout + specs
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 03 — DETAIL</div>
+      <div class="section-eyebrow">/ 03 — CONNECTIVITY</div>
+      <h2 class="ds-conn-intro">Flight Controller Pinout and Connectivity Overview.</h2>
+
+      <div class="ds-conn-panel">
+        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+        <div class="ds-conn-caption">FLIGHT CONTROLLER · PINOUT OVERVIEW</div>
+        <div class="ds-conn-figure">
+          <img src="/assets/fragment.png" alt="NAS flight controller pinout diagram — top and bottom board views with UART, GPIO, ELRS, I2C, camera, ESC and power connections labelled" />
+        </div>
+      </div>
+
+      <div class="ds-conn-specs">
+        <div class="conn-spec">
+          <div class="conn-spec-label">6 × UART</div>
+          <p class="conn-spec-desc">Six UART (Universal Asynchronous Receiver/Transmitter) interfaces, providing extensive flexibility for external device connectivity.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label">2 × GPIO</div>
+          <p class="conn-spec-desc">Two GPIO (General-Purpose Input/Output) pins on the drone stack, configurable to the desired application or user requirements.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label">SSD</div>
+          <p class="conn-spec-desc">Solid-State Drive — an internal high-speed electronic storage drive.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label">ELRS</div>
+          <p class="conn-spec-desc">With ELRS, the stack provides an ultra-fast, highly reliable, long-range and lightweight control link between the drone and the remote controller.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label">I2C</div>
+          <p class="conn-spec-desc">I2C increases flexibility and enables communication with external components such as compasses, GPS modules, LiDAR/sonar systems, weapons systems, etc.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       04 — DETAIL: board macro grid
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 04 — DETAIL</div>
       <div class="ds-detail-grid">
         <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 01</span><span class="t-label">MOSFET</span></div>
         <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 02</span><span class="t-label">CAPACITORS</span></div>
@@ -442,11 +504,11 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       04 — IN FLIGHT: full-width mood placeholder
+       05 — IN FLIGHT: full-width mood placeholder
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 04 — IN FLIGHT</div>
+      <div class="section-eyebrow">/ 05 — IN FLIGHT</div>
       <div class="ds-inflight" aria-hidden="true">
         <div class="hud-corner hud-corner-tl"></div>
         <div class="hud-corner hud-corner-tr"></div>
