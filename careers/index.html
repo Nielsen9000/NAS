@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Company — Nordic Advanced Systems</title>
-<meta name="description" content="Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion." />
+<title>Careers — Nordic Advanced Systems</title>
+<meta name="description" content="NAS is growing. We're looking for people who want to build the future of engine production." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1466,6 +1466,77 @@ p{ margin:0; color:var(--ink-1); }
   .cursor { display: none; }
   * { cursor: auto; }
 }
+
+/* -------------------------------------------------------------
+   Careers
+   ------------------------------------------------------------- */
+.careers-hero{ position:relative; padding:180px 0 96px; overflow:hidden; }
+.careers-hero-frame{
+  position:relative;
+  border:1px solid var(--line-dark);
+  border-radius:var(--radius-lg);
+  background:linear-gradient(180deg, rgba(59,182,232,0.06) 0%, transparent 55%), var(--bg-elev);
+  padding:76px 64px;
+  overflow:hidden;
+}
+.careers-hero-stripes{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:repeating-linear-gradient(-45deg, rgba(59,182,232,0.06) 0 1px, transparent 1px 13px);
+  -webkit-mask-image:radial-gradient(130% 130% at 100% 0%, #000 0%, transparent 62%);
+  mask-image:radial-gradient(130% 130% at 100% 0%, #000 0%, transparent 62%);
+}
+.careers-hero-crosshair{
+  position:absolute; top:22px; right:26px; z-index:2;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-3);
+}
+.careers-hero-inner{ position:relative; z-index:1; max-width:900px; }
+.careers-hero-headline{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:clamp(44px, 6.4vw, 88px);
+  font-weight:700; letter-spacing:-0.03em; line-height:1.0;
+  color:var(--ink-0); margin:20px 0 28px;
+}
+.careers-hero-headline .accent{ color:var(--accent); }
+.careers-hero-lead{
+  color:var(--ink-1); font-size:clamp(17px,1.5vw,20px);
+  line-height:1.6; max-width:620px; margin:0;
+}
+.position-grid{
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(340px, 1fr));
+  gap:20px; margin-top:40px;
+}
+.position-card{
+  position:relative; display:flex; flex-direction:column; gap:16px;
+  background:linear-gradient(180deg, rgba(59,182,232,0.04) 0%, transparent 60%), var(--bg-elev);
+  border:1px solid var(--line-dark); border-radius:var(--radius-md);
+  padding:32px 28px 28px; text-decoration:none;
+  transition:border-color .3s ease, transform .3s var(--ease-smooth);
+}
+.position-card:hover{ border-color:rgba(59,182,232,0.35); transform:translateY(-2px); }
+.position-card-meta{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent);
+}
+.position-card-title{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:20px; font-weight:600; letter-spacing:-0.01em;
+  color:var(--ink-0); line-height:1.25;
+}
+.position-card-teaser{ color:var(--ink-2); font-size:15px; line-height:1.6; margin:0; }
+.position-card-link{
+  margin-top:auto; padding-top:8px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--accent); display:inline-flex; align-items:center; gap:8px;
+}
+.position-card .arrow{ transition:transform .3s var(--ease-spring); }
+.position-card:hover .arrow{ transform:translateX(4px); }
+@media (max-width:640px){
+  .careers-hero{ padding:132px 0 64px; }
+  .careers-hero-frame{ padding:44px 26px; }
+  .position-grid{ grid-template-columns:1fr; }
+}
 </style>
 </head>
 <body>
@@ -1493,10 +1564,10 @@ p{ margin:0; color:var(--ink-1); }
     <nav class="nav" aria-label="Primary">
       <a href="/#platforms">Platforms</a>
       <a href="/#anatomy">Anatomy</a>
-      <a href="/engineering" class="active">Engineering</a>
+      <a href="/engineering">Engineering</a>
       <a href="/nas">NAS</a>
       <a href="/conduct">Conduct</a>
-      <a href="/careers">Careers</a>
+      <a href="/careers" class="active">Careers</a>
       <a href="/contact">Contact</a>
     </nav>
     <div class="header-cta">
@@ -1508,240 +1579,47 @@ p{ margin:0; color:var(--ink-1); }
 <main>
 
   <!-- =========================================
-       1. PRODUCTION HERO — full-bleed test rig
+       1. CAREERS HERO
        ========================================= -->
-  <section class="production-hero">
-    <img src="../assets/tyr-test.jpg"
-         alt="NAS engine on test rig with dynamometer and exhaust ducting"
-         class="production-hero-image" />
-
-    <div class="production-hero-overlay" aria-hidden="true"></div>
-
-    <div class="production-hero-hud" aria-hidden="true">
-      <div class="testrig-corner testrig-corner-tl"></div>
-      <div class="testrig-corner testrig-corner-tr"></div>
-      <div class="testrig-corner testrig-corner-bl"></div>
-      <div class="testrig-corner testrig-corner-br"></div>
-    </div>
-
-    <div class="wrap production-hero-content">
-      <div class="production-hero-text reveal">
-        <div class="section-eyebrow">/ PRODUCTION & QUALITY</div>
-        <h1 class="production-hero-headline">
-          No engine<br>
-          <span class="accent">ships untested</span>
-        </h1>
-        <p class="production-hero-lead">
-          Production is structured for series assembly in a controlled environment with defined workflows and inspection points — supporting consistent output and repeatable quality across deliveries.
-        </p>
+  <section class="careers-hero">
+    <div class="wrap">
+      <div class="careers-hero-frame reveal">
+        <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
+        <div class="careers-hero-stripes" aria-hidden="true"></div>
+        <div class="careers-hero-crosshair" aria-hidden="true">+ CAREERS · NAS</div>
+        <div class="careers-hero-inner">
+          <div class="section-eyebrow">/ CAREERS</div>
+          <h1 class="careers-hero-headline">
+            Build the engines<br>
+            <span class="accent">that fly further.</span>
+          </h1>
+          <p class="careers-hero-lead">NAS is growing. We're looking for people who want to build the future of engine production.</p>
+        </div>
       </div>
-    </div>
-
-    <div class="testrig-caption">
-      <span class="testrig-caption-label">DOCUMENTED</span>
-      <span class="testrig-caption-text">NAS engine · dynamometer test rig · Denmark</span>
-    </div>
-
-    <div class="production-hero-scroll" aria-hidden="true">
-      <span class="production-hero-scroll-text">SCROLL</span>
-      <span class="production-hero-scroll-line"></span>
     </div>
   </section>
 
   <!-- =========================================
-       2. TEST PROTOCOL — process diagram + facility note
-       ========================================= -->
-  <section class="company-section company-production-protocol">
-    <div class="wrap reveal">
-
-      <div class="section-eyebrow">/ TEST PROTOCOL</div>
-
-      <div class="process-diagram" aria-label="Quality process flow">
-        <div class="process-node">
-          <div class="process-num">01</div>
-          <div class="process-label">COLD-RUN<br>TESTING</div>
-          <div class="process-desc">Mechanical verification under controlled conditions</div>
-        </div>
-        <div class="process-connector" aria-hidden="true"></div>
-        <div class="process-node">
-          <div class="process-num">02</div>
-          <div class="process-label">HOT-RUN<br>TESTING</div>
-          <div class="process-desc">Performance validation at operational load</div>
-        </div>
-        <div class="process-connector" aria-hidden="true"></div>
-        <div class="process-node">
-          <div class="process-num">03</div>
-          <div class="process-label">VISUAL<br>INSPECTION</div>
-          <div class="process-desc">Final review before unit release</div>
-        </div>
-        <div class="process-connector" aria-hidden="true"></div>
-        <div class="process-node">
-          <div class="process-num">04</div>
-          <div class="process-label">UNIT<br>TRACEABILITY</div>
-          <div class="process-desc">Documentation provided with every delivery</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- =========================================
-       3. DESIGN PHILOSOPHY
+       2. OPEN POSITIONS
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 02 — DESIGN PHILOSOPHY</div>
-      <h2>Designed for <span class="accent">real operating conditions</span></h2>
-      <p class="lead">
-        The engines are developed based on actual operating conditions and known load profiles.
-      </p>
+      <div class="section-eyebrow">/ 02 — OPEN POSITIONS</div>
 
-      <div class="spec-card-grid">
-        <div class="spec-card">
-          <div class="num">/ 01</div>
-          <div class="title">Stable Rotational Speed</div>
-          <div class="desc">Throughout the mission, without unexpected drops or surges.</div>
-          <div class="spec-card-spec">RPM under load</div>
-        </div>
-        <div class="spec-card">
-          <div class="num">/ 02</div>
-          <div class="title">Controlled Vibration</div>
-          <div class="desc">During operation, minimizing structural stress on the platform.</div>
-          <div class="spec-card-spec">Boxer-twin counterbalanced</div>
-        </div>
-        <div class="spec-card">
-          <div class="num">/ 03</div>
-          <div class="title">Predictable Thermal Behavior</div>
-          <div class="desc">Until mission completion, with known limits and margins.</div>
-          <div class="spec-card-spec">Forced-air cooled, mapped</div>
-        </div>
-        <div class="spec-card">
-          <div class="num">/ 04</div>
-          <div class="title">Consistent Performance</div>
-          <div class="desc">Across series production, unit to unit.</div>
-          <div class="spec-card-spec">Series-tested, unit to unit</div>
-        </div>
-      </div>
-
-      <p class="spec-card-closing">
-        Design choices are made to ensure stable and predictable function for the duration of the mission, based on known load profiles and operating conditions.
-      </p>
-    </div>
-  </section>
-
-  <!-- =========================================
-       4. NAS SERIES INTRO — split 2-column with image placeholder
-       ========================================= -->
-  <section class="company-section company-product" id="nas-series">
-    <div class="wrap">
-      <div class="product-split reveal">
-
-        <div class="product-media">
-          <div class="engine-profile-card" aria-label="NAS 2 engine profile card">
-            <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
-            <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
-            <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
-            <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
-
-            <div class="ep-header">
-              <span class="ep-label">NAS · Engine Profile</span>
-              <span class="ep-id">/ 02-2026</span>
-            </div>
-
-            <div class="ep-visual">
-              <div class="ep-tick-axes" aria-hidden="true"></div>
-              <img src="../assets/motor_blueprint_TRUE_alpha.png"
-                   alt="NAS 2 dual-cylinder boxer engine — technical schematic"
-                   class="ep-engine" />
-            </div>
-
-            <div class="ep-specs">
-              <div class="ep-spec">
-                <span class="ep-spec-label">Config</span>
-                <span class="ep-spec-value">Boxer · Twin</span>
-              </div>
-              <div class="ep-spec">
-                <span class="ep-spec-label">Cylinders</span>
-                <span class="ep-spec-value">2</span>
-              </div>
-              <div class="ep-spec">
-                <span class="ep-spec-label">Drive</span>
-                <span class="ep-spec-value">Direct</span>
-              </div>
-            </div>
-
-            <div class="ep-footer">
-              <span>Boxer-twin architecture</span>
-              <span class="ep-status">
-                <span class="ep-status-dot" aria-hidden="true"></span>
-                Active
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="product-content">
-          <div class="section-eyebrow">/ 03 — PRODUCT</div>
-          <h2>The <span class="accent">NAS Series</span> — Purpose-built<br>UAV engines for continuous operation</h2>
-          <p class="product-lead">
-            NAS 2C and NAS 2E are not modified hobby or industrial engines. They are purpose-built UAV engines, designed from the ground up for:
-          </p>
-
-          <div class="product-grid">
-            <div class="product-item">
-              <div class="num">/ 01</div>
-              <div class="title">Constant high load</div>
-              <p class="desc">Designed for sustained operating loads, not peak duty cycles.</p>
-            </div>
-            <div class="product-item">
-              <div class="num">/ 02</div>
-              <div class="title">Direct propeller coupling</div>
-              <p class="desc">No reduction stage — fewer parts, less drivetrain loss.</p>
-            </div>
-            <div class="product-item">
-              <div class="num">/ 03</div>
-              <div class="title">Long endurance</div>
-              <p class="desc">Built for extended missions, not short bursts.</p>
-            </div>
-            <div class="product-item">
-              <div class="num">/ 04</div>
-              <div class="title">Mechanical and thermal stability</div>
-              <p class="desc">Predictable behavior across the full operating envelope.</p>
-            </div>
-            <div class="product-item">
-              <div class="num">/ 05</div>
-              <div class="title">Precision-balanced crankshaft</div>
-              <p class="desc">Counterweighted for low vibration under continuous load.</p>
-            </div>
-            <div class="product-item">
-              <div class="num">/ 06</div>
-              <div class="title">High-grade bearings</div>
-              <p class="desc">Rated for continuous cyclic loads — specified for the duty cycle, not approximated.</p>
-            </div>
-          </div>
-
-          <div class="product-cta-row">
-            <a class="cta-link" href="/#platforms">View full NAS 2 specifications <span aria-hidden="true">→</span></a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       5. CLOSING CTA
-       ========================================= -->
-  <section class="company-section company-closing-cta">
-    <div class="wrap">
-      <div class="closing-cta-content reveal">
-        <p class="closing-cta-statement">
-          Engineered for endurance. <span class="accent">Tested for the mission.</span>
-        </p>
-        <div class="closing-cta-actions">
-          <a href="/#platforms" class="btn-pill-accent">Explore NAS 2 Series →</a>
-          <a href="/contact" class="btn-pill-outline">Speak with engineering</a>
-        </div>
+      <div class="position-grid">
+        <a class="position-card" href="/careers/production-team-lead/">
+          <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
+          <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
+          <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
+          <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
+          <div class="position-card-meta">Engine Division · Full-time · Copenhagen, DK</div>
+          <div class="position-card-title">Production Team Lead — Engine Systems</div>
+          <p class="position-card-teaser">Help build the engine production of the future.</p>
+          <span class="position-card-link">Read more <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
       </div>
     </div>
   </section>
@@ -1751,7 +1629,7 @@ p{ margin:0; color:var(--ink-1); }
 <footer class="site-footer">
   <div class="wrap footer-grid">
     <div class="footer-brand">
-      <span class="brand-logo-sm"><img src="../assets/logo.png" alt="" /></span>
+      <span class="brand-logo-sm"><img src="/assets/logo.png" alt="" /></span>
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
