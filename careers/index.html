@@ -1477,21 +1477,21 @@ p{ margin:0; color:var(--ink-1); }
   padding:180px 0 130px;
   overflow:hidden;
   background-color:#0A2530;
-  background-image:url('/careers/assets/hero-drone.png');
-  background-size:cover;
-  background-position:center right;
-  background-repeat:no-repeat;
 }
-/* two-layer fade: bottom-fade into next section + horizontal fade into marine dark on the left */
+/* engine sits on the right of the hero; cyan glow behind it on the marine bg */
+.careers-hero-media{ position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.careers-hero-glow{ position:absolute; right:9%; top:50%; transform:translateY(-50%); width:42%; height:66%; background:radial-gradient(ellipse at center, rgba(59,182,232,0.30), rgba(59,182,232,0.08) 46%, transparent 72%); filter:blur(60px); }
+.careers-hero-engine{ position:absolute; right:2.5%; top:50%; transform:translateY(-50%); width:47%; max-width:680px; max-height:80%; height:auto; object-fit:contain; filter:drop-shadow(0 24px 46px rgba(0,0,0,0.5)); }
+/* horizontal fade over the image (solid marine left -> transparent right) so the engine dissolves into the dark where the text sits; plus bottom-fade into the next section */
 .careers-hero-overlay{
-  position:absolute; inset:0; z-index:0; pointer-events:none;
+  position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
-    linear-gradient(180deg, transparent 55%, rgba(10,37,48,0.7) 80%, #0A2530 100%),
-    linear-gradient(90deg, #0A2530 0%, #0A2530 30%, rgba(10,37,48,0.6) 60%, rgba(10,37,48,0.15) 100%);
+    linear-gradient(180deg, transparent 62%, rgba(10,37,48,0.55) 84%, #0A2530 100%),
+    linear-gradient(90deg, #0A2530 0%, #0A2530 33%, rgba(10,37,48,0.5) 56%, rgba(10,37,48,0) 86%);
 }
 /* hero + Open Positions share the exact same marine base so the bottom fade lands seamlessly */
 .careers-positions{ background:#0A2530; }
-.careers-hero .wrap{ position:relative; z-index:1; }
+.careers-hero .wrap{ position:relative; z-index:2; }
 .careers-hero .testrig-corner{ z-index:2; }
 /* clear the fixed header so the top HUD corners stay visible */
 .careers-hero .testrig-corner-tl,
@@ -1546,12 +1546,14 @@ p{ margin:0; color:var(--ink-1); }
 .position-card .arrow{ transition:transform .3s var(--ease-spring); }
 .position-card:hover .arrow{ transform:translateX(4px); }
 @media (max-width:640px){
-  .careers-hero{ padding:128px 0 76px; min-height:70vh; background-position:78% center; }
-  /* stronger, more opaque marine overlay so the image never drowns the text on narrow screens */
+  .careers-hero{ padding:128px 0 76px; min-height:70vh; }
+  /* engine becomes a faint centred backdrop; strong overlay keeps text readable */
+  .careers-hero-engine{ width:98%; max-width:none; right:auto; left:50%; transform:translate(-50%,-50%); max-height:56%; }
+  .careers-hero-glow{ right:auto; left:50%; transform:translate(-50%,-50%); width:82%; }
   .careers-hero-overlay{
     background:
-      linear-gradient(180deg, transparent 55%, rgba(10,37,48,0.8) 80%, #0A2530 100%),
-      linear-gradient(90deg, #0A2530 0%, #0A2530 44%, rgba(10,37,48,0.9) 74%, rgba(10,37,48,0.6) 100%);
+      linear-gradient(180deg, rgba(10,37,48,0.5) 0%, rgba(10,37,48,0.72) 58%, #0A2530 100%),
+      linear-gradient(90deg, #0A2530 0%, rgba(10,37,48,0.82) 60%, rgba(10,37,48,0.68) 100%);
   }
   .position-grid{ grid-template-columns:1fr; }
 }
@@ -1600,6 +1602,10 @@ p{ margin:0; color:var(--ink-1); }
        1. CAREERS HERO — full-bleed drone background
        ========================================= -->
   <section class="careers-hero">
+    <div class="careers-hero-media" aria-hidden="true">
+      <div class="careers-hero-glow"></div>
+      <img class="careers-hero-engine" src="/careers/assets/careers-engine.png" alt="" />
+    </div>
     <div class="careers-hero-overlay" aria-hidden="true"></div>
     <div class="testrig-corner testrig-corner-tl" aria-hidden="true"></div>
     <div class="testrig-corner testrig-corner-tr" aria-hidden="true"></div>
