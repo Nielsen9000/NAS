@@ -1477,18 +1477,44 @@ p{ margin:0; color:var(--ink-1); }
   padding:180px 0 130px;
   overflow:hidden;
   background-color:#0A2530;
-  background-image:url('/careers/assets/hero-drone.png');
-  background-size:cover;
-  background-position:center right;
-  background-repeat:no-repeat;
 }
-/* two-layer fade: bottom-fade into next section + horizontal fade into marine dark on the left */
-.careers-hero-overlay{
-  position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:
-    linear-gradient(180deg, transparent 55%, rgba(10,37,48,0.7) 80%, #0A2530 100%),
-    linear-gradient(90deg, #0A2530 0%, #0A2530 30%, rgba(10,37,48,0.6) 60%, rgba(10,37,48,0.15) 100%);
+/* Fully coded HUD hero background — no photo. All layered on the marine base. */
+.careers-hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+/* subtle blueprint grid */
+.careers-hero-grid{
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(to right, rgba(59,182,232,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59,182,232,0.06) 1px, transparent 1px);
+  background-size:44px 44px;
 }
+/* soft cyan radial glow on the right */
+.careers-hero-glow{
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 72% 42%, rgba(59,182,232,0.14), transparent 55%);
+}
+/* rotating turbine/propeller schematic, right side */
+.careers-hero-rotor{
+  position:absolute; top:50%; right:-60px; transform:translateY(-50%);
+  width:min(640px, 54vw); aspect-ratio:1;
+}
+.careers-hero-schematic{
+  display:block; width:100%; height:100%;
+  opacity:0.4; transform-origin:center;
+  animation:careers-rotor-spin 60s linear infinite;
+}
+@keyframes careers-rotor-spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce){ .careers-hero-schematic{ animation:none; } }
+/* telemetry ticks, top-right */
+.careers-hero-telemetry{
+  position:absolute; top:132px; right:30px; z-index:2;
+  display:flex; flex-direction:column; align-items:flex-end; gap:7px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--accent); opacity:0.6;
+}
+.careers-hero-telemetry span{ display:inline-flex; align-items:center; gap:8px; }
+.careers-hero-telemetry span::before{ content:""; width:5px; height:5px; background:var(--accent); box-shadow:0 0 8px var(--accent-glow); }
 /* hero + Open Positions share the exact same marine base so the bottom fade lands seamlessly */
 .careers-positions{ background:#0A2530; }
 .careers-hero .wrap{ position:relative; z-index:1; }
@@ -1546,13 +1572,11 @@ p{ margin:0; color:var(--ink-1); }
 .position-card .arrow{ transition:transform .3s var(--ease-spring); }
 .position-card:hover .arrow{ transform:translateX(4px); }
 @media (max-width:640px){
-  .careers-hero{ padding:128px 0 76px; min-height:70vh; background-position:78% center; }
-  /* stronger, more opaque marine overlay so the image never drowns the text on narrow screens */
-  .careers-hero-overlay{
-    background:
-      linear-gradient(180deg, transparent 55%, rgba(10,37,48,0.8) 80%, #0A2530 100%),
-      linear-gradient(90deg, #0A2530 0%, #0A2530 44%, rgba(10,37,48,0.9) 74%, rgba(10,37,48,0.6) 100%);
-  }
+  .careers-hero{ padding:128px 0 76px; min-height:70vh; }
+  /* push the schematic further off-canvas and dim it so the headline stays crisp */
+  .careers-hero-rotor{ right:-42%; width:min(440px, 104vw); opacity:0.6; }
+  .careers-hero-glow{ background:radial-gradient(ellipse at 84% 28%, rgba(59,182,232,0.12), transparent 60%); }
+  .careers-hero-telemetry{ display:none; }
   .position-grid{ grid-template-columns:1fr; }
 }
 </style>
@@ -1597,15 +1621,56 @@ p{ margin:0; color:var(--ink-1); }
 <main>
 
   <!-- =========================================
-       1. CAREERS HERO — full-bleed drone background
+       1. CAREERS HERO — fully coded HUD background (no photo)
        ========================================= -->
   <section class="careers-hero">
-    <div class="careers-hero-overlay" aria-hidden="true"></div>
+    <!-- Coded background: blueprint grid + cyan glow + slow-rotating rotor schematic -->
+    <div class="careers-hero-bg" aria-hidden="true">
+      <div class="careers-hero-grid"></div>
+      <div class="careers-hero-glow"></div>
+      <div class="careers-hero-rotor">
+        <svg class="careers-hero-schematic" viewBox="0 0 400 400" fill="none" stroke="#3bb6e8" xmlns="http://www.w3.org/2000/svg">
+          <!-- concentric circles (one dashed) -->
+          <circle cx="200" cy="200" r="190" stroke-width="1" opacity="0.45"/>
+          <circle cx="200" cy="200" r="156" stroke-width="1" stroke-dasharray="3 8" opacity="0.85"/>
+          <circle cx="200" cy="200" r="96" stroke-width="1" opacity="0.5"/>
+          <!-- center hub -->
+          <circle cx="200" cy="200" r="22" stroke-width="1.2" opacity="0.9"/>
+          <circle cx="200" cy="200" r="5" fill="#3bb6e8" stroke="none" opacity="0.9"/>
+          <!-- three curved propeller blades from the hub -->
+          <g stroke-width="1.4" opacity="0.9">
+            <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(0 200 200)"/>
+            <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(120 200 200)"/>
+            <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(240 200 200)"/>
+          </g>
+          <!-- radial tick marks around the rim -->
+          <g stroke-width="1" opacity="0.65">
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(0 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(30 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(60 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(90 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(120 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(150 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(180 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(210 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(240 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(270 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(300 200 200)"/>
+            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(330 200 200)"/>
+          </g>
+        </svg>
+      </div>
+    </div>
     <div class="testrig-corner testrig-corner-tl" aria-hidden="true"></div>
     <div class="testrig-corner testrig-corner-tr" aria-hidden="true"></div>
     <div class="testrig-corner testrig-corner-bl" aria-hidden="true"></div>
     <div class="testrig-corner testrig-corner-br" aria-hidden="true"></div>
     <div class="careers-hero-crosshair" aria-hidden="true">+ CAREERS · NAS</div>
+    <div class="careers-hero-telemetry" aria-hidden="true">
+      <span>RPM · —</span>
+      <span>THRUST · —</span>
+      <span>TEMP · —</span>
+    </div>
     <div class="wrap">
       <div class="careers-hero-inner reveal">
         <div class="section-eyebrow">/ CAREERS</div>
