@@ -307,6 +307,20 @@ p{ margin:0; color:var(--ink-1); }
 .esc-lead-mark{ display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
 .esc-lead{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(18px,1.5vw,21px); font-weight:600; line-height:1.5; letter-spacing:-0.01em; color:var(--ink-0); margin:0; }
 .esc-lead .accent{ color:var(--accent); }
+/* ---- NDAA compliance explainer (pays off the hero badge) ---- */
+.ndaa-box{ position:relative; max-width:920px; margin-inline:auto; padding:44px 48px; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.07),transparent 62%),var(--bg-elev); overflow:hidden; }
+.ndaa-box .hud-corner{ width:20px; height:20px; opacity:.7; }
+.ndaa-box .hud-corner-tl{ top:16px; left:16px; }
+.ndaa-box .hud-corner-tr{ top:16px; right:16px; }
+.ndaa-box .hud-corner-bl{ bottom:16px; left:16px; }
+.ndaa-box .hud-corner-br{ bottom:16px; right:16px; }
+.ndaa-head{ display:flex; align-items:center; gap:18px; margin-bottom:22px; }
+.ndaa-icon{ flex:none; width:56px; height:56px; border:1px solid rgba(59,182,232,0.5); border-radius:12px; display:grid; place-items:center; color:var(--accent); background:rgba(59,182,232,0.08); box-shadow:inset 0 0 18px -6px rgba(59,182,232,0.55); }
+.ndaa-icon svg{ width:30px; height:30px; }
+.ndaa-title{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(24px,2.4vw,32px); font-weight:700; letter-spacing:-0.02em; line-height:1.1; color:var(--ink-0); margin:0; }
+.ndaa-title .accent{ color:var(--accent); }
+.ndaa-body{ color:var(--ink-1); font-size:clamp(15px,1.25vw,17px); line-height:1.72; margin:0; max-width:790px; }
+@media (max-width:600px){ .ndaa-box{ padding:32px 24px; } .ndaa-head{ gap:14px; } .ndaa-icon{ width:48px; height:48px; } .ndaa-icon svg{ width:26px; height:26px; } }
 /* ---- 07 — Field-proven (featured customer testimonial) ---- */
 .ds-quote{ position:relative; max-width:1000px; margin:8px auto 0; padding:64px 72px 56px; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.06),transparent 55%),var(--bg-elev); text-align:center; overflow:hidden; }
 .ds-quote::after{ content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(59,182,232,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(59,182,232,0.035) 1px,transparent 1px); background-size:34px 34px; opacity:.5; pointer-events:none; }
@@ -488,6 +502,27 @@ p{ margin:0; color:var(--ink-1); }
           </div>
         </article>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       NDAA COMPLIANCE — trust callout (pays off hero badge)
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="ndaa-box">
+        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+        <div class="ndaa-head">
+          <span class="ndaa-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v5.4c0 4.6 3.2 7.9 7.5 9.1 4.3-1.2 7.5-4.5 7.5-9.1V5.5L12 2.5Z"/><path d="M8.7 12.2l2.4 2.4 4.4-4.6"/></svg>
+          </span>
+          <h2 class="ndaa-title"><span class="accent">NDAA</span> Compliant</h2>
+        </div>
+        <p class="ndaa-body">A US standard that sets a high bar — also within NATO. This equipment complies with the US National Defense Authorization Act, meaning it contains no components, chips or software from selected sanctioned Chinese manufacturers (such as Huawei, Hikvision or Dahua), ensuring a high level of cybersecurity. Although it is US law, NDAA compliance functions today as an international security standard — many partners and defence organisations in NATO countries, including Denmark, require it.</p>
       </div>
     </div>
   </section>
