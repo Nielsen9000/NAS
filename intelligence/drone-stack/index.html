@@ -287,6 +287,12 @@ p{ margin:0; color:var(--ink-1); }
 .ds-conn-caption::before{ content:""; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 .ds-conn-figure{ background:transparent; border:0; border-radius:var(--radius-md); padding:0; }
 .ds-conn-figure img{ width:100%; height:auto; max-height:500px; object-fit:contain; display:block; margin-inline:auto; }
+/* Light "datasheet" panel — identical frame for both pinout diagrams */
+.ds-conn-panel.is-datasheet{ background:#ffffff; border:1px solid rgba(10,37,48,0.16); box-shadow:0 22px 54px -26px rgba(0,0,0,0.6); padding:22px; }
+.ds-conn-panel.is-datasheet .ds-conn-caption{ color:#0a2530; }
+.ds-conn-panel.is-datasheet .hud-corner{ border-color:var(--accent); opacity:.9; }
+.ds-conn-panel.is-datasheet .ds-conn-figure{ background:#ffffff; border-radius:8px; overflow:hidden; }
+.ds-conn-panel.is-datasheet .ds-conn-figure img{ max-height:520px; }
 .ds-conn-specs{ display:grid; grid-template-columns:1fr; gap:22px; margin:0; }
 .conn-spec{ position:relative; padding-left:24px; }
 .conn-spec::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
@@ -502,14 +508,14 @@ p{ margin:0; color:var(--ink-1); }
       <h2 class="ds-conn-intro">Flight Controller Pinout and Connectivity Overview.</h2>
 
       <div class="ds-conn-layout">
-      <div class="ds-conn-panel">
+      <div class="ds-conn-panel is-datasheet">
         <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
         <div class="ds-conn-caption">FLIGHT CONTROLLER · PINOUT OVERVIEW</div>
         <div class="ds-conn-figure">
-          <img src="/assets/fragment.png" alt="NAS flight controller pinout diagram — top and bottom board views with UART, GPIO, ELRS, I2C, camera, ESC and power connections labelled" />
+          <img src="/assets/fragment.png" loading="lazy" alt="NAS flight controller pinout diagram — top and bottom board views with UART, GPIO, ELRS, I2C, camera, ESC and power connections labelled" />
         </div>
       </div>
 
@@ -557,15 +563,14 @@ p{ margin:0; color:var(--ink-1); }
       </div>
 
       <div class="ds-conn-layout">
-        <div class="ds-conn-panel">
+        <div class="ds-conn-panel is-datasheet">
           <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
           <div class="ds-conn-caption">ESC · PINOUT OVERVIEW</div>
           <div class="ds-conn-figure">
-            <!-- ESC pinout image lands here — swap the .fig-ph div for <img src="/assets/…" alt="…" /> -->
-            <div class="fig-ph" aria-hidden="true"><span class="fig-ph-label">ESC DIAGRAM · PLACEHOLDER</span></div>
+            <img src="/assets/ESC.jpeg" loading="lazy" alt="NAS ESC pinout diagram — 4-in-1 ESC with XT60 power, low-ESR capacitor, four motor outputs and FC signal connections labelled" />
           </div>
         </div>
 
