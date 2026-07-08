@@ -43,3 +43,8 @@ qrkode*.jpg
 
 # Unreferenced source video clips (working files, not used on the live site)
 assets/Kolibri video med FC NAS.mp4
+
+# Large unused source images (kept locally, not referenced by any page)
+assets/tyr-test-rig.jpg
+assets/Droner.png
+assets/motor_blueprint_extracted.png
