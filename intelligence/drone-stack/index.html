@@ -278,6 +278,9 @@ p{ margin:0; color:var(--ink-1); }
 /* ---- 03 — Connectivity (FC pinout + specs) ---- */
 .ds-conn-intro{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(22px,2.6vw,34px); font-weight:700; letter-spacing:-0.02em; line-height:1.12; color:var(--ink-0); margin:0 0 32px; max-width:720px; }
 .ds-conn-layout{ display:grid; grid-template-columns:1.15fr 0.85fr; align-items:center; gap:54px; }
+.ds-conn-layout.is-mirror{ grid-template-columns:0.85fr 1.15fr; }
+.ds-conn-layout.is-mirror .ds-conn-specs{ order:1; }
+.ds-conn-layout.is-mirror .ds-conn-panel{ order:2; }
 .ds-conn-panel{ position:relative; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); padding:26px; overflow:hidden; }
 .ds-conn-panel .hud-corner-tl{ top:14px; left:14px; }
 .ds-conn-panel .hud-corner-tr{ top:14px; right:14px; }
@@ -298,7 +301,7 @@ p{ margin:0; color:var(--ink-1); }
 .conn-spec::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 .conn-spec-label{ font-family:'Inter',system-ui,sans-serif; font-size:16px; font-weight:700; color:var(--ink-0); letter-spacing:0.02em; margin-bottom:6px; }
 .conn-spec-desc{ color:var(--ink-2); font-size:14px; line-height:1.62; margin:0; }
-@media (max-width:1000px){ .ds-conn-layout{ grid-template-columns:1fr; gap:34px; } .ds-conn-figure{ padding:16px; } }
+@media (max-width:1000px){ .ds-conn-layout{ grid-template-columns:1fr; gap:34px; } .ds-conn-figure{ padding:16px; } .ds-conn-layout.is-mirror .ds-conn-specs, .ds-conn-layout.is-mirror .ds-conn-panel{ order:0; } }
 /* ---- 04 — ESC (clean lead statement + punchlines, mirrors Connectivity) ---- */
 .esc-lead-block{ margin-bottom:6px; }
 .esc-lead-mark{ display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
@@ -536,14 +539,29 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       04 — ESC: the muscle (FC pairs with the ESC)
+       04 — DETAIL: board macro grid
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 04 — ESC</div>
+      <div class="section-eyebrow">/ 04 — DETAIL</div>
+      <div class="ds-detail-grid">
+        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/mosfet.png" alt="Power MOSFET on the NAS drone stack" loading="lazy"><span class="t-num">/ 01</span><span class="t-label">MOSFET</span></div>
+        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/capacitor.png" alt="Electrolytic capacitor on the NAS drone stack" loading="lazy"><span class="t-num">/ 02</span><span class="t-label">CAPACITORS</span></div>
+        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 03</span><span class="t-label">COPPER BAR</span></div>
+        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 04</span><span class="t-label">SOLDER PADS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       05 — ESC: the muscle (FC pairs with the ESC)
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 05 — ESC</div>
       <h2>The <span class="accent">muscle</span> behind the stack</h2>
 
-      <div class="ds-conn-layout">
+      <div class="ds-conn-layout is-mirror">
         <div class="ds-conn-panel is-datasheet">
           <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
@@ -573,21 +591,6 @@ p{ margin:0; color:var(--ink-1); }
             <p class="conn-spec-desc">For maximum flexibility and adaptability, the ESC supports both 4S and 6S batteries.</p>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       05 — DETAIL: board macro grid
-       ========================================= -->
-  <section class="company-section">
-    <div class="wrap reveal">
-      <div class="section-eyebrow">/ 05 — DETAIL</div>
-      <div class="ds-detail-grid">
-        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/mosfet.png" alt="Power MOSFET on the NAS drone stack" loading="lazy"><span class="t-num">/ 01</span><span class="t-label">MOSFET</span></div>
-        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/capacitor.png" alt="Electrolytic capacitor on the NAS drone stack" loading="lazy"><span class="t-num">/ 02</span><span class="t-label">CAPACITORS</span></div>
-        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 03</span><span class="t-label">COPPER BAR</span></div>
-        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 04</span><span class="t-label">SOLDER PADS</span></div>
       </div>
     </div>
   </section>
