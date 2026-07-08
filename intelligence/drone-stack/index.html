@@ -317,7 +317,7 @@ p{ margin:0; color:var(--ink-1); }
 .ndaa-head{ display:flex; align-items:center; gap:18px; margin-bottom:14px; }
 .ndaa-icon{ flex:none; width:56px; height:56px; border:1px solid rgba(59,182,232,0.5); border-radius:12px; display:grid; place-items:center; color:var(--accent); background:rgba(59,182,232,0.08); box-shadow:inset 0 0 18px -6px rgba(59,182,232,0.55); }
 .ndaa-icon svg{ width:30px; height:30px; }
-.ndaa-title{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(24px,2.4vw,32px); font-weight:700; letter-spacing:-0.02em; line-height:1.1; color:var(--ink-0); margin:0; }
+.ndaa-title{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(24px,2.4vw,32px); font-weight:700; letter-spacing:-0.02em; line-height:1; color:var(--ink-0); margin:0; transform:translateY(7px); }
 .ndaa-title .accent{ color:var(--accent); }
 .ndaa-body{ color:var(--ink-1); font-size:clamp(15px,1.25vw,17px); line-height:1.65; margin:0; padding-left:74px; }
 @media (max-width:600px){ .ndaa-box{ padding:32px 24px; } .ndaa-head{ gap:14px; } .ndaa-icon{ width:48px; height:48px; } .ndaa-icon svg{ width:26px; height:26px; } .ndaa-body{ padding-left:62px; } }
@@ -338,6 +338,11 @@ p{ margin:0; color:var(--ink-1); }
 .ds-quote-role{ font-size:15px; font-weight:500; color:var(--accent); margin-top:7px; letter-spacing:0.01em; }
 .ds-quote-sub{ font-size:14px; color:var(--ink-2); margin-top:10px; }
 @media (max-width:900px){ .ds-quote{ padding:44px 24px 40px; } .ds-quote-mark{ font-size:84px; height:38px; } }
+/* Testimonial sitting directly under the field-test video — frameless, so it reads as one unit with the clip */
+.ds-quote.is-inline{ max-width:860px; margin:42px auto 0; padding:8px 24px 0; border:0; background:none; box-shadow:none; }
+.ds-quote.is-inline::after{ display:none; }
+.ds-quote.is-inline blockquote{ font-size:clamp(20px,2.2vw,28px); }
+@media (max-width:900px){ .ds-quote.is-inline{ padding:6px 6px 0; margin-top:32px; } }
 </style>
 </head>
 <body>
@@ -624,7 +629,7 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       06 — FIELD TEST: Kolibri Defence field-test video
+       06 — FIELD TEST: Kolibri Defence field-test video + testimonial
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
@@ -644,26 +649,14 @@ p{ margin:0; color:var(--ink-1); }
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
         </button>
       </div>
-    </div>
-  </section>
 
-  <!-- =========================================
-       07 — FIELD-PROVEN: customer testimonial
-       ========================================= -->
-  <section class="company-section">
-    <div class="wrap reveal">
-      <div class="section-eyebrow">/ 07 — FIELD-PROVEN</div>
-      <figure class="ds-quote">
-        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+      <figure class="ds-quote is-inline">
         <span class="ds-quote-mark" aria-hidden="true">&ldquo;</span>
         <blockquote>We are proud to use NAS avionics on our elite FPV drone platforms. Easy-to-solder ESC motor pads, high power output, and a versatile flight controller are exactly what we have been looking for in the European market for a long time.</blockquote>
         <figcaption class="ds-quote-attr">
           <div class="ds-quote-divider" aria-hidden="true"></div>
           <div class="ds-quote-name">Henri Christensen</div>
-          <div class="ds-quote-role">CEO, Kolibri Drones Ltd.</div>
+          <div class="ds-quote-role">CEO, Kolibri Defence</div>
           <div class="ds-quote-sub">Finnish dual-use FPV drone design house and manufacturer.</div>
         </figcaption>
       </figure>
