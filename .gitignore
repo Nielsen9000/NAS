@@ -15,3 +15,31 @@ node_modules/
 .idea/
 .vscode/
 Thumbs.db
+
+# Dev / build scratch (screenshots, temp PDF/PPTX build dirs)
+.screenshots/
+.tmp_pdf/
+.tmp_pptx/
+.intel-shots/
+.intel-shot.mjs
+
+# Working intermediates from image generation
+assets/fragment
+assets/fragment (1)
+assets/fragment.png
+assets/hero-loop-original.mp4
+assets/nas_deck_complete.tar.gz
+
+# Heavy binary deliverables — kept locally as backup, regenerable, not versioned
+*.pptx
+*.pdf
+*.docx
+*.zip
+*.tar.gz
+LOGER/
+NAS LOGO.png
+qrkode*.jpeg
+qrkode*.jpg
+
+# Unreferenced source video clips (working files, not used on the live site)
+assets/Kolibri video med FC NAS.mp4
