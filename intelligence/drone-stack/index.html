@@ -212,6 +212,11 @@ p{ margin:0; color:var(--ink-1); }
 .detail-tile{ position:relative; aspect-ratio:1/1; border:1.5px dashed rgba(59,182,232,0.4); border-radius:var(--radius-md); background:repeating-linear-gradient(45deg,#0c2a37 0 8px,#0e2e3c 8px 16px); overflow:hidden; }
 .detail-tile .t-num{ position:absolute; top:12px; left:14px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; letter-spacing:0.2em; color:var(--accent); opacity:.85; }
 .detail-tile .t-label{ position:absolute; left:14px; bottom:14px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent); padding:6px 11px; border:1px solid rgba(59,182,232,0.35); background:rgba(8,32,42,0.55); }
+/* Filled detail tiles — real component photo on the marine/striped tile */
+.detail-tile.has-media{ border-style:solid; border-color:rgba(59,182,232,0.42); }
+.detail-tile .tile-glow{ position:absolute; z-index:1; left:50%; top:48%; transform:translate(-50%,-50%); width:64%; height:64%; border-radius:50%; background:radial-gradient(circle, rgba(59,182,232,0.26) 0%, rgba(59,182,232,0.10) 46%, transparent 70%); filter:blur(4px); pointer-events:none; }
+.detail-tile .tile-media{ position:absolute; inset:0; z-index:2; width:100%; height:100%; object-fit:contain; padding:16%; }
+.detail-tile .t-num, .detail-tile .t-label{ z-index:3; }
 
 /* ---- 04 — In flight ---- */
 .ds-inflight{ position:relative; aspect-ratio:21/9; max-height:420px; margin-top:8px; border:1.5px dashed rgba(59,182,232,0.4); border-radius:var(--radius-lg); background:repeating-linear-gradient(45deg,#0c2a37 0 8px,#0e2e3c 8px 16px); display:grid; place-items:center; overflow:hidden; }
@@ -589,8 +594,8 @@ p{ margin:0; color:var(--ink-1); }
     <div class="wrap reveal">
       <div class="section-eyebrow">/ 05 — DETAIL</div>
       <div class="ds-detail-grid">
-        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 01</span><span class="t-label">MOSFET</span></div>
-        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 02</span><span class="t-label">CAPACITORS</span></div>
+        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/mosfet.png" alt="Power MOSFET on the NAS drone stack" loading="lazy"><span class="t-num">/ 01</span><span class="t-label">MOSFET</span></div>
+        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/capacitor.png" alt="Electrolytic capacitor on the NAS drone stack" loading="lazy"><span class="t-num">/ 02</span><span class="t-label">CAPACITORS</span></div>
         <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 03</span><span class="t-label">COPPER BAR</span></div>
         <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 04</span><span class="t-label">SOLDER PADS</span></div>
       </div>
