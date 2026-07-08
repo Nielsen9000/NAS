@@ -276,6 +276,21 @@ p{ margin:0; color:var(--ink-1); }
 .conn-spec-label{ font-family:'Inter',system-ui,sans-serif; font-size:16px; font-weight:700; color:var(--ink-0); letter-spacing:0.02em; margin-bottom:6px; }
 .conn-spec-desc{ color:var(--ink-2); font-size:14px; line-height:1.62; margin:0; }
 @media (max-width:1000px){ .ds-conn-layout{ grid-template-columns:1fr; gap:34px; } .ds-conn-figure{ padding:16px; } }
+/* ---- 04 — ESC (the muscle: featured callout + punchlines) ---- */
+.esc-callout{ position:relative; margin:0 0 52px; padding:40px 46px 40px 48px; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.06),transparent 60%),var(--bg-elev); overflow:hidden; }
+.esc-callout::before{ content:""; position:absolute; top:0; bottom:0; left:0; width:3px; background:var(--accent); opacity:.65; }
+.esc-callout::after{ content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(59,182,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,182,232,0.04) 1px,transparent 1px); background-size:30px 30px; opacity:.5; pointer-events:none; }
+.esc-callout .hud-corner{ width:18px; height:18px; opacity:.55; }
+.esc-callout .hud-corner-tl{ top:14px; left:14px; }
+.esc-callout .hud-corner-tr{ top:14px; right:14px; }
+.esc-callout .hud-corner-bl{ bottom:14px; left:14px; }
+.esc-callout .hud-corner-br{ bottom:14px; right:14px; }
+.esc-callout-mark{ position:relative; z-index:1; display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); margin-bottom:16px; }
+.esc-callout p{ position:relative; z-index:1; font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(20px,2.05vw,28px); font-weight:600; line-height:1.4; letter-spacing:-0.01em; color:var(--ink-0); max-width:900px; margin:0; }
+.esc-callout p .accent{ color:var(--accent); }
+.fig-ph{ position:relative; min-height:360px; height:100%; border:1.5px dashed rgba(59,182,232,0.4); border-radius:var(--radius-md); background:repeating-linear-gradient(45deg,#0c2a37 0 8px,#0e2e3c 8px 16px); display:grid; place-items:center; overflow:hidden; }
+.fig-ph-label{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); padding:9px 16px; border:1px solid rgba(59,182,232,0.4); background:rgba(8,32,42,0.55); }
+@media (max-width:900px){ .esc-callout{ padding:30px 24px 30px 28px; } .fig-ph{ min-height:260px; } }
 </style>
 </head>
 <body>
@@ -491,11 +506,59 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       04 — DETAIL: board macro grid
+       04 — ESC: the muscle (FC pairs with the ESC)
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 04 — DETAIL</div>
+      <div class="section-eyebrow">/ 04 — ESC</div>
+      <h2>The <span class="accent">muscle</span> behind the stack</h2>
+
+      <div class="esc-callout">
+        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+        <span class="esc-callout-mark">[ FC + ESC ]</span>
+        <p>Combined with the NAS Flight Controller (FC), this ESC provides complete situational awareness, precise control, and exceptional stability in flight — even under the harshest conditions. Together, they form a combination that is <span class="accent">second to none</span>.</p>
+      </div>
+
+      <div class="ds-conn-layout">
+        <div class="ds-conn-panel">
+          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+          <div class="ds-conn-caption">ESC · PINOUT OVERVIEW</div>
+          <div class="ds-conn-figure">
+            <!-- ESC pinout image lands here — swap the .fig-ph div for <img src="/assets/…" alt="…" /> -->
+            <div class="fig-ph" aria-hidden="true"><span class="fig-ph-label">ESC DIAGRAM · PLACEHOLDER</span></div>
+          </div>
+        </div>
+
+        <div class="ds-conn-specs">
+          <div class="conn-spec">
+            <div class="conn-spec-label">Agility</div>
+            <p class="conn-spec-desc">This ESC is engineered for rapid maneuvering, seamless response to a wide range of control inputs, and outstanding flight stability.</p>
+          </div>
+          <div class="conn-spec">
+            <div class="conn-spec-label">Power</div>
+            <p class="conn-spec-desc">Engineered for high-current and high-voltage operation, this ESC reliably handles even the most demanding control inputs and flight conditions.</p>
+          </div>
+          <div class="conn-spec">
+            <div class="conn-spec-label">Flexibility</div>
+            <p class="conn-spec-desc">For maximum flexibility and adaptability, the ESC supports both 4S and 6S batteries.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       05 — DETAIL: board macro grid
+       ========================================= -->
+  <section class="company-section">
+    <div class="wrap reveal">
+      <div class="section-eyebrow">/ 05 — DETAIL</div>
       <div class="ds-detail-grid">
         <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 01</span><span class="t-label">MOSFET</span></div>
         <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 02</span><span class="t-label">CAPACITORS</span></div>
@@ -506,11 +569,11 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       05 — IN FLIGHT: full-width mood placeholder
+       06 — IN FLIGHT: full-width mood placeholder
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 05 — IN FLIGHT</div>
+      <div class="section-eyebrow">/ 06 — IN FLIGHT</div>
       <div class="ds-inflight" aria-hidden="true">
         <div class="hud-corner hud-corner-tl"></div>
         <div class="hud-corner hud-corner-tr"></div>
