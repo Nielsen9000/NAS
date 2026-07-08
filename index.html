@@ -2263,6 +2263,48 @@ p{ margin:0; color:var(--ink-1); }
 .nav-dd-sub{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-3); }
 .nav-dd-menu a:hover .nav-dd-sub, .nav-dd-menu a.active .nav-dd-sub{ color:var(--accent); }
 @media (max-width:900px){ .nav-dd{ display:none; } }
+
+/* ---------------------------------------------------------------
+   Intelligence Solutions teaser — full-width cinematic video band
+   --------------------------------------------------------------- */
+.intel-teaser{ position:relative; padding:120px 0; overflow:hidden; border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark); background:var(--bg-base); }
+.intel-teaser-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; pointer-events:none; }
+.intel-teaser-overlay{ position:absolute; inset:0; z-index:0; pointer-events:none; background:linear-gradient(180deg, rgba(10,37,48,0.78) 0%, rgba(10,37,48,0.88) 100%); }
+.intel-teaser-overlay::after{ content:""; position:absolute; inset:0; background:radial-gradient(1200px 620px at 50% -5%, rgba(59,182,232,0.12), transparent 62%); }
+.intel-teaser .wrap{ position:relative; z-index:1; }
+.intel-teaser .section-eyebrow{ margin-bottom:26px; }
+.intel-teaser-headline{ font-family:'Inter', system-ui, -apple-system, sans-serif; font-size:clamp(30px,3.4vw,48px); font-weight:700; letter-spacing:-0.02em; line-height:1.08; color:var(--ink-0); margin:0 0 18px; max-width:760px; }
+.intel-teaser-headline .accent{ color:var(--accent); }
+.intel-teaser-sub{ color:var(--ink-1); font-size:clamp(15px,1.4vw,18px); line-height:1.6; max-width:620px; margin:0 0 48px; }
+.intel-hints{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px; max-width:840px; }
+.intel-hint{ position:relative; display:block; padding:28px 28px 24px; border:1px solid var(--line-dark); border-radius:var(--radius-md); background:linear-gradient(180deg, rgba(59,182,232,0.06), transparent 55%), rgba(13,42,49,0.62); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); overflow:hidden; transition:border-color .3s ease, transform .35s var(--ease-smooth), box-shadow .3s ease, background-color .3s ease; }
+.intel-hint:hover{ border-color:rgba(59,182,232,0.45); transform:translateY(-4px); box-shadow:0 26px 55px -32px rgba(0,0,0,0.65); }
+.intel-hint:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+.intel-hint-corner{ position:absolute; width:13px; height:13px; border:1px solid var(--accent); opacity:.42; pointer-events:none; transition:opacity .3s ease; }
+.intel-hint:hover .intel-hint-corner{ opacity:.9; }
+.intel-hint-corner.tl{ top:12px; left:12px; border-right:0; border-bottom:0; }
+.intel-hint-corner.tr{ top:12px; right:12px; border-left:0; border-bottom:0; }
+.intel-hint-corner.bl{ bottom:12px; left:12px; border-right:0; border-top:0; }
+.intel-hint-corner.br{ bottom:12px; right:12px; border-left:0; border-top:0; }
+.intel-hint-tag{ display:block; font-family:"JetBrains Mono", ui-monospace, monospace; font-size:10px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:18px; }
+.intel-hint-title{ font-family:'Inter', system-ui, -apple-system, sans-serif; font-size:22px; font-weight:700; letter-spacing:-0.01em; color:var(--ink-0); }
+.intel-hint-desc{ color:var(--ink-2); font-size:14px; line-height:1.55; margin:8px 0 0; }
+.intel-hint-go{ display:inline-flex; align-items:center; gap:8px; margin-top:22px; font-family:"JetBrains Mono", ui-monospace, monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent); }
+.intel-hint-go .arrow{ transition:transform .3s var(--ease-spring); }
+.intel-hint:hover .intel-hint-go .arrow{ transform:translateX(4px); }
+.intel-proof{ display:flex; align-items:baseline; flex-wrap:wrap; gap:6px 12px; margin:34px 0 0; font-size:14px; line-height:1.5; }
+.intel-proof-mark{ font-family:"JetBrains Mono", ui-monospace, monospace; color:var(--accent); font-weight:500; letter-spacing:0.1em; }
+.intel-proof-quote{ color:var(--ink-1); }
+.intel-proof-quote .accent{ color:var(--accent); }
+.intel-proof-attr{ font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-3); }
+@media (max-width:900px){
+  .intel-teaser{ padding:88px 0; }
+  .intel-teaser-overlay{ background:linear-gradient(180deg, rgba(10,37,48,0.86) 0%, rgba(10,37,48,0.93) 100%); }
+  .intel-hints{ grid-template-columns:1fr; max-width:520px; }
+}
+@media (prefers-reduced-motion: reduce){
+  .intel-teaser-video{ display:none; }
+}
 </style>
 </head>
 <body>
@@ -2432,7 +2474,59 @@ p{ margin:0; color:var(--ink-1); }
 </section>
 
 <!-- =========================================
-     2. BUILT FOR FLIGHT
+     INTELLIGENCE SOLUTIONS — teaser band
+     ========================================= -->
+<section class="intel-teaser" id="intelligence" aria-labelledby="intel-teaser-title">
+  <video class="intel-teaser-video"
+         poster="/assets/kolibri-poster.jpg"
+         autoplay muted loop playsinline
+         preload="auto"
+         aria-hidden="true">
+    <source src="/assets/Kolibri_video_med_FC_NAS.mp4" type="video/mp4">
+  </video>
+  <div class="intel-teaser-overlay" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <div class="reveal">
+      <div class="section-eyebrow">/ 02 — INTELLIGENCE SOLUTIONS</div>
+      <h2 class="intel-teaser-headline" id="intel-teaser-title">Intelligent solutions for <span class="accent">professional UAV platforms.</span></h2>
+      <p class="intel-teaser-sub">Proprietary propulsion, avionics and engine management — engineered in Europe.</p>
+
+      <div class="intel-hints">
+        <a class="intel-hint" href="/intelligence/drone-stack/">
+          <span class="intel-hint-corner tl" aria-hidden="true"></span>
+          <span class="intel-hint-corner tr" aria-hidden="true"></span>
+          <span class="intel-hint-corner bl" aria-hidden="true"></span>
+          <span class="intel-hint-corner br" aria-hidden="true"></span>
+          <span class="intel-hint-tag">[ 01 ] — Avionics</span>
+          <div class="intel-hint-title">Drone Stack</div>
+          <p class="intel-hint-desc">FC + ESC flight stack</p>
+          <span class="intel-hint-go">Explore <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+
+        <a class="intel-hint" href="/intelligence/efi/">
+          <span class="intel-hint-corner tl" aria-hidden="true"></span>
+          <span class="intel-hint-corner tr" aria-hidden="true"></span>
+          <span class="intel-hint-corner bl" aria-hidden="true"></span>
+          <span class="intel-hint-corner br" aria-hidden="true"></span>
+          <span class="intel-hint-tag">[ 02 ] — Engine management</span>
+          <div class="intel-hint-title">EFI / IEMS</div>
+          <p class="intel-hint-desc">Integrated engine management</p>
+          <span class="intel-hint-go">Explore <span class="arrow" aria-hidden="true">→</span></span>
+        </a>
+      </div>
+
+      <p class="intel-proof">
+        <span class="intel-proof-mark" aria-hidden="true">//</span>
+        <span class="intel-proof-quote">&ldquo;Exactly what we have been looking for in the <span class="accent">European market</span>.&rdquo;</span>
+        <span class="intel-proof-attr">— Kolibri Drones Ltd, Finland</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================
+     3. BUILT FOR FLIGHT
      ========================================= -->
 <section class="flight-section" id="flight">
   <div class="flight-bg-grid" aria-hidden="true"></div>
@@ -2483,7 +2577,7 @@ p{ margin:0; color:var(--ink-1); }
       </dl>
     </div>
     <div class="flight-content">
-      <div class="section-eyebrow">/ 02 — BUILT FOR FLIGHT</div>
+      <div class="section-eyebrow">/ 03 — BUILT FOR FLIGHT</div>
       <h2 class="flight-heading">
         Mission-ready
         <span class="muted">Mounted, tested, proven</span>
@@ -2541,7 +2635,7 @@ p{ margin:0; color:var(--ink-1); }
   <div class="wrap">
     <div class="anatomy-grid">
       <div class="anatomy-content reveal">
-        <div class="section-eyebrow">/ 03 — ANATOMY</div>
+        <div class="section-eyebrow">/ 04 — ANATOMY</div>
         <h2 class="anatomy-heading">Inside the NAS&nbsp;2.</h2>
         <div class="anatomy-body">
           <p>Two cylinders. One purpose-built crankshaft. Every component specified, tested, and traceable to a serial number.</p>
@@ -2606,7 +2700,7 @@ p{ margin:0; color:var(--ink-1); }
   <div class="wrap">
     <div class="platforms-head">
       <div class="platforms-head-inner reveal">
-        <div class="section-eyebrow">/ 04 — PLATFORMS</div>
+        <div class="section-eyebrow">/ 05 — PLATFORMS</div>
         <h2>
           The NAS 2 Series
           <span class="muted">Long-endurance by design</span>
