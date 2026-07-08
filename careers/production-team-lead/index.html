@@ -1899,10 +1899,13 @@ p{ margin:0; color:var(--ink-1); }
   let curX = 0, curY = 0;
   let rafId = null;
   const lerp = (a, b, t) => a + (b - a) * t;
+  const ring = cursor.querySelector('.cursor-ring');
   const animate = () => {
-    curX = lerp(curX, mouseX, 0.12);
-    curY = lerp(curY, mouseY, 0.12);
-    cursor.style.transform = `translate(${curX}px, ${curY}px)`;
+    curX = lerp(curX, mouseX, 0.35);
+    curY = lerp(curY, mouseY, 0.35);
+    // Dot + cross snap to the exact pointer (no lag); only the ring trails.
+    cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    if (ring) ring.style.transform = `translate(-50%,-50%) translate3d(${curX - mouseX}px, ${curY - mouseY}px, 0)`;
     rafId = requestAnimationFrame(animate);
   };
   window.addEventListener('mousemove', (e) => {
