@@ -2268,9 +2268,14 @@ p{ margin:0; color:var(--ink-1); }
    Intelligence Solutions teaser — full-width cinematic video band
    --------------------------------------------------------------- */
 .intel-teaser{ position:relative; padding:120px 0; overflow:hidden; border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark); background:var(--bg-base); }
-.intel-teaser-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; pointer-events:none; }
-.intel-teaser-overlay{ position:absolute; inset:0; z-index:0; pointer-events:none; background:linear-gradient(180deg, rgba(10,37,48,0.78) 0%, rgba(10,37,48,0.88) 100%); }
-.intel-teaser-overlay::after{ content:""; position:absolute; inset:0; background:radial-gradient(1200px 620px at 50% -5%, rgba(59,182,232,0.12), transparent 62%); }
+.intel-teaser-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 78%; z-index:0; pointer-events:none; }
+.intel-teaser-overlay{ position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(680px 340px at 100% 0%, rgba(8,32,42,0.92) 0%, rgba(8,32,42,0.35) 55%, transparent 72%),
+    linear-gradient(90deg, rgba(8,32,42,0.84) 0%, rgba(8,32,42,0.44) 52%, rgba(8,32,42,0.12) 100%),
+    linear-gradient(180deg, rgba(10,37,48,0.94) 0%, rgba(10,37,48,0.70) 16%, rgba(10,37,48,0.66) 56%, rgba(10,37,48,0.88) 100%);
+}
+.intel-teaser-overlay::after{ content:""; position:absolute; inset:0; background:radial-gradient(900px 520px at 22% 34%, rgba(59,182,232,0.12), transparent 60%); }
 .intel-teaser .wrap{ position:relative; z-index:1; }
 .intel-teaser .section-eyebrow{ margin-bottom:26px; }
 .intel-teaser-headline{ font-family:'Inter', system-ui, -apple-system, sans-serif; font-size:clamp(30px,3.4vw,48px); font-weight:700; letter-spacing:-0.02em; line-height:1.08; color:var(--ink-0); margin:0 0 18px; max-width:760px; }
@@ -2299,7 +2304,7 @@ p{ margin:0; color:var(--ink-1); }
 .intel-proof-attr{ font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-3); }
 @media (max-width:900px){
   .intel-teaser{ padding:88px 0; }
-  .intel-teaser-overlay{ background:linear-gradient(180deg, rgba(10,37,48,0.86) 0%, rgba(10,37,48,0.93) 100%); }
+  .intel-teaser-overlay{ background:linear-gradient(180deg, rgba(10,37,48,0.97) 0%, rgba(10,37,48,0.85) 16%, rgba(10,37,48,0.82) 58%, rgba(10,37,48,0.93) 100%); }
   .intel-hints{ grid-template-columns:1fr; max-width:520px; }
 }
 @media (prefers-reduced-motion: reduce){
