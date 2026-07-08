@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>try{if(sessionStorage.getItem('nas-loader-seen'))document.documentElement.classList.add('loader-seen');}catch(e){}</script>
 <title>Nordic Advanced Systems — NAS 2 Series</title>
 <meta name="description" content="Long-endurance dual-cylinder boxer engines for platforms requiring over 1000 km range. Engineered for altitude shifts and harsh weather. NDAA-compliant, European origin." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2138,6 +2139,8 @@ p{ margin:0; color:var(--ink-1); }
   opacity: 0;
   pointer-events: none;
 }
+/* Returning within the same browser session: never show the intro loader (class set pre-paint in <head>) */
+.loader-seen .site-loader { display: none; }
 .loader-inner {
   display: flex;
   flex-direction: column;
@@ -3098,6 +3101,19 @@ p{ margin:0; color:var(--ink-1); }
   const bar = document.getElementById('loader-bar');
   const status = document.getElementById('loader-status');
   if (!loader || !bar || !status) return;
+
+  // Intro loader plays only on the first visit of this browser session. On later
+  // home-page loads (e.g. clicking Platforms / Anatomy) skip it and go straight in.
+  let loaderSeen = false;
+  try { loaderSeen = sessionStorage.getItem('nas-loader-seen'); } catch (e) {}
+  if (loaderSeen) {
+    loader.remove();
+    const fireDone = () => window.dispatchEvent(new Event('loader:done'));
+    if (document.readyState === 'loading') window.addEventListener('DOMContentLoaded', fireDone, { once: true });
+    else fireDone();
+    return;
+  }
+  try { sessionStorage.setItem('nas-loader-seen', '1'); } catch (e) {}
 
   document.body.style.overflow = 'hidden';
 
