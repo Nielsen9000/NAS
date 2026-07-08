@@ -1500,11 +1500,16 @@ p{ margin:0; color:var(--ink-1); }
 }
 .careers-hero-schematic{
   display:block; width:100%; height:100%;
-  opacity:0.4; transform-origin:center;
+  opacity:0.5;
+}
+.careers-hero-schematic text{ font-family:"JetBrains Mono",ui-monospace,monospace; fill:#3bb6e8; }
+/* Only the rotor (rings, blades, hub, spokes) spins; the protractor scale, dimension line and callout labels stay upright + readable. */
+.careers-hero-schematic .rotor-spin{
+  transform-box:view-box; transform-origin:200px 200px;
   animation:careers-rotor-spin 60s linear infinite;
 }
 @keyframes careers-rotor-spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
-@media (prefers-reduced-motion:reduce){ .careers-hero-schematic{ animation:none; } }
+@media (prefers-reduced-motion:reduce){ .careers-hero-schematic .rotor-spin{ animation:none; } }
 /* telemetry ticks, top-right */
 .careers-hero-telemetry{
   position:absolute; top:132px; right:30px; z-index:2;
@@ -1515,6 +1520,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .careers-hero-telemetry span{ display:inline-flex; align-items:center; gap:8px; }
 .careers-hero-telemetry span::before{ content:""; width:5px; height:5px; background:var(--accent); box-shadow:0 0 8px var(--accent-glow); }
+.careers-hero-telemetry b{ font-weight:500; font-variant-numeric:tabular-nums; }
 /* hero + Open Positions share the exact same marine base so the bottom fade lands seamlessly */
 .careers-positions{ background:#0A2530; }
 .careers-hero .wrap{ position:relative; z-index:1; }
@@ -1630,33 +1636,92 @@ p{ margin:0; color:var(--ink-1); }
       <div class="careers-hero-glow"></div>
       <div class="careers-hero-rotor">
         <svg class="careers-hero-schematic" viewBox="0 0 400 400" fill="none" stroke="#3bb6e8" xmlns="http://www.w3.org/2000/svg">
-          <!-- concentric circles (one dashed) -->
-          <circle cx="200" cy="200" r="190" stroke-width="1" opacity="0.45"/>
-          <circle cx="200" cy="200" r="156" stroke-width="1" stroke-dasharray="3 8" opacity="0.85"/>
-          <circle cx="200" cy="200" r="96" stroke-width="1" opacity="0.5"/>
-          <!-- center hub -->
-          <circle cx="200" cy="200" r="22" stroke-width="1.2" opacity="0.9"/>
-          <circle cx="200" cy="200" r="5" fill="#3bb6e8" stroke="none" opacity="0.9"/>
-          <!-- three curved propeller blades from the hub -->
-          <g stroke-width="1.4" opacity="0.9">
-            <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(0 200 200)"/>
-            <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(120 200 200)"/>
-            <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(240 200 200)"/>
+          <!-- ===== STATIC LAYER: protractor scale, dimension line, callouts (stay upright) ===== -->
+          <g class="rotor-fixed">
+            <circle cx="200" cy="200" r="190" stroke-width="1" opacity="0.5"/>
+            <circle cx="200" cy="200" r="176" stroke-width="1" opacity="0.26"/>
+            <!-- degree ticks every 30° -->
+            <g stroke-width="1" opacity="0.5">
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(30 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(60 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(120 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(150 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(210 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(240 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(300 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="23" transform="rotate(330 200 200)"/>
+            </g>
+            <!-- cardinal ticks (longer) -->
+            <g stroke-width="1.6" opacity="0.72">
+              <line x1="200" y1="10" x2="200" y2="30" transform="rotate(0 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="30" transform="rotate(90 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="30" transform="rotate(180 200 200)"/>
+              <line x1="200" y1="10" x2="200" y2="30" transform="rotate(270 200 200)"/>
+            </g>
+            <!-- degree number labels -->
+            <g font-size="9" opacity="0.5" text-anchor="middle" stroke="none">
+              <text x="200" y="34">0</text>
+              <text x="284" y="56">30</text>
+              <text x="346" y="118">60</text>
+              <text x="369" y="203">90</text>
+              <text x="346" y="288">120</text>
+              <text x="284" y="349">150</text>
+              <text x="200" y="372">180</text>
+              <text x="115" y="349">210</text>
+              <text x="54" y="288">240</text>
+              <text x="31" y="203">270</text>
+              <text x="54" y="118">300</text>
+              <text x="115" y="56">330</text>
+            </g>
+            <!-- dashed diameter dimension line + label -->
+            <line x1="46" y1="200" x2="354" y2="200" stroke-width="1" stroke-dasharray="2 6" opacity="0.26"/>
+            <text x="244" y="192" font-size="8.5" opacity="0.5" text-anchor="middle" stroke="none">&#216; &#8212;</text>
+            <!-- callout: PITCH -> blade -->
+            <g opacity="0.55">
+              <circle cx="252" cy="150" r="1.6" fill="#3bb6e8" stroke="none"/>
+              <path d="M252 150 L292 128 L316 128" stroke-width="1" opacity="0.6"/>
+              <text x="320" y="131" font-size="8.5" stroke="none">PITCH &#8212;</text>
+            </g>
+            <!-- callout: RPM -> hub -->
+            <g opacity="0.55">
+              <circle cx="176" cy="224" r="1.6" fill="#3bb6e8" stroke="none"/>
+              <path d="M176 224 L120 268 L86 268" stroke-width="1" opacity="0.6"/>
+              <text x="82" y="271" font-size="8.5" text-anchor="end" stroke="none">RPM &#8212;</text>
+            </g>
           </g>
-          <!-- radial tick marks around the rim -->
-          <g stroke-width="1" opacity="0.65">
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(0 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(30 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(60 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(90 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(120 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(150 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(180 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(210 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(240 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(270 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(300 200 200)"/>
-            <line x1="200" y1="12" x2="200" y2="26" transform="rotate(330 200 200)"/>
+
+          <!-- ===== ROTATING LAYER: rings, blades, detailed hub, spokes, bolt-holes ===== -->
+          <g class="rotor-spin">
+            <circle cx="200" cy="200" r="156" stroke-width="1" stroke-dasharray="3 8" opacity="0.7"/>
+            <circle cx="200" cy="200" r="120" stroke-width="1" opacity="0.32"/>
+            <circle cx="200" cy="200" r="96" stroke-width="1" opacity="0.3"/>
+            <!-- radial spokes: hub -> r90 -->
+            <g stroke-width="1" opacity="0.4">
+              <line x1="200" y1="166" x2="200" y2="110" transform="rotate(0 200 200)"/>
+              <line x1="200" y1="166" x2="200" y2="110" transform="rotate(60 200 200)"/>
+              <line x1="200" y1="166" x2="200" y2="110" transform="rotate(120 200 200)"/>
+              <line x1="200" y1="166" x2="200" y2="110" transform="rotate(180 200 200)"/>
+              <line x1="200" y1="166" x2="200" y2="110" transform="rotate(240 200 200)"/>
+              <line x1="200" y1="166" x2="200" y2="110" transform="rotate(300 200 200)"/>
+            </g>
+            <!-- three curved propeller blades -->
+            <g stroke-width="1.4" opacity="0.9" fill="#3bb6e8" fill-opacity="0.05">
+              <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(0 200 200)"/>
+              <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(120 200 200)"/>
+              <path d="M200 200 C 210 164 238 138 288 130 C 252 150 226 176 200 200 Z" transform="rotate(240 200 200)"/>
+            </g>
+            <!-- central hub structure -->
+            <circle cx="200" cy="200" r="34" stroke-width="1.2" opacity="0.8"/>
+            <circle cx="200" cy="200" r="22" stroke-width="1" opacity="0.55"/>
+            <g fill="#3bb6e8" stroke="none" opacity="0.75">
+              <circle cx="200" cy="172" r="2.4" transform="rotate(0 200 200)"/>
+              <circle cx="200" cy="172" r="2.4" transform="rotate(60 200 200)"/>
+              <circle cx="200" cy="172" r="2.4" transform="rotate(120 200 200)"/>
+              <circle cx="200" cy="172" r="2.4" transform="rotate(180 200 200)"/>
+              <circle cx="200" cy="172" r="2.4" transform="rotate(240 200 200)"/>
+              <circle cx="200" cy="172" r="2.4" transform="rotate(300 200 200)"/>
+            </g>
+            <circle cx="200" cy="200" r="5" fill="#3bb6e8" stroke="none" opacity="0.9"/>
           </g>
         </svg>
       </div>
@@ -1667,9 +1732,9 @@ p{ margin:0; color:var(--ink-1); }
     <div class="testrig-corner testrig-corner-br" aria-hidden="true"></div>
     <div class="careers-hero-crosshair" aria-hidden="true">+ CAREERS · NAS</div>
     <div class="careers-hero-telemetry" aria-hidden="true">
-      <span>RPM · —</span>
-      <span>THRUST · —</span>
-      <span>TEMP · —</span>
+      <span>RPM · <b id="tlm-rpm">7,100</b></span>
+      <span>THRUST · <b id="tlm-thrust">51 N</b></span>
+      <span>TEMP · <b id="tlm-temp">49°C</b></span>
     </div>
     <div class="wrap">
       <div class="careers-hero-inner reveal">
@@ -1761,6 +1826,32 @@ p{ margin:0; color:var(--ink-1); }
       el.style.transform = 'translate(0px,0px)';
     });
   });
+})();
+</script>
+
+<script>
+/* Careers hero — live telemetry readout (RPM / THRUST / TEMP flicker) */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rpmEl = document.getElementById('tlm-rpm');
+  const thrEl = document.getElementById('tlm-thrust');
+  const tmpEl = document.getElementById('tlm-temp');
+  if (!rpmEl || !thrEl || !tmpEl) return;
+
+  const rnd = (min, max) => Math.round(min + Math.random() * (max - min));
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  let rpm = 7100, thrust = 51, temp = 49;
+
+  function tick(){
+    rpm    = clamp(rpm + rnd(-160, 160), 6000, 8000);
+    thrust = clamp(thrust + rnd(-2, 2), 40, 60);
+    temp   = clamp(temp + rnd(-1, 1), 46, 52);
+    rpmEl.textContent = rpm.toLocaleString('en-US');
+    thrEl.textContent = thrust + ' N';
+    tmpEl.textContent = temp + '°C';
+    setTimeout(tick, rnd(450, 780));
+  }
+  setTimeout(tick, 500);
 })();
 </script>
 
