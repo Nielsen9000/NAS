@@ -185,11 +185,20 @@ img{ display:block; max-width:100%; }
    ============================================================ */
 .cf{
   position:relative;
-  background:linear-gradient(180deg,rgba(59,182,232,0.04),transparent 42%),var(--bg-elev);
+  background:linear-gradient(180deg,rgba(59,182,232,0.05),transparent 42%),var(--bg-elev);
   border:1px solid var(--line-dark);
   border-radius:var(--radius-md);
-  padding:34px 34px 30px;
+  padding:40px 38px 34px;
+  box-shadow:0 30px 70px -42px rgba(0,0,0,0.7), inset 0 1px 0 rgba(148,205,221,0.06);
 }
+/* HUD corner brackets — mirrors .hud-corner / .testrig-corner elsewhere on the site */
+.cf-corner{ position:absolute; width:16px; height:16px; border:1.5px solid var(--accent); opacity:0.85; pointer-events:none; z-index:3; }
+.cf-corner-tl{ top:13px; left:13px; border-right:0; border-bottom:0; }
+.cf-corner-tr{ top:13px; right:13px; border-left:0; border-bottom:0; }
+.cf-corner-bl{ bottom:13px; left:13px; border-right:0; border-top:0; }
+.cf-corner-br{ bottom:13px; right:13px; border-left:0; border-top:0; }
+/* mono step marker near the heading */
+.cf-step-mark{ display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); opacity:0.85; margin-bottom:12px; }
 /* progress tracker */
 .cf-progress{ display:flex; list-style:none; margin:0 0 34px; padding:0; }
 .cf-step-node{ flex:1; display:flex; flex-direction:column; align-items:center; gap:10px; position:relative; }
@@ -216,7 +225,8 @@ img{ display:block; max-width:100%; }
 .cf-input, .cf-select, .cf-textarea{ width:100%; background:var(--bg-base); border:1px solid var(--line-dark); border-radius:10px; color:var(--ink-0); font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif; font-size:15px; padding:12px 14px; transition:border-color .2s ease, box-shadow .2s ease; }
 .cf-input::placeholder, .cf-textarea::placeholder{ color:var(--ink-3); }
 .cf-select{ appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:38px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233bb6e8' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
-.cf-input:focus, .cf-select:focus, .cf-textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(59,182,232,0.14); }
+.cf-input:hover, .cf-select:hover, .cf-textarea:hover{ border-color:rgba(59,182,232,0.4); }
+.cf-input:focus, .cf-select:focus, .cf-textarea:focus{ outline:none; border-color:var(--accent); background-color:rgba(59,182,232,0.05); box-shadow:0 0 0 3px rgba(59,182,232,0.16), 0 0 22px -6px rgba(59,182,232,0.55); }
 .cf-textarea{ min-height:122px; resize:vertical; line-height:1.6; }
 .cf-help{ font-size:12px; color:var(--ink-3); margin:6px 0 0; }
 .cf-counter{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; color:var(--ink-3); text-align:right; margin-top:6px; }
@@ -404,6 +414,11 @@ img{ display:block; max-width:100%; }
         <form class="cf" id="contact-form" novalidate>
           <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
 
+          <span class="cf-corner cf-corner-tl" aria-hidden="true"></span>
+          <span class="cf-corner cf-corner-tr" aria-hidden="true"></span>
+          <span class="cf-corner cf-corner-bl" aria-hidden="true"></span>
+          <span class="cf-corner cf-corner-br" aria-hidden="true"></span>
+
           <!-- Progress tracker -->
           <ol class="cf-progress">
             <li class="cf-step-node is-current" data-node="1">
@@ -422,6 +437,7 @@ img{ display:block; max-width:100%; }
 
           <!-- STEP 1 — Your enquiry -->
           <div class="cf-step is-active" data-step="1">
+            <span class="cf-step-mark">[ 01 / 03 ]</span>
             <h2 class="cf-step-title">Your enquiry</h2>
             <p class="cf-step-sub">Tell us what this is about — we'll route it to the right people.</p>
             <div class="cf-field">
@@ -450,6 +466,7 @@ img{ display:block; max-width:100%; }
 
           <!-- STEP 2 — Your contact details -->
           <div class="cf-step" data-step="2">
+            <span class="cf-step-mark">[ 02 / 03 ]</span>
             <h2 class="cf-step-title">Your contact details</h2>
             <p class="cf-step-sub">So we can get back to you.</p>
             <div class="cf-row cols-2">
