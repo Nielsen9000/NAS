@@ -224,7 +224,10 @@ img{ display:block; max-width:100%; }
 .cf-label{ display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-2); margin-bottom:7px; }
 .cf-input, .cf-select, .cf-textarea{ width:100%; background:var(--bg-base); border:1px solid var(--line-dark); border-radius:10px; color:var(--ink-0); font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif; font-size:15px; padding:12px 14px; transition:border-color .2s ease, box-shadow .2s ease; }
 .cf-input::placeholder, .cf-textarea::placeholder{ color:var(--ink-3); }
-.cf-select{ appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:38px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233bb6e8' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
+.cf-select{ appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:38px; color-scheme:dark; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233bb6e8' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
+/* native options popup — force readable dark rows (was rendering invisible on the dark theme) */
+.cf-select option, .cf-select optgroup{ background-color:#0d2a31; color:var(--ink-0); }
+.cf-select option:disabled{ color:var(--ink-3); }
 .cf-input:hover, .cf-select:hover, .cf-textarea:hover{ border-color:rgba(59,182,232,0.4); }
 .cf-input:focus, .cf-select:focus, .cf-textarea:focus{ outline:none; border-color:var(--accent); background-color:rgba(59,182,232,0.05); box-shadow:0 0 0 3px rgba(59,182,232,0.16), 0 0 22px -6px rgba(59,182,232,0.55); }
 .cf-textarea{ min-height:122px; resize:vertical; line-height:1.6; }
