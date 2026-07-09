@@ -180,28 +180,83 @@ img{ display:block; max-width:100%; }
   color:var(--ink-1); font-size:15px; font-weight:500;
 }
 
-/* Contact — direct email (no form) */
-.btn-primary{
-  background:var(--accent); color:var(--accent-ink);
-  border-color:transparent; font-weight:600;
-  box-shadow:0 10px 30px -10px rgba(59,182,232,0.45);
+/* ============================================================
+   Contact wizard (multi-step form)
+   ============================================================ */
+.cf{
+  position:relative;
+  background:linear-gradient(180deg,rgba(59,182,232,0.04),transparent 42%),var(--bg-elev);
+  border:1px solid var(--line-dark);
+  border-radius:var(--radius-md);
+  padding:34px 34px 30px;
 }
-.btn-primary:hover{ background:#55c3ea; transform:scale(1.02); }
-.contact-mail{ display:flex; flex-direction:column; align-items:flex-start; gap:22px; }
-.contact-mail .label{
-  font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:13px; font-weight:500; letter-spacing:0.22em;
-  text-transform:uppercase; color:var(--accent);
+/* progress tracker */
+.cf-progress{ display:flex; list-style:none; margin:0 0 34px; padding:0; }
+.cf-step-node{ flex:1; display:flex; flex-direction:column; align-items:center; gap:10px; position:relative; }
+.cf-step-node::before{ content:""; position:absolute; top:20px; right:50%; width:100%; height:2px; background:var(--line-dark); z-index:0; transition:background .35s ease; }
+.cf-step-node:first-child::before{ display:none; }
+.cf-step-node.is-current::before, .cf-step-node.is-done::before{ background:var(--accent); }
+.cf-node-icon{ position:relative; z-index:1; width:42px; height:42px; border-radius:50%; border:1.5px solid var(--line-dark); background:var(--bg-base); display:grid; place-items:center; color:var(--ink-3); transition:border-color .3s ease, color .3s ease, background .3s ease, box-shadow .3s ease; }
+.cf-node-icon svg{ width:18px; height:18px; }
+.cf-step-node.is-current .cf-node-icon{ border-color:var(--accent); color:var(--accent); box-shadow:0 0 0 4px rgba(59,182,232,0.12); }
+.cf-step-node.is-done .cf-node-icon{ border-color:var(--accent); background:var(--accent); color:var(--accent-ink); }
+.cf-node-label{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-3); transition:color .3s ease; }
+.cf-step-node.is-current .cf-node-label, .cf-step-node.is-done .cf-node-label{ color:var(--accent); }
+
+/* steps */
+.cf-step{ display:none; }
+.cf-step.is-active{ display:block; animation:cfIn .4s var(--ease-smooth); }
+@keyframes cfIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+.cf-step-title{ font-family:'Inter',system-ui,sans-serif; font-size:20px; font-weight:600; letter-spacing:-0.01em; color:var(--ink-0); margin:0 0 4px; }
+.cf-step-sub{ font-size:13px; color:var(--ink-2); margin:0 0 22px; }
+
+/* fields */
+.cf-field{ margin-bottom:16px; }
+.cf-label{ display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-2); margin-bottom:7px; }
+.cf-input, .cf-select, .cf-textarea{ width:100%; background:var(--bg-base); border:1px solid var(--line-dark); border-radius:10px; color:var(--ink-0); font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif; font-size:15px; padding:12px 14px; transition:border-color .2s ease, box-shadow .2s ease; }
+.cf-input::placeholder, .cf-textarea::placeholder{ color:var(--ink-3); }
+.cf-select{ appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:38px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233bb6e8' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
+.cf-input:focus, .cf-select:focus, .cf-textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(59,182,232,0.14); }
+.cf-textarea{ min-height:122px; resize:vertical; line-height:1.6; }
+.cf-help{ font-size:12px; color:var(--ink-3); margin:6px 0 0; }
+.cf-counter{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; color:var(--ink-3); text-align:right; margin-top:6px; }
+.cf-row{ display:grid; gap:14px; }
+.cf-row.cols-2{ grid-template-columns:1fr 1fr; }
+.cf-row.cols-3{ grid-template-columns:0.7fr 1.3fr 1fr; }
+
+/* consent */
+.cf-consent{ display:flex; gap:12px; align-items:flex-start; margin:8px 0 4px; cursor:pointer; }
+.cf-consent input{ margin-top:3px; width:16px; height:16px; accent-color:var(--accent); flex:none; }
+.cf-consent-text{ font-size:12.5px; line-height:1.6; color:var(--ink-2); }
+.cf-consent-text .muted{ display:block; margin-top:8px; color:var(--ink-3); }
+
+/* validation */
+.cf-field.has-error .cf-input, .cf-field.has-error .cf-select, .cf-field.has-error .cf-textarea{ border-color:#e0776f; box-shadow:0 0 0 3px rgba(224,119,111,0.14); }
+.cf-consent.has-error .cf-consent-text{ color:#e0968f; }
+
+/* actions */
+.cf-actions{ display:flex; align-items:center; justify-content:space-between; gap:14px; margin-top:26px; }
+.cf-actions.end{ justify-content:flex-end; }
+.cf-btn{ display:inline-flex; align-items:center; gap:9px; padding:12px 22px; border-radius:var(--radius-pill); font-weight:600; font-size:14px; cursor:pointer; border:1px solid transparent; transition:transform .2s var(--ease-spring), background-color .2s ease, border-color .2s ease, color .2s ease; }
+.cf-btn-primary{ background:var(--accent); color:var(--accent-ink); box-shadow:0 8px 22px -10px rgba(59,182,232,0.5); }
+.cf-btn-primary:hover{ background:#55c3ea; transform:translateY(-1px); }
+.cf-btn-ghost{ background:transparent; color:var(--ink-1); border-color:var(--line-dark); }
+.cf-btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
+.cf-btn .arrow{ transition:transform .3s var(--ease-spring); }
+.cf-btn:hover .arrow{ transform:translateX(3px); }
+
+/* finish */
+.cf-finish{ text-align:center; padding:22px 8px 10px; }
+.cf-check{ width:64px; height:64px; margin:0 auto 22px; border-radius:50%; border:1.5px solid var(--accent); display:grid; place-items:center; color:var(--accent); box-shadow:0 0 0 6px rgba(59,182,232,0.08); }
+.cf-check svg{ width:30px; height:30px; }
+.cf-finish h3{ font-family:'Inter',system-ui,sans-serif; font-size:22px; font-weight:600; color:var(--ink-0); margin:0 0 12px; }
+.cf-finish p{ color:var(--ink-2); font-size:15px; line-height:1.7; max-width:430px; margin:0 auto; }
+
+@media (max-width:520px){
+  .cf{ padding:26px 20px 24px; }
+  .cf-row.cols-2, .cf-row.cols-3{ grid-template-columns:1fr; }
+  .cf-node-label{ font-size:9px; letter-spacing:0.12em; }
 }
-.mail-link{
-  font-family:'Inter',system-ui,sans-serif;
-  font-size:30px; font-weight:600; line-height:1.2; color:var(--ink-0);
-  border-bottom:1px solid rgba(59,182,232,0.4); padding-bottom:6px;
-  transition:color .25s ease, border-color .25s ease;
-}
-.mail-link:hover{ color:var(--accent); border-bottom-color:var(--accent); }
-.mail-note{ color:var(--ink-2); font-size:16px; line-height:1.65; margin:0; max-width:420px; }
-@media (max-width:720px){ .mail-link{ font-size:24px; word-break:break-word; } }
 
 /* Footer */
 .site-footer{
@@ -346,12 +401,97 @@ img{ display:block; max-width:100%; }
       </div>
 
       <div class="reveal">
-        <div class="contact-mail">
-          <div class="label">Email us</div>
-          <a class="mail-link" href="mailto:cvi@nordicadvancedsystems.com">cvi@nordicadvancedsystems.com</a>
-          <p class="mail-note">Send us a note with your requirements and we'll respond within two business days.</p>
-          <a class="btn btn-primary" href="mailto:cvi@nordicadvancedsystems.com">Kontakt os <span class="arrow" aria-hidden="true">→</span></a>
-        </div>
+        <form class="cf" id="contact-form" novalidate>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" />
+
+          <!-- Progress tracker -->
+          <ol class="cf-progress">
+            <li class="cf-step-node is-current" data-node="1">
+              <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
+              <span class="cf-node-label">Enquiry</span>
+            </li>
+            <li class="cf-step-node" data-node="2">
+              <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0113 0"/></svg></span>
+              <span class="cf-node-label">Contact</span>
+            </li>
+            <li class="cf-step-node" data-node="3">
+              <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+              <span class="cf-node-label">Finish</span>
+            </li>
+          </ol>
+
+          <!-- STEP 1 — Your enquiry -->
+          <div class="cf-step is-active" data-step="1">
+            <h2 class="cf-step-title">Your enquiry</h2>
+            <p class="cf-step-sub">Tell us what this is about — we'll route it to the right people.</p>
+            <div class="cf-field">
+              <label class="cf-label" for="cf-type">Enquiry type</label>
+              <select class="cf-select" id="cf-type" name="type">
+                <option value="" disabled selected>Select an enquiry type</option>
+                <option>NAS Engine 2C or 2E</option>
+                <option>Drone Stack</option>
+                <option>EFI system</option>
+                <option>Job</option>
+                <option>Partnership</option>
+                <option>Finance</option>
+                <option>Press</option>
+                <option>General</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="cf-message">Your enquiry</label>
+              <textarea class="cf-textarea" id="cf-message" name="message" placeholder="Please tell us as much as you can about your enquiry"></textarea>
+              <div class="cf-counter" id="cf-counter">0/500</div>
+            </div>
+            <div class="cf-actions end">
+              <button type="button" class="cf-btn cf-btn-primary" data-next>Continue <span class="arrow" aria-hidden="true">→</span></button>
+            </div>
+          </div>
+
+          <!-- STEP 2 — Your contact details -->
+          <div class="cf-step" data-step="2">
+            <h2 class="cf-step-title">Your contact details</h2>
+            <p class="cf-step-sub">So we can get back to you.</p>
+            <div class="cf-row cols-2">
+              <div class="cf-field"><label class="cf-label" for="cf-first">First name</label><input class="cf-input" id="cf-first" name="firstName" type="text" autocomplete="given-name" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-last">Last name</label><input class="cf-input" id="cf-last" name="lastName" type="text" autocomplete="family-name" /></div>
+            </div>
+            <div class="cf-row cols-2">
+              <div class="cf-field"><label class="cf-label" for="cf-email">Company email</label><input class="cf-input" id="cf-email" name="email" type="email" autocomplete="email" /><p class="cf-help">Providing a valid company email helps</p></div>
+              <div class="cf-field"><label class="cf-label" for="cf-company">Company name</label><input class="cf-input" id="cf-company" name="company" type="text" autocomplete="organization" /><p class="cf-help">Providing a valid company name helps</p></div>
+            </div>
+            <div class="cf-row cols-3">
+              <div class="cf-field"><label class="cf-label" for="cf-prefix">Prefix</label><select class="cf-select" id="cf-prefix" name="prefix"><option value="" disabled selected>Code</option></select></div>
+              <div class="cf-field"><label class="cf-label" for="cf-phone">Phone number</label><input class="cf-input" id="cf-phone" name="phone" type="tel" autocomplete="tel" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-hours">Business hours</label><select class="cf-select" id="cf-hours" name="hours"><option value="" disabled selected>Best time</option><option>Anytime</option><option>Morning (08–12)</option><option>Afternoon (12–16)</option><option>Evening (16–20)</option></select></div>
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="cf-role">Job role</label>
+              <select class="cf-select" id="cf-role" name="role"><option value="" disabled selected>Select your role</option></select>
+            </div>
+            <div class="cf-field">
+              <label class="cf-label" for="cf-country">Country/Region</label>
+              <select class="cf-select" id="cf-country" name="country"><option value="" disabled selected>Select a country/region</option></select>
+            </div>
+            <label class="cf-consent" for="cf-consent">
+              <input type="checkbox" id="cf-consent" name="consent" />
+              <span class="cf-consent-text">I agree to receive relevant company updates, product information, technical news and other communications from Nordic Advanced Systems ApS by email, phone, messaging services and digital platforms, including LinkedIn and other social media channels.
+                <span class="muted">I understand that I can withdraw my consent at any time. Information about how Nordic Advanced Systems processes personal data is available in our GDPR Policy, accessible through our Code of Conduct.</span>
+              </span>
+            </label>
+            <div class="cf-actions">
+              <button type="button" class="cf-btn cf-btn-ghost" data-back><span class="arrow-back" aria-hidden="true">←</span> Back</button>
+              <button type="submit" class="cf-btn cf-btn-primary" id="cf-submit">Continue <span class="arrow" aria-hidden="true">→</span></button>
+            </div>
+          </div>
+
+          <!-- STEP 3 — Finish -->
+          <div class="cf-step cf-finish" data-step="3">
+            <div class="cf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <h3>Thank you — your enquiry has been received.</h3>
+            <p>Our team will get back to you as soon as possible. All inquiries are handled with discretion and confidentiality.</p>
+          </div>
+        </form>
       </div>
 
     </div>
@@ -397,6 +537,110 @@ img{ display:block; max-width:100%; }
       el.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
       el.style.transform = 'translate(0px,0px)';
     });
+  });
+})();
+</script>
+
+<script>
+/* ============ Contact wizard controller ============ */
+(function(){
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  const steps = Array.from(form.querySelectorAll('.cf-step'));
+  const nodes = Array.from(form.querySelectorAll('.cf-step-node'));
+  const TOTAL = steps.length;
+  let current = 1;
+
+  function goTo(step){
+    current = Math.min(Math.max(step, 1), TOTAL);
+    steps.forEach(s => s.classList.toggle('is-active', +s.dataset.step === current));
+    nodes.forEach(n => {
+      const ns = +n.dataset.node;
+      n.classList.toggle('is-current', ns === current);
+      n.classList.toggle('is-done', ns < current);
+    });
+    form.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  /* ---- populate selects ---- */
+  const ROLES = ['CEO','CFO','CIO','COO','CPO/Chief Procurement Officer','CTO','Commercial manager/Director','Compliance / Customs','Export Manager','Head of Digital Transformation','Head of Supply Chain','Director/Head of Procurement','Import Manager','Logistics Coordinator','Logistics Manager/Director','Marketing manager/Director','Operations Director','Press','Procurement Manager','Products Manager','Purchase Manager','Sales Manager/Director','Sales Representative','Sourcing Manager','Student','Supply Chain Manager'];
+
+  // Standard ISO country list with sanctioned jurisdictions removed (Russia, Belarus,
+  // Iran, North Korea, Syria, Cuba, Venezuela, Myanmar, Sudan, South Sudan, Afghanistan,
+  // Yemen, Libya, Somalia, DR Congo, Central African Republic, Mali, Nicaragua, Zimbabwe).
+  const COUNTRIES = ['Albania','Algeria','Andorra','Angola','Antigua and Barbuda','Argentina','Armenia','Australia','Austria','Azerbaijan','Bahamas','Bahrain','Bangladesh','Barbados','Belgium','Belize','Benin','Bhutan','Bolivia','Bosnia and Herzegovina','Botswana','Brazil','Brunei','Bulgaria','Burkina Faso','Burundi','Cabo Verde','Cambodia','Cameroon','Canada','Chad','Chile','China','Colombia','Comoros','Congo (Republic of the)','Costa Rica','Côte d’Ivoire','Croatia','Cyprus','Czechia','Denmark','Djibouti','Dominica','Dominican Republic','Ecuador','Egypt','El Salvador','Equatorial Guinea','Eritrea','Estonia','Eswatini','Ethiopia','Fiji','Finland','France','Gabon','Gambia','Georgia','Germany','Ghana','Greece','Grenada','Guatemala','Guinea','Guinea-Bissau','Guyana','Haiti','Honduras','Hungary','Iceland','India','Indonesia','Iraq','Ireland','Israel','Italy','Jamaica','Japan','Jordan','Kazakhstan','Kenya','Kiribati','Kosovo','Kuwait','Kyrgyzstan','Laos','Latvia','Lebanon','Lesotho','Liberia','Liechtenstein','Lithuania','Luxembourg','Madagascar','Malawi','Malaysia','Maldives','Malta','Marshall Islands','Mauritania','Mauritius','Mexico','Micronesia','Moldova','Monaco','Mongolia','Montenegro','Morocco','Mozambique','Namibia','Nauru','Nepal','Netherlands','New Zealand','Niger','Nigeria','North Macedonia','Norway','Oman','Pakistan','Palau','Palestine','Panama','Papua New Guinea','Paraguay','Peru','Philippines','Poland','Portugal','Qatar','Romania','Rwanda','Saint Kitts and Nevis','Saint Lucia','Saint Vincent and the Grenadines','Samoa','San Marino','Sao Tome and Principe','Saudi Arabia','Senegal','Serbia','Seychelles','Sierra Leone','Singapore','Slovakia','Slovenia','Solomon Islands','South Africa','South Korea','Spain','Sri Lanka','Suriname','Sweden','Switzerland','Taiwan','Tajikistan','Tanzania','Thailand','Timor-Leste','Togo','Tonga','Trinidad and Tobago','Tunisia','Turkey','Turkmenistan','Tuvalu','Uganda','Ukraine','United Arab Emirates','United Kingdom','United States','Uruguay','Uzbekistan','Vanuatu','Vatican City','Vietnam','Zambia'];
+
+  const PREFIXES = ['+1','+7','+20','+27','+30','+31','+32','+33','+34','+36','+39','+40','+41','+43','+44','+45','+46','+47','+48','+49','+51','+52','+53','+54','+55','+56','+57','+58','+60','+61','+62','+63','+64','+65','+66','+81','+82','+84','+86','+90','+91','+92','+94','+95','+212','+213','+216','+218','+220','+221','+234','+254','+27','+351','+352','+353','+354','+355','+356','+357','+358','+359','+370','+371','+372','+373','+374','+375','+376','+377','+378','+380','+385','+386','+420','+421','+852','+886','+960','+961','+962','+963','+964','+965','+966','+968','+971','+972','+973','+974','+975','+976','+977','+994','+995','+998'];
+
+  function fill(id, values){
+    const sel = form.querySelector(id);
+    if (!sel) return;
+    const frag = document.createDocumentFragment();
+    values.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; frag.appendChild(o); });
+    sel.appendChild(frag);
+  }
+  fill('#cf-role', ROLES);
+  fill('#cf-country', COUNTRIES);
+  // dedupe prefixes while preserving order
+  fill('#cf-prefix', PREFIXES.filter((v, i) => PREFIXES.indexOf(v) === i));
+
+  /* ---- character counter ---- */
+  const msg = form.querySelector('#cf-message');
+  const counter = form.querySelector('#cf-counter');
+  const MAX = 500;
+  if (msg && counter){
+    msg.setAttribute('maxlength', String(MAX));
+    const update = () => {
+      if (msg.value.length > MAX) msg.value = msg.value.slice(0, MAX);
+      counter.textContent = msg.value.length + '/' + MAX;
+    };
+    msg.addEventListener('input', update);
+    update();
+  }
+
+  /* ---- validation ---- */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const mark = (el, bad) => { const f = el && el.closest('.cf-field'); if (f) f.classList.toggle('has-error', !!bad); };
+
+  function validateStep1(){
+    let ok = true;
+    const type = form.querySelector('#cf-type');
+    const message = form.querySelector('#cf-message');
+    if (!type.value){ mark(type, true); ok = false; } else mark(type, false);
+    if (!message.value.trim()){ mark(message, true); ok = false; } else mark(message, false);
+    return ok;
+  }
+  function validateStep2(){
+    let ok = true;
+    const first = form.querySelector('#cf-first');
+    const email = form.querySelector('#cf-email');
+    const consent = form.querySelector('#cf-consent');
+    if (!first.value.trim()){ mark(first, true); ok = false; } else mark(first, false);
+    if (!email.value.trim() || !EMAIL_RE.test(email.value.trim())){ mark(email, true); ok = false; } else mark(email, false);
+    consent.closest('.cf-consent').classList.toggle('has-error', !consent.checked);
+    if (!consent.checked) ok = false;
+    return ok;
+  }
+
+  /* ---- navigation ---- */
+  form.addEventListener('click', (e) => {
+    if (e.target.closest('[data-next]')){ e.preventDefault(); if (validateStep1()) goTo(2); }
+    else if (e.target.closest('[data-back]')){ e.preventDefault(); goTo(current - 1); }
+  });
+
+  // clear a field's error as the user corrects it
+  form.addEventListener('input', (e) => {
+    const f = e.target.closest('.cf-field.has-error');
+    if (f) f.classList.remove('has-error');
+    if (e.target.id === 'cf-consent' && e.target.checked) e.target.closest('.cf-consent').classList.remove('has-error');
+  });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateStep2()) return;
+    // NOTE: backend POST to /api/contact is wired in the next step.
+    goTo(3);
   });
 })();
 </script>
