@@ -257,6 +257,10 @@ img{ display:block; max-width:100%; }
 .cf-btn-ghost:hover{ border-color:var(--accent); color:var(--accent); }
 .cf-btn .arrow{ transition:transform .3s var(--ease-spring); }
 .cf-btn:hover .arrow{ transform:translateX(3px); }
+.cf-btn[disabled]{ opacity:0.7; cursor:progress; transform:none; }
+.cf-spin{ width:14px; height:14px; border:2px solid rgba(7,42,55,0.35); border-top-color:var(--accent-ink); border-radius:50%; display:inline-block; animation:cfSpin .7s linear infinite; }
+@keyframes cfSpin{ to{ transform:rotate(360deg); } }
+.cf-error{ margin:16px 0 0; font-size:13px; line-height:1.5; color:#e0968f; }
 
 /* finish */
 .cf-finish{ text-align:center; padding:22px 8px 10px; }
@@ -499,9 +503,10 @@ img{ display:block; max-width:100%; }
                 <span class="muted">I understand that I can withdraw my consent at any time. Information about how Nordic Advanced Systems processes personal data is available in our GDPR Policy, accessible through our Code of Conduct.</span>
               </span>
             </label>
+            <p class="cf-error" id="cf-error" role="alert" hidden></p>
             <div class="cf-actions">
               <button type="button" class="cf-btn cf-btn-ghost" data-back><span class="arrow-back" aria-hidden="true">←</span> Back</button>
-              <button type="submit" class="cf-btn cf-btn-primary" id="cf-submit">Continue <span class="arrow" aria-hidden="true">→</span></button>
+              <button type="submit" class="cf-btn cf-btn-primary" id="cf-submit">Submit enquiry <span class="arrow" aria-hidden="true">→</span></button>
             </div>
           </div>
 
@@ -656,11 +661,55 @@ img{ display:block; max-width:100%; }
     if (e.target.id === 'cf-consent' && e.target.checked) e.target.closest('.cf-consent').classList.remove('has-error');
   });
 
-  form.addEventListener('submit', (e) => {
+  const errorBox = form.querySelector('#cf-error');
+  const submitBtn = form.querySelector('#cf-submit');
+  const showError = (msg) => { if (errorBox){ errorBox.textContent = msg; errorBox.hidden = false; } };
+  const clearError = () => { if (errorBox){ errorBox.hidden = true; errorBox.textContent = ''; } };
+  const val = (sel) => { const el = form.querySelector(sel); return el ? el.value.trim() : ''; };
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!validateStep2()) return;
-    // NOTE: backend POST to /api/contact is wired in the next step.
-    goTo(3);
+    clearError();
+
+    const payload = {
+      type: val('#cf-type'),
+      message: val('#cf-message'),
+      firstName: val('#cf-first'),
+      lastName: val('#cf-last'),
+      email: val('#cf-email'),
+      company: val('#cf-company'),
+      prefix: val('#cf-prefix'),
+      phone: val('#cf-phone'),
+      hours: val('#cf-hours'),
+      role: val('#cf-role'),
+      country: val('#cf-country'),
+      consent: form.querySelector('#cf-consent').checked,
+      _gotcha: val('input[name="_gotcha"]'),
+    };
+
+    const original = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="cf-spin" aria-hidden="true"></span> Sending…';
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success) {
+        goTo(3);
+      } else {
+        showError(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      showError('Network error — please check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = original;
+    }
   });
 })();
 </script>
