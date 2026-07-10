@@ -1178,6 +1178,30 @@ p{ margin:0; color:var(--ink-1); }
   * { cursor: auto; }
 }
 
+
+/* ---------- Intelligence Solutions dropdown ---------- */
+.nav-dd{ position:relative; display:flex; align-items:center; }
+.nav-dd-trigger{ font-family:inherit; font-size:15px; font-weight:500; color:var(--ink-1); position:relative; padding:6px 0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:color .2s ease; }
+.nav-dd-trigger::after{ content:""; position:absolute; left:0; right:18px; bottom:-2px; height:1px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease-spring); }
+.nav-dd:hover .nav-dd-trigger, .nav-dd:focus-within .nav-dd-trigger, .nav-dd-trigger.active{ color:var(--accent); }
+.nav-dd:hover .nav-dd-trigger::after, .nav-dd:focus-within .nav-dd-trigger::after, .nav-dd-trigger.active::after{ transform:scaleX(1); }
+.nav-dd-caret{ width:6px; height:6px; margin-top:-3px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); opacity:.65; transition:transform .3s var(--ease-spring), opacity .2s ease; }
+.nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret{ transform:rotate(-135deg); margin-top:2px; opacity:1; }
+.nav-dd-menu{ position:absolute; top:calc(100% + 16px); left:50%; transform:translateX(-50%) translateY(-8px); min-width:230px; padding:8px; background:rgba(8,32,42,0.94); border:1px solid var(--line-dark); border-radius:var(--radius-sm,10px); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); display:flex; flex-direction:column; gap:2px; opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s ease, transform .3s var(--ease-spring), visibility .25s; z-index:130; }
+.nav-dd-menu::before{ content:""; position:absolute; top:-16px; left:0; right:0; height:16px; }
+.nav-dd-menu::after{ content:""; position:absolute; top:-5px; left:50%; width:9px; height:9px; transform:translateX(-50%) rotate(45deg); background:rgba(8,32,42,0.94); border-left:1px solid var(--line-dark); border-top:1px solid var(--line-dark); }
+.nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu{ opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.nav-dd-menu a{ position:relative; display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:7px; color:var(--ink-1); font-size:14px; font-weight:500; transition:background .2s ease, color .2s ease; }
+.nav-dd-menu a::after{ display:none; }
+.nav-dd-menu a::before{ content:""; flex:none; width:6px; height:6px; border:1px solid var(--accent); transform:rotate(45deg); opacity:.55; transition:opacity .2s ease, background .2s ease; }
+.nav-dd-menu a:hover{ background:var(--accent-dim,rgba(59,182,232,0.18)); color:var(--accent); }
+.nav-dd-menu a:hover::before{ opacity:1; background:var(--accent); }
+.nav-dd-menu a.active{ color:var(--accent); }
+.nav-dd-menu a.active::before{ opacity:1; background:var(--accent); }
+.nav-dd-label{ flex:1; letter-spacing:0.01em; }
+.nav-dd-sub{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-3); }
+.nav-dd-menu a:hover .nav-dd-sub, .nav-dd-menu a.active .nav-dd-sub{ color:var(--accent); }
+@media (max-width:900px){ .nav-dd{ display:none; } }
 </style>
 </head>
 <body>
@@ -1204,6 +1228,13 @@ p{ margin:0; color:var(--ink-1); }
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="/">Platforms</a>
+      <div class="nav-dd">
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <div class="nav-dd-menu" role="menu">
+          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
+          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+        </div>
+      </div>
       <a href="/engineering">Engineering</a>
       <a href="/nas" class="active">NAS</a>
       <a href="/conduct">Conduct</a>
