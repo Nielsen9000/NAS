@@ -414,6 +414,13 @@ p{ margin:0; color:var(--ink-1); }
 }
 .mobile-nav a:hover,
 .mobile-nav a:focus-visible{ color:var(--accent); }
+.mobile-nav-group{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+.mobile-nav-group .mobile-nav-label{
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  font-size:12px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent);
+}
+.mobile-nav .mobile-nav-group a{ font-size:clamp(22px, 5.5vw, 32px); font-weight:500; }
 .mobile-nav .mobile-cta{
   margin-top:16px;
   display:inline-flex;
@@ -2377,8 +2384,11 @@ p{ margin:0; color:var(--ink-1); }
 <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
   <nav class="mobile-nav" aria-label="Mobile navigation">
     <a href="/#platforms">Platforms</a>
-    <a href="/intelligence/drone-stack/">Intelligence · Drone Stack</a>
-    <a href="/intelligence/efi/">Intelligence · EFI</a>
+    <div class="mobile-nav-group">
+      <span class="mobile-nav-label">Intelligent Solutions</span>
+      <a href="/intelligence/drone-stack/">Drone Stack</a>
+      <a href="/intelligence/efi/">EFI</a>
+    </div>
     <a href="/engineering">Engineering</a>
     <a href="/nas">NAS</a>
     <a href="/conduct">Conduct</a>
