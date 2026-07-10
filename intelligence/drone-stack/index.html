@@ -165,22 +165,26 @@ p{ margin:0; color:var(--ink-1); }
 /* =============================================================
    Page — Drone Stack
    ============================================================= */
-/* ---- Hero: compact 2-column ---- */
-.ds-hero{ position:relative; padding:128px 0 24px; }
-.ds-hero-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; align-items:center; gap:80px; }
-.ds-hero-headline{ font-family:'Inter',system-ui,sans-serif; font-size:clamp(2.5rem,5vw,4rem); font-weight:700; letter-spacing:-0.03em; line-height:1.0; margin:22px 0 20px; }
+/* ---- Hero: full-bleed FPV drone photo floating into the text ---- */
+.ds-hero{
+  position:relative; min-height:90vh; display:flex; align-items:center;
+  padding:150px 0 96px; overflow:hidden;
+  background-color:var(--bg-base);
+  background-image:url('/careers/assets/hero-drone.png');
+  background-size:cover; background-position:center right; background-repeat:no-repeat;
+}
+/* two-layer fade: bottom into the page base, left into marine so the copy stays legible */
+.ds-hero-overlay{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:
+    linear-gradient(180deg, transparent 46%, rgba(8,32,42,0.72) 80%, var(--bg-base) 100%),
+    linear-gradient(90deg, var(--bg-base) 0%, rgba(8,32,42,0.94) 30%, rgba(8,32,42,0.5) 58%, transparent 100%);
+}
+.ds-hero .wrap{ position:relative; z-index:1; }
+.ds-hero-inner{ max-width:620px; }
+.ds-hero-headline{ font-family:'Inter',system-ui,sans-serif; font-size:clamp(2.6rem,5.4vw,4.4rem); font-weight:700; letter-spacing:-0.03em; line-height:1.0; margin:22px 0 22px; text-shadow:0 2px 40px rgba(4,18,24,0.6); }
 .ds-hero-headline .accent{ color:var(--accent); }
-.ds-hero-sub{ color:var(--ink-1); font-size:clamp(15px,1.3vw,18px); line-height:1.6; max-width:440px; }
-.ds-telemetry{ display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:30px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-2); }
-.ds-telemetry span{ display:flex; align-items:center; gap:8px; }
-.ds-telemetry span::before{ content:""; width:6px; height:6px; background:var(--accent); box-shadow:0 0 8px var(--accent-glow); }
-.ds-render{ position:relative; aspect-ratio:3/2; min-height:300px; border:1.5px dashed rgba(59,182,232,0.4); border-radius:var(--radius-md); background:repeating-linear-gradient(45deg,#0c2a37 0 8px,#0e2e3c 8px 16px); display:grid; place-items:center; overflow:hidden; }
-.ds-render-label{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); padding:9px 16px; border:1px solid rgba(59,182,232,0.4); background:rgba(8,32,42,0.55); }
-.ds-render .hud-corner{ opacity:0.7; }
-.ds-render .hud-corner-tl{ top:12px; left:12px; }
-.ds-render .hud-corner-tr{ top:12px; right:12px; }
-.ds-render .hud-corner-bl{ bottom:12px; left:12px; }
-.ds-render .hud-corner-br{ bottom:12px; right:12px; }
+.ds-hero-inner .ds-hero-tagline{ text-shadow:0 1px 24px rgba(4,18,24,0.55); }
 
 /* ---- 02 — Variants ---- */
 .ds-variants{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:8px; }
@@ -261,9 +265,11 @@ p{ margin:0; color:var(--ink-1); }
   .company-section{ padding:72px 0; }
   .footer-grid{ grid-template-columns:1fr; text-align:left; gap:14px; }
   .footer-mid,.footer-right{ text-align:left; }
-  .ds-hero{ padding:112px 0 20px; }
-  .ds-hero-grid{ grid-template-columns:1fr; gap:36px; }
-  .ds-render{ aspect-ratio:auto; min-height:240px; }
+  .ds-hero{ min-height:76vh; padding:120px 0 64px; background-position:72% center; }
+  .ds-hero-inner{ max-width:none; }
+  .ds-hero-overlay{ background:
+    linear-gradient(180deg, transparent 40%, rgba(8,32,42,0.8) 78%, var(--bg-base) 100%),
+    linear-gradient(90deg, var(--bg-base) 0%, rgba(8,32,42,0.92) 46%, rgba(8,32,42,0.55) 100%); }
   .ds-variants{ grid-template-columns:1fr; max-width:560px; }
   .ds-detail-grid{ grid-template-columns:repeat(2,1fr); }
 }
@@ -308,7 +314,7 @@ p{ margin:0; color:var(--ink-1); }
 .esc-lead{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(18px,1.5vw,21px); font-weight:600; line-height:1.5; letter-spacing:-0.01em; color:var(--ink-0); margin:0; }
 .esc-lead .accent{ color:var(--accent); }
 /* ---- NDAA compliance explainer (pays off the hero badge) ---- */
-.ndaa-box{ position:relative; margin:52px 0 0; padding:24px 40px 26px; border:1px solid var(--line-dark); border-radius:var(--radius-md); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),rgba(13,42,49,0.5); overflow:hidden; }
+.ndaa-box{ position:relative; margin:8px 0 0; padding:24px 40px 26px; border:1px solid var(--line-dark); border-radius:var(--radius-md); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),rgba(13,42,49,0.5); overflow:hidden; }
 .ndaa-box .hud-corner{ width:20px; height:20px; opacity:.7; }
 .ndaa-box .hud-corner-tl{ top:16px; left:16px; }
 .ndaa-box .hud-corner-tr{ top:16px; right:16px; }
@@ -387,126 +393,30 @@ p{ margin:0; color:var(--ink-1); }
 <main>
 
   <!-- =========================================
-       HERO — 2-column: text + stack render
+       HERO — full-bleed FPV drone photo
        ========================================= -->
   <section class="ds-hero">
+    <div class="ds-hero-overlay" aria-hidden="true"></div>
     <div class="wrap">
-      <div class="ds-hero-grid">
-        <div class="ds-hero-text reveal">
-          <div class="section-eyebrow">/ INTELLIGENT — DRONE STACK</div>
-          <h1 class="ds-hero-headline">The brain of<br><span class="accent">the aircraft</span></h1>
-          <p class="ds-hero-tagline">A flight controller in a class of its own, unmatched by its competitors. Built exclusively from certified components, designed and manufactured in Europe.</p>
-          <div class="ds-badges">
-            <span class="ds-badge">NDAA COMPLIANT</span>
-            <span class="ds-badge">EXCLUSIVE TO NAS</span>
-          </div>
-          <p class="ds-hero-sub">FPV flight controller stack — three variants in ascending capability. 60A · 100A · 200A.</p>
-          <div class="ds-telemetry" aria-hidden="true">
-            <span>MCU · —</span>
-            <span>IMU · —</span>
-            <span>OSD · —</span>
-            <span>CONT · —A</span>
-          </div>
-        </div>
-        <div class="ds-render reveal" aria-hidden="true">
-          <div class="hud-corner hud-corner-tl"></div>
-          <div class="hud-corner hud-corner-tr"></div>
-          <div class="hud-corner hud-corner-bl"></div>
-          <div class="hud-corner hud-corner-br"></div>
-          <span class="ds-render-label">STACK RENDER · PLACEHOLDER</span>
+      <div class="ds-hero-inner reveal">
+        <div class="section-eyebrow">/ INTELLIGENT — DRONE STACK</div>
+        <h1 class="ds-hero-headline">The brain of<br><span class="accent">the aircraft</span></h1>
+        <p class="ds-hero-tagline">A flight controller in a class of its own, unmatched by its competitors. Built exclusively from certified components, designed and manufactured in Europe.</p>
+        <div class="ds-badges">
+          <span class="ds-badge">NDAA COMPLIANT</span>
+          <span class="ds-badge">EXCLUSIVE TO NAS</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- =========================================
-       02 — VARIANTS: 60A / 100A / 200A
+       02 — COMPLIANCE: NDAA
+       (Variants 60A/100A/200A removed until specs are available — will return)
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 02 — VARIANTS</div>
-      <div class="ds-variants">
-
-        <!-- 60A -->
-        <article class="vcard">
-          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="vcard-head">
-            <div class="vcard-name">60A</div>
-            <div class="vcard-class">5&quot; freestyle / long-range</div>
-          </div>
-          <div class="vcard-divider" aria-hidden="true"></div>
-          <div class="vcard-specs">
-            <div class="vcard-spec"><span class="k">MCU</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">IMU</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Barometer</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">OSD</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Blackbox</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Continuous</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Burst</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Voltage</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Mounting</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Weight</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Firmware</span><span class="v">—</span></div>
-          </div>
-        </article>
-
-        <!-- 100A -->
-        <article class="vcard">
-          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="vcard-head">
-            <div class="vcard-name">100A</div>
-            <div class="vcard-class">X8 / cinelifter</div>
-          </div>
-          <div class="vcard-divider" aria-hidden="true"></div>
-          <div class="vcard-specs">
-            <div class="vcard-spec"><span class="k">MCU</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">IMU</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Barometer</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">OSD</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Blackbox</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Continuous</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Burst</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Voltage</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Mounting</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Weight</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Firmware</span><span class="v">—</span></div>
-          </div>
-        </article>
-
-        <!-- 200A — flagship -->
-        <article class="vcard is-flagship">
-          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="vcard-head">
-            <span class="vcard-flag">FLAGSHIP · HEAVY-LIFT</span>
-            <div class="vcard-name">200A</div>
-            <div class="vcard-class">industrial / heavy-lift</div>
-          </div>
-          <div class="vcard-divider" aria-hidden="true"></div>
-          <div class="vcard-specs">
-            <div class="vcard-spec"><span class="k">MCU</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">IMU</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Barometer</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">OSD</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Blackbox</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Continuous</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Burst</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Voltage</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Mounting</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Weight</span><span class="v">—</span></div>
-            <div class="vcard-spec"><span class="k">Firmware</span><span class="v">—</span></div>
-          </div>
-        </article>
-
-      </div>
+      <div class="section-eyebrow">/ 02 — COMPLIANCE</div>
 
       <div class="ndaa-box">
         <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
@@ -571,26 +481,12 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       04 — DETAIL: board macro grid
+       04 — ESC: the muscle (FC pairs with the ESC)
+       (former "04 — DETAIL" board-macro grid removed until photos are ready — will return)
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 04 — DETAIL</div>
-      <div class="ds-detail-grid">
-        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/mosfet.png" alt="Power MOSFET on the NAS drone stack" loading="lazy"><span class="t-num">/ 01</span><span class="t-label">MOSFET</span></div>
-        <div class="detail-tile has-media"><span class="tile-glow" aria-hidden="true"></span><img class="tile-media" src="/assets/capacitor.png" alt="Electrolytic capacitor on the NAS drone stack" loading="lazy"><span class="t-num">/ 02</span><span class="t-label">CAPACITORS</span></div>
-        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 03</span><span class="t-label">COPPER BAR</span></div>
-        <div class="detail-tile" aria-hidden="true"><span class="t-num">/ 04</span><span class="t-label">SOLDER PADS</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       05 — ESC: the muscle (FC pairs with the ESC)
-       ========================================= -->
-  <section class="company-section">
-    <div class="wrap reveal">
-      <div class="section-eyebrow">/ 05 — ESC</div>
+      <div class="section-eyebrow">/ 04 — ESC</div>
       <h2>The <span class="accent">muscle</span> behind the stack</h2>
 
       <div class="ds-conn-layout is-mirror">
@@ -632,7 +528,7 @@ p{ margin:0; color:var(--ink-1); }
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 06 — FIELD TEST</div>
+      <div class="section-eyebrow">/ 05 — FIELD TEST</div>
       <div class="ds-inflight ds-fieldtest" id="ds-fieldtest">
         <video class="ds-ft-video" id="ds-ft-video"
                poster="/assets/dronestack-poster.jpg"
