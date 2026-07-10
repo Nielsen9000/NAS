@@ -314,7 +314,7 @@ p{ margin:0; color:var(--ink-1); }
 .esc-lead{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(18px,1.5vw,21px); font-weight:600; line-height:1.5; letter-spacing:-0.01em; color:var(--ink-0); margin:0; }
 .esc-lead .accent{ color:var(--accent); }
 /* ---- NDAA compliance explainer (pays off the hero badge) ---- */
-.ndaa-box{ position:relative; margin:8px 0 0; padding:24px 40px 26px; border:1px solid var(--line-dark); border-radius:var(--radius-md); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),rgba(13,42,49,0.5); overflow:hidden; }
+.ndaa-box{ position:relative; margin:48px 0 0; padding:24px 40px 26px; border:1px solid var(--line-dark); border-radius:var(--radius-md); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),rgba(13,42,49,0.5); overflow:hidden; }
 .ndaa-box .hud-corner{ width:20px; height:20px; opacity:.7; }
 .ndaa-box .hud-corner-tl{ top:16px; left:16px; }
 .ndaa-box .hud-corner-tr{ top:16px; right:16px; }
@@ -411,35 +411,13 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
   <!-- =========================================
-       02 — COMPLIANCE: NDAA
-       (Variants 60A/100A/200A removed until specs are available — will return)
+       02 — CONNECTIVITY: FC pinout + specs (+ NDAA compliance below)
+       (Variants 60A/100A/200A and the board-macro Detail grid are parked until
+        their specs / photos are ready — CSS retained, will return.)
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 02 — COMPLIANCE</div>
-
-      <div class="ndaa-box">
-        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-        <div class="ndaa-head">
-          <span class="ndaa-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v5.4c0 4.6 3.2 7.9 7.5 9.1 4.3-1.2 7.5-4.5 7.5-9.1V5.5L12 2.5Z"/><path d="M8.7 12.2l2.4 2.4 4.4-4.6"/></svg>
-          </span>
-          <h2 class="ndaa-title"><span class="accent">NDAA</span> Compliant</h2>
-        </div>
-        <p class="ndaa-body">A US standard that sets a high bar — also within NATO. This equipment complies with the US National Defense Authorization Act, meaning it contains no components, chips or software from selected sanctioned Chinese manufacturers (such as Huawei, Hikvision or Dahua), ensuring a high level of cybersecurity. Although it is US law, NDAA compliance functions today as an international security standard — many partners and defence organisations in NATO countries, including Denmark, require it.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       03 — CONNECTIVITY: FC pinout + specs
-       ========================================= -->
-  <section class="company-section">
-    <div class="wrap reveal">
-      <div class="section-eyebrow">/ 03 — CONNECTIVITY</div>
+      <div class="section-eyebrow">/ 02 — CONNECTIVITY</div>
       <h2 class="ds-conn-intro">Flight Controller Pinout and <span class="accent">Connectivity</span> Overview.</h2>
 
       <div class="ds-conn-layout">
@@ -477,6 +455,21 @@ p{ margin:0; color:var(--ink-1); }
         </div>
       </div>
       </div>
+
+      <!-- NDAA compliance — sits under the connectivity content, pays off the hero badge -->
+      <div class="ndaa-box">
+        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+        <div class="ndaa-head">
+          <span class="ndaa-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v5.4c0 4.6 3.2 7.9 7.5 9.1 4.3-1.2 7.5-4.5 7.5-9.1V5.5L12 2.5Z"/><path d="M8.7 12.2l2.4 2.4 4.4-4.6"/></svg>
+          </span>
+          <h2 class="ndaa-title"><span class="accent">NDAA</span> Compliant</h2>
+        </div>
+        <p class="ndaa-body">A US standard that sets a high bar — also within NATO. This equipment complies with the US National Defense Authorization Act, meaning it contains no components, chips or software from selected sanctioned Chinese manufacturers (such as Huawei, Hikvision or Dahua), ensuring a high level of cybersecurity. Although it is US law, NDAA compliance functions today as an international security standard — many partners and defence organisations in NATO countries, including Denmark, require it.</p>
+      </div>
     </div>
   </section>
 
@@ -486,7 +479,7 @@ p{ margin:0; color:var(--ink-1); }
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 04 — ESC</div>
+      <div class="section-eyebrow">/ 03 — ESC</div>
       <h2>The <span class="accent">muscle</span> behind the stack</h2>
 
       <div class="ds-conn-layout is-mirror">
@@ -528,7 +521,7 @@ p{ margin:0; color:var(--ink-1); }
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 05 — FIELD TEST</div>
+      <div class="section-eyebrow">/ 04 — FIELD TEST</div>
       <div class="ds-inflight ds-fieldtest" id="ds-fieldtest">
         <video class="ds-ft-video" id="ds-ft-video"
                poster="/assets/dronestack-poster.jpg"
