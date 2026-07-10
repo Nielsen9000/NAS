@@ -2395,7 +2395,7 @@ p{ margin:0; color:var(--ink-1); }
 
   <video class="hero-loop-video"
          poster="./assets/hero-poster.jpg"
-         autoplay muted loop playsinline
+         autoplay muted loop playsinline webkit-playsinline
          preload="auto"
          aria-hidden="true">
     <source src="./assets/hero-loop.mp4" type="video/mp4">
@@ -2481,7 +2481,7 @@ p{ margin:0; color:var(--ink-1); }
 <section class="intel-teaser" id="intelligence" aria-labelledby="intel-teaser-title">
   <video class="intel-teaser-video"
          poster="/assets/kolibri-poster.jpg"
-         autoplay muted loop playsinline
+         autoplay muted loop playsinline webkit-playsinline
          preload="auto"
          aria-hidden="true">
     <source src="/assets/teaser.mp4" type="video/mp4">
@@ -3350,6 +3350,30 @@ p{ margin:0; color:var(--ink-1); }
   });
 })();
 
+</script>
+
+<script>
+/* Safari autoplay fallback — Safari/iOS often ignore the autoplay attribute even on
+   muted+playsinline video. Force muted, call play() explicitly (handling the promise),
+   and retry on the first user gesture in case the initial attempt was blocked. */
+(function(){
+  var vids = document.querySelectorAll('.hero-loop-video, .intel-teaser-video');
+  if (!vids.length) return;
+  function tryPlay(){
+    vids.forEach(function(v){
+      v.muted = true;            // Safari requires the muted PROPERTY, not just the attribute
+      if (v.paused){
+        var p = v.play();
+        if (p && p.catch) p.catch(function(){ /* blocked until a gesture — retried below */ });
+      }
+    });
+  }
+  tryPlay();                                   // initial explicit attempt
+  var opts = { once:true, passive:true };      // backup: first user interaction
+  ['touchstart','pointerdown','click','scroll','keydown'].forEach(function(evt){
+    window.addEventListener(evt, tryPlay, opts);
+  });
+})();
 </script>
 
 </body>
