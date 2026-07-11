@@ -37,7 +37,7 @@
   --ease-smooth:cubic-bezier(0.16,1,0.3,1);
 }
 *,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; text-rendering:optimizeLegibility; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; text-rendering:optimizeLegibility; overflow-x:hidden; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 body{
   margin:0; background:var(--bg-base); color:var(--ink-0);
   font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
@@ -282,6 +282,9 @@ p{ margin:0; color:var(--ink-1); }
   .footer-mid,.footer-right{ text-align:left; }
   .efi-hero{ padding:112px 0 20px; }
   .efi-hero-grid{ grid-template-columns:1fr; gap:36px; }
+  /* diagram fits the viewport on mobile — no oversized element to widen the layout / trigger iOS zoom */
+  .efi-diagram svg{ min-width:0; }
+  .efi-diagram-scroll{ overflow-x:visible; }
   .efi-render{ aspect-ratio:auto; min-height:240px; order:-1; }
   .efi-diagram{ padding:24px 18px; }
   .efi-pillars{ grid-template-columns:repeat(2,1fr); }
