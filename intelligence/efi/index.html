@@ -193,6 +193,45 @@ p{ margin:0; color:var(--ink-1); }
   text-transform:uppercase; color:var(--accent); padding:6px 11px;
   border:1px solid rgba(59,182,232,0.35); background:rgba(8,32,42,0.55); }
 
+/* ---- EFI hero: engineering-profile blueprint readout (HUD panel) ---- */
+.efi-profile{ position:relative; display:flex; flex-direction:column; gap:18px; }
+.efi-profile-top{ display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; font-weight:500;
+  letter-spacing:0.2em; text-transform:uppercase; }
+.efi-profile-id{ color:var(--accent); }
+.efi-profile-ref{ color:var(--ink-3); }
+.efi-profile-frame{ position:relative; aspect-ratio:952/860; display:grid; place-items:center; padding:10px; }
+.efi-profile-glow{ position:absolute; inset:14% 16%; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 52%, rgba(59,182,232,0.20), rgba(59,182,232,0.06) 50%, transparent 72%);
+  filter:blur(32px); }
+.efi-profile-img{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain;
+  filter:drop-shadow(0 0 22px rgba(59,182,232,0.18)); }
+.efi-profile-frame .hud-corner{ opacity:0.7; width:20px; height:20px; }
+.efi-profile-frame .hud-corner-tl{ top:0; left:0; }
+.efi-profile-frame .hud-corner-tr{ top:0; right:0; }
+.efi-profile-frame .hud-corner-bl{ bottom:0; left:0; }
+.efi-profile-frame .hud-corner-br{ bottom:0; right:0; }
+.efi-profile-specs{ display:grid; grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark); }
+.efi-profile-spec{ display:flex; flex-direction:column; gap:7px; padding:15px 16px 15px 0; }
+.efi-profile-spec + .efi-profile-spec{ padding-left:18px; border-left:1px solid var(--line-dark); }
+.efi-profile-spec-label{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; font-weight:500;
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); }
+.efi-profile-spec-value{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:14px; font-weight:600;
+  color:var(--ink-0); line-height:1.3; }
+.efi-profile-foot{ display:flex; align-items:center; justify-content:space-between; gap:16px;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; }
+.efi-profile-caption{ color:var(--ink-2); }
+.efi-profile-status{ display:inline-flex; align-items:center; gap:9px; color:var(--accent); }
+.efi-profile-dot{ width:7px; height:7px; border-radius:50%; background:var(--accent);
+  animation:efi-pulse 2s var(--ease-smooth) infinite; }
+@keyframes efi-pulse{
+  0%{ box-shadow:0 0 0 0 rgba(59,182,232,0.55); opacity:1; }
+  70%{ box-shadow:0 0 0 8px rgba(59,182,232,0); opacity:0.85; }
+  100%{ box-shadow:0 0 0 0 rgba(59,182,232,0); opacity:1; }
+}
+@media (prefers-reduced-motion:reduce){ .efi-profile-dot{ animation:none; } }
+
 /* ---- 02 — System architecture (inline SVG) ---- */
 .efi-diagram{ position:relative; margin-top:8px; padding:36px 34px 30px; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); overflow:hidden; }
 .efi-diagram::after{ content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(59,182,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,182,232,0.04) 1px,transparent 1px); background-size:32px 32px; opacity:.5; pointer-events:none; }
@@ -250,6 +289,9 @@ p{ margin:0; color:var(--ink-1); }
 }
 @media (max-width:560px){
   .efi-pillars{ grid-template-columns:1fr; max-width:340px; }
+  .efi-profile-specs{ grid-template-columns:1fr; }
+  .efi-profile-spec{ padding:13px 0; }
+  .efi-profile-spec + .efi-profile-spec{ padding-left:0; padding-top:13px; border-left:0; border-top:1px solid var(--line-dark); }
 }
 /* ---- IEMS hero copy ---- */
 .iems-sublabel{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:12px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); margin:2px 0 18px; }
@@ -349,14 +391,37 @@ p{ margin:0; color:var(--ink-1); }
             <span>ECU</span>
           </div>
         </div>
-        <div class="efi-render efi-render--live reveal">
-          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="efi-render-glow" aria-hidden="true"></div>
-          <img class="efi-render-img" src="/assets/efi.png" alt="Electronic fuel injection throttle body unit" />
-          <span class="efi-render-tag">EFI · THROTTLE BODY</span>
+        <div class="efi-profile reveal">
+          <div class="efi-profile-top">
+            <span class="efi-profile-id">NAS · EFI PROFILE</span>
+            <span class="efi-profile-ref">/ EFI-01</span>
+          </div>
+          <div class="efi-profile-frame">
+            <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+            <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+            <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+            <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+            <div class="efi-profile-glow" aria-hidden="true"></div>
+            <img class="efi-profile-img" src="/assets/efi-blueprint.webp" alt="EFI throttle body — technical wireframe blueprint" />
+          </div>
+          <div class="efi-profile-specs">
+            <div class="efi-profile-spec">
+              <span class="efi-profile-spec-label">TYPE</span>
+              <span class="efi-profile-spec-value">Throttle Body</span>
+            </div>
+            <div class="efi-profile-spec">
+              <span class="efi-profile-spec-label">SYSTEM</span>
+              <span class="efi-profile-spec-value">EFI · Electronic Fuel Injection</span>
+            </div>
+            <div class="efi-profile-spec">
+              <span class="efi-profile-spec-label">COMP.</span>
+              <span class="efi-profile-spec-value">NDAA</span>
+            </div>
+          </div>
+          <div class="efi-profile-foot">
+            <span class="efi-profile-caption">// EFI THROTTLE BODY</span>
+            <span class="efi-profile-status"><span class="efi-profile-dot" aria-hidden="true"></span>ACTIVE</span>
+          </div>
         </div>
       </div>
     </div>
