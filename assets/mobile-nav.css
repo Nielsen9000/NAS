@@ -116,9 +116,18 @@ body.has-menu-open .header-cta{ visibility:hidden; }
   .brand-subline{ display:none; }
 }
 @media (max-width:700px){
-  /* The CTA lives in the menu at this size, so the bar keeps only the
-     logo and the toggle. */
+  /* The CTA lives in the menu at this size, so the bar keeps the logo,
+     the company name and the toggle. */
   .header-cta{ display:none; }
+  /* The name stays — it just has to fit. At the desktop 16px/0.22em it
+     needs 296px against the ~217px beside the mark, so it wrapped to three
+     lines and pushed the bar to 98px. One line at 11px/0.14em needs 183px
+     and clears the 187px available down to a 360px phone. */
+  .brand-wordmark{ font-size:11px; letter-spacing:0.14em; white-space:nowrap; }
+}
+/* Below ~355px even one line does not fit beside the mark and the toggle.
+   The mark carries the brand there rather than wrapping again. */
+@media (max-width:355px){
   .brand-wordmark{ display:none; }
 }
 
