@@ -28,6 +28,22 @@ export const PEOPLE = [
     phoneIsSignal: true,
     email: 'cfe@nordicadvancedsystems.com',
   },
+  {
+    slug: 'henrik-radich',
+    name: 'Henrik Radich',
+    title: 'Partner',
+    phone: '+45 23 62 10 40',
+    phoneIsSignal: true,
+    email: 'hro@nordicadvancedsystems.com',
+  },
+  {
+    slug: 'jesper-nielsen',
+    name: 'Jesper Nielsen',
+    title: 'Intelligent Solutions',
+    phone: '+45 27 83 13 23',
+    phoneIsSignal: true,
+    email: 'jni@nordicadvancedsystems.com',
+  },
 ];
 
 // The card QR points here — a short URL keeps the QR coarse and easy to scan.
