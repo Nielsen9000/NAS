@@ -113,6 +113,17 @@ body.has-menu-open .header-cta{ visibility:hidden; }
 @media (max-width:900px){
   .nav{ display:none; }
   .nav-toggle{ display:flex; }
+  /* "Built on integrity" stays, stacked under the name as on desktop.
+     Setting it inline after the name instead was measured and rejected:
+     "NORDIC ADVANCED SYSTEMS · BUILT ON INTEGRITY" needs 326px at the
+     name's own 11px against ~217px available, and only fits at 7px — which
+     shrinks the company name to accommodate the tagline. Stacking costs
+     ~13px of bar height and keeps the name at 11px. */
+  .brand-subline{ font-size:8px; letter-spacing:0.12em; margin-top:2px; white-space:nowrap; }
+}
+/* Under 355px the name itself is dropped (below), so the tagline goes too —
+   a lone "BUILT ON INTEGRITY" beside the mark reads as a stray label. */
+@media (max-width:355px){
   .brand-subline{ display:none; }
 }
 @media (max-width:700px){
