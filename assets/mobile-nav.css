@@ -1,0 +1,135 @@
+/* =============================================================
+   Shared mobile navigation — hamburger toggle + full-screen menu.
+   Paired with /assets/mobile-nav.js, which BUILDS the toggle and the
+   overlay at runtime from the <nav class="nav"> already present in each
+   page's header. Nothing here is page-specific, so every page gets the
+   same menu by loading these two files — no markup to keep in sync.
+
+   Falls back safely: with JS off, nothing is injected and the header is
+   exactly what it was before (logo + CTA). The primary nav links stay in
+   the HTML inside .nav either way, so crawlers always see them.
+
+   Colours come from each page's own custom properties (--accent,
+   --accent-ink, --ink-0), so the menu inherits the page's palette.
+   ============================================================= */
+
+/* ---- Hamburger ---------------------------------------------------- */
+.nav-toggle{
+  display:none;                       /* the media query below reveals it */
+  width:44px; height:44px;            /* 44px — Apple's minimum tap target */
+  background:none; border:0; padding:0; margin:0;
+  cursor:pointer;
+  align-items:center; justify-content:center; flex-direction:column;
+  gap:5px;
+  position:relative;
+  color:#0d2030;
+  transition:color 0.5s cubic-bezier(0.16,1,0.3,1);
+  -webkit-tap-highlight-color:transparent;
+}
+.site-header:not(.is-scrolled) .nav-toggle{ color:#ffffff; }
+/* Once the overlay is up the header sits on the dark sheet, so the bars
+   must be light regardless of scroll state. */
+body.has-menu-open .nav-toggle{ color:#ffffff; }
+
+.nav-toggle-line{
+  width:22px; height:1.5px; background:currentColor;
+  transition:transform 250ms cubic-bezier(0.16,1,0.3,1), opacity 200ms ease;
+  transform-origin:center;
+}
+.nav-toggle.is-open .nav-toggle-line:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+.nav-toggle.is-open .nav-toggle-line:nth-child(2){ opacity:0; }
+.nav-toggle.is-open .nav-toggle-line:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+/* ---- Overlay ------------------------------------------------------ */
+.mobile-menu{
+  position:fixed; inset:0;
+  z-index:150;
+  background:rgba(8,32,42,0.96);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  display:flex; align-items:center; justify-content:center;
+  padding:96px 24px 40px;             /* clears the header bar above it */
+  overflow-y:auto;                    /* long menus scroll on short phones */
+  overscroll-behavior:contain;
+  opacity:0; visibility:hidden;
+  transition:opacity 350ms cubic-bezier(0.16,1,0.3,1), visibility 350ms;
+}
+.mobile-menu.is-open{ opacity:1; visibility:visible; }
+
+/* THE close-button fix. .site-header is position:fixed with z-index:100,
+   which makes it a stacking context — so the toggle's own z-index is
+   trapped inside it and the z-index:150 overlay painted over the whole
+   header, X included. Raising the header above the overlay while the menu
+   is open is what makes the X reachable; it also keeps the logo visible,
+   so the bar still reads as a header rather than a bare sheet. */
+body.has-menu-open .site-header{ z-index:200; }
+/* The bar must not tint the overlay behind it. */
+body.has-menu-open .site-header{ background:transparent; border-bottom-color:transparent; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+/* Nothing in the bar is reachable while the menu is up except the toggle. */
+body.has-menu-open .header-cta{ visibility:hidden; }
+
+.mobile-nav{
+  display:flex; flex-direction:column; gap:24px;
+  align-items:center; text-align:center;
+  width:100%; max-width:420px;
+  margin:auto;                        /* centres, but yields when scrolling */
+}
+.mobile-nav a{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:clamp(26px,6.4vw,38px);
+  font-weight:600; letter-spacing:-0.02em;
+  color:var(--ink-0,#f3f7f8); text-decoration:none;
+  transition:color 200ms ease;
+}
+.mobile-nav a:hover,
+.mobile-nav a:focus-visible{ color:var(--accent,#3bb6e8); }
+.mobile-nav a:focus-visible{ outline:2px solid var(--accent,#3bb6e8); outline-offset:6px; border-radius:2px; }
+/* The page you are on, marked the way the desktop nav marks it. */
+.mobile-nav a.is-current{ color:var(--accent,#3bb6e8); }
+
+.mobile-nav-group{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+.mobile-nav-label{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; font-weight:500; letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent,#3bb6e8);
+}
+.mobile-nav .mobile-nav-group a{ font-size:clamp(21px,5.2vw,30px); font-weight:500; }
+
+.mobile-nav .mobile-cta{
+  margin-top:16px;
+  display:inline-flex; align-items:center; gap:10px;
+  padding:15px 30px;
+  background:var(--accent,#3bb6e8); color:var(--accent-ink,#08202a);
+  border-radius:999px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:13px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase;
+  white-space:nowrap;
+}
+.mobile-nav .mobile-cta:hover{ color:var(--accent-ink,#08202a); background:#5cc4ed; }
+
+/* ---- Mobile header sizing ----------------------------------------
+   Without these the wordmark wraps to three lines and "Request brief"
+   wraps inside its own pill, pushing the bar to 98px on a 844px screen.
+   Home already did this inline; every page now gets it. */
+@media (max-width:900px){
+  .nav{ display:none; }
+  .nav-toggle{ display:flex; }
+  .brand-subline{ display:none; }
+}
+@media (max-width:700px){
+  /* The CTA lives in the menu at this size, so the bar keeps only the
+     logo and the toggle. */
+  .header-cta{ display:none; }
+  .brand-wordmark{ display:none; }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .mobile-menu{ transition:none; }
+  .nav-toggle-line{ transition:none; }
+}
+
+/* ---- Anchor landings ---------------------------------------------
+   .site-header is fixed, so every in-page jump (#platforms, the
+   "Explore the stack" cue, footer links) put its target under the bar.
+   scroll-margin-top was 0 on every section site-wide. */
+section[id], [id].company-section, main [id]{ scroll-margin-top:104px; }
+@media (max-width:700px){ section[id], [id].company-section, main [id]{ scroll-margin-top:84px; } }

@@ -280,11 +280,28 @@ p{ margin:0; color:var(--ink-1); }
   .footer-mid,.footer-right{ text-align:left; }
   .efi-hero{ padding:112px 0 20px; }
   .efi-hero-grid{ grid-template-columns:1fr; gap:36px; }
-  /* diagram fits the viewport on mobile — no oversized element to widen the layout / trigger iOS zoom */
-  .efi-diagram svg{ min-width:0; }
-  .efi-diagram-scroll{ overflow-x:visible; }
+  /* The schematic keeps its real size and scrolls inside its own container.
+     Letting it shrink to fit rendered a 1200×360 drawing at 0.25 scale, with
+     its labels 3–4 px tall — present but unreadable.
+     min-width:0 is the part that matters: a grid/flex item defaults to
+     min-width:auto, so the scroll container was being sized by its oversized
+     child instead of clipping it. THAT is what widened the layout and set off
+     the iOS zoom this rule was originally added to stop — overflow-x:auto was
+     never the problem, an unconstrained container was. */
+  .efi-diagram{ padding:24px 18px; min-width:0; }
+  .efi-diagram-scroll{ overflow-x:auto; min-width:0; max-width:100%; -webkit-overflow-scrolling:touch; }
+  /* 760px is the width the diagram was authored against (the desktop
+     scroll container's own min-width) — its labels are sized for it. */
+  .efi-diagram svg{ min-width:760px; }
+  /* Tells the reader it moves, since the right edge is cut. Anchored to the
+     panel rather than the scroll content, so it stays put while the diagram
+     pans, and centred so it clears both bottom HUD brackets. */
+  .efi-diagram{ padding-bottom:44px; }
+  .efi-diagram::before{ content:"Scroll to explore →"; position:absolute; z-index:1;
+    left:0; right:0; bottom:16px; text-align:center;
+    font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--accent); opacity:.75; pointer-events:none; }
   .efi-render{ aspect-ratio:auto; min-height:240px; order:-1; }
-  .efi-diagram{ padding:24px 18px; }
   .efi-pillars{ grid-template-columns:repeat(2,1fr); }
   .efi-components{ grid-template-columns:1fr; max-width:420px; }
 }
@@ -331,6 +348,8 @@ p{ margin:0; color:var(--ink-1); }
 .iems-cta{ position:relative; max-width:840px; }
 .iems-cta-body{ color:var(--ink-1); font-size:17px; line-height:1.78; margin:0 0 30px; }
 </style>
+  <link rel="stylesheet" href="/assets/mobile-nav.css">
+  <script src="/assets/mobile-nav.js" defer></script>
 </head>
 <body>
 
