@@ -48,3 +48,11 @@ assets/Kolibri video med FC NAS.mp4
 assets/tyr-test-rig.jpg
 assets/Droner.png
 assets/motor_blueprint_extracted.png
+
+# brand/ generated roll-up output — regenerable via build_rollup.mjs, not versioned.
+# (*.pdf is already covered above.) Scoped to rollup-* on purpose: the business
+# card PNG previews are small, reviewable in a diff, and stay tracked.
+brand/rollup-*.png
+brand/rollup-*.jpg
+brand/rollup-*.html
+brand/rollup-*.svg

@@ -4,14 +4,17 @@
 //
 //   node brand/build_business_card.mjs
 //
-// Per person it writes (in brand/):
-//   business-card-<slug>.pdf            2-page print master (p1 front, p2 back) — page 105×74mm w/ crop marks
-//   business-card-<slug>-front.pdf      single side
-//   business-card-<slug>-back.pdf       single side
-//   business-card-<slug>-front.png      preview (deviceScaleFactor 2)
-//   business-card-<slug>-back.png       preview
-//   business-card-<surname>-cmyk.pdf    PDF/X-3:2003 DeviceCMYK print master (FOGRA39), 2 pages
-// Cached assets: business-card-qr-cyan.svg, signal-logo.svg
+// It writes only deliverables. Per person:
+//   business-card-<surname>-cmyk.pdf    THE print master — PDF/X-3:2003 DeviceCMYK
+//                                       (FOGRA39), 2 pages, 105×74mm w/ bleed + crop marks
+//   business-card-<slug>-front.png      preview of that person's front
+// Plus one shared file:
+//   business-card-back.png              the back — identical for everyone, so
+//                                       rendered once and reused as page 2 of every card
+//
+// With --rgb it additionally re-emits the RGB single-side and combined PDFs.
+// Those are the same two designs a third and fourth time and nothing consumes
+// them, so they are opt-in rather than clutter after every build.
 //
 // Every card is also checked before it is written:
 //   · name and title must each set on ONE line at the current type size, and
@@ -29,6 +32,9 @@ import { COMPANY, PEOPLE, contactUrl } from './people.mjs';
 import { writePdfXCmyk } from './pdfx_cmyk.mjs';
 
 const require = createRequire(import.meta.url);
+
+// Opt-in extras. Off by default so a build leaves only deliverables in brand/.
+const RGB_PDFS = process.argv.includes('--rgb');
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const brandDir = __dirname;
@@ -400,52 +406,40 @@ async function render() {
   const fitReport = [];
   const cmykByPerson = [];
 
+  // The back carries no personal detail at all — same logo, same coordinates for
+  // everyone — so it is rendered ONCE and reused as page 2 of every card. Writing
+  // it per person produced four byte-identical PNGs.
+  const backHtml = doc(pageBlock(backInner(backLogoSvg, markSvg, 'bigmark'), true, true));
+  await page.setContent(backHtml, { waitUntil: 'networkidle', timeout: 60000 });
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(300);
+  const backPng = path.join(brandDir, 'business-card-back.png');
+  await (await page.$('.page')).screenshot({ path: backPng });
+  console.log('✓ business-card-back.png  (shared by every card — the back is identical for everyone)\n');
+
   for (const p of PEOPLE) {
     const front = frontInner(p, qrBySlug[p.slug], markSvg, { edge: true, ghost: true });
     const back = backInner(backLogoSvg, markSvg, 'bigmark');
 
-    // PNG previews (full page incl. marks) + single-side PDFs
-    const pngBySide = {};
-    for (const [side, inner] of [['front', front], ['back', back]]) {
-      const html = doc(pageBlock(inner, true, true));
-      await page.setContent(html, { waitUntil: 'networkidle', timeout: 60000 });
-      await page.evaluate(() => document.fonts.ready);
-      await page.waitForTimeout(300);
-
-      // Fit is measured on the front, with the real webfonts loaded, BEFORE
-      // anything is written — a card that does not fit must not reach the PDFs.
-      if (side === 'front') {
-        const rows = await measureFit(page, PAGE_W);
-        assertFits(p, rows);
-        fitReport.push({ person: p, rows });
-      }
-
-      const pngPath = path.join(brandDir, `business-card-${p.slug}-${side}.png`);
-      const el = await page.$('.page');
-      await el.screenshot({ path: pngPath });
-      pngBySide[side] = pngPath;
-      await page.pdf({
-        path: path.join(brandDir, `business-card-${p.slug}-${side}.pdf`),
-        width: `${PAGE_W}mm`, height: `${PAGE_H}mm`,
-        printBackground: true, preferCSSPageSize: true, margin: { top: 0, right: 0, bottom: 0, left: 0 },
-      });
-    }
-
-    // combined 2-page RGB print master (front, back)
-    const combined = doc(pageBlock(front, true, false) + pageBlock(back, true, true));
-    await page.setContent(combined, { waitUntil: 'networkidle', timeout: 60000 });
+    const html = doc(pageBlock(front, true, true));
+    await page.setContent(html, { waitUntil: 'networkidle', timeout: 60000 });
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(300);
-    await page.pdf({
-      path: path.join(brandDir, `business-card-${p.slug}.pdf`),
-      width: `${PAGE_W}mm`, height: `${PAGE_H}mm`,
-      printBackground: true, preferCSSPageSize: true, margin: { top: 0, right: 0, bottom: 0, left: 0 },
-    });
 
-    // CMYK print master — one PDF/X-3 per person, named by surname.
+    // Fit is measured with the real webfonts loaded, BEFORE anything is written
+    // — a card that does not fit must not reach the PDFs.
+    const rows = await measureFit(page, PAGE_W);
+    assertFits(p, rows);
+    fitReport.push({ person: p, rows });
+
+    const frontPng = path.join(brandDir, `business-card-${p.slug}-front.png`);
+    await (await page.$('.page')).screenshot({ path: frontPng });
+
+    // CMYK print master — one PDF/X-3 per person, named by surname. This is the
+    // file the trykkeri gets, and the only card output that is a deliverable.
     const cmykPath = path.join(brandDir, `business-card-${surname(p)}-cmyk.pdf`);
     const info = await writePdfXCmyk({
-      pngPaths: [pngBySide.front, pngBySide.back],
+      pngPaths: [frontPng, backPng],
       outPath: cmykPath,
       title: `${p.name} — Nordic Advanced Systems business card`,
       widthMm: PAGE_W, heightMm: PAGE_H,
@@ -456,9 +450,30 @@ async function render() {
     cmykByPerson.push({ p, cmykPath, info, size });
 
     console.log(`✓ ${p.name}`);
-    console.log(`    business-card-${p.slug}.pdf            RGB master, 2 pages`);
     console.log(`    business-card-${surname(p)}-cmyk.pdf   PDF/X-3:2003 DeviceCMYK, ` +
       `${info.pages} pages, ${info.dpi} dpi, ${(size / 1048576).toFixed(2)} MB`);
+    console.log(`    business-card-${p.slug}-front.png      preview`);
+
+    // The RGB single-side and combined PDFs are the same two designs a third and
+    // fourth time. Chromium can re-emit them on demand; they are not deliverables,
+    // so they are opt-in rather than clutter in brand/ after every build.
+    if (RGB_PDFS) {
+      await page.pdf({
+        path: path.join(brandDir, `business-card-${p.slug}-front.pdf`),
+        width: `${PAGE_W}mm`, height: `${PAGE_H}mm`,
+        printBackground: true, preferCSSPageSize: true, margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      });
+      const combined = doc(pageBlock(front, true, false) + pageBlock(back, true, true));
+      await page.setContent(combined, { waitUntil: 'networkidle', timeout: 60000 });
+      await page.evaluate(() => document.fonts.ready);
+      await page.waitForTimeout(300);
+      await page.pdf({
+        path: path.join(brandDir, `business-card-${p.slug}.pdf`),
+        width: `${PAGE_W}mm`, height: `${PAGE_H}mm`,
+        printBackground: true, preferCSSPageSize: true, margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      });
+      console.log(`    business-card-${p.slug}.pdf + -front.pdf   RGB (--rgb)`);
+    }
   }
 
   // ---- QR read-back: decode what was actually rendered on each card ----
