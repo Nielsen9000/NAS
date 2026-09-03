@@ -310,21 +310,21 @@ const T = {
 // shrink again — that is the trade.
 const PANEL = { radiusMm: 1.8, strokeMm: 0.22, padMm: 6 };
 
-// ---- shared diagram width --------------------------------------------------
-// ONE width for every language variant, so both sheets show the drawings at the
-// same size and can be laid side by side. This is a constant rather than a
-// per-language solve because a solver optimises for the page it is handed, and
-// Ukrainian page 2 carries two translation keys that the English page does not.
-// Left to itself the solver answered 93.6mm for English and 83.3mm for
-// Ukrainian — which is exactly the mismatch a two-language datasheet must not
-// have, and it would not have announced itself.
+// ---- diagram width: solved per language ------------------------------------
+// Each language solves its own page-2 width. The two variants are never seen
+// side by side — English is the primary document and goes to the website, to
+// partners and to the trade fair, so it is not shrunk to match a single-market
+// translation. Ukrainian page 2 carries two translation keys that English does
+// not, so it legitimately lands on a smaller figure.
 //
-// The value is the CONSTRAINED language's answer: what fits the fullest page
-// fits the emptier one. Re-derive it with --solve-width (which runs the old
-// search and prints what it would pick, per language, without writing files) if
-// the artwork or the copy changes. The build fails if the pinned width no
-// longer fits, rather than quietly shrinking back.
-const DIAGRAM_W_MM = 83.0;
+// What MUST match is the two panels WITHIN a page: they are one component used
+// twice, and a mismatch there is a bug. assertPanelsMatch() enforces that, per
+// variant, and is not relaxed by any of this.
+//
+// Divergence ACROSS languages is expected, but it must never be silent: every
+// build reports the width it solved, --solve-width prints the convergence
+// trace, and --both prints both widths against each other so a drift that is
+// not intended is visible in the output rather than only in a proof.
 const SOLVE_WIDTH = process.argv.includes('--solve-width');
 
 // ---------------------------------------------------------------------------
@@ -1293,15 +1293,15 @@ async function build() {
   const BODY_W = CONTENT_W - GUTTER - GUTTER_GAP;          // 149mm — section body column
   const IMG_MAX = BODY_W - 2 * PANEL.padMm;                // image at full column width
 
-  // ONE width for both diagrams, so the two plates come out the same size and
-  // share a centre — and, since it is pinned, the same size in every language.
-  // The pinout is landscape and the wiring portrait, so a shared width W costs
-  // W/1.67 + W/0.88 of height; --solve-width searches on that, a normal build
-  // renders once at DIAGRAM_W_MM and checks it still fits.
-  let imgWidthMm = SOLVE_WIDTH ? IMG_MAX : DIAGRAM_W_MM;
-  const PASSES = SOLVE_WIDTH ? 14 : 1;
+  // ONE width for both diagrams on THIS page, so the two plates come out the
+  // same size and share a centre. The pinout is landscape and the wiring
+  // portrait, so a shared width W costs W/1.67 + W/0.88 of height, and the
+  // search below converges on that. Solved per language — see the note at
+  // DIAGRAM WIDTH above.
+  let imgWidthMm = IMG_MAX;
+  const trace = [];
 
-  for (let pass = 1; pass <= PASSES; pass++) {
+  for (let pass = 1; pass <= 14; pass++) {
     diagrams = [];
     for (const d of DIAGRAMS) {
       diagrams.push({
@@ -1340,15 +1340,7 @@ async function build() {
     }
 
     const s2 = slacks[1];
-    if (!SOLVE_WIDTH) {
-      // Pinned width: the only question is whether it still fits.
-      if (s2 < 0)
-        fit('page 2', `content overruns the footer rule by ${(-s2).toFixed(1)}mm ` +
-          `at the pinned diagram width of ${DIAGRAM_W_MM}mm`,
-          'run --solve-width to see what each language would choose, then set ' +
-          'DIAGRAM_W_MM to the smallest of them — never to a per-language value');
-      break;
-    }
+    trace.push({ pass, widthMm: +imgWidthMm.toFixed(2), slackMm: +s2.toFixed(2) });
     const atCap = imgWidthMm >= IMG_MAX - 0.01;
     if (s2 >= TARGET_SLACK - 1 && (atCap || s2 <= TARGET_SLACK + 6)) break;
     // Both plates grow and shrink together, so a 1mm change in the shared width
@@ -1358,14 +1350,16 @@ async function build() {
   }
 
   if (SOLVE_WIDTH) {
-    console.log(`--solve-width (${LANG}): this page would take ${imgWidthMm.toFixed(1)}mm. ` +
-      `DIAGRAM_W_MM is ${DIAGRAM_W_MM}mm.`);
-    console.log('  Set the constant to the SMALLEST value across all languages — a ' +
-                'per-language width breaks the side-by-side match.');
+    console.log(`--solve-width (${LANG}): convergence trace — ${trace.length} pass(es)`);
+    for (const t of trace)
+      console.log(`  pass ${String(t.pass).padStart(2)}  width ${String(t.widthMm).padStart(7)}mm  ` +
+                  `page-2 slack ${String(t.slackMm).padStart(7)}mm`);
+    console.log(`  settled at ${imgWidthMm.toFixed(1)}mm for --lang=${LANG}. Each language solves ` +
+                `its own page;\n  run --both to see the two side by side.`);
   }
-  console.log(`Both figures at one shared width: image ${imgWidthMm.toFixed(1)}mm ` +
+  console.log(`Both figures on this page at one shared width: image ${imgWidthMm.toFixed(1)}mm ` +
               `in a ${(imgWidthMm + 2 * PANEL.padMm).toFixed(1)}mm plate (column max ${BODY_W}mm)` +
-              `${SOLVE_WIDTH ? ' — SOLVED, not pinned' : ' — pinned, identical in every language'}`);
+              ` — solved for --lang=${LANG}`);
   console.log(`  pinout landscape ${aspects[0].toFixed(2)} · wiring portrait ${aspects[1].toFixed(2)} ` +
               `— same width and centre, heights follow their aspect ratios`);
 
@@ -1637,19 +1631,35 @@ function compareVariants() {
   console.log('  ' + '-'.repeat(w0 + w1 + 30));
   for (const r of rows) console.log(line(...r));
 
-  // The two sheets must show the SAME drawings at the SAME size — a reader
-  // comparing them side by side should see one document in two languages.
-  const problems = [];
+  // Diagram size is allowed to differ between languages — the two sheets are
+  // never seen side by side, and English is the primary document rather than a
+  // shape the translation gets to dictate. So a difference here is REPORTED,
+  // loudly, and is not a failure. What is checked within each variant, and is
+  // still a hard failure there, is that the two panels on a page match each
+  // other: see assertPanelsMatch().
+  const drift = [];
   for (let i = 0; i < en.panels.length; i++) {
-    for (const k of ['w', 'h', 'centre'])
+    for (const k of ['w', 'h'])
       if (Math.abs(en.panels[i][k] - uk.panels[i][k]) > 0.15)
-        problems.push(`panel ${i + 1} ${k}: ${en.panels[i][k]}mm (en) vs ${uk.panels[i][k]}mm (uk)`);
+        drift.push(`panel ${i + 1} ${k}: ${en.panels[i][k]}mm (en) vs ${uk.panels[i][k]}mm (uk)`);
   }
+  console.log('\n  Diagram size across languages: ' +
+    (drift.length
+      ? `differs — expected, each language solves its own page\n` +
+        drift.map(m => '    · ' + m).join('\n')
+      : 'identical this build'));
+
+  // Identity, on the other hand, must hold. These are failures.
+  const problems = [];
   if (en.revision !== uk.revision) problems.push('revisions differ');
   if (uk.docId !== en.docId + '-UA') problems.push(`uk document number is ${uk.docId}, expected ${en.docId}-UA`);
   if (uk.fonts.includes('SpaceGrotesk')) problems.push('Space Grotesk reached the Ukrainian PDF');
-  console.log('\n  Cross-variant checks: ' +
-    (problems.length ? problems.length + ' FAILED' : 'diagram panels identical, revisions match, -UA suffix correct'));
+  for (const [lang, r] of [['en', en], ['uk', uk]])
+    if (Math.abs(r.panels[0].centre - r.panels[1].centre) > 0.15)
+      problems.push(`${lang}: the two panels on page 2 do not share a centre ` +
+        `(${r.panels[0].centre}mm vs ${r.panels[1].centre}mm)`);
+  console.log('  Cross-variant checks: ' +
+    (problems.length ? problems.length + ' FAILED' : 'revisions match, -UA suffix correct, no Space Grotesk in the UA file'));
   problems.forEach(m => console.log('    · ' + m));
   if (problems.length) throw new Error('Cross-variant checks failed.');
 }

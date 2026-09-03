@@ -57,8 +57,13 @@ re-convert.*
 Send `NAS_DATASHEET_DRONESTACK_2026_UA_CMYK.pdf` — the same document in
 Ukrainian, same revision, document number `DS-2026-FC-UA`. Identical print
 route: PDF/X-3:2003, DeviceCMYK, FOGRA39 embedded, live vector text. Both
-language variants carry the same two diagrams at the same size and centre, so
-the sheets can be laid side by side.
+Both variants use the same diagram artwork. They do NOT necessarily print it at
+the same size: each language solves its own page-2 width, because the Ukrainian
+sheet carries translation keys under the figures that the English one does not.
+English is the primary document — it goes to the website, to partners and to the
+trade fair — and is not shrunk to match a single-market translation. Within each
+sheet the two panels are still one component used twice: same width, same
+centre, enforced.
 
 It sets its **body copy in Inter, not Space Grotesk**. Space Grotesk has no
 Cyrillic glyphs at all — it ships latin, latin-ext and vietnamese subsets only —
@@ -79,8 +84,13 @@ Build: `node brand/build_datasheet_dronestack.mjs`             (English)
 Build: `node brand/build_datasheet_dronestack.mjs --lang=uk`   (Ukrainian)
 Build: `node brand/build_datasheet_dronestack.mjs --both`      (both, then compared side by side)
 
-`--both` prints a variant comparison and fails if the diagram panels, the
-revision or the `-UA` suffix ever drift apart.
+`--both` prints a variant comparison. It reports any difference in diagram size
+between the languages — expected, but never silent — and fails on the things
+that must hold: matching revisions, the `-UA` suffix, no Space Grotesk in the
+Ukrainian file, and the two panels on a page sharing a centre.
+
+`--solve-width` prints the convergence trace for the active language, for when
+the artwork or the copy changes and you want to see what the page settled on.
 
 ---
 
