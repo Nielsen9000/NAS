@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Careers — Nordic Advanced Systems</title>
-<meta name="description" content="NAS is growing. We're looking for people who want to build the future of engine production." />
+<meta name="description" content="NAS is growing. We design and build our engines in-house in Denmark — and we're always interested in the people who want to build them with us." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1577,6 +1577,49 @@ p{ margin:0; color:var(--ink-1); }
 }
 .position-card .arrow{ transition:transform .3s var(--ease-spring); }
 .position-card:hover .arrow{ transform:translateX(4px); }
+
+/* Open Positions — empty state (all roles currently filled) */
+.positions-empty{
+  position:relative; max-width:660px; margin-top:40px;
+  background:linear-gradient(180deg, rgba(59,182,232,0.05) 0%, transparent 62%), var(--bg-elev);
+  border:1px solid var(--line-dark); border-radius:var(--radius-md);
+  padding:36px 34px 32px;
+}
+.positions-empty-status{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent);
+}
+.positions-empty-status::before{
+  content:""; width:5px; height:5px; background:var(--accent);
+  box-shadow:0 0 8px var(--accent-glow);
+  animation:pe-pulse 2.6s ease-in-out infinite;
+}
+@keyframes pe-pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.22; } }
+@media (prefers-reduced-motion: reduce){ .positions-empty-status::before{ animation:none; } }
+.positions-empty-title{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:clamp(26px,3vw,36px); font-weight:600;
+  letter-spacing:-0.02em; line-height:1.15;
+  color:var(--ink-0); margin:18px 0;
+}
+.positions-empty-title .accent{ color:var(--accent); }
+.positions-empty-body{
+  color:var(--ink-2); font-size:15px; line-height:1.7;
+  margin:0 0 14px; max-width:54ch;
+}
+.positions-empty-cta{
+  margin-top:10px; align-self:flex-start;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--accent); text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  border-bottom:1px solid rgba(59,182,232,0.3); padding-bottom:4px;
+  transition:border-color .3s ease;
+}
+.positions-empty-cta:hover{ border-color:var(--accent); }
+.positions-empty-cta .arrow{ transition:transform .3s var(--ease-spring); }
+.positions-empty-cta:hover .arrow{ transform:translateX(4px); }
 @media (max-width:640px){
   .careers-hero{ padding:128px 0 76px; min-height:70vh; }
   /* push the schematic further off-canvas and dim it so the headline stays crisp */
@@ -1584,6 +1627,7 @@ p{ margin:0; color:var(--ink-1); }
   .careers-hero-glow{ background:radial-gradient(ellipse at 84% 28%, rgba(59,182,232,0.12), transparent 60%); }
   .careers-hero-telemetry{ display:none; }
   .position-grid{ grid-template-columns:1fr; }
+  .positions-empty{ padding:28px 22px 26px; }
 }
 
 /* ---------- Intelligence Solutions dropdown ---------- */
@@ -1775,7 +1819,7 @@ p{ margin:0; color:var(--ink-1); }
           Build the engines<br>
           <span class="accent">that fly further.</span>
         </h1>
-        <p class="careers-hero-lead">NAS is growing. We're looking for people who want to build the future of engine production.</p>
+        <p class="careers-hero-lead">NAS is growing. We design and build our engines in-house in Denmark — and we're always interested in the people who want to build them with us.</p>
       </div>
     </div>
   </section>
@@ -1787,27 +1831,16 @@ p{ margin:0; color:var(--ink-1); }
     <div class="wrap reveal">
       <div class="section-eyebrow">/ 02 — OPEN POSITIONS</div>
 
-      <div class="position-grid">
-        <a class="position-card" href="/careers/production-team-lead/">
-          <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
-          <div class="position-card-meta">Engine Division · Full-time · Copenhagen, DK</div>
-          <div class="position-card-title">Production Team Lead — Engine Systems</div>
-          <p class="position-card-teaser">Help build the engine production of the future.</p>
-          <span class="position-card-link">Read more <span class="arrow" aria-hidden="true">→</span></span>
-        </a>
-        <a class="position-card" href="/careers/technical-engine-specialist/">
-          <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
-          <div class="position-card-meta">Engine Division · Full-time · Copenhagen, DK</div>
-          <div class="position-card-title">Technical Engine Specialist</div>
-          <p class="position-card-teaser">Be the technical cornerstone behind the next generation of UAV engines.</p>
-          <span class="position-card-link">Read more <span class="arrow" aria-hidden="true">→</span></span>
-        </a>
+      <div class="positions-empty">
+        <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
+        <div class="positions-empty-status">Status · All positions filled</div>
+        <h2 class="positions-empty-title">No open roles<br><span class="accent">at the moment.</span></h2>
+        <p class="positions-empty-body">Every seat on the bench is taken right now — our latest openings have been filled. But we build in-house and we're growing, so this page rarely stays quiet for long.</p>
+        <p class="positions-empty-body">If you want to be first in line when it changes, send us your CV and a few lines about what you'd want to build. We read every one.</p>
+        <a class="positions-empty-cta" href="mailto:job@nordicadvancedsystems.com?subject=Open%20application%20%E2%80%94%20NAS">Send an open application <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
