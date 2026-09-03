@@ -52,7 +52,35 @@ CMYK is right here because it is a **new document with no printed predecessor to
 match**. Tell the printer: *PDF/X-3, DeviceCMYK, FOGRA39 embedded, do not
 re-convert.*
 
-Build: `node brand/build_datasheet_dronestack.mjs`
+### Ukrainian variant
+
+Send `NAS_DATASHEET_DRONESTACK_2026_UA_CMYK.pdf` — the same document in
+Ukrainian, same revision, document number `DS-2026-FC-UA`. Identical print
+route: PDF/X-3:2003, DeviceCMYK, FOGRA39 embedded, live vector text. Both
+language variants carry the same two diagrams at the same size and centre, so
+the sheets can be laid side by side.
+
+It sets its **body copy in Inter, not Space Grotesk**. Space Grotesk has no
+Cyrillic glyphs at all — it ships latin, latin-ext and vietnamese subsets only —
+so it cannot set Ukrainian, and asking it to would silently fall back to a
+system face. Inter and JetBrains Mono both carry cyrillic and cyrillic-ext,
+which covers і ї є ґ. Headings and mono labels were already those two families
+and did not move. The English sheet is untouched and still sets in Space
+Grotesk; the build fails if Space Grotesk ever appears in the Ukrainian PDF.
+
+Part numbers, protocols, interfaces and units stay in Latin script in both
+languages. That is checked two ways rather than trusted: every protected token
+must extract from the finished PDF, and no token may mix Cyrillic with Latin or
+digits — Cyrillic А В Е О Р С Т Х are indistinguishable from their Latin twins,
+so one inside a part number would be invisible on the page and wrong in every
+search index.
+
+Build: `node brand/build_datasheet_dronestack.mjs`             (English)
+Build: `node brand/build_datasheet_dronestack.mjs --lang=uk`   (Ukrainian)
+Build: `node brand/build_datasheet_dronestack.mjs --both`      (both, then compared side by side)
+
+`--both` prints a variant comparison and fails if the diagram panels, the
+revision or the `-UA` suffix ever drift apart.
 
 ---
 

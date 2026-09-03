@@ -23,6 +23,7 @@
 // written — see the ASSERTIONS section at the bottom.
 
 import fs from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -38,29 +39,249 @@ const repoRoot = path.resolve(__dirname, '..');
 const RGB_ONLY = process.argv.includes('--rgb-only');
 // --preview also writes a PNG of each page for visual review (not a deliverable).
 const PREVIEW = process.argv.includes('--preview');
+// --allow-fit writes the deliverables even when fit assertions fire, so a
+// too-long page can be looked at rather than only described. It never silences
+// anything: every problem is still printed in full under FIT REPORT.
+const ALLOW_FIT = process.argv.includes('--allow-fit');
 
 // ---------------------------------------------------------------------------
-// CONFIG — the document's identity. Nothing below hardcodes these.
-// The engine datasheet is DS-2026; this document gets its own number so the two
-// can never be confused in a filename, a print queue or a version conversation.
-// REVISION goes to 02 when physical dimensions arrive (see OMITTED_SPECS).
+// FIT REPORT — Ukrainian sets roughly 10–15% longer than English for the same
+// copy, so this document's fit assertions are expected to fire on the UA
+// variant. The wrong response to that is a quiet type-size nudge: it produces a
+// sheet that fits and nobody notices it now sets 8pt where the English sets
+// 9.5pt. So no check throws on its own any more. Every one of them appends here
+// instead, the whole list is printed at the end of the run, and the build fails
+// once — with all of it visible — so each case can be decided rather than
+// absorbed.
 // ---------------------------------------------------------------------------
-const DOC = {
-  id: 'DS-2026-FC',
-  revision: '01',
-  title: 'NAS Drone Stack — FC + 4-in-1 ESC',
-  year: 2026,
-  company: 'Nordic Advanced Systems ApS',
-  confidentiality: 'Confidential',
-  outBase: 'NAS_DATASHEET_DRONESTACK_2026',
+const FIT = [];
+const fit = (where, msg, detail) => FIT.push({ where, msg, detail });
+
+// ---------------------------------------------------------------------------
+// LOCALE — this document ships in two languages, and they are VARIANTS, not
+// replacements: nothing the Ukrainian sheet needs is allowed to change the
+// English master. Everything language-dependent lives in LOCALES below; the
+// rest of the file reads the derived consts and never learns which language it
+// is setting.
+//
+//   node brand/build_datasheet_dronestack.mjs             → English  (DS-2026-FC)
+//   node brand/build_datasheet_dronestack.mjs --lang=uk   → Ukrainian (DS-2026-FC-UA)
+//   node brand/build_datasheet_dronestack.mjs --both      → both, compared side by side
+//
+// FONT. Space Grotesk ships latin, latin-ext and vietnamese subsets and nothing
+// else — verified against the Google Fonts API, there is no Cyrillic block in
+// the family at all. Setting Ukrainian body copy in it does not fail loudly; it
+// falls back to whatever system face Chromium finds, which puts an unintended
+// (and possibly non-embedded) font into a print master. So the Ukrainian variant
+// substitutes Inter for body copy — and ONLY for body copy. Headings were
+// already Inter and mono labels were already JetBrains Mono; both families carry
+// cyrillic (U+0400–045F) and cyrillic-ext, which covers і ї є ґ, so neither
+// moves. The Ukrainian font link does not even request Space Grotesk, and
+// assertFonts() reads the finished PDF back to prove which faces are embedded.
+//
+// TECHNICAL TOKENS. Part numbers, protocols, interfaces and units stay in Latin
+// script, as they do in Ukrainian engineering documentation. Only descriptive
+// text is translated: titles, standfirst, section names, prose and spec labels.
+// This is asserted rather than trusted — see assertLatinTokens() and
+// assertNoHomoglyphs(), the latter because Cyrillic А В Е О Р С Т Х are visually
+// identical to their Latin counterparts and a single one inside "100A" or
+// "STM32F405" would be invisible on the page and wrong in every search index.
+// ---------------------------------------------------------------------------
+const LANG = (process.argv.find(a => a.startsWith('--lang=')) || '--lang=en').split('=')[1];
+if (!['en', 'uk'].includes(LANG)) throw new Error(`unknown --lang=${LANG} — want en or uk`);
+
+// Must appear in the finished PDF in Latin script, in every language.
+const LATIN_TOKENS = [
+  'STM32F405', 'STM32F051', 'ICM-42688-P', 'DSHOT', 'ELRS', 'I2C', 'SBUS', 'IBUS',
+  'CRSF', 'UART', 'GPIO', 'SPI', 'NDAA', 'NAS', 'ESC', 'FC', 'VTX', 'RC', 'GPS',
+  '4S', '6S', '65A', '100A', '200A', 'Mbit',
+];
+
+const LOCALES = {
+  // -------------------------------------------------------------------------
+  en: {
+    htmlLang: 'en',
+    // Space Grotesk for body copy — the house text face, latin-only and fine here.
+    bodyFont: '"Space Grotesk", ui-sans-serif, system-ui, sans-serif',
+    fontLink: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800' +
+              '&family=Space+Grotesk:wght@300;400;500;600;700' +
+              '&family=JetBrains+Mono:wght@400;500&display=swap',
+    // Faces allowed to appear in the finished PDF. Anything else is a fallback
+    // that crept in, which is exactly what this variant system exists to catch.
+    expectFonts: ['SpaceGrotesk', 'Inter', 'JetBrainsMono'],
+    forbidFonts: [],
+    doc: {
+      id: 'DS-2026-FC',
+      revision: '01',
+      title: 'NAS Drone Stack — FC + 4-in-1 ESC',
+      year: 2026,
+      company: 'Nordic Advanced Systems ApS',
+      confidentiality: 'Confidential',
+      outBase: 'NAS_DATASHEET_DRONESTACK_2026',
+    },
+    ui: { doc: 'Doc', rev: 'Rev' },
+    sections: { overview: 'Overview', specs: 'Technical specifications' },
+    hero: {
+      eyebrow: '/ Datasheet — Drone Stack',
+      titleMain: 'NAS DRONE STACK',
+      titleTail: '— FC + 4-IN-1 ESC',
+      standfirst: 'Flight controller and ESC engineered for continuous operation. ' +
+                  'Designed and manufactured in Europe.',
+      ndaa: 'NDAA-compliant silicon. No components, chips or software from sanctioned manufacturers.',
+    },
+    overview: {
+      lead: 'The NAS Drone Stack pairs a flight controller with a 4-in-1 electronic ' +
+            'speed controller on a single stack. The FC carries the sensing, link and ' +
+            'logging; the ESC carries the current. Built exclusively from certified ' +
+            'components.',
+      bullets: [
+        ['Flight controller', 'STM32F405 with a 6-axis ICM-42688-P IMU and six UARTs.'],
+        ['4-in-1 ESC', 'STM32F051, DSHOT motor output, 4S / 6S operation across a 12–26V input range.'],
+      ],
+      variantsLabel: 'Three current variants',
+      variants: ['65A', '100A', '200A'],
+      variantsNote: 'Maximum continuous current',
+    },
+    specs: [
+      ['Max continuous current', '65A / 100A / 200A'],
+      ['Input voltage',          '4S / 6S · 12–26V'],
+      ['Flight controller MCU',  'STM32F405'],
+      ['ESC MCU',                'STM32F051'],
+      ['IMU',                    'ICM-42688-P, 6-axis'],
+      ['Blackbox',               '128 Mbit integrated SPI flash'],
+      ['UART',                   '6 × (VTX, RC, ESC telemetry, GPS)'],
+      ['GPIO',                   '2 × configurable'],
+      ['Protocols',              'ELRS · I2C · SBUS / IBUS / CRSF'],
+      ['Camera',                 'Dual, 5V and 12V up to 2A'],
+      ['Motor output',           'DSHOT, quad'],
+      ['Power rails',            '5V / 12V selectable, up to 2A'],
+    ],
+    diagrams: [
+      { n: '03', title: 'Pinout reference', src: 'assets/fragment.png', redact: true,
+        caption: 'Flight controller · ESC — pad and connector assignment',
+        // No key in English: the drawings are already in English.
+        key: [] },
+      { n: '04', title: 'Wiring', src: 'assets/ESC.jpeg',
+        caption: '4-in-1 ESC — motor, battery and FC connections',
+        key: [] },
+    ],
+    omittedSpecs: ['Physical dimensions', 'Mounting hole pattern', 'Operating temperature'],
+    omittedNote: 'Mechanical drawings issued at Rev 02',
+  },
+
+  // -------------------------------------------------------------------------
+  // Ukrainian. Roughly 10–15% longer than the English for the same content,
+  // which is why the fit report exists rather than a quiet type-size nudge.
+  uk: {
+    htmlLang: 'uk',
+    // THE substitution. Inter carries Cyrillic; Space Grotesk does not.
+    bodyFont: '"Inter", ui-sans-serif, system-ui, sans-serif',
+    // Space Grotesk is not even requested here, so it cannot be reached by
+    // accident through an inherited rule.
+    fontLink: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800' +
+              '&family=JetBrains+Mono:wght@400;500&display=swap',
+    expectFonts: ['Inter', 'JetBrainsMono'],
+    forbidFonts: ['SpaceGrotesk'],
+    doc: {
+      // -UA per the brief. Revision stays 01: this is the same document in
+      // another language, not a newer one.
+      id: 'DS-2026-FC-UA',
+      revision: '01',
+      title: 'NAS Drone Stack — FC + 4-in-1 ESC (UA)',
+      year: 2026,
+      company: 'Nordic Advanced Systems ApS',
+      confidentiality: 'Конфіденційно',
+      outBase: 'NAS_DATASHEET_DRONESTACK_2026_UA',
+    },
+    // NOT translated, deliberately. The document reference is an identifier
+    // before it is a phrase: a Ukrainian customer has to be able to quote
+    // "DOC DS-2026-FC-UA REV 01" to a Danish rep and have both people read the
+    // same string. Конфіденційно below IS translated, because a handling
+    // marking that the reader cannot read does not mark anything.
+    ui: { doc: 'Doc', rev: 'Rev' },
+    sections: { overview: 'Огляд', specs: 'Технічні характеристики' },
+    hero: {
+      eyebrow: '/ Технічний опис — Drone Stack',
+      // Product name — not translated, exactly as NAS writes it everywhere else.
+      titleMain: 'NAS DRONE STACK',
+      titleTail: '— FC + 4-IN-1 ESC',
+      standfirst: 'Політний контролер і ESC, розроблені для тривалої безперервної роботи. ' +
+                  'Розробка та виробництво в Європі.',
+      // "Відповідність" mirrors the English "compliant", not "certified" — the
+      // two documents must not say different things about NDAA §889 status.
+      ndaa: 'Відповідність NDAA. Жодних компонентів, мікросхем чи програмного забезпечення ' +
+            'від виробників під санкціями.',
+    },
+    overview: {
+      lead: 'NAS Drone Stack поєднує політний контролер і 4-in-1 регулятор обертів ' +
+            'двигунів в одному стеку. FC відповідає за датчики, зв’язок і журналювання; ' +
+            'ESC — за струм. Зібрано виключно із сертифікованих компонентів.',
+      bullets: [
+        ['Політний контролер', 'STM32F405 з 6-осьовим IMU ICM-42688-P та шістьма UART.'],
+        ['4-in-1 ESC', 'STM32F051, вихід DSHOT на двигуни, робота 4S / 6S у діапазоні входу 12–26V.'],
+      ],
+      variantsLabel: 'Три струмові варіанти',
+      variants: ['65A', '100A', '200A'],
+      variantsNote: 'Максимальний тривалий струм',
+    },
+    specs: [
+      ['Макс. тривалий струм',     '65A / 100A / 200A'],
+      ['Вхідна напруга',           '4S / 6S · 12–26V'],
+      ['MCU політного контролера', 'STM32F405'],
+      ['MCU ESC',                  'STM32F051'],
+      ['IMU',                      'ICM-42688-P, 6 осей'],
+      // Blackbox stays Latin: it is the feature's name in Betaflight and it is
+      // what Ukrainian FPV documentation calls it. Translating it to "чорна
+      // скринька" would make the row harder to match against the firmware UI.
+      ['Blackbox',                 '128 Mbit, вбудована SPI flash'],
+      ['UART',                     '6 × (VTX, RC, телеметрія ESC, GPS)'],
+      ['GPIO',                     '2 × налаштовувані'],
+      ['Протоколи',                'ELRS · I2C · SBUS / IBUS / CRSF'],
+      ['Камера',                   'Дві, 5V і 12V до 2A'],
+      ['Вихід на двигуни',         'DSHOT, 4 канали'],
+      ['Лінії живлення',           '5V / 12V на вибір, до 2A'],
+    ],
+    diagrams: [
+      { n: '03', title: 'Призначення виводів', src: 'assets/fragment.png', redact: true,
+        caption: 'Політний контролер · ESC — призначення площадок і роз’ємів',
+        // English term first, because that is the string physically printed on
+        // the drawing the reader is looking at; the translation follows it.
+        key: [
+          ['Camera A / B',       'Камера A / B'],
+          ['Extra Power',        'Додаткове живлення'],
+          ['Video Transmitter',  'Відеопередавач'],
+        ] },
+      { n: '04', title: 'Схема підключення', src: 'assets/ESC.jpeg',
+        caption: '4-in-1 ESC — підключення двигунів, акумулятора та FC',
+        key: [
+          ['XT60 Power Cable',         'Кабель живлення XT60'],
+          ['1500uF Low ESR Capacitor', 'Конденсатор 1500uF, низький ESR'],
+          ['Motor 1–4',                'Двигуни 1–4'],
+          ['Extra Power',              'Додаткове живлення'],
+        ] },
+    ],
+    omittedSpecs: ['Габаритні розміри', 'Розташування монтажних отворів', 'Робоча температура'],
+    omittedNote: 'Механічні креслення — у Rev 02',
+  },
 };
+
+const L = LOCALES[LANG];
+
+// ---------------------------------------------------------------------------
+// CONFIG — the document's identity, now supplied by the active locale. Nothing
+// below this line hardcodes a language. The engine datasheet is DS-2026; this
+// document gets its own number so the two can never be confused in a filename,
+// a print queue or a version conversation. REVISION goes to 02 when physical
+// dimensions arrive (see OMITTED_SPECS) — in BOTH languages, together.
+// ---------------------------------------------------------------------------
+const DOC = L.doc;
 
 // Rows that are deliberately absent. A datasheet with "TBD" in it reads as an
 // unfinished product, so these are omitted entirely rather than shown empty.
 // When the measurements land, add them here and bump DOC.revision to '02'.
-const OMITTED_SPECS = ['Physical dimensions', 'Mounting hole pattern', 'Operating temperature'];
+const OMITTED_SPECS = L.omittedSpecs;
 // Shown on the page so the gap is declared rather than silently absent.
-const OMITTED_NOTE = 'Mechanical drawings issued at Rev 02';
+const OMITTED_NOTE = L.omittedNote;
 
 // ---- page geometry (mm) ----
 const PAGE_W = 210, PAGE_H = 297;
@@ -89,46 +310,47 @@ const T = {
 // shrink again — that is the trade.
 const PANEL = { radiusMm: 1.8, strokeMm: 0.22, padMm: 6 };
 
-// ---------------------------------------------------------------------------
-// CONTENT
-// ---------------------------------------------------------------------------
-const HERO = {
-  eyebrow: '/ Datasheet — Drone Stack',
-  titleMain: 'NAS DRONE STACK',
-  titleTail: '— FC + 4-IN-1 ESC',
-  standfirst: 'Flight controller and ESC engineered for continuous operation. ' +
-              'Designed and manufactured in Europe.',
-  // The only claim worth keeping from the removed capability grid: the other
-  // three cards (blackbox, dual camera, ELRS) all restate rows of the spec table.
-  //
-  // "compliant", NOT "certified". The printed roll-up says NDAA COMPLIANT and the
-  // two documents must not contradict each other. It is also the accurate word:
-  // NDAA §889 status is a self-declared contractual position — there is no
-  // certifying body — which is how the website's own explanation puts it.
-  // Note this is a DIFFERENT claim from "certified components" in OVERVIEW.lead,
-  // which is about component sourcing and stays as it is.
-  ndaa: 'NDAA-compliant silicon. No components, chips or software from sanctioned manufacturers.',
-};
+// ---- shared diagram width --------------------------------------------------
+// ONE width for every language variant, so both sheets show the drawings at the
+// same size and can be laid side by side. This is a constant rather than a
+// per-language solve because a solver optimises for the page it is handed, and
+// Ukrainian page 2 carries two translation keys that the English page does not.
+// Left to itself the solver answered 93.6mm for English and 83.3mm for
+// Ukrainian — which is exactly the mismatch a two-language datasheet must not
+// have, and it would not have announced itself.
+//
+// The value is the CONSTRAINED language's answer: what fits the fullest page
+// fits the emptier one. Re-derive it with --solve-width (which runs the old
+// search and prints what it would pick, per language, without writing files) if
+// the artwork or the copy changes. The build fails if the pinned width no
+// longer fits, rather than quietly shrinking back.
+const DIAGRAM_W_MM = 83.0;
+const SOLVE_WIDTH = process.argv.includes('--solve-width');
 
-const OVERVIEW = {
-  lead: 'The NAS Drone Stack pairs a flight controller with a 4-in-1 electronic ' +
-        'speed controller on a single stack. The FC carries the sensing, link and ' +
-        'logging; the ESC carries the current. Built exclusively from certified ' +
-        'components.',
-  // Only the two boards. The four capability bullets went with the card grid:
-  // three of them (blackbox, dual camera, ELRS) restate rows of the spec table,
-  // and the NDAA claim survives as HERO.ndaa under the standfirst.
-  bullets: [
-    ['Flight controller', 'STM32F405 with a 6-axis ICM-42688-P IMU and six UARTs.'],
-    ['4-in-1 ESC', 'STM32F051, DSHOT motor output, 4S / 6S operation across a 12–26V input range.'],
-  ],
-  variantsLabel: 'Three current variants',
-  variants: ['65A', '100A', '200A'],
-  // Client-confirmed: these are TOTAL across all four outputs, not per motor.
-  // The earlier "per motor output" wording overstated the rating fourfold.
-  // No qualifier at all, at the client's request — do not re-add one.
-  variantsNote: 'Maximum continuous current',
-};
+// ---------------------------------------------------------------------------
+// CONTENT — supplied by the active locale (see LOCALES at the top of the file).
+// The English strings are the master; the Ukrainian ones are a translation of
+// the same document, not a different document.
+// ---------------------------------------------------------------------------
+// The only claim worth keeping from the removed capability grid: the other
+// three cards (blackbox, dual camera, ELRS) all restate rows of the spec table.
+//
+// "compliant", NOT "certified". The printed roll-up says NDAA COMPLIANT and the
+// two documents must not contradict each other. It is also the accurate word:
+// NDAA §889 status is a self-declared contractual position — there is no
+// certifying body — which is how the website's own explanation puts it.
+// Note this is a DIFFERENT claim from "certified components" in OVERVIEW.lead,
+// which is about component sourcing and stays as it is.
+const HERO = L.hero;
+
+// Only the two boards. The four capability bullets went with the card grid:
+// three of them (blackbox, dual camera, ELRS) restate rows of the spec table,
+// and the NDAA claim survives as HERO.ndaa under the standfirst.
+//
+// The current variants are TOTAL across all four outputs, not per motor
+// (client-confirmed). The earlier "per motor output" wording overstated the
+// rating fourfold. No qualifier at all, at the client's request — do not re-add.
+const OVERVIEW = L.overview;
 
 // The Kolibri airframe photograph is gone: it pictures someone else's aircraft
 // rather than the product, and a datasheet reader gets nothing from it. The two
@@ -140,44 +362,19 @@ const OVERVIEW = {
 // the same two facts. The content is not lost, only the duplicate.
 
 // Section 04 — every value is a figure or an explicit capability. No ratings.
-const SPECS = [
-  // No "(three variants)" — the band directly above the table already says
-  // THREE CURRENT VARIANTS, a few centimetres away on the same page.
-  ['Max continuous current', '65A / 100A / 200A'],
-  ['Input voltage',          '4S / 6S · 12–26V'],
-  ['Flight controller MCU',  'STM32F405'],
-  ['ESC MCU',                'STM32F051'],
-  ['IMU',                    'ICM-42688-P, 6-axis'],
-  ['Blackbox',               '128 Mbit integrated SPI flash'],
-  ['UART',                   '6 × (VTX, RC, ESC telemetry, GPS)'],
-  ['GPIO',                   '2 × configurable'],
-  ['Protocols',              'ELRS · I2C · SBUS / IBUS / CRSF'],
-  ['Camera',                 'Dual, 5V and 12V up to 2A'],
-  ['Motor output',           'DSHOT, quad'],
-  ['Power rails',            '5V / 12V selectable, up to 2A'],
-];
+// No "(three variants)" on the current row — the band directly above the table
+// already says THREE CURRENT VARIANTS, a few centimetres away on the same page.
+const SPECS = L.specs;
 
 // The two diagrams are the document's visual spine now that the airframe photo
-// is gone: one closes page 1, one sits under the spec table on page 2. They
-// share the panel treatment — cyan hairline, 1.8 mm radius, white fill, 16 mm
-// padding — but not their width: the pinout takes the full column, and the
-// wiring diagram is sized to the room page 2 has left. ESC.jpeg is PORTRAIT
-// (697 x 789), so its height is what consumes the page, not its width.
-// Only the pinout is placed. ESC.jpeg is portrait, so showing it usefully costs
-// about 120mm of height — a third of a page — and at any size that actually fits
-// beside a twelve-row table it lands near 30mm wide, which is a thumbnail, not a
-// reference. The pinout already names every pad and connector on both boards.
-// Wiring belongs in an assembly sheet. The asset is untouched if it comes back.
-// Both diagrams are placed. They are different shapes and get different slots:
+// is gone. They share the panel treatment — cyan hairline, 1.8 mm radius, white
+// fill, 6 mm padding — and, on this layout, one shared width and one shared
+// centre. Their heights differ because their shapes do:
 //   pinout (landscape 1.72) — a wide band closing page 2
-//   wiring (portrait  0.82) — the column beside the spec table, since a tall
-//                             drawing beside a tall table fills one row cleanly
-const DIAGRAMS = [
-  { n: '03', title: 'Pinout reference', src: 'assets/fragment.png', redact: true,
-    caption: 'Flight controller · ESC — pad and connector assignment' },
-  { n: '04', title: 'Wiring', src: 'assets/ESC.jpeg',
-    caption: '4-in-1 ESC — motor, battery and FC connections' },
-];
+//   wiring (portrait  0.82) — a tall plate beneath it
+// Only the titles and captions are localised; the source artwork is shared, so
+// the two language variants are guaranteed to show identical drawings.
+const DIAGRAMS = L.diagrams;
 
 // ---------------------------------------------------------------------------
 // image prep — composite away alpha, size for the placement, embed as data URI
@@ -326,7 +523,7 @@ const pageNo = (i, total) => `${String(i).padStart(2, '0')} / ${String(total).pa
 function header() {
   return `<div class="page-header">
     <div class="brand-mark"><img class="brand-logo" src="LOGO_URI" alt="NAS"> Nordic Advanced Systems</div>
-    <div class="doc-id">Doc <span class="dot">·</span> ${esc(DOC.id)} <span class="dot">·</span> Rev ${esc(DOC.revision)}</div>
+    <div class="doc-id">${esc(L.ui.doc)} <span class="dot">·</span> ${esc(DOC.id)} <span class="dot">·</span> ${esc(L.ui.rev)} ${esc(DOC.revision)}</div>
   </div>`;
 }
 function footer(i, total) {
@@ -360,6 +557,20 @@ function figure(dataUri, widthMm) {
     </div>`;
 }
 
+// Key for the labels silkscreened into a diagram. Empty in English, where the
+// drawing already reads. Mono and small, like the caption above it — it is
+// reference furniture, not body copy, and must not compete with the drawing.
+function diagramKey(pairs, widthMm) {
+  if (!pairs || !pairs.length) return '';
+  // Held to the width of the plate it belongs to. That is correct typographically
+  // — a legend should not be wider than its figure — and it is also what keeps
+  // the key clear of the NAS seal in the bottom-right corner: the plate is
+  // centred in the column and already stops short of the seal, so anything no
+  // wider than the plate stops short of it too.
+  return `<div class="diagkey" style="max-width:${widthMm}mm">` + pairs.map(([en, uk]) =>
+    `<span class="k"><i>${esc(en)}</i>${esc(uk)}</span>`).join('') + `</div>`;
+}
+
 function buildHtml({ plateUri, logoUri, stampUri, diagrams, total }) {
   const specRows = SPECS.map(([l, v]) =>
     `<tr><td class="label">${esc(l)}</td><td class="value">${esc(v)}</td></tr>`).join('');
@@ -391,12 +602,12 @@ function buildHtml({ plateUri, logoUri, stampUri, diagrams, total }) {
       <div class="vrow">${OVERVIEW.variants.map(v => `<span class="v">${esc(v)}</span>`).join('<span class="vsep">·</span>')}</div>
       <div class="vnote">${esc(OVERVIEW.variantsNote)}</div>
     </div>
-    ${numbered('01', 'Overview', `
+    ${numbered('01', L.sections.overview, `
       <p>${esc(OVERVIEW.lead)}</p>
       <div class="bullet-list">
         ${hardware.map(([k, t]) => `<div class="b"><span class="dot">—</span><span><b>${esc(k)}</b> ${esc(t)}</span></div>`).join('')}
       </div>`)}
-    ${numbered('02', 'Technical specifications', `
+    ${numbered('02', L.sections.specs, `
       <table class="spec-table">${specRows}</table>
       <div class="footnote">${esc(OMITTED_NOTE)}</div>`)}
     ${footer(1, total)}
@@ -412,22 +623,24 @@ function buildHtml({ plateUri, logoUri, stampUri, diagrams, total }) {
       <div class="figwrap wide">
         ${figure(diagrams[0].dataUri, diagrams[0].figWmm)}
         <div class="diagcap">${esc(DIAGRAMS[0].caption)}</div>
+        ${diagramKey(DIAGRAMS[0].key, diagrams[0].figWmm)}
       </div>`)}
     ${numbered(DIAGRAMS[1].n, DIAGRAMS[1].title, `
       <div class="figwrap wide">
         ${figure(diagrams[1].dataUri, diagrams[1].figWmm)}
         <div class="diagcap">${esc(DIAGRAMS[1].caption)}</div>
+        ${diagramKey(DIAGRAMS[1].key, diagrams[1].figWmm)}
       </div>`)}
     <div class="ds-stamp"><img src="${stampUri}" alt=""></div>
     ${footer(2, total)}
   </section>`;
 
 
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8">
-<title>${esc(DOC.title)} — ${esc(DOC.id)} Rev ${esc(DOC.revision)}</title>
+  return `<!doctype html><html lang="${L.htmlLang}"><head><meta charset="utf-8">
+<title>${esc(DOC.title)} — ${esc(DOC.id)} ${esc(L.ui.rev)} ${esc(DOC.revision)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="${L.fontLink}" rel="stylesheet">
 <style>
 :root{
   --bg:${T.bg}; --ink:${T.ink}; --ink2:${T.ink2};
@@ -436,7 +649,7 @@ function buildHtml({ plateUri, logoUri, stampUri, diagrams, total }) {
 @page{ size:A4 portrait; margin:0; }
 *,*::before,*::after{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; background:var(--bg); color:var(--ink);
-  font-family:"Space Grotesk", ui-sans-serif, system-ui, sans-serif; font-weight:400;
+  font-family:${L.bodyFont}; font-weight:400;
   -webkit-font-smoothing:antialiased; }
 
 .page{ position:relative; width:${PAGE_W}mm; height:${PAGE_H}mm;
@@ -537,6 +750,20 @@ b{ font-weight:700; color:var(--ink); }
 .footnote::before{ content:"+"; font-size:9.5pt; font-weight:700; line-height:1; opacity:0.75; }
 
 .section-block{ margin-bottom:4mm; }
+/* ---- diagram key ----------------------------------------------------------
+   Same mono family and tracking family as .diagcap, one step down in size and
+   held at ink2 rather than accent so the caption stays the louder line. The
+   English term keeps the accent colour because it is the string the reader is
+   hunting for on the drawing; the translation follows in text colour. Mixed
+   case, not uppercase: uppercase Cyrillic is appreciably wider and this block
+   has to earn its millimetres on a page that is already full. */
+.diagkey{ margin-top:2mm; display:flex; flex-wrap:wrap; justify-content:center;
+  gap:0.9mm 4.5mm;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:6.2pt; font-weight:400;
+  letter-spacing:0.04em; line-height:1.35; color:var(--ink2); }
+.diagkey .k{ display:inline-flex; align-items:baseline; gap:1.4mm; white-space:nowrap; }
+.diagkey i{ font-style:normal; font-weight:500; color:var(--accent); opacity:.85; }
+.diagkey i::after{ content:" ·"; opacity:.6; }
 .diagcap{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:7.5pt;
   font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);
   margin-top:2.5mm; }
@@ -678,9 +905,7 @@ function assertPanelsMatch(panels) {
       problems.push(`p${p.page} image does not fill its plate: ` +
         `${p.fillWpct}% x ${p.fillHpct}% of the inner box`);
   }
-  if (problems.length)
-    throw new Error('Figure geometry assertions failed —\n' +
-      problems.map(s => '    · ' + s).join('\n'));
+  for (const msg of problems) fit('figure geometry', msg);
 }
 
 // ---- spec table: no value may wrap ----------------------------------------
@@ -698,11 +923,27 @@ async function measureTableWrap(page) {
         r.selectNodeContents(td);
         return [...r.getClientRects()].filter(b => b.width > 0.01).length;
       };
+      // Text width vs cell width, both in mm, so an overrun is a number rather
+      // than something you have to spot in a proof.
+      const pg = tr.closest('.page');
+      const pxPerMm = pg.getBoundingClientRect().width / 210;
+      const mm = (px) => +(px / pxPerMm).toFixed(2);
+      const cellR = cells[0].getBoundingClientRect();
+      const valR = cells[1].getBoundingClientRect();
+      const rng = document.createRange();
+      rng.selectNodeContents(cells[0]);
+      const textR = rng.getBoundingClientRect();
+      const csL = getComputedStyle(cells[0]);
+      const padR = parseFloat(csL.paddingRight);
       out.push({
         label: cells[0].textContent.trim(),
         value: cells[1].textContent.trim(),
         labelLines: lines(cells[0]),
         valueLines: lines(cells[1]),
+        labelColWmm: mm(cellR.width),
+        labelTextWmm: mm(textR.width + parseFloat(csL.paddingLeft) + padR),
+        labelOverflowMm: mm(Math.max(0, textR.right + padR - cellR.right)),
+        gapMm: mm(valR.left - textR.right),
       });
     });
     return out;
@@ -710,10 +951,22 @@ async function measureTableWrap(page) {
 }
 
 function assertNoWrap(rows) {
-  const bad = rows.filter(r => r.valueLines !== 1 || r.labelLines !== 1);
-  if (bad.length) {
-    throw new Error('Spec table wraps —\n' + bad.map(r =>
-      `    · "${r.label}" (${r.labelLines} lines) / "${r.value}" (${r.valueLines} lines)`).join('\n'));
+  for (const r of rows.filter(r => r.valueLines !== 1 || r.labelLines !== 1)) {
+    fit('spec table', `row wraps: "${r.label}" (${r.labelLines} lines) / "${r.value}" (${r.valueLines} lines)`,
+        'a wrapped row interleaves label and value in pdftotext output');
+  }
+  // white-space:nowrap does not prevent a long label from overrunning its cell —
+  // it prevents the BREAK, so the text simply extends past the column edge and
+  // can end up sitting on the value. That is invisible to a line count, so the
+  // geometry is measured separately. This is the check most likely to fire on a
+  // language whose spec labels are longer than English's.
+  for (const r of rows) {
+    if (r.labelOverflowMm > 0.15)
+      fit('spec table', `label overruns its column by ${r.labelOverflowMm}mm: "${r.label}"`,
+          `label column is ${r.labelColWmm}mm, the text needs ${r.labelTextWmm}mm`);
+    if (r.gapMm < 1.5)
+      fit('spec table', `only ${r.gapMm}mm between label and value on "${r.label}"`,
+          'below ~1.5mm the two columns read as one string');
   }
 }
 
@@ -784,8 +1037,29 @@ async function assertLayout(page) {
         stampClearOfBandMm = mm(band.top - sb.bottom, pxPerMm);
       }
 
+      // Text-on-text collisions. Only leaf text runs are compared: images and
+      // plates legitimately contain other boxes, but two glyph runs sharing
+      // space is always a defect. A 0.4mm tolerance absorbs the sub-pixel
+      // rounding of letter-spaced mono and the trailing-space rect a line box
+      // can report; anything above that is real ink on ink.
+      const TOL = 0.4 * pxPerMm;
+      const texts = boxes.filter(x => x.kind === 'text');
+      const collisions = [];
+      for (let i = 0; i < texts.length; i++) {
+        for (let j = i + 1; j < texts.length; j++) {
+          const a = texts[i].b, c = texts[j].b;
+          const ox = Math.min(a.right, c.right) - Math.max(a.left, c.left);
+          const oy = Math.min(a.bottom, c.bottom) - Math.max(a.top, c.top);
+          if (ox > TOL && oy > TOL)
+            collisions.push({ a: texts[i].what, b: texts[j].what,
+                              xMm: mm(ox, pxPerMm), yMm: mm(oy, pxPerMm) });
+        }
+      }
+
       out.push({
         page: +n,
+        textCollisions: collisions,
+        textRuns: texts.length,
         footerTopMm: mm(fb.top - pr.top, pxPerMm),
         footerClashes: bandHits,
         stampPresent: !!stamp,
@@ -801,6 +1075,9 @@ async function assertLayout(page) {
 
   const problems = [];
   for (const p of report) {
+    for (const c of p.textCollisions)
+      problems.push(`page ${p.page}: text overlaps text — "${c.a}" / "${c.b}" ` +
+        `(${c.xMm}mm × ${c.yMm}mm)`);
     for (const c of p.footerClashes)
       problems.push(`page ${p.page}: footer band is overlapped by ${c.kind} "${c.what}" (${c.byMm}mm)`);
     for (const c of p.stampClashes)
@@ -811,9 +1088,7 @@ async function assertLayout(page) {
     if (p.freeAboveFooterMm < 0)
       problems.push(`page ${p.page}: content runs ${(-p.freeAboveFooterMm).toFixed(1)}mm past the footer rule`);
   }
-  if (problems.length) {
-    throw new Error('Layout assertions failed —\n' + problems.map(s => '    · ' + s).join('\n'));
-  }
+  for (const msg of problems) fit('layout', msg);
   return report;
 }
 
@@ -857,12 +1132,13 @@ function assertTextFidelity(pdfPath, total) {
   const flat = got.replace(/\s+/g, ' ').trim();
 
   const expected = [
-    DOC.id, `Rev ${DOC.revision}`,
+    DOC.id, `${L.ui.rev} ${DOC.revision}`,
     HERO.titleMain, HERO.titleTail, HERO.standfirst, HERO.ndaa,
     OVERVIEW.lead, OVERVIEW.variantsNote,
     ...OVERVIEW.bullets.flat(),
     ...SPECS.flat(),
     ...DIAGRAMS.map(d => d.caption),
+    ...DIAGRAMS.flatMap(d => (d.key || []).flat()),
     `© ${DOC.year} ${DOC.company}`,
   ];
 
@@ -875,6 +1151,103 @@ function assertTextFidelity(pdfPath, total) {
   const invalidUtf8 = /�/.test(got);
 
   return { missing, missingCounters, invalidUtf8, counters, text: got };
+}
+
+// ---------------------------------------------------------------------------
+// SCRIPT INTEGRITY — the checks that make "keep these tokens in Latin" real
+// ---------------------------------------------------------------------------
+// Cyrillic А В Е І К М Н О Р С Т У Х and а е і о р с у х are visually identical
+// to Latin letters at any size. A single one inside "100A" or "STM32F405" is
+// invisible on the printed page, breaks every text search a customer runs, and
+// would survive proofreading by anyone — including a native speaker — because
+// there is nothing to see. So mixed-script tokens are a build failure, not a
+// style note.
+const CYR = /[\u0400-\u04FF]/;
+const LAT = /[A-Za-z]/;
+
+function assertNoHomoglyphs(strings) {
+  const bad = [];
+  for (const str of strings) {
+    // Split on everything that is not a letter or digit, so "телеметрія ESC"
+    // is two tokens (fine) while "10\u04100A" would be one (not fine).
+    for (const tok of String(str).split(/[^\p{L}\p{N}]+/u)) {
+      if (!tok) continue;
+      const hasCyr = CYR.test(tok), hasLat = LAT.test(tok);
+      // Digits alone are script-neutral; the failure is Cyrillic letters sharing
+      // a token with Latin letters, or with digits in an otherwise Latin part
+      // number or rating.
+      if (hasCyr && (hasLat || /\d/.test(tok)))
+        bad.push({ tok, str: String(str).slice(0, 60) });
+    }
+  }
+  return bad;
+}
+
+// Every protected token must actually be present in the finished PDF, spelled
+// in Latin. This catches the opposite failure from the homoglyph check: a
+// translation that helpfully rendered "ESC" as "РЕГУЛЯТОР" and lost the term the
+// customer's firmware and wiring loom actually use.
+function assertLatinTokens(extracted) {
+  const flat = extracted.replace(/\s+/g, ' ');
+  return LATIN_TOKENS.filter(t => !flat.includes(t));
+}
+
+// ---- which faces actually made it into the PDF -----------------------------
+// pdffonts is not installed here, and the answer is sitting in the file anyway:
+// Chromium writes plain `/BaseFont /ABCDEF+Family-Style` entries and embeds the
+// programme alongside. This is the check that turns "Inter has Cyrillic" from an
+// assumption into a fact about the artefact — if a glyph had fallen back to a
+// system face, that face's name appears here and nowhere else would show it.
+// Weight and style words that are part of a font's NAME, not its family:
+// Skia writes "Space-Grotesk-Light" and "JetBrains-Mono-Medium", so the family
+// is what is left once these are peeled off the end.
+const FACE_SUFFIX = /^(Thin|ExtraLight|UltraLight|Light|Regular|Book|Medium|SemiBold|DemiBold|Bold|ExtraBold|UltraBold|Black|Heavy|Italic|Oblique)$/i;
+function fontFamilyOf(name) {
+  const parts = name.split('-').filter(Boolean);
+  while (parts.length > 1 && FACE_SUFFIX.test(parts[parts.length - 1])) parts.pop();
+  return parts.join('');
+}
+
+function pdfFonts(pdfPath) {
+  const raw = readFileSync(pdfPath, 'latin1');
+  const found = new Map();
+  // Chromium's Skia PDF writer does not emit /BaseFont at all — the authoritative
+  // name is /FontName inside each FontDescriptor, carrying the same six-letter
+  // subset tag. Reading the descriptor also means we are looking at fonts that
+  // are genuinely embedded, since that is the object the font programme hangs off.
+  for (const m of raw.matchAll(/\/FontName\s*\/([A-Za-z0-9+\-_,.]+)/g)) {
+    const full = m[1];
+    const subset = /^[A-Z]{6}\+/.test(full);
+    const name = full.replace(/^[A-Z]{6}\+/, '');
+    const family = fontFamilyOf(name);
+    const rec = found.get(family) || { family, names: new Set(), subset: true };
+    rec.names.add(name);
+    if (!subset) rec.subset = false;
+    found.set(family, rec);
+  }
+  if (!found.size) throw new Error('no /FontName entries in ' + pdfPath + ' — cannot verify fonts');
+  return [...found.values()].sort((x, y) => x.family.localeCompare(y.family));
+}
+
+function assertFonts(pdfPath) {
+  const fonts = pdfFonts(pdfPath);
+  const families = fonts.map(f => f.family);
+  const problems = [];
+  for (const want of L.expectFonts)
+    if (!families.includes(want)) problems.push(`expected ${want} in the PDF, not found`);
+  for (const no of L.forbidFonts)
+    if (families.includes(no)) problems.push(`${no} is in the PDF and must not be — ` +
+      'it has no Cyrillic glyphs, so its presence means Cyrillic text fell back to a substitute');
+  // Anything outside the allowed list is a fallback that crept in.
+  for (const f of families)
+    if (!L.expectFonts.includes(f))
+      problems.push(`unexpected font "${f}" — nothing in this document asks for it, ` +
+        'so it is a fallback for a glyph the intended face could not supply');
+  // A non-subset font means the whole face was embedded, which is legal but
+  // usually signals the font was loaded from the system rather than the webfont.
+  for (const f of fonts)
+    if (!f.subset) problems.push(`${f.family} is embedded whole, not subset — likely a system font`);
+  return { fonts, problems };
 }
 
 // ---------------------------------------------------------------------------
@@ -921,12 +1294,14 @@ async function build() {
   const IMG_MAX = BODY_W - 2 * PANEL.padMm;                // image at full column width
 
   // ONE width for both diagrams, so the two plates come out the same size and
-  // share a centre. Page 2 now carries nothing but the two figures, so the width
-  // is solved purely against how tall they stack: the pinout is landscape and the
-  // wiring is portrait, so a shared width W costs W/1.72 + W/0.82 of height.
-  let imgWidthMm = IMG_MAX;
+  // share a centre — and, since it is pinned, the same size in every language.
+  // The pinout is landscape and the wiring portrait, so a shared width W costs
+  // W/1.67 + W/0.88 of height; --solve-width searches on that, a normal build
+  // renders once at DIAGRAM_W_MM and checks it still fits.
+  let imgWidthMm = SOLVE_WIDTH ? IMG_MAX : DIAGRAM_W_MM;
+  const PASSES = SOLVE_WIDTH ? 14 : 1;
 
-  for (let pass = 1; pass <= 14; pass++) {
+  for (let pass = 1; pass <= PASSES; pass++) {
     diagrams = [];
     for (const d of DIAGRAMS) {
       diagrams.push({
@@ -954,9 +1329,26 @@ async function build() {
       return out;
     }, TOTAL);
 
-    if (slacks[0] < 0) throw new Error(`page 1 overflows by ${(-slacks[0]).toFixed(1)}mm`);
+    // Page 1 has no solver — it is type, not images, so nothing on it can be
+    // scaled without changing the document's type sizes. If it overflows, that
+    // is a content decision (cut a clause, or accept a smaller size) and it goes
+    // to the fit report rather than being silently absorbed here.
+    if (slacks[0] < 0 && pass === 1) {
+      fit('page 1', `content overruns the footer rule by ${(-slacks[0]).toFixed(1)}mm`,
+          'page 1 is all type — no image can be shrunk to recover this; ' +
+          'either the copy shortens or a type size changes, and both are decisions');
+    }
 
     const s2 = slacks[1];
+    if (!SOLVE_WIDTH) {
+      // Pinned width: the only question is whether it still fits.
+      if (s2 < 0)
+        fit('page 2', `content overruns the footer rule by ${(-s2).toFixed(1)}mm ` +
+          `at the pinned diagram width of ${DIAGRAM_W_MM}mm`,
+          'run --solve-width to see what each language would choose, then set ' +
+          'DIAGRAM_W_MM to the smallest of them — never to a per-language value');
+      break;
+    }
     const atCap = imgWidthMm >= IMG_MAX - 0.01;
     if (s2 >= TARGET_SLACK - 1 && (atCap || s2 <= TARGET_SLACK + 6)) break;
     // Both plates grow and shrink together, so a 1mm change in the shared width
@@ -965,8 +1357,15 @@ async function build() {
     imgWidthMm = Math.max(45, Math.min(IMG_MAX, imgWidthMm));
   }
 
+  if (SOLVE_WIDTH) {
+    console.log(`--solve-width (${LANG}): this page would take ${imgWidthMm.toFixed(1)}mm. ` +
+      `DIAGRAM_W_MM is ${DIAGRAM_W_MM}mm.`);
+    console.log('  Set the constant to the SMALLEST value across all languages — a ' +
+                'per-language width breaks the side-by-side match.');
+  }
   console.log(`Both figures at one shared width: image ${imgWidthMm.toFixed(1)}mm ` +
-              `in a ${(imgWidthMm + 2 * PANEL.padMm).toFixed(1)}mm plate (column max ${BODY_W}mm)`);
+              `in a ${(imgWidthMm + 2 * PANEL.padMm).toFixed(1)}mm plate (column max ${BODY_W}mm)` +
+              `${SOLVE_WIDTH ? ' — SOLVED, not pinned' : ' — pinned, identical in every language'}`);
   console.log(`  pinout landscape ${aspects[0].toFixed(2)} · wiring portrait ${aspects[1].toFixed(2)} ` +
               `— same width and centre, heights follow their aspect ratios`);
 
@@ -994,19 +1393,65 @@ async function build() {
 
   const tableRows = await measureTableWrap(page);
   assertNoWrap(tableRows);
+  const widestLabel = tableRows.reduce((a, r) => r.labelTextWmm > a.labelTextWmm ? r : a, tableRows[0]);
+  const tightest = tableRows.reduce((a, r) => r.gapMm < a.gapMm ? r : a, tableRows[0]);
   console.log(`\nSpec table: ${tableRows.length} rows, every label and value on ONE line`);
+  console.log(`  label column   ${tableRows[0].labelColWmm}mm  (44% of the section body column)`);
+  console.log(`  widest label   ${widestLabel.labelTextWmm}mm  "${widestLabel.label}"`);
+  console.log(`  tightest gap   ${tightest.gapMm}mm to the value  "${tightest.label}"`);
+  console.log(`  overruns       ${tableRows.filter(r => r.labelOverflowMm > 0.15).length} of ${tableRows.length} rows`);
 
   const panels = await measurePanels(page, CONTENT_W);
   assertPanelsMatch(panels);
 
   layout = await assertLayout(page);
 
+  // ---- script integrity, on the source strings, before anything is rendered --
+  const allStrings = [
+    DOC.id, DOC.title, DOC.company, DOC.confidentiality, L.ui.doc, L.ui.rev,
+    L.sections.overview, L.sections.specs,
+    HERO.eyebrow, HERO.titleMain, HERO.titleTail, HERO.standfirst, HERO.ndaa,
+    OVERVIEW.lead, OVERVIEW.variantsLabel, OVERVIEW.variantsNote, ...OVERVIEW.variants,
+    ...OVERVIEW.bullets.flat(), ...SPECS.flat(),
+    ...DIAGRAMS.map(d => d.title), ...DIAGRAMS.map(d => d.caption),
+    ...DIAGRAMS.flatMap(d => (d.key || []).flat()),
+    OMITTED_NOTE, ...OMITTED_SPECS,
+  ];
+  const homoglyphs = assertNoHomoglyphs(allStrings);
+  console.log(`\nScript integrity (${LANG}): ` +
+    `${allStrings.length} strings scanned, ` +
+    `${homoglyphs.length === 0 ? 'no mixed-script tokens' : homoglyphs.length + ' MIXED-SCRIPT'}`);
+  if (homoglyphs.length) {
+    for (const h of homoglyphs)
+      console.log(`    · "${h.tok}" in "${h.str}" — Cyrillic and Latin in one token`);
+    throw new Error('Cyrillic homoglyphs found inside Latin technical tokens.');
+  }
+
+  // ---- FIT REPORT ----------------------------------------------------------
+  console.log(`\nFit report (${LANG}): ` +
+    (FIT.length === 0 ? 'no assertions fired' : `${FIT.length} ASSERTION(S) FIRED`));
+  if (FIT.length) {
+    let last = null;
+    for (const f of FIT) {
+      if (f.where !== last) { console.log(`  [${f.where}]`); last = f.where; }
+      console.log(`    · ${f.msg}`);
+      if (f.detail) console.log(`      ${f.detail}`);
+    }
+    console.log('\n  Nothing has been shrunk to make these go away. Each one is a\n' +
+                '  decision: shorten the copy, change a column width, or accept a\n' +
+                '  smaller type size on that element specifically.');
+    if (!ALLOW_FIT)
+      throw new Error(`${FIT.length} fit assertion(s) fired on --lang=${LANG}. ` +
+        'Re-run with --allow-fit to write the files anyway and look at them.');
+    console.log('\n  --allow-fit: writing the files anyway.');
+  }
+
   if (PREVIEW) {
     for (let i = 1; i <= TOTAL; i++) {
       await page.locator('.page[data-page="' + i + '"]').screenshot({
-        path: path.join(brandDir, 'ds-dronestack-p' + i + '.png') });
+        path: path.join(brandDir, 'ds-dronestack' + (LANG === 'en' ? '' : '-' + LANG) + '-p' + i + '.png') });
     }
-    console.log('preview PNGs: brand/ds-dronestack-p1..' + TOTAL + '.png');
+    console.log('preview PNGs: brand/ds-dronestack' + (LANG === 'en' ? '' : '-' + LANG) + '-p1..' + TOTAL + '.png');
   }
 
   const rgbPath = path.join(repoRoot, `${DOC.outBase}_RGB.pdf`);
@@ -1044,7 +1489,9 @@ async function build() {
 
   console.log('\nLayout assertions:');
   for (const p of layout) {
-    console.log(`  page ${p.page}: footer clear (${p.footerClashes.length} clashes) · ` +
+    console.log(`  page ${p.page}: ${p.textRuns} text runs, ` +
+      `${p.textCollisions.length} overlapping · ` +
+      `footer clear (${p.footerClashes.length} clashes) · ` +
       `seal ${p.stampPresent
         ? `clear — ${p.stampClashes.length} content clashes, ${p.stampClearOfBandMm}mm above the footer band`
         : 'none'} · ` +
@@ -1064,6 +1511,28 @@ async function build() {
   }
   if (t.missingCounters.length) throw new Error('Page counters missing: ' + t.missingCounters);
   if (t.invalidUtf8) throw new Error('PDF text contains invalid UTF-8 — ToUnicode CMap is broken.');
+
+  // ---- fonts actually embedded in the master -------------------------------
+  const fontCheck = assertFonts(rgbPath);
+  console.log('\nFonts embedded in the PDF:');
+  for (const f of fontCheck.fonts)
+    console.log(`  ${fontCheck.problems.some(p => p.includes(f.family)) ? 'FAIL' : 'OK  '} ` +
+      `${f.family.padEnd(16)} ${f.subset ? 'subset' : 'FULL FACE'}  ` +
+      `(${[...f.names].join(', ')})`);
+  if (L.forbidFonts.length)
+    console.log(`  forbidden here: ${L.forbidFonts.join(', ')} — ` +
+      `${fontCheck.problems.length ? 'SEE FAILURES' : 'absent, as required'}`);
+  if (fontCheck.problems.length) {
+    fontCheck.problems.forEach(m => console.log('    · ' + m));
+    throw new Error('Font check failed — see above.');
+  }
+
+  // ---- protected Latin tokens survived translation -------------------------
+  const missingTokens = assertLatinTokens(t.text);
+  console.log(`\nProtected Latin tokens: ${LATIN_TOKENS.length} checked, ` +
+    `${missingTokens.length === 0 ? 'all present in Latin script' : 'MISSING ' + missingTokens.join(', ')}`);
+  if (missingTokens.length)
+    throw new Error('Latin technical tokens missing from the PDF: ' + missingTokens.join(', '));
 
   const rgbSize = (await fs.stat(rgbPath)).size;
   console.log(`\n  ${path.relative(repoRoot, rgbPath)}  (${(rgbSize / 1048576).toFixed(2)} MB, DeviceRGB)`);
@@ -1095,9 +1564,107 @@ async function build() {
     throw new Error('CMYK conversion damaged the text layer.');
   }
 
+  await writeReport({
+    lang: LANG, docId: DOC.id, revision: DOC.revision, outBase: DOC.outBase,
+    bodyFont: L.bodyFont.split(',')[0].replace(/"/g, ''),
+    fonts: fontCheck.fonts.map(f => f.family),
+    forbidden: L.forbidFonts,
+    fitFired: FIT.length,
+    freeAboveFooterMm: layout.map(x => +x.freeAboveFooterMm.toFixed(1)),
+    sealClearMm: layout.find(x => x.stampPresent)?.stampClearOfBandMm ?? null,
+    panels: panels.map(x => ({ page: x.page, w: x.widthMm, h: x.heightMm, centre: x.centreMm })),
+    labelColWmm: tableRows[0].labelColWmm,
+    widestLabelMm: widestLabel.labelTextWmm,
+    widestLabel: widestLabel.label,
+    tightestGapMm: tightest.gapMm,
+    imgWidthMm: +imgWidthMm.toFixed(2),
+    rgbMB: +(rgbSize / 1048576).toFixed(2),
+    cmykMB: RGB_ONLY ? null : +(info.size / 1048576).toFixed(2),
+    iccFamily: RGB_ONLY ? null : info.iccFamily,
+  });
+
   console.log(`\nOmitted by design (no TBD rows): ${OMITTED_SPECS.join(' · ')}`);
   console.log(`Add them and set DOC.revision = '02' when the measurements arrive.`);
 }
 
-await build();
+// Written per language so --both can lay the two variants against each other
+// without either build knowing the other exists.
+const reportPath = (lang) => path.join(brandDir, `.datasheet-report-${lang}.json`);
+async function writeReport(obj) {
+  await fs.writeFile(reportPath(obj.lang), JSON.stringify(obj, null, 2));
+}
+
+// ---------------------------------------------------------------------------
+// --both — build English then Ukrainian in separate processes and print them
+// side by side. Separate processes because the locale is fixed at module load:
+// one process is one language, which is also what makes the English master
+// provably untouched by the Ukrainian build.
+// ---------------------------------------------------------------------------
+function compareVariants() {
+  const [en, uk] = ['en', 'uk'].map(l => {
+    try { return JSON.parse(readFileSync(reportPath(l), 'utf8')); }
+    catch { throw new Error('no build report for ' + l + ' — --both needs the full CMYK pass, so it cannot be combined with --rgb-only'); }
+  });
+  const rows = [
+    ['document number',      en.docId,               uk.docId],
+    ['revision',             en.revision,            uk.revision],
+    ['body font',            en.bodyFont,            uk.bodyFont],
+    ['fonts embedded',       en.fonts.join(' · '),   uk.fonts.join(' · ')],
+    ['Space Grotesk',        'present',              uk.fonts.includes('SpaceGrotesk') ? 'PRESENT — WRONG' : 'absent (no Cyrillic)'],
+    ['fit assertions fired', String(en.fitFired),    String(uk.fitFired)],
+    ['p1 free above footer', en.freeAboveFooterMm[0] + 'mm', uk.freeAboveFooterMm[0] + 'mm'],
+    ['p2 free above footer', en.freeAboveFooterMm[1] + 'mm', uk.freeAboveFooterMm[1] + 'mm'],
+    ['seal above footer',    en.sealClearMm + 'mm',  uk.sealClearMm + 'mm'],
+    ['spec label column',    en.labelColWmm + 'mm',  uk.labelColWmm + 'mm'],
+    ['widest spec label',    en.widestLabelMm + 'mm', uk.widestLabelMm + 'mm'],
+    ['',                     '"' + en.widestLabel + '"', '"' + uk.widestLabel + '"'],
+    ['tightest label gap',   en.tightestGapMm + 'mm', uk.tightestGapMm + 'mm'],
+    ['diagram width',        en.imgWidthMm + 'mm',   uk.imgWidthMm + 'mm'],
+    ['p2 panel 1',           en.panels[0].w + ' × ' + en.panels[0].h + 'mm', uk.panels[0].w + ' × ' + uk.panels[0].h + 'mm'],
+    ['p2 panel 2',           en.panels[1].w + ' × ' + en.panels[1].h + 'mm', uk.panels[1].w + ' × ' + uk.panels[1].h + 'mm'],
+    ['panel centre',         en.panels[0].centre + 'mm', uk.panels[0].centre + 'mm'],
+    ['output intent',        en.iccFamily || '—',    uk.iccFamily || '—'],
+    ['RGB master',           en.rgbMB + ' MB',       uk.rgbMB + ' MB'],
+    ['CMYK master',          (en.cmykMB ?? '—') + ' MB', (uk.cmykMB ?? '—') + ' MB'],
+  ];
+  const w0 = Math.max(...rows.map(r => r[0].length));
+  const w1 = Math.max(...rows.map(r => String(r[1]).length), 'ENGLISH'.length);
+  const line = (a, b, c) => '  ' + String(a).padEnd(w0) + '   ' + String(b).padEnd(w1) + '   ' + c;
+  console.log('\n' + '='.repeat(w0 + w1 + 34));
+  console.log('  VARIANTS SIDE BY SIDE');
+  console.log('='.repeat(w0 + w1 + 34));
+  console.log(line('', 'ENGLISH', 'UKRAINIAN'));
+  console.log('  ' + '-'.repeat(w0 + w1 + 30));
+  for (const r of rows) console.log(line(...r));
+
+  // The two sheets must show the SAME drawings at the SAME size — a reader
+  // comparing them side by side should see one document in two languages.
+  const problems = [];
+  for (let i = 0; i < en.panels.length; i++) {
+    for (const k of ['w', 'h', 'centre'])
+      if (Math.abs(en.panels[i][k] - uk.panels[i][k]) > 0.15)
+        problems.push(`panel ${i + 1} ${k}: ${en.panels[i][k]}mm (en) vs ${uk.panels[i][k]}mm (uk)`);
+  }
+  if (en.revision !== uk.revision) problems.push('revisions differ');
+  if (uk.docId !== en.docId + '-UA') problems.push(`uk document number is ${uk.docId}, expected ${en.docId}-UA`);
+  if (uk.fonts.includes('SpaceGrotesk')) problems.push('Space Grotesk reached the Ukrainian PDF');
+  console.log('\n  Cross-variant checks: ' +
+    (problems.length ? problems.length + ' FAILED' : 'diagram panels identical, revisions match, -UA suffix correct'));
+  problems.forEach(m => console.log('    · ' + m));
+  if (problems.length) throw new Error('Cross-variant checks failed.');
+}
+
+if (process.argv.includes('--both')) {
+  const self = fileURLToPath(import.meta.url);
+  const pass = process.argv.slice(2).filter(a => a !== '--both' && !a.startsWith('--lang='));
+  for (const lang of ['en', 'uk']) {
+    console.log('\n' + '#'.repeat(72));
+    console.log('#  BUILDING --lang=' + lang);
+    console.log('#'.repeat(72));
+    execFileSync(process.execPath, [self, '--lang=' + lang, ...pass], { stdio: 'inherit' });
+  }
+  compareVariants();
+} else {
+  await build();
+}
 console.log('\nDone.');
