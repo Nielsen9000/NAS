@@ -1,0 +1,13 @@
+# The repo doubles as the working repo for print material and internal docs.
+# NOTHING in this list is referenced by the deployed site — it is working
+# material and must never be publicly served (NAS-FAKTA carries private phone
+# numbers; the copy deck, review notes and brand/ print masters are internal).
+# Verified: no page references /brand/; /c/ vCard pages and /assets stay in.
+*.md
+/brand
+/brand_assets
+/DATASHEETS
+/locales
+/.tmp_pdf
+/.screenshots
+serve.mjs
