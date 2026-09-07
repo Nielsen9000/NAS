@@ -1,5 +1,31 @@
 # REVIEW-NOTES-UA — til korrekturlæseren (indfødt gennemsyn FØR udsendelse)
 
+## DEL 0 — WEBSITE (/uk/ — preview, IKKE i produktion)
+
+Al ukrainsk website-tekst ligger i `locales/uk.json` (390 strenge, oversat af
+Claude med deck-terminologien; **ikke** indfødt korrekturlæst endnu). Ret
+direkte i uk.json og kør `node brand/build_i18n.mjs --build-uk --strict`.
+Preview: Vercel-deployment af grenen `i18n-preview`.
+
+Valg til bekræftelse (ud over dem fra datablads-decket, som er genbrugt 1:1):
+- **політний контролер** (fra DS-2026-FC-UA) — ikke «польотний»
+- Nav: Платформи · Інтелектуальні рішення · Інженерія · NAS · Кодекс ·
+  Кар’єра · Контакти; «Запросити бриф» for Request brief
+- «Мозок літального апарата» (The brain of the aircraft)
+- «КРЕМНІЙ, ЩО ВІДПОВІДАЄ NDAA» (NDAA-COMPLIANT SILICON — aldrig
+  «сертифікований»)
+- «опозитний твін» for boxer twin; reticle-label «ОПОЗИТНИЙ · 340CC»
+- Kolibri-testimonial og conduct-siden (10 juridiske afsnit) er nyoversat —
+  læs dem grundigt
+- Landeliste (178) og rolleliste (27) i kontaktformularen er oversat;
+  formularens indsendte værdier forbliver engelske (value-attributter)
+- Forbliver EN/latinsk: produktnavne (Drone Stack, NAS IEMS), tagline,
+  firmanavn/adresse, HUD/telemetri-mono, LAT/LNG/ELEV, SYS·ACTIVE osv.
+- Tal står ALDRIG i uk.json — de kommer fra brand/specs.mjs via
+  {spec:…}-pladsholdere og er byte-identiske med EN
+
+
+
 Gælder: **DATASHEETS/NAS_COMPANY_PROFILE_2026_UA_CMYK.pdf** (CP-2026-UA REV 01)
 og **DATASHEETS/NAS_DATASHEET_2C2E_2026_UA_CMYK.pdf** (DS-2026-UA REV 01).
 Al ukrainsk tekst er taget 1:1 fra `NAS_UA_COPYDECK_CP_DS.md`; der er ikke

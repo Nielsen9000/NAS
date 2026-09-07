@@ -532,9 +532,43 @@ function ukValue(uk, en, key, missing) {
   return e;                                                          // en fallback (dev only)
 }
 
+// A translation must carry the exact same markup skeleton and the exact same
+// spec placeholders as its English source — only the words between them may
+// differ. And no token may mix Cyrillic with Latin/digits: А В Е О Р С Т Х are
+// indistinguishable from their Latin twins on the page (same rule as the
+// datasheet builds).
+function validateTranslations(en, uk) {
+  const problems = [];
+  const skeleton = (s) => (String(s).match(/<[^>]+>|\{spec:[^}]+\}/g) || []).join('|');
+  const CYRRE = /[Ѐ-ӿ]/, LATRE = /[A-Za-z]/;
+  for (const [ns, entries] of Object.entries(en)) {
+    for (const [k, v] of Object.entries(entries)) {
+      const u = uk[ns]?.[k];
+      if (u === undefined || u === '' || (Array.isArray(u) && u.length === 0)) continue;
+      if (Array.isArray(v)) {
+        if (!Array.isArray(u) || u.length !== v.length)
+          problems.push(`${ns}.${k}: array length ${Array.isArray(u) ? u.length : '?'} vs ${v.length}`);
+      } else if (skeleton(u) !== skeleton(v)) {
+        problems.push(`${ns}.${k}: markup/placeholder skeleton differs\n      en: ${skeleton(v) || '(none)'}\n      uk: ${skeleton(u) || '(none)'}`);
+      }
+      for (const str of Array.isArray(u) ? u : [u]) {
+        for (const tok of String(str).replace(/<[^>]+>|\{spec:[^}]+\}|&[a-z]+;/g, ' ').split(/[^\p{L}\p{N}]+/u)) {
+          if (tok && CYRRE.test(tok) && (LATRE.test(tok) || /\d/.test(tok)))
+            problems.push(`${ns}.${k}: mixed-script token "${tok}"`);
+        }
+      }
+    }
+  }
+  if (problems.length) {
+    problems.forEach(m => console.log('  · ' + m));
+    throw new Error(`${problems.length} translation validation problem(s) in locales/uk.json`);
+  }
+}
+
 async function buildUk(sources) {
   const en = JSON.parse(await fs.readFile(path.join(localesDir, 'en.json'), 'utf8'));
   const uk = JSON.parse(await fs.readFile(path.join(localesDir, 'uk.json'), 'utf8'));
+  validateTranslations(en, uk);
   // a sitemap must never carry /uk/ while UK_NOINDEX is on
   for (const sm of ['sitemap.xml', 'sitemap.txt']) {
     try {
@@ -756,7 +790,9 @@ async function main() {
   } else if (MODE === '--build-uk') {
     await buildUk(sources);
   } else if (MODE === '--check-layout') {
-    PSEUDO = true;
+    // default: pseudo-localised stress test; --real measures the actual
+    // Ukrainian copy currently in locales/uk.json instead.
+    PSEUDO = !ARGS.has('--real');
     await buildUk(sources);
     await checkLayout();
   }

@@ -53,7 +53,7 @@
     "rearmounted-output-shaft": "Rear-mounted output shaft",
     "direct-propeller-drive-without": "Direct propeller drive without a reduction stage — fewer parts, less drivetrain loss.",
     "standard-firewall-pattern": "Standard firewall pattern",
-    "dropin-mounting-interface-for": "Drop-in mounting interface for fixed-wing platforms in the 25–50 kg MTOW class.",
+    "dropin-mounting-interface-for": "Drop-in mounting interface for fixed-wing platforms in the {spec:nas2.mtowClass} MTOW class.",
     "power-output": "Power output",
     "displacement": "Displacement",
     "dry-weight": "Dry weight",
