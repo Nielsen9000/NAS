@@ -37,7 +37,7 @@
   --ease-smooth:cubic-bezier(0.16,1,0.3,1);
 }
 *,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; text-rendering:optimizeLegibility; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; text-rendering:optimizeLegibility; overflow-x:hidden; -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 body{
   margin:0; background:var(--bg-base); color:var(--ink-0);
   font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
@@ -193,6 +193,43 @@ p{ margin:0; color:var(--ink-1); }
   text-transform:uppercase; color:var(--accent); padding:6px 11px;
   border:1px solid rgba(59,182,232,0.35); background:rgba(8,32,42,0.55); }
 
+/* ---- EFI hero: engineering-profile blueprint readout (HUD panel) ---- */
+.efi-profile{ position:relative; display:flex; flex-direction:column; gap:18px; }
+.efi-profile-top{ display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; font-weight:500;
+  letter-spacing:0.2em; text-transform:uppercase; }
+.efi-profile-id{ color:var(--accent); }
+.efi-profile-ref{ color:var(--ink-3); }
+.efi-profile-frame{ position:relative; aspect-ratio:952/860; display:grid; place-items:center; padding:10px; }
+.efi-profile-glow{ position:absolute; inset:14% 16%; z-index:0; pointer-events:none;
+  background:radial-gradient(ellipse at 50% 52%, rgba(59,182,232,0.20), rgba(59,182,232,0.06) 50%, transparent 72%);
+  filter:blur(32px); }
+.efi-profile-img{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain;
+  filter:drop-shadow(0 0 22px rgba(59,182,232,0.18)); }
+.efi-profile-frame .hud-corner{ opacity:0.7; width:20px; height:20px; }
+.efi-profile-frame .hud-corner-tl{ top:0; left:0; }
+.efi-profile-frame .hud-corner-tr{ top:0; right:0; }
+.efi-profile-frame .hud-corner-bl{ bottom:0; left:0; }
+.efi-profile-frame .hud-corner-br{ bottom:0; right:0; }
+.efi-profile-specs{ display:grid; grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark); }
+.efi-profile-spec{ display:flex; flex-direction:column; gap:7px; padding:15px 16px 15px 0; }
+.efi-profile-spec + .efi-profile-spec{ padding-left:18px; border-left:1px solid var(--line-dark); }
+.efi-profile-spec-label{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; font-weight:500;
+  letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); }
+.efi-profile-spec-value{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:14px; font-weight:600;
+  color:var(--ink-0); line-height:1.3; }
+.efi-profile-foot{ display:flex; align-items:center; justify-content:space-between; gap:16px;
+  font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; }
+.efi-profile-caption{ color:var(--ink-2); }
+.efi-profile-status{ display:inline-flex; align-items:center; gap:9px; color:var(--accent); }
+.efi-profile-dot{ width:7px; height:7px; border-radius:50%; background:var(--accent);
+  box-shadow:0 0 7px var(--accent-glow); animation:efi-pulse 2s ease-in-out infinite; }
+/* opacity-only pulse — no spreading box-shadow / transform, so it can't affect
+   layout or overflow (which triggered iOS Safari viewport zoom). */
+@keyframes efi-pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+@media (prefers-reduced-motion:reduce){ .efi-profile-dot{ animation:none; } }
+
 /* ---- 02 — System architecture (inline SVG) ---- */
 .efi-diagram{ position:relative; margin-top:8px; padding:36px 34px 30px; border:1px solid var(--line-dark); border-radius:var(--radius-lg); background:linear-gradient(180deg,rgba(59,182,232,0.045),transparent 60%),var(--bg-elev); overflow:hidden; }
 .efi-diagram::after{ content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(59,182,232,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,182,232,0.04) 1px,transparent 1px); background-size:32px 32px; opacity:.5; pointer-events:none; }
@@ -243,13 +280,36 @@ p{ margin:0; color:var(--ink-1); }
   .footer-mid,.footer-right{ text-align:left; }
   .efi-hero{ padding:112px 0 20px; }
   .efi-hero-grid{ grid-template-columns:1fr; gap:36px; }
+  /* The schematic keeps its real size and scrolls inside its own container.
+     Letting it shrink to fit rendered a 1200×360 drawing at 0.25 scale, with
+     its labels 3–4 px tall — present but unreadable.
+     min-width:0 is the part that matters: a grid/flex item defaults to
+     min-width:auto, so the scroll container was being sized by its oversized
+     child instead of clipping it. THAT is what widened the layout and set off
+     the iOS zoom this rule was originally added to stop — overflow-x:auto was
+     never the problem, an unconstrained container was. */
+  .efi-diagram{ padding:24px 18px; min-width:0; }
+  .efi-diagram-scroll{ overflow-x:auto; min-width:0; max-width:100%; -webkit-overflow-scrolling:touch; }
+  /* 760px is the width the diagram was authored against (the desktop
+     scroll container's own min-width) — its labels are sized for it. */
+  .efi-diagram svg{ min-width:760px; }
+  /* Tells the reader it moves, since the right edge is cut. Anchored to the
+     panel rather than the scroll content, so it stays put while the diagram
+     pans, and centred so it clears both bottom HUD brackets. */
+  .efi-diagram{ padding-bottom:44px; }
+  .efi-diagram::before{ content:"Scroll to explore →"; position:absolute; z-index:1;
+    left:0; right:0; bottom:16px; text-align:center;
+    font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.16em;
+    text-transform:uppercase; color:var(--accent); opacity:.75; pointer-events:none; }
   .efi-render{ aspect-ratio:auto; min-height:240px; order:-1; }
-  .efi-diagram{ padding:24px 18px; }
   .efi-pillars{ grid-template-columns:repeat(2,1fr); }
   .efi-components{ grid-template-columns:1fr; max-width:420px; }
 }
 @media (max-width:560px){
   .efi-pillars{ grid-template-columns:1fr; max-width:340px; }
+  .efi-profile-specs{ grid-template-columns:1fr; }
+  .efi-profile-spec{ padding:13px 0; }
+  .efi-profile-spec + .efi-profile-spec{ padding-left:0; padding-top:13px; border-left:0; border-top:1px solid var(--line-dark); }
 }
 /* ---- IEMS hero copy ---- */
 .iems-sublabel{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:12px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); margin:2px 0 18px; }
@@ -288,6 +348,8 @@ p{ margin:0; color:var(--ink-1); }
 .iems-cta{ position:relative; max-width:840px; }
 .iems-cta-body{ color:var(--ink-1); font-size:17px; line-height:1.78; margin:0 0 30px; }
 </style>
+  <link rel="stylesheet" href="/assets/mobile-nav.css">
+  <script src="/assets/mobile-nav.js" defer></script>
 </head>
 <body>
 
@@ -309,7 +371,7 @@ p{ margin:0; color:var(--ink-1); }
       </span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="/">Platforms</a>
+      <a href="/#platforms">Platforms</a>
       <div class="nav-dd">
         <button class="nav-dd-trigger active" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu">
@@ -320,6 +382,7 @@ p{ margin:0; color:var(--ink-1); }
       <a href="/engineering">Engineering</a>
       <a href="/nas">NAS</a>
       <a href="/conduct">Conduct</a>
+      <a href="/careers">Careers</a>
       <a href="/contact">Contact</a>
     </nav>
     <div class="header-cta">
@@ -348,14 +411,37 @@ p{ margin:0; color:var(--ink-1); }
             <span>ECU</span>
           </div>
         </div>
-        <div class="efi-render efi-render--live reveal">
-          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="efi-render-glow" aria-hidden="true"></div>
-          <img class="efi-render-img" src="/assets/efi.png" alt="Electronic fuel injection throttle body unit" />
-          <span class="efi-render-tag">EFI · THROTTLE BODY</span>
+        <div class="efi-profile reveal">
+          <div class="efi-profile-top">
+            <span class="efi-profile-id">NAS · EFI PROFILE</span>
+            <span class="efi-profile-ref">/ EFI-01</span>
+          </div>
+          <div class="efi-profile-frame">
+            <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+            <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+            <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+            <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+            <div class="efi-profile-glow" aria-hidden="true"></div>
+            <img class="efi-profile-img" src="/assets/efi-blueprint.webp" alt="EFI throttle body — technical wireframe blueprint" />
+          </div>
+          <div class="efi-profile-specs">
+            <div class="efi-profile-spec">
+              <span class="efi-profile-spec-label">TYPE</span>
+              <span class="efi-profile-spec-value">Throttle Body</span>
+            </div>
+            <div class="efi-profile-spec">
+              <span class="efi-profile-spec-label">SYSTEM</span>
+              <span class="efi-profile-spec-value">EFI · Electronic Fuel Injection</span>
+            </div>
+            <div class="efi-profile-spec">
+              <span class="efi-profile-spec-label">COMP.</span>
+              <span class="efi-profile-spec-value">NDAA</span>
+            </div>
+          </div>
+          <div class="efi-profile-foot">
+            <span class="efi-profile-caption">// EFI THROTTLE BODY</span>
+            <span class="efi-profile-status"><span class="efi-profile-dot" aria-hidden="true"></span>ACTIVE</span>
+          </div>
         </div>
       </div>
     </div>

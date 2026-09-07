@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Careers — Nordic Advanced Systems</title>
-<meta name="description" content="NAS is growing. We're looking for people who want to build the future of engine production." />
+<meta name="description" content="NAS is growing. We design and build our engines in-house in Denmark — and we're always interested in the people who want to build them with us." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1577,6 +1577,49 @@ p{ margin:0; color:var(--ink-1); }
 }
 .position-card .arrow{ transition:transform .3s var(--ease-spring); }
 .position-card:hover .arrow{ transform:translateX(4px); }
+
+/* Open Positions — empty state (all roles currently filled) */
+.positions-empty{
+  position:relative; max-width:660px; margin-top:40px;
+  background:linear-gradient(180deg, rgba(59,182,232,0.05) 0%, transparent 62%), var(--bg-elev);
+  border:1px solid var(--line-dark); border-radius:var(--radius-md);
+  padding:36px 34px 32px;
+}
+.positions-empty-status{
+  display:inline-flex; align-items:center; gap:9px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent);
+}
+.positions-empty-status::before{
+  content:""; width:5px; height:5px; background:var(--accent);
+  box-shadow:0 0 8px var(--accent-glow);
+  animation:pe-pulse 2.6s ease-in-out infinite;
+}
+@keyframes pe-pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.22; } }
+@media (prefers-reduced-motion: reduce){ .positions-empty-status::before{ animation:none; } }
+.positions-empty-title{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:clamp(26px,3vw,36px); font-weight:600;
+  letter-spacing:-0.02em; line-height:1.15;
+  color:var(--ink-0); margin:18px 0;
+}
+.positions-empty-title .accent{ color:var(--accent); }
+.positions-empty-body{
+  color:var(--ink-2); font-size:15px; line-height:1.7;
+  margin:0 0 14px; max-width:54ch;
+}
+.positions-empty-cta{
+  margin-top:10px; align-self:flex-start;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--accent); text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  border-bottom:1px solid rgba(59,182,232,0.3); padding-bottom:4px;
+  transition:border-color .3s ease;
+}
+.positions-empty-cta:hover{ border-color:var(--accent); }
+.positions-empty-cta .arrow{ transition:transform .3s var(--ease-spring); }
+.positions-empty-cta:hover .arrow{ transform:translateX(4px); }
 @media (max-width:640px){
   .careers-hero{ padding:128px 0 76px; min-height:70vh; }
   /* push the schematic further off-canvas and dim it so the headline stays crisp */
@@ -1584,8 +1627,35 @@ p{ margin:0; color:var(--ink-1); }
   .careers-hero-glow{ background:radial-gradient(ellipse at 84% 28%, rgba(59,182,232,0.12), transparent 60%); }
   .careers-hero-telemetry{ display:none; }
   .position-grid{ grid-template-columns:1fr; }
+  .positions-empty{ padding:28px 22px 26px; }
 }
+
+/* ---------- Intelligence Solutions dropdown ---------- */
+.nav-dd{ position:relative; display:flex; align-items:center; }
+.nav-dd-trigger{ font-family:inherit; font-size:15px; font-weight:500; color:var(--ink-1); position:relative; padding:6px 0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:color .2s ease; }
+.nav-dd-trigger::after{ content:""; position:absolute; left:0; right:18px; bottom:-2px; height:1px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease-spring); }
+.nav-dd:hover .nav-dd-trigger, .nav-dd:focus-within .nav-dd-trigger, .nav-dd-trigger.active{ color:var(--accent); }
+.nav-dd:hover .nav-dd-trigger::after, .nav-dd:focus-within .nav-dd-trigger::after, .nav-dd-trigger.active::after{ transform:scaleX(1); }
+.nav-dd-caret{ width:6px; height:6px; margin-top:-3px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); opacity:.65; transition:transform .3s var(--ease-spring), opacity .2s ease; }
+.nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret{ transform:rotate(-135deg); margin-top:2px; opacity:1; }
+.nav-dd-menu{ position:absolute; top:calc(100% + 16px); left:50%; transform:translateX(-50%) translateY(-8px); min-width:230px; padding:8px; background:rgba(8,32,42,0.94); border:1px solid var(--line-dark); border-radius:var(--radius-sm,10px); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); display:flex; flex-direction:column; gap:2px; opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s ease, transform .3s var(--ease-spring), visibility .25s; z-index:130; }
+.nav-dd-menu::before{ content:""; position:absolute; top:-16px; left:0; right:0; height:16px; }
+.nav-dd-menu::after{ content:""; position:absolute; top:-5px; left:50%; width:9px; height:9px; transform:translateX(-50%) rotate(45deg); background:rgba(8,32,42,0.94); border-left:1px solid var(--line-dark); border-top:1px solid var(--line-dark); }
+.nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu{ opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.nav-dd-menu a{ position:relative; display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:7px; color:var(--ink-1); font-size:14px; font-weight:500; transition:background .2s ease, color .2s ease; }
+.nav-dd-menu a::after{ display:none; }
+.nav-dd-menu a::before{ content:""; flex:none; width:6px; height:6px; border:1px solid var(--accent); transform:rotate(45deg); opacity:.55; transition:opacity .2s ease, background .2s ease; }
+.nav-dd-menu a:hover{ background:var(--accent-dim,rgba(59,182,232,0.18)); color:var(--accent); }
+.nav-dd-menu a:hover::before{ opacity:1; background:var(--accent); }
+.nav-dd-menu a.active{ color:var(--accent); }
+.nav-dd-menu a.active::before{ opacity:1; background:var(--accent); }
+.nav-dd-label{ flex:1; letter-spacing:0.01em; }
+.nav-dd-sub{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-3); }
+.nav-dd-menu a:hover .nav-dd-sub, .nav-dd-menu a.active .nav-dd-sub{ color:var(--accent); }
+@media (max-width:900px){ .nav-dd{ display:none; } }
 </style>
+  <link rel="stylesheet" href="/assets/mobile-nav.css">
+  <script src="/assets/mobile-nav.js" defer></script>
 </head>
 <body>
 
@@ -1610,7 +1680,14 @@ p{ margin:0; color:var(--ink-1); }
       </span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="/">Platforms</a>
+      <a href="/#platforms">Platforms</a>
+      <div class="nav-dd">
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <div class="nav-dd-menu" role="menu">
+          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
+          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+        </div>
+      </div>
       <a href="/engineering">Engineering</a>
       <a href="/nas">NAS</a>
       <a href="/conduct">Conduct</a>
@@ -1742,7 +1819,7 @@ p{ margin:0; color:var(--ink-1); }
           Build the engines<br>
           <span class="accent">that fly further.</span>
         </h1>
-        <p class="careers-hero-lead">NAS is growing. We're looking for people who want to build the future of engine production.</p>
+        <p class="careers-hero-lead">NAS is growing. We design and build our engines in-house in Denmark — and we're always interested in the people who want to build them with us.</p>
       </div>
     </div>
   </section>
@@ -1754,27 +1831,16 @@ p{ margin:0; color:var(--ink-1); }
     <div class="wrap reveal">
       <div class="section-eyebrow">/ 02 — OPEN POSITIONS</div>
 
-      <div class="position-grid">
-        <a class="position-card" href="/careers/production-team-lead/">
-          <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
-          <div class="position-card-meta">Engine Division · Full-time · Copenhagen, DK</div>
-          <div class="position-card-title">Production Team Lead — Engine Systems</div>
-          <p class="position-card-teaser">Help build the engine production of the future.</p>
-          <span class="position-card-link">Read more <span class="arrow" aria-hidden="true">→</span></span>
-        </a>
-        <a class="position-card" href="/careers/technical-engine-specialist/">
-          <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
-          <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
-          <div class="position-card-meta">Engine Division · Full-time · Copenhagen, DK</div>
-          <div class="position-card-title">Technical Engine Specialist</div>
-          <p class="position-card-teaser">Be the technical cornerstone behind the next generation of UAV engines.</p>
-          <span class="position-card-link">Read more <span class="arrow" aria-hidden="true">→</span></span>
-        </a>
+      <div class="positions-empty">
+        <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
+        <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
+        <div class="positions-empty-status">Status · All positions filled</div>
+        <h2 class="positions-empty-title">No open roles<br><span class="accent">at the moment.</span></h2>
+        <p class="positions-empty-body">Every seat on the bench is taken right now — our latest openings have been filled. But we build in-house and we're growing, so this page rarely stays quiet for long.</p>
+        <p class="positions-empty-body">If you want to be first in line when it changes, send us your CV and a few lines about what you'd want to build. We read every one.</p>
+        <a class="positions-empty-cta" href="mailto:job@nordicadvancedsystems.com?subject=Open%20application%20%E2%80%94%20NAS">Send an open application <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>

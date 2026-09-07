@@ -2,6 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/careers/production-team-lead", "destination": "/careers", "permanent": false },
+    { "source": "/careers/technical-engine-specialist", "destination": "/careers", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*).vcf",

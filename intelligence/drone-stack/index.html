@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Drone Stack — Intelligent Solutions — Nordic Advanced Systems</title>
-<meta name="description" content="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: 60A, 100A and 200A." />
+<meta name="description" data-spec-tpl="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: {ds.currents.0}, {ds.currents.1} and {ds.currents.2}." content="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: 65A, 100A and 200A." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -187,7 +187,8 @@ p{ margin:0; color:var(--ink-1); }
 .ds-hero-specs{ display:flex; flex-wrap:wrap; gap:12px 22px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-3); }
 .ds-hero-specs span{ position:relative; }
 .ds-hero-specs span + span::before{ content:"·"; position:absolute; left:-13px; color:var(--ink-3); opacity:0.6; }
-.ds-scroll-cue{ flex:none; display:inline-flex; align-items:center; gap:10px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-1); transition:color .25s ease; }
+/* min-height 44px — it was a 19px-tall tap target on a phone */
+.ds-scroll-cue{ flex:none; display:inline-flex; align-items:center; min-height:44px; gap:10px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-1); transition:color .25s ease; }
 .ds-scroll-cue:hover{ color:var(--accent); }
 .ds-scroll-arrow{ display:inline-block; animation:ds-nudge 1.8s var(--ease-smooth) infinite; }
 @keyframes ds-nudge{ 0%,100%{ transform:translateY(0); opacity:0.7; } 50%{ transform:translateY(4px); opacity:1; } }
@@ -353,7 +354,11 @@ p{ margin:0; color:var(--ink-1); }
 .conn-spec::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--accent); transform:rotate(45deg); box-shadow:0 0 8px var(--accent-glow); }
 .conn-spec-label{ font-family:'Inter',system-ui,sans-serif; font-size:16px; font-weight:700; color:var(--ink-0); letter-spacing:0.02em; margin-bottom:6px; }
 .conn-spec-desc{ color:var(--ink-2); font-size:14px; line-height:1.62; margin:0; }
-@media (max-width:1000px){ .ds-conn-layout{ grid-template-columns:1fr; gap:34px; } .ds-conn-figure{ padding:16px; } .ds-conn-layout.is-mirror .ds-conn-specs, .ds-conn-layout.is-mirror .ds-conn-panel{ order:0; } }
+/* Single column below 1000px. The selector must carry .is-mirror: a media
+   query adds no specificity, so the plain `.ds-conn-layout` rule (0,1,0) lost
+   to `.ds-conn-layout.is-mirror` (0,2,0) above and the ESC section stayed in
+   two columns on phones — its copy crushed into a half-width strip. */
+@media (max-width:1000px){ .ds-conn-layout, .ds-conn-layout.is-mirror{ grid-template-columns:1fr; gap:34px; } .ds-conn-figure{ padding:16px; } .ds-conn-layout.is-mirror .ds-conn-specs, .ds-conn-layout.is-mirror .ds-conn-panel{ order:0; } }
 /* ---- 04 — ESC (clean lead statement + punchlines, mirrors Connectivity) ---- */
 .esc-lead-block{ margin-bottom:6px; }
 .esc-lead-mark{ display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.24em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
@@ -396,6 +401,8 @@ p{ margin:0; color:var(--ink-1); }
 .ds-quote.is-inline blockquote{ font-size:clamp(20px,2.2vw,28px); }
 @media (max-width:900px){ .ds-quote.is-inline{ padding:6px 6px 0; margin-top:32px; } }
 </style>
+  <link rel="stylesheet" href="/assets/mobile-nav.css">
+  <script src="/assets/mobile-nav.js" defer></script>
 </head>
 <body>
 
@@ -417,7 +424,7 @@ p{ margin:0; color:var(--ink-1); }
       </span>
     </a>
     <nav class="nav" aria-label="Primary">
-      <a href="/">Platforms</a>
+      <a href="/#platforms">Platforms</a>
       <div class="nav-dd">
         <button class="nav-dd-trigger active" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu">
@@ -428,6 +435,7 @@ p{ margin:0; color:var(--ink-1); }
       <a href="/engineering">Engineering</a>
       <a href="/nas">NAS</a>
       <a href="/conduct">Conduct</a>
+      <a href="/careers">Careers</a>
       <a href="/contact">Contact</a>
     </nav>
     <div class="header-cta">
@@ -447,10 +455,9 @@ p{ margin:0; color:var(--ink-1); }
       <div class="ds-hero-inner reveal">
         <div class="section-eyebrow">/ INTELLIGENT — DRONE STACK</div>
         <h1 class="ds-hero-headline">The brain of<br><span class="accent">the aircraft</span></h1>
-        <p class="ds-hero-tagline">A flight controller in a class of its own, unmatched by its competitors. Built exclusively from certified components, designed and manufactured in Europe.</p>
+        <p class="ds-hero-tagline">A flight controller engineered for continuous operation. Built exclusively from certified components, designed and manufactured in Europe.</p>
         <div class="ds-badges">
           <span class="ds-badge">NDAA COMPLIANT</span>
-          <span class="ds-badge">EXCLUSIVE TO NAS</span>
         </div>
       </div>
     </div>
@@ -477,7 +484,7 @@ p{ margin:0; color:var(--ink-1); }
 
     <div class="wrap ds-hero-rail">
       <div class="ds-hero-specs" aria-hidden="true">
-        <span>6× UART</span><span>2× GPIO</span><span>ELRS</span><span>I2C</span><span>NDAA-CERTIFIED SILICON</span>
+        <span><span data-spec="ds.uarts">6</span>× UART</span><span><span data-spec="ds.gpio">2</span>× GPIO</span><span>ELRS</span><span>I2C</span><span>NDAA-COMPLIANT SILICON</span>
       </div>
       <a class="ds-scroll-cue" href="#connectivity">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
     </div>
@@ -485,7 +492,7 @@ p{ margin:0; color:var(--ink-1); }
 
   <!-- =========================================
        01 — CONNECTIVITY: FC pinout + specs (+ NDAA compliance below)
-       (Variants 60A/100A/200A and the board-macro Detail grid are parked until
+       (Variants 65A/100A/200A and the board-macro Detail grid are parked until
         their specs / photos are ready — CSS retained, will return.)
        ========================================= -->
   <section class="company-section" id="connectivity">
@@ -507,11 +514,11 @@ p{ margin:0; color:var(--ink-1); }
 
       <div class="ds-conn-specs">
         <div class="conn-spec">
-          <div class="conn-spec-label">6 × UART</div>
+          <div class="conn-spec-label"><span data-spec="ds.uarts">6</span> × UART</div>
           <p class="conn-spec-desc">Six UART (Universal Asynchronous Receiver/Transmitter) interfaces, providing extensive flexibility for external device connectivity.</p>
         </div>
         <div class="conn-spec">
-          <div class="conn-spec-label">2 × GPIO</div>
+          <div class="conn-spec-label"><span data-spec="ds.gpio">2</span> × GPIO</div>
           <p class="conn-spec-desc">Two GPIO (General-Purpose Input/Output) pins on the drone stack, configurable to the desired application or user requirements.</p>
         </div>
         <div class="conn-spec">
@@ -570,19 +577,19 @@ p{ margin:0; color:var(--ink-1); }
         <div class="ds-conn-specs">
           <div class="esc-lead-block">
             <span class="esc-lead-mark">[ FC + ESC ]</span>
-            <p class="esc-lead">Combined with the NAS Flight Controller (FC), this ESC provides complete situational awareness, precise control, and exceptional stability in flight — even under the harshest conditions. Together, they form a combination that is <span class="accent">second to none</span>.</p>
+            <p class="esc-lead">Combined with the NAS Flight Controller (FC), this ESC completes the stack: the FC carries the sensing, link and logging; the ESC carries the current. Together they form a single stack with <span class="accent">one power path and one signal path</span> — fewer interfaces and known behaviour under load.</p>
           </div>
           <div class="conn-spec">
             <div class="conn-spec-label">Agility</div>
-            <p class="conn-spec-desc">This ESC is engineered for rapid maneuvering, seamless response to a wide range of control inputs, and outstanding flight stability.</p>
+            <p class="conn-spec-desc">Digital motor control over DSHOT on all four outputs — checksummed throttle commands, no analogue calibration, no drift over time.</p>
           </div>
           <div class="conn-spec">
             <div class="conn-spec-label">Power</div>
-            <p class="conn-spec-desc">Engineered for high-current and high-voltage operation, this ESC reliably handles even the most demanding control inputs and flight conditions.</p>
+            <p class="conn-spec-desc">Three variants — <span data-spec="ds.currents.0">65A</span>, <span data-spec="ds.currents.1">100A</span> and <span data-spec="ds.currents.2">200A</span> maximum continuous current — rated for sustained operation, not burst figures.</p>
           </div>
           <div class="conn-spec">
             <div class="conn-spec-label">Flexibility</div>
-            <p class="conn-spec-desc">For maximum flexibility and adaptability, the ESC supports both 4S and 6S batteries.</p>
+            <p class="conn-spec-desc">Runs on both <span data-spec="ds.cellCounts.0">4S</span> and <span data-spec="ds.cellCounts.1">6S</span> batteries across a <span data-spec="ds.inputRange">12–26V</span> input range — one stack, no reconfiguration between packs.</p>
           </div>
         </div>
       </div>
@@ -598,7 +605,7 @@ p{ margin:0; color:var(--ink-1); }
       <div class="ds-inflight ds-fieldtest" id="ds-fieldtest">
         <video class="ds-ft-video" id="ds-ft-video"
                poster="/assets/dronestack-poster.jpg"
-               preload="metadata" playsinline>
+               preload="metadata" playsinline webkit-playsinline>
           <source src="/assets/dronestack-video.mp4" type="video/mp4">
         </video>
         <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
@@ -617,7 +624,7 @@ p{ margin:0; color:var(--ink-1); }
         <figcaption class="ds-quote-attr">
           <div class="ds-quote-divider" aria-hidden="true"></div>
           <div class="ds-quote-name">Henri Christensen</div>
-          <div class="ds-quote-role">CEO, Kolibri Drones Ltd.</div>
+          <div class="ds-quote-role">CEO, Kolibri Defence</div>
           <div class="ds-quote-sub">Finnish dual-use FPV drone design house and manufacturer.</div>
         </figcaption>
       </figure>

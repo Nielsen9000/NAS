@@ -15,3 +15,48 @@ node_modules/
 .idea/
 .vscode/
 Thumbs.db
+
+# Dev / build scratch (screenshots, temp PDF/PPTX build dirs)
+.screenshots/
+.tmp_pdf/
+.tmp_pptx/
+.intel-shots/
+.intel-shot.mjs
+
+# Working intermediates from image generation
+assets/fragment
+assets/fragment (1)
+assets/fragment.png
+assets/hero-loop-original.mp4
+assets/nas_deck_complete.tar.gz
+
+# Heavy binary deliverables — kept locally as backup, regenerable, not versioned
+*.pptx
+*.pdf
+*.docx
+*.zip
+*.tar.gz
+LOGER/
+NAS LOGO.png
+qrkode*.jpeg
+qrkode*.jpg
+
+# Unreferenced source video clips (working files, not used on the live site)
+assets/Kolibri video med FC NAS.mp4
+
+# Large unused source images (kept locally, not referenced by any page)
+assets/tyr-test-rig.jpg
+assets/Droner.png
+assets/motor_blueprint_extracted.png
+
+# brand/ generated roll-up output — regenerable via build_rollup.mjs, not versioned.
+# (*.pdf is already covered above.) Scoped to rollup-* on purpose: the business
+# card PNG previews are small, reviewable in a diff, and stay tracked.
+brand/rollup-*.png
+brand/rollup-*.jpg
+brand/rollup-*.html
+brand/rollup-*.svg
+
+# brand/ per-build datasheet summaries — written by build_datasheet_dronestack.mjs
+# so --both can compare the two language variants. Regenerated every run.
+brand/.datasheet-report-*.json
