@@ -30,6 +30,7 @@ import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
 import { chromium } from '../.screenshots/node_modules/playwright/index.mjs';
 import { toPdfxCmyk } from './pdfx_vector_cmyk.mjs';
+import { DRONE_STACK } from './specs.mjs';
 
 const require = createRequire(import.meta.url);
 const sharp = require('sharp');
@@ -90,11 +91,35 @@ const fit = (where, msg, detail) => FIT.push({ where, msg, detail });
 const LANG = (process.argv.find(a => a.startsWith('--lang=')) || '--lang=en').split('=')[1];
 if (!['en', 'uk'].includes(LANG)) throw new Error(`unknown --lang=${LANG} — want en or uk`);
 
-// Must appear in the finished PDF in Latin script, in every language.
+// ---------------------------------------------------------------------------
+// FIGURES — every measured value in this document, written down exactly once.
+//
+// A datasheet that states a current rating in two places has two chances to be
+// wrong, and translation multiplies that: before this block the 65A rating
+// appeared in four literals across two languages, and the only thing keeping
+// them equal was that somebody remembered. Now each language composes its
+// sentences around these values instead of restating them, so a figure can only
+// be changed here — and assertNumericParity() proves at build time that no
+// language has smuggled a different number into its own copy.
+//
+// Descriptive words stay in the locale. Numbers do not live there.
+// ---------------------------------------------------------------------------
+// The values themselves live in brand/specs.mjs — ONE source shared with the
+// engine datasheet build and with the website (brand/build_site_specs.mjs), so
+// a corrected figure lands in every PDF and every page from a single edit.
+const F = { ...DRONE_STACK };
+// Derived forms, so the composed strings are also single-source.
+F.cells        = F.cellCounts.join(' / ');           // 4S / 6S
+F.currentRow   = F.currents.join(' / ');             // 65A / 100A / 200A
+F.inputVoltage = `${F.cells} · ${F.inputRange}`;     // 4S / 6S · 12–26V
+
+// Must appear in the finished PDF in Latin script, in every language. The
+// numeric ones are read from F rather than restated, so this list cannot drift
+// away from the document it is checking.
 const LATIN_TOKENS = [
-  'STM32F405', 'STM32F051', 'ICM-42688-P', 'DSHOT', 'ELRS', 'I2C', 'SBUS', 'IBUS',
+  F.fcMcu, F.escMcu, F.imu, 'DSHOT', 'ELRS', 'I2C', 'SBUS', 'IBUS',
   'CRSF', 'UART', 'GPIO', 'SPI', 'NDAA', 'NAS', 'ESC', 'FC', 'VTX', 'RC', 'GPS',
-  '4S', '6S', '65A', '100A', '200A', 'Mbit',
+  ...F.cellCounts, ...F.currents, 'Mbit',
 ];
 
 const LOCALES = {
@@ -135,26 +160,29 @@ const LOCALES = {
             'logging; the ESC carries the current. Built exclusively from certified ' +
             'components.',
       bullets: [
-        ['Flight controller', 'STM32F405 with a 6-axis ICM-42688-P IMU and six UARTs.'],
-        ['4-in-1 ESC', 'STM32F051, DSHOT motor output, 4S / 6S operation across a 12–26V input range.'],
+        ['Flight controller', `${F.fcMcu} with a ${F.imuAxes}-axis ${F.imu} IMU and six UARTs.`],
+        ['4-in-1 ESC', `${F.escMcu}, DSHOT motor output, ${F.cells} operation across a ${F.inputRange} input range.`],
       ],
       variantsLabel: 'Three current variants',
-      variants: ['65A', '100A', '200A'],
+      variants: F.currents,
       variantsNote: 'Maximum continuous current',
     },
     specs: [
-      ['Max continuous current', '65A / 100A / 200A'],
-      ['Input voltage',          '4S / 6S · 12–26V'],
-      ['Flight controller MCU',  'STM32F405'],
-      ['ESC MCU',                'STM32F051'],
-      ['IMU',                    'ICM-42688-P, 6-axis'],
-      ['Blackbox',               '128 Mbit integrated SPI flash'],
-      ['UART',                   '6 × (VTX, RC, ESC telemetry, GPS)'],
-      ['GPIO',                   '2 × configurable'],
-      ['Protocols',              'ELRS · I2C · SBUS / IBUS / CRSF'],
-      ['Camera',                 'Dual, 5V and 12V up to 2A'],
+      ['Max continuous current', F.currentRow],
+      ['Input voltage',          F.inputVoltage],
+      ['Flight controller MCU',  F.fcMcu],
+      ['ESC MCU',                F.escMcu],
+      ['IMU',                    `${F.imu}, ${F.imuAxes}-axis`],
+      ['Blackbox',               `${F.blackbox} integrated SPI flash`],
+      ['UART',                   `${F.uarts} × (VTX, RC, ESC telemetry, GPS)`],
+      ['GPIO',                   `${F.gpio} × configurable`],
+      ['Protocols',              F.protocols],
+      ['Camera',                 `Dual, ${F.cameraRails[0]} and ${F.cameraRails[1]} up to ${F.railMax}`],
+      // "quad", not "4": the Ukrainian says "чотири канали" for the same reason.
+      // A count spelled as a word in one language and a digit in the other would
+      // trip assertNumericParity, and correctly so — it IS a divergence.
       ['Motor output',           'DSHOT, quad'],
-      ['Power rails',            '5V / 12V selectable, up to 2A'],
+      ['Power rails',            `${F.rails} selectable, up to ${F.railMax}`],
     ],
     diagrams: [
       { n: '03', title: 'Pinout reference', src: 'assets/fragment.png', redact: true,
@@ -217,29 +245,32 @@ const LOCALES = {
             'двигунів в одному стеку. FC відповідає за датчики, зв’язок і журналювання; ' +
             'ESC — за струм. Зібрано виключно із сертифікованих компонентів.',
       bullets: [
-        ['Політний контролер', 'STM32F405 з 6-осьовим IMU ICM-42688-P та шістьма UART.'],
-        ['4-in-1 ESC', 'STM32F051, вихід DSHOT на двигуни, робота 4S / 6S у діапазоні входу 12–26V.'],
+        ['Політний контролер', `${F.fcMcu} з ${F.imuAxes}-осьовим IMU ${F.imu} та шістьма UART.`],
+        ['4-in-1 ESC', `${F.escMcu}, вихід DSHOT на двигуни, робота ${F.cells} у діапазоні входу ${F.inputRange}.`],
       ],
       variantsLabel: 'Три струмові варіанти',
-      variants: ['65A', '100A', '200A'],
+      variants: F.currents,
       variantsNote: 'Максимальний тривалий струм',
     },
     specs: [
-      ['Макс. тривалий струм',     '65A / 100A / 200A'],
-      ['Вхідна напруга',           '4S / 6S · 12–26V'],
-      ['MCU політного контролера', 'STM32F405'],
-      ['MCU ESC',                  'STM32F051'],
-      ['IMU',                      'ICM-42688-P, 6 осей'],
+      ['Макс. тривалий струм',     F.currentRow],
+      ['Вхідна напруга',           F.inputVoltage],
+      ['MCU політного контролера', F.fcMcu],
+      ['MCU ESC',                  F.escMcu],
+      ['IMU',                      `${F.imu}, ${F.imuAxes} осей`],
       // Blackbox stays Latin: it is the feature's name in Betaflight and it is
       // what Ukrainian FPV documentation calls it. Translating it to "чорна
       // скринька" would make the row harder to match against the firmware UI.
-      ['Blackbox',                 '128 Mbit, вбудована SPI flash'],
-      ['UART',                     '6 × (VTX, RC, телеметрія ESC, GPS)'],
-      ['GPIO',                     '2 × налаштовувані'],
-      ['Протоколи',                'ELRS · I2C · SBUS / IBUS / CRSF'],
-      ['Камера',                   'Дві, 5V і 12V до 2A'],
-      ['Вихід на двигуни',         'DSHOT, 4 канали'],
-      ['Лінії живлення',           '5V / 12V на вибір, до 2A'],
+      ['Blackbox',                 `${F.blackbox}, вбудована SPI flash`],
+      ['UART',                     `${F.uarts} × (VTX, RC, телеметрія ESC, GPS)`],
+      ['GPIO',                     `${F.gpio} × налаштовувані`],
+      ['Протоколи',                F.protocols],
+      ['Камера',                   `Дві, ${F.cameraRails[0]} і ${F.cameraRails[1]} до ${F.railMax}`],
+      // "чотири канали", spelled out, to mirror the English "quad". Writing it
+      // as "4 канали" would put a digit in one language and a word in the other
+      // for the same count — exactly what assertNumericParity exists to catch.
+      ['Вихід на двигуни',         'DSHOT, чотири канали'],
+      ['Лінії живлення',           `${F.rails} на вибір, до ${F.railMax}`],
     ],
     diagrams: [
       { n: '03', title: 'Призначення виводів', src: 'assets/fragment.png', redact: true,
@@ -254,10 +285,10 @@ const LOCALES = {
       { n: '04', title: 'Схема підключення', src: 'assets/ESC.jpeg',
         caption: '4-in-1 ESC — підключення двигунів, акумулятора та FC',
         key: [
-          ['XT60 Power Cable',         'Кабель живлення XT60'],
-          ['1500uF Low ESR Capacitor', 'Конденсатор 1500uF, низький ESR'],
-          ['Motor 1–4',                'Двигуни 1–4'],
-          ['Extra Power',              'Додаткове живлення'],
+          [`${F.battConnector} Power Cable`,         `Кабель живлення ${F.battConnector}`],
+          [`${F.capacitor} Low ESR Capacitor`,       `Конденсатор ${F.capacitor}, низький ESR`],
+          [`Motor 1–${F.motorOutputs}`,              `Двигуни 1–${F.motorOutputs}`],
+          ['Extra Power',                             'Додаткове живлення'],
         ] },
     ],
     omittedSpecs: ['Габаритні розміри', 'Розташування монтажних отворів', 'Робоча температура'],
@@ -1165,6 +1196,74 @@ function assertTextFidelity(pdfPath, total) {
 const CYR = /[\u0400-\u04FF]/;
 const LAT = /[A-Za-z]/;
 
+// ---------------------------------------------------------------------------
+// NUMERIC PARITY — the same figures in every language, byte for byte
+// ---------------------------------------------------------------------------
+// Composing both locales from F makes divergence hard; this makes it visible.
+// The check runs on EVERY build, not only under --both, because both locales
+// are in memory in every process — so building only the Ukrainian sheet still
+// proves it agrees with the English one.
+//
+// A "numeric token" is a run of digits with whatever unit or range is welded to
+// it: 65A, 12–26V, 1500uF, 2A, 128, 6. Part numbers decompose oddly (STM32F405
+// yields 32F and 405) but they decompose IDENTICALLY in both languages, which
+// is all this needs to be true.
+//
+// Descriptive text is excluded by construction — only the fields below are
+// scanned, and a Ukrainian sentence is free to be any length it likes as long
+// as the numbers inside it are the English numbers. Diagram keys are excluded
+// because English has none; they get their own check, pair by pair.
+const NUM_TOKEN = /\d+(?:[.,]\d+)*(?:[–-]\d+)*(?:[A-Za-z]+)?/g;
+
+function numericTokens(loc) {
+  const strings = [
+    loc.hero.eyebrow, loc.hero.titleMain, loc.hero.titleTail,
+    loc.hero.standfirst, loc.hero.ndaa,
+    loc.overview.lead, loc.overview.variantsLabel, loc.overview.variantsNote,
+    ...loc.overview.variants, ...loc.overview.bullets.flat(),
+    ...loc.specs.flat(),
+    ...loc.diagrams.map(d => d.title), ...loc.diagrams.map(d => d.caption),
+    loc.omittedNote, loc.sections.overview, loc.sections.specs,
+  ];
+  const out = [];
+  for (const str of strings) out.push(...(String(str).match(NUM_TOKEN) || []));
+  return out.sort();
+}
+
+function assertNumericParity(locales) {
+  const langs = Object.keys(locales);
+  const base = langs[0];
+  const baseTokens = numericTokens(locales[base]);
+  const problems = [];
+  for (const lang of langs.slice(1)) {
+    const got = numericTokens(locales[lang]);
+    if (got.join('\u0000') === baseTokens.join('\u0000')) continue;
+    // Report the actual difference, both directions, rather than "they differ".
+    const count = (arr) => arr.reduce((m, t) => m.set(t, (m.get(t) || 0) + 1), new Map());
+    const a = count(baseTokens), b = count(got);
+    for (const [t, n] of a)
+      if ((b.get(t) || 0) !== n)
+        problems.push(`"${t}" appears ${n}× in ${base} but ${b.get(t) || 0}× in ${lang}`);
+    for (const [t, n] of b)
+      if (!a.has(t)) problems.push(`"${t}" appears ${n}× in ${lang} but never in ${base}`);
+  }
+  return { problems, count: baseTokens.length, tokens: baseTokens };
+}
+
+// The diagram keys quote a label off the artwork and translate it. Whatever
+// numbers are in the English side must be in the Ukrainian side: "Motor 1–4"
+// must not become "Двигуни 1–3".
+function assertKeyNumericParity(loc) {
+  const bad = [];
+  for (const d of loc.diagrams)
+    for (const [en, tr] of d.key || []) {
+      const a = (en.match(NUM_TOKEN) || []).sort().join(' ');
+      const b = (tr.match(NUM_TOKEN) || []).sort().join(' ');
+      if (a !== b) bad.push(`key "${en}" → "${tr}": [${a}] vs [${b}]`);
+    }
+  return bad;
+}
+
 function assertNoHomoglyphs(strings) {
   const bad = [];
   for (const str of strings) {
@@ -1411,6 +1510,23 @@ async function build() {
     ...DIAGRAMS.flatMap(d => (d.key || []).flat()),
     OMITTED_NOTE, ...OMITTED_SPECS,
   ];
+  // ---- numeric parity across every language ------------------------------
+  const parity = assertNumericParity(LOCALES);
+  console.log(`\nNumeric parity (${Object.keys(LOCALES).join(' vs ')}): ` +
+    `${parity.count} numeric tokens, ` +
+    `${parity.problems.length === 0 ? 'byte-identical in every language' : parity.problems.length + ' DIVERGENT'}`);
+  if (parity.problems.length) {
+    parity.problems.forEach(m => console.log('    · ' + m));
+    throw new Error('Numeric values differ between language variants. Every figure ' +
+      'must come from F (see FIGURES) — a number written into a locale is a bug.');
+  }
+
+  const keyParity = assertKeyNumericParity(L);
+  if (keyParity.length) {
+    keyParity.forEach(m => console.log('    · ' + m));
+    throw new Error('A diagram key translates a label but not its numbers.');
+  }
+
   const homoglyphs = assertNoHomoglyphs(allStrings);
   console.log(`\nScript integrity (${LANG}): ` +
     `${allStrings.length} strings scanned, ` +
@@ -1448,7 +1564,10 @@ async function build() {
     console.log('preview PNGs: brand/ds-dronestack' + (LANG === 'en' ? '' : '-' + LANG) + '-p1..' + TOTAL + '.png');
   }
 
-  const rgbPath = path.join(repoRoot, `${DOC.outBase}_RGB.pdf`);
+  // Deliverables land directly in DATASHEETS/ — nothing to move by hand.
+  const outDir = path.join(repoRoot, 'DATASHEETS');
+  await fs.mkdir(outDir, { recursive: true });
+  const rgbPath = path.join(outDir, `${DOC.outBase}_RGB.pdf`);
   await page.pdf({
     path: rgbPath, format: 'A4', printBackground: true, preferCSSPageSize: true,
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
@@ -1534,7 +1653,7 @@ async function build() {
   if (RGB_ONLY) { console.log('\n--rgb-only: stopping before the CMYK pass.'); return; }
 
   // ---- PDF/X CMYK, text preserved ----
-  const cmykPath = path.join(repoRoot, `${DOC.outBase}_CMYK.pdf`);
+  const cmykPath = path.join(outDir, `${DOC.outBase}_CMYK.pdf`);
   const info = await toPdfxCmyk({
     inPath: rgbPath, outPath: cmykPath,
     title: `${DOC.title} — ${DOC.id} Rev ${DOC.revision}`,
@@ -1564,6 +1683,7 @@ async function build() {
     fonts: fontCheck.fonts.map(f => f.family),
     forbidden: L.forbidFonts,
     fitFired: FIT.length,
+    numericTokens: parity.tokens,
     freeAboveFooterMm: layout.map(x => +x.freeAboveFooterMm.toFixed(1)),
     sealClearMm: layout.find(x => x.stampPresent)?.stampClearOfBandMm ?? null,
     panels: panels.map(x => ({ page: x.page, w: x.widthMm, h: x.heightMm, centre: x.centreMm })),
@@ -1613,6 +1733,7 @@ function compareVariants() {
     ['widest spec label',    en.widestLabelMm + 'mm', uk.widestLabelMm + 'mm'],
     ['',                     '"' + en.widestLabel + '"', '"' + uk.widestLabel + '"'],
     ['tightest label gap',   en.tightestGapMm + 'mm', uk.tightestGapMm + 'mm'],
+    ['numeric tokens',       en.numericTokens.length + ' tokens', uk.numericTokens.length + ' tokens'],
     ['diagram width',        en.imgWidthMm + 'mm',   uk.imgWidthMm + 'mm'],
     ['p2 panel 1',           en.panels[0].w + ' × ' + en.panels[0].h + 'mm', uk.panels[0].w + ' × ' + uk.panels[0].h + 'mm'],
     ['p2 panel 2',           en.panels[1].w + ' × ' + en.panels[1].h + 'mm', uk.panels[1].w + ' × ' + uk.panels[1].h + 'mm'],
@@ -1654,6 +1775,11 @@ function compareVariants() {
   if (en.revision !== uk.revision) problems.push('revisions differ');
   if (uk.docId !== en.docId + '-UA') problems.push(`uk document number is ${uk.docId}, expected ${en.docId}-UA`);
   if (uk.fonts.includes('SpaceGrotesk')) problems.push('Space Grotesk reached the Ukrainian PDF');
+  // Belt and braces: each build already proved this in-process against every
+  // locale, but this compares what the two builds actually emitted.
+  if (en.numericTokens.join('\u0000') !== uk.numericTokens.join('\u0000'))
+    problems.push('numeric tokens differ between the two builds: ' +
+      `en [${en.numericTokens.join(' ')}] vs uk [${uk.numericTokens.join(' ')}]`);
   for (const [lang, r] of [['en', en], ['uk', uk]])
     if (Math.abs(r.panels[0].centre - r.panels[1].centre) > 0.15)
       problems.push(`${lang}: the two panels on page 2 do not share a centre ` +

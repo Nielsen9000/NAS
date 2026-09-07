@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Drone Stack — Intelligent Solutions — Nordic Advanced Systems</title>
-<meta name="description" content="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: 65A, 100A and 200A." />
+<meta name="description" data-spec-tpl="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: {ds.currents.0}, {ds.currents.1} and {ds.currents.2}." content="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: 65A, 100A and 200A." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -455,7 +455,7 @@ p{ margin:0; color:var(--ink-1); }
       <div class="ds-hero-inner reveal">
         <div class="section-eyebrow">/ INTELLIGENT — DRONE STACK</div>
         <h1 class="ds-hero-headline">The brain of<br><span class="accent">the aircraft</span></h1>
-        <p class="ds-hero-tagline">A flight controller in a class of its own, unmatched by its competitors. Built exclusively from certified components, designed and manufactured in Europe.</p>
+        <p class="ds-hero-tagline">A flight controller engineered for continuous operation. Built exclusively from certified components, designed and manufactured in Europe.</p>
         <div class="ds-badges">
           <span class="ds-badge">NDAA COMPLIANT</span>
         </div>
@@ -484,7 +484,7 @@ p{ margin:0; color:var(--ink-1); }
 
     <div class="wrap ds-hero-rail">
       <div class="ds-hero-specs" aria-hidden="true">
-        <span>6× UART</span><span>2× GPIO</span><span>ELRS</span><span>I2C</span><span>NDAA-CERTIFIED SILICON</span>
+        <span><span data-spec="ds.uarts">6</span>× UART</span><span><span data-spec="ds.gpio">2</span>× GPIO</span><span>ELRS</span><span>I2C</span><span>NDAA-COMPLIANT SILICON</span>
       </div>
       <a class="ds-scroll-cue" href="#connectivity">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
     </div>
@@ -514,11 +514,11 @@ p{ margin:0; color:var(--ink-1); }
 
       <div class="ds-conn-specs">
         <div class="conn-spec">
-          <div class="conn-spec-label">6 × UART</div>
+          <div class="conn-spec-label"><span data-spec="ds.uarts">6</span> × UART</div>
           <p class="conn-spec-desc">Six UART (Universal Asynchronous Receiver/Transmitter) interfaces, providing extensive flexibility for external device connectivity.</p>
         </div>
         <div class="conn-spec">
-          <div class="conn-spec-label">2 × GPIO</div>
+          <div class="conn-spec-label"><span data-spec="ds.gpio">2</span> × GPIO</div>
           <p class="conn-spec-desc">Two GPIO (General-Purpose Input/Output) pins on the drone stack, configurable to the desired application or user requirements.</p>
         </div>
         <div class="conn-spec">
@@ -577,19 +577,19 @@ p{ margin:0; color:var(--ink-1); }
         <div class="ds-conn-specs">
           <div class="esc-lead-block">
             <span class="esc-lead-mark">[ FC + ESC ]</span>
-            <p class="esc-lead">Combined with the NAS Flight Controller (FC), this ESC provides complete situational awareness, precise control, and exceptional stability in flight — even under the harshest conditions. Together, they form a combination that is <span class="accent">second to none</span>.</p>
+            <p class="esc-lead">Combined with the NAS Flight Controller (FC), this ESC completes the stack: the FC carries the sensing, link and logging; the ESC carries the current. Together they form a single stack with <span class="accent">one power path and one signal path</span> — fewer interfaces and known behaviour under load.</p>
           </div>
           <div class="conn-spec">
             <div class="conn-spec-label">Agility</div>
-            <p class="conn-spec-desc">This ESC is engineered for rapid maneuvering, seamless response to a wide range of control inputs, and outstanding flight stability.</p>
+            <p class="conn-spec-desc">Digital motor control over DSHOT on all four outputs — checksummed throttle commands, no analogue calibration, no drift over time.</p>
           </div>
           <div class="conn-spec">
             <div class="conn-spec-label">Power</div>
-            <p class="conn-spec-desc">Engineered for high-current and high-voltage operation, this ESC reliably handles even the most demanding control inputs and flight conditions.</p>
+            <p class="conn-spec-desc">Three variants — <span data-spec="ds.currents.0">65A</span>, <span data-spec="ds.currents.1">100A</span> and <span data-spec="ds.currents.2">200A</span> maximum continuous current — rated for sustained operation, not burst figures.</p>
           </div>
           <div class="conn-spec">
             <div class="conn-spec-label">Flexibility</div>
-            <p class="conn-spec-desc">For maximum flexibility and adaptability, the ESC supports both 4S and 6S batteries.</p>
+            <p class="conn-spec-desc">Runs on both <span data-spec="ds.cellCounts.0">4S</span> and <span data-spec="ds.cellCounts.1">6S</span> batteries across a <span data-spec="ds.inputRange">12–26V</span> input range — one stack, no reconfiguration between packs.</p>
           </div>
         </div>
       </div>
@@ -624,7 +624,7 @@ p{ margin:0; color:var(--ink-1); }
         <figcaption class="ds-quote-attr">
           <div class="ds-quote-divider" aria-hidden="true"></div>
           <div class="ds-quote-name">Henri Christensen</div>
-          <div class="ds-quote-role">CEO, Kolibri Drones Ltd.</div>
+          <div class="ds-quote-role">CEO, Kolibri Defence</div>
           <div class="ds-quote-sub">Finnish dual-use FPV drone design house and manufacturer.</div>
         </figcaption>
       </figure>
