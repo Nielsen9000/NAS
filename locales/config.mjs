@@ -23,4 +23,4 @@ export const UK_NOINDEX = true;
 //          complete, proofread, and deployed to production.
 // Generated /uk/ pages always show the switcher (they only exist on builds
 // where /uk/ exists).
-export const UK_SWITCHER_LIVE = false;
+export const UK_SWITCHER_LIVE = true;

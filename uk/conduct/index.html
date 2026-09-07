@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Code of Conduct — Nordic Advanced Systems</title>
-<meta name="description" content="Nordic Advanced Systems Code of Conduct and Compliance. Ethical business conduct, quality management, data protection, and responsible operations." />
+<title>Кодекс поведінки — Nordic Advanced Systems</title>
+<meta name="description" content="Кодекс поведінки та комплаєнс Nordic Advanced Systems. Етичне ведення бізнесу, менеджмент якості, захист даних і відповідальна діяльність." />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -35,7 +36,7 @@ body{
   margin:0;
   background:var(--bg-base);
   color:var(--ink-0);
-  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;
   font-size:16px;
   line-height:1.7;
   overflow-x:hidden;
@@ -75,7 +76,7 @@ img{ display:block; max-width:100%; }
 .site-header .brand-logo img{ width:auto; height:52px; display:block; }
 .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
 .brand-wordmark{
-  font-family:"Space Grotesk",sans-serif;
+  font-family:"Inter",sans-serif;
   font-style:italic; font-weight:600; font-size:16px;
   letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
 }
@@ -364,6 +365,8 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
+<style>/* uk: the Latin brand wordmark keeps its identity face */
+.brand-wordmark{ font-family:"Space Grotesk",sans-serif; }</style>
 </head>
 <body>
 
@@ -380,30 +383,29 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+    <a class="brand" href="/uk/" aria-label="Nordic Advanced Systems — на головну" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
-      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
+    <nav class="nav" aria-label="Основна навігація" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/uk/#platforms" data-i18n="shared.platforms">Платформи</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Інтелектуальні рішення <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
-          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
-          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+          <a href="/uk/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">СТЕК FC</span></a> <a href="/uk/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Упорскування палива</span></a>
         </div>
       </div>
-      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
-      <a href="/nas">NAS</a>
-      <a href="/conduct" class="active" data-i18n="shared.conduct">Conduct</a>
-      <a href="/careers" data-i18n="shared.careers">Careers</a>
-      <a href="/contact" data-i18n="shared.contact">Contact</a>
+      <a href="/uk/engineering" data-i18n="shared.engineering">Інженерія</a>
+      <a href="/uk/nas">NAS</a>
+      <a href="/uk/conduct" class="active" data-i18n="shared.conduct">Кодекс</a>
+      <a href="/uk/careers" data-i18n="shared.careers">Кар’єра</a>
+      <a href="/uk/contact" data-i18n="shared.contact">Контакти</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="/uk/contact" data-i18n="shared.request-brief">Запросити бриф <span class="arrow" aria-hidden="true">→</span></a>
       <a class="lang-switch" id="lang-switch" href="/uk/" data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
     </div>
   </div>
@@ -415,26 +417,25 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
       <div>
         <div class="conduct-eyebrow">Nordic Advanced Systems</div>
         <h1 data-i18n="conduct.code-of-conduct-and">
-          Code of Conduct
-          <span>And Compliance</span>
+          Кодекс поведінки <span>та комплаєнс</span>
         </h1>
       </div>
       <div class="conduct-hero-meta">
         <div class="conduct-meta-item">
-          <div class="k" data-i18n="conduct.issued-by">Issued by</div>
+          <div class="k" data-i18n="conduct.issued-by">Видано</div>
           <div class="v">Nordic Advanced Systems ApS</div>
         </div>
         <div class="conduct-meta-item">
-          <div class="k" data-i18n="shared.registration">Registration</div>
+          <div class="k" data-i18n="shared.registration">Реєстрація</div>
           <div class="v">CVR. 45976645</div>
         </div>
         <div class="conduct-meta-item">
-          <div class="k" data-i18n="conduct.jurisdiction">Jurisdiction</div>
-          <div class="v" data-i18n="conduct.danish-law-eu-regulations">Danish law · EU regulations · International standards</div>
+          <div class="k" data-i18n="conduct.jurisdiction">Юрисдикція</div>
+          <div class="v" data-i18n="conduct.danish-law-eu-regulations">Данське право · Регламенти ЄС · Міжнародні стандарти</div>
         </div>
         <div class="conduct-meta-item">
-          <div class="k" data-i18n="conduct.sections">Sections</div>
-          <div class="v" data-i18n="conduct.10-principles">10 principles</div>
+          <div class="k" data-i18n="conduct.sections">Розділи</div>
+          <div class="v" data-i18n="conduct.10-principles">10 принципів</div>
         </div>
       </div>
     </div>
@@ -442,19 +443,19 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 
   <div class="wrap conduct-body">
 
-    <nav class="conduct-toc" aria-label="Table of contents" data-i18n-attrs="aria-label:conduct.table-of-contents">
-      <div class="toc-label" data-i18n="conduct.contents">Contents</div>
+    <nav class="conduct-toc" aria-label="Зміст" data-i18n-attrs="aria-label:conduct.table-of-contents">
+      <div class="toc-label" data-i18n="conduct.contents">Зміст</div>
       <ul class="toc-list">
-        <li data-i18n="conduct.ethical-business-conduct"><a href="#ethical">Ethical Business Conduct</a></li>
-        <li data-i18n="conduct.quality-continuous-improvement"><a href="#quality">Quality & Continuous Improvement</a></li>
-        <li data-i18n="conduct.data-protection-confidentiality"><a href="#data">Data Protection & Confidentiality</a></li>
-        <li data-i18n="conduct.conflicts-of-interest"><a href="#conflicts">Conflicts of Interest</a></li>
-        <li data-i18n="conduct.work-environment-diversity"><a href="#workplace">Work Environment & Diversity</a></li>
-        <li data-i18n="conduct.international-trade-compliance"><a href="#trade">International Trade Compliance</a></li>
-        <li data-i18n="conduct.responsible-supply-chain"><a href="#supply">Responsible Supply Chain</a></li>
-        <li data-i18n="conduct.human-rights-sustainability"><a href="#rights">Human Rights & Sustainability</a></li>
-        <li data-i18n="conduct.financial-integrity"><a href="#financial">Financial Integrity</a></li>
-        <li data-i18n="conduct.compliance-with-laws"><a href="#laws">Compliance with Laws</a></li>
+        <li data-i18n="conduct.ethical-business-conduct"><a href="#ethical">Етичне ведення бізнесу</a></li>
+        <li data-i18n="conduct.quality-continuous-improvement"><a href="#quality">Якість і постійне вдосконалення</a></li>
+        <li data-i18n="conduct.data-protection-confidentiality"><a href="#data">Захист даних і конфіденційність</a></li>
+        <li data-i18n="conduct.conflicts-of-interest"><a href="#conflicts">Конфлікти інтересів</a></li>
+        <li data-i18n="conduct.work-environment-diversity"><a href="#workplace">Робоче середовище та різноманіття</a></li>
+        <li data-i18n="conduct.international-trade-compliance"><a href="#trade">Дотримання правил міжнародної торгівлі</a></li>
+        <li data-i18n="conduct.responsible-supply-chain"><a href="#supply">Відповідальний ланцюг постачання</a></li>
+        <li data-i18n="conduct.human-rights-sustainability"><a href="#rights">Права людини та сталий розвиток</a></li>
+        <li data-i18n="conduct.financial-integrity"><a href="#financial">Фінансова доброчесність</a></li>
+        <li data-i18n="conduct.compliance-with-laws"><a href="#laws">Дотримання законодавства</a></li>
       </ul>
     </nav>
 
@@ -462,62 +463,62 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 
       <div class="conduct-section" id="ethical">
         <div class="conduct-section-num">/ 01</div>
-        <h2 data-i18n="conduct.ethical-business-conduct-2">Ethical Business Conduct</h2>
-        <p data-i18n="conduct.at-nas-nordic-advanced">At NAS (Nordic Advanced Systems), we are committed to conducting business with integrity, transparency, and responsibility. We follow all applicable laws and internal policies to ensure that we operate according to the highest ethical standards. We do not tolerate any form of bribery, corruption, facilitation payments, or improper advantage.</p>
+        <h2 data-i18n="conduct.ethical-business-conduct-2">Етичне ведення бізнесу</h2>
+        <p data-i18n="conduct.at-nas-nordic-advanced">У NAS (Nordic Advanced Systems) ми зобов’язуємося вести бізнес доброчесно, прозоро та відповідально. Ми дотримуємося всіх застосовних законів і внутрішніх політик, щоб діяти відповідно до найвищих етичних стандартів. Ми не толеруємо жодних форм хабарництва, корупції, платежів за спрощення процедур чи неправомірної вигоди.</p>
       </div>
 
       <div class="conduct-section" id="quality">
         <div class="conduct-section-num">/ 02</div>
-        <h2 data-i18n="conduct.quality-and-continuous-improvement">Quality and Continuous Improvement</h2>
-        <p data-i18n="conduct.we-operate-under-a">We operate under a self-developed and certified Quality Management System (QMS), which ensures that our products and services meet the highest quality standards. The QMS is based on continuous improvement, audits, and strict quality control. This ensures that we consistently deliver reliable and high-performing solutions to our partners.</p>
+        <h2 data-i18n="conduct.quality-and-continuous-improvement">Якість і постійне вдосконалення</h2>
+        <p data-i18n="conduct.we-operate-under-a">Ми працюємо за власно розробленою та сертифікованою системою менеджменту якості (QMS), яка гарантує, що наші продукти й послуги відповідають найвищим стандартам якості. QMS ґрунтується на постійному вдосконаленні, аудитах і суворому контролі якості. Це забезпечує стабільне постачання надійних і високоефективних рішень нашим партнерам.</p>
       </div>
 
       <div class="conduct-section" id="data">
         <div class="conduct-section-num">/ 03</div>
-        <h2 data-i18n="conduct.data-protection-and-confidentiality">Data Protection and Confidentiality</h2>
-        <p data-i18n="conduct.we-handle-all-data">We handle all data with great care and in compliance with applicable data protection regulations, including GDPR. Confidentiality is a fundamental principle at NAS, and we ensure that information from partners, employees, and stakeholders is treated with the highest level of security and discretion.</p>
+        <h2 data-i18n="conduct.data-protection-and-confidentiality">Захист даних і конфіденційність</h2>
+        <p data-i18n="conduct.we-handle-all-data">Ми поводимося з усіма даними з великою обережністю та відповідно до застосовних норм захисту даних, включно з GDPR. Конфіденційність — фундаментальний принцип NAS, і ми гарантуємо, що інформація партнерів, працівників і зацікавлених сторін обробляється з найвищим рівнем безпеки та обачності.</p>
       </div>
 
       <div class="conduct-section" id="conflicts">
         <div class="conduct-section-num">/ 04</div>
-        <h2 data-i18n="conduct.conflicts-of-interest-2">Conflicts of Interest</h2>
-        <p data-i18n="conduct.employees-and-representatives-of">Employees and representatives of NAS must avoid situations where personal interests conflict with company interests. Any potential conflict must be reported immediately so that an appropriate and transparent solution can be found.</p>
+        <h2 data-i18n="conduct.conflicts-of-interest-2">Конфлікти інтересів</h2>
+        <p data-i18n="conduct.employees-and-representatives-of">Працівники та представники NAS мають уникати ситуацій, у яких особисті інтереси суперечать інтересам компанії. Про будь-який потенційний конфлікт слід негайно повідомити, щоб знайти належне та прозоре рішення.</p>
       </div>
 
       <div class="conduct-section" id="workplace">
         <div class="conduct-section-num">/ 05</div>
-        <h2 data-i18n="conduct.work-environment-diversity-and">Work Environment, Diversity, and Respect</h2>
-        <p data-i18n="conduct.nas-strives-to-create">NAS strives to create an inclusive, safe, and respectful workplace for all employees. Discrimination, harassment, or bullying are not tolerated. We promote equal opportunities regardless of nationality, gender, age, or background. As an international company, we value the diversity of our global team and ensure that all employees are onboarded and employed in accordance with Danish law and international labor standards.</p>
+        <h2 data-i18n="conduct.work-environment-diversity-and">Робоче середовище, різноманіття та повага</h2>
+        <p data-i18n="conduct.nas-strives-to-create">NAS прагне створити інклюзивне, безпечне та шанобливе робоче середовище для всіх працівників. Дискримінація, домагання чи цькування не толеруються. Ми забезпечуємо рівні можливості незалежно від національності, статі, віку чи походження. Як міжнародна компанія, ми цінуємо різноманіття нашої глобальної команди та гарантуємо, що всі працівники приймаються на роботу відповідно до данського законодавства та міжнародних трудових стандартів.</p>
       </div>
 
       <div class="conduct-section" id="trade">
         <div class="conduct-section-num">/ 06</div>
-        <h2 data-i18n="conduct.international-trade-compliance-2">International Trade Compliance</h2>
-        <p data-i18n="conduct.nas-complies-with-all">NAS complies with all applicable international trade laws, customs requirements, and sanctions regimes. We ensure that all production and trade activities are carried out in alignment with EU and local regulations in the countries where we operate.</p>
+        <h2 data-i18n="conduct.international-trade-compliance-2">Дотримання правил міжнародної торгівлі</h2>
+        <p data-i18n="conduct.nas-complies-with-all">NAS дотримується всіх застосовних законів міжнародної торгівлі, митних вимог і санкційних режимів. Ми гарантуємо, що вся виробнича й торговельна діяльність здійснюється відповідно до регламентів ЄС і місцевого законодавства країн, у яких ми працюємо.</p>
       </div>
 
       <div class="conduct-section" id="supply">
         <div class="conduct-section-num">/ 07</div>
-        <h2 data-i18n="conduct.responsible-supply-chain-2">Responsible Supply Chain</h2>
-        <p data-i18n="conduct.we-expect-our-suppliers">We expect our suppliers and partners to comply with the same ethical, legal, and quality standards as NAS. We conduct due diligence in our supply chain to prevent corruption, human rights violations, and environmental harm, and we work only with responsible and reliable partners.</p>
+        <h2 data-i18n="conduct.responsible-supply-chain-2">Відповідальний ланцюг постачання</h2>
+        <p data-i18n="conduct.we-expect-our-suppliers">Ми очікуємо, що наші постачальники та партнери дотримуються тих самих етичних, правових і якісних стандартів, що й NAS. Ми проводимо належну перевірку нашого ланцюга постачання, щоб запобігати корупції, порушенням прав людини та шкоді довкіллю, і працюємо лише з відповідальними та надійними партнерами.</p>
       </div>
 
       <div class="conduct-section" id="rights">
         <div class="conduct-section-num">/ 08</div>
-        <h2 data-i18n="conduct.human-rights-and-sustainability">Human Rights and Sustainability</h2>
-        <p data-i18n="conduct.nas-is-committed-to">NAS is committed to respecting internationally recognized human rights and labor standards, including the UN Guiding Principles on Business and Human Rights. We also seek to minimize our environmental footprint and continuously work towards sustainable solutions in both production and international trade.</p>
+        <h2 data-i18n="conduct.human-rights-and-sustainability">Права людини та сталий розвиток</h2>
+        <p data-i18n="conduct.nas-is-committed-to">NAS зобов’язується поважати міжнародно визнані права людини та трудові стандарти, включно з Керівними принципами ООН з питань бізнесу та прав людини. Ми також прагнемо мінімізувати наш вплив на довкілля та постійно працюємо над сталими рішеннями як у виробництві, так і в міжнародній торгівлі.</p>
       </div>
 
       <div class="conduct-section" id="financial">
         <div class="conduct-section-num">/ 09</div>
-        <h2 data-i18n="conduct.financial-integrity-2">Financial Integrity</h2>
-        <p data-i18n="conduct.nas-is-committed-to-2">NAS is committed to financial transparency and integrity. We comply with all applicable anti-money laundering (AML) and financial regulations, ensuring that our business activities and relationships are conducted with accountability and trustworthiness.</p>
+        <h2 data-i18n="conduct.financial-integrity-2">Фінансова доброчесність</h2>
+        <p data-i18n="conduct.nas-is-committed-to-2">NAS зобов’язується дотримуватися фінансової прозорості та доброчесності. Ми виконуємо всі застосовні вимоги щодо протидії відмиванню коштів (AML) і фінансові регламенти, гарантуючи, що наша діяльність і ділові відносини ведуться відповідально та надійно.</p>
       </div>
 
       <div class="conduct-section" id="laws">
         <div class="conduct-section-num">/ 10</div>
-        <h2 data-i18n="conduct.compliance-with-laws-and">Compliance with Laws and Regulations</h2>
-        <p data-i18n="conduct.nas-complies-with-all-2">NAS complies with all relevant laws and regulations in the countries where we operate. This includes requirements for safety, health, and environmental protection. By adhering to both international and local standards, we ensure that our activities are fully aligned with responsible business practices.</p>
+        <h2 data-i18n="conduct.compliance-with-laws-and">Дотримання законодавства та регламентів</h2>
+        <p data-i18n="conduct.nas-complies-with-all-2">NAS дотримується всіх відповідних законів і регламентів у країнах, де ми працюємо. Це включає вимоги щодо безпеки, здоров’я та захисту довкілля. Дотримуючись міжнародних і місцевих стандартів, ми гарантуємо, що наша діяльність повністю відповідає практикам відповідального бізнесу.</p>
       </div>
 
     </div>
@@ -531,7 +532,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Усі права захищені.</div>
   </div>
 </footer>
 

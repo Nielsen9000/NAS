@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Drone Stack — Intelligent Solutions — Nordic Advanced Systems</title>
-<meta name="description" data-spec-tpl="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: {ds.currents.0}, {ds.currents.1} and {ds.currents.2}." content="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: 65A, 100A and 200A." />
+<title>Drone Stack — Інтелектуальні рішення — Nordic Advanced Systems</title>
+<meta name="description" data-spec-tpl="NAS Drone Stack — FPV політний стек у серці платформ БПЛА NAS. Три варіанти: {ds.currents.0}, {ds.currents.1} і {ds.currents.2}." content="NAS Drone Stack — FPV політний стек у серці платформ БПЛА NAS. Три варіанти: 65A, 100A і 200A." />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -40,7 +41,7 @@
 html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; text-rendering:optimizeLegibility; }
 body{
   margin:0; background:var(--bg-base); color:var(--ink-0);
-  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;
   font-size:16px; line-height:1.7; overflow-x:hidden;
 }
 a{ color:inherit; text-decoration:none; }
@@ -70,7 +71,7 @@ p{ margin:0; color:var(--ink-1); }
 .site-header .brand-logo{ width:auto; height:auto; background:none; border:0; border-radius:0; }
 .site-header .brand-logo img{ width:auto; height:52px; display:block; }
 .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
-.brand-wordmark{ font-family:"Space Grotesk",sans-serif; font-style:italic; font-weight:600; font-size:16px; letter-spacing:0.22em; text-transform:uppercase; color:#ffffff; }
+.brand-wordmark{ font-family:"Inter",sans-serif; font-style:italic; font-weight:600; font-size:16px; letter-spacing:0.22em; text-transform:uppercase; color:#ffffff; }
 .brand-subline{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-3); margin-top:4px; }
 .nav{ display:flex; align-items:center; gap:32px; margin-left:auto; }
 .nav a{ font-size:15px; color:var(--ink-1); font-weight:500; position:relative; padding:6px 0; transition:color .2s ease; }
@@ -418,6 +419,8 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
+<style>/* uk: the Latin brand wordmark keeps its identity face */
+.brand-wordmark{ font-family:"Space Grotesk",sans-serif; }</style>
 </head>
 <body>
 
@@ -431,30 +434,29 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+    <a class="brand" href="/uk/" aria-label="Nordic Advanced Systems — на головну" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
-      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
+    <nav class="nav" aria-label="Основна навігація" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/uk/#platforms" data-i18n="shared.platforms">Платформи</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger active" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <button class="nav-dd-trigger active" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Інтелектуальні рішення <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu" data-i18n="drone-stack.drone-stack-fc-stack">
-          <a href="/intelligence/drone-stack/" role="menuitem" class="active"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
-          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+          <a href="/uk/intelligence/drone-stack/" role="menuitem" class="active"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">СТЕК FC</span></a> <a href="/uk/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Упорскування палива</span></a>
         </div>
       </div>
-      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
-      <a href="/nas">NAS</a>
-      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
-      <a href="/careers" data-i18n="shared.careers">Careers</a>
-      <a href="/contact" data-i18n="shared.contact">Contact</a>
+      <a href="/uk/engineering" data-i18n="shared.engineering">Інженерія</a>
+      <a href="/uk/nas">NAS</a>
+      <a href="/uk/conduct" data-i18n="shared.conduct">Кодекс</a>
+      <a href="/uk/careers" data-i18n="shared.careers">Кар’єра</a>
+      <a href="/uk/contact" data-i18n="shared.contact">Контакти</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="/uk/contact" data-i18n="shared.request-brief">Запросити бриф <span class="arrow" aria-hidden="true">→</span></a>
       <a class="lang-switch" id="lang-switch" href="/uk/" data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
     </div>
   </div>
@@ -469,11 +471,11 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
     <div class="ds-hero-overlay" aria-hidden="true"></div>
     <div class="wrap">
       <div class="ds-hero-inner reveal">
-        <div class="section-eyebrow" data-i18n="drone-stack.intelligent-drone-stack">/ INTELLIGENT — DRONE STACK</div>
-        <h1 class="ds-hero-headline" data-i18n="drone-stack.the-brain-of-the">The brain of<br><span class="accent">the aircraft</span></h1>
-        <p class="ds-hero-tagline" data-i18n="drone-stack.a-flight-controller-engineered">A flight controller engineered for continuous operation, built on an NDAA-compliant European chipset.</p>
+        <div class="section-eyebrow" data-i18n="drone-stack.intelligent-drone-stack">/ ІНТЕЛЕКТУАЛЬНІ РІШЕННЯ — DRONE STACK</div>
+        <h1 class="ds-hero-headline" data-i18n="drone-stack.the-brain-of-the">Мозок<br><span class="accent">літального апарата</span></h1>
+        <p class="ds-hero-tagline" data-i18n="drone-stack.a-flight-controller-engineered">Політний контролер, розроблений для безперервної роботи, побудований на європейському чипсеті, що відповідає NDAA.</p>
         <div class="ds-badges" data-i18n="drone-stack.ndaa-compliant">
-          <span class="ds-badge">NDAA-COMPLIANT EUROPEAN CHIPSET</span>
+          <span class="ds-badge">ЄВРОПЕЙСЬКИЙ ЧИПСЕТ, ЩО ВІДПОВІДАЄ NDAA</span>
         </div>
       </div>
     </div>
@@ -500,9 +502,9 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 
     <div class="wrap ds-hero-rail">
       <div class="ds-hero-specs" aria-hidden="true" data-i18n="drone-stack.uart-gpio-elrs-i2c">
-        <span><span data-spec="ds.uarts">6</span>× UART</span><span><span data-spec="ds.gpio">2</span>× GPIO</span><span>ELRS</span><span>I2C</span><span>NDAA-COMPLIANT EUROPEAN CHIPSET</span>
+        <span><span data-spec="ds.uarts">6</span>× UART</span><span><span data-spec="ds.gpio">2</span>× GPIO</span><span>ELRS</span><span>I2C</span><span>ЄВРОПЕЙСЬКИЙ ЧИПСЕТ, ЩО ВІДПОВІДАЄ NDAA</span>
       </div>
-      <a class="ds-scroll-cue" href="#connectivity" data-i18n="drone-stack.explore-the-stack">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
+      <a class="ds-scroll-cue" href="#connectivity" data-i18n="drone-stack.explore-the-stack">Огляд стека <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
     </div>
   </section>
 
@@ -513,8 +515,8 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
        ========================================= -->
   <section class="company-section" id="connectivity">
     <div class="wrap reveal">
-      <div class="section-eyebrow" data-i18n="drone-stack.01-connectivity">/ 01 — CONNECTIVITY</div>
-      <h2 class="ds-conn-intro" data-i18n="drone-stack.flight-controller-pinout-and">Flight Controller Pinout and <span class="accent">Connectivity</span> Overview.</h2>
+      <div class="section-eyebrow" data-i18n="drone-stack.01-connectivity">/ 01 — ПІДКЛЮЧЕННЯ</div>
+      <h2 class="ds-conn-intro" data-i18n="drone-stack.flight-controller-pinout-and">Призначення виводів політного контролера та огляд <span class="accent">підключень</span>.</h2>
 
       <div class="ds-conn-layout">
       <div class="ds-conn-panel is-datasheet">
@@ -522,32 +524,32 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
         <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-        <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller-pinout-overview">FLIGHT CONTROLLER · PINOUT OVERVIEW</div>
+        <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller-pinout-overview">ПОЛІТНИЙ КОНТРОЛЕР · ПРИЗНАЧЕННЯ ВИВОДІВ</div>
         <div class="ds-conn-figure">
-          <img src="/assets/fragment.png" loading="lazy" alt="NAS flight controller pinout diagram — top and bottom board views with UART, GPIO, ELRS, I2C, camera, ESC and power connections labelled"  data-i18n-attrs="alt:drone-stack.nas-flight-controller-pinout"/>
+          <img src="/assets/fragment.png" loading="lazy" alt="Схема виводів політного контролера NAS — верхній і нижній види плати з позначеними підключеннями UART, GPIO, ELRS, I2C, камер, ESC та живлення"  data-i18n-attrs="alt:drone-stack.nas-flight-controller-pinout"/>
         </div>
       </div>
 
       <div class="ds-conn-specs">
         <div class="conn-spec">
           <div class="conn-spec-label"><span data-spec="ds.uarts">6</span> × UART</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.six-uart-universal-asynchronous">Six UART (Universal Asynchronous Receiver/Transmitter) interfaces, providing extensive flexibility for external device connectivity.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.six-uart-universal-asynchronous">Шість інтерфейсів UART (Universal Asynchronous Receiver/Transmitter) — широка гнучкість для підключення зовнішніх пристроїв.</p>
         </div>
         <div class="conn-spec">
           <div class="conn-spec-label"><span data-spec="ds.gpio">2</span> × GPIO</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.two-gpio-generalpurpose-inputoutput">Two GPIO (General-Purpose Input/Output) pins on the drone stack, configurable to the desired application or user requirements.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.two-gpio-generalpurpose-inputoutput">Два виводи GPIO (General-Purpose Input/Output) на стеку, налаштовувані під потрібне застосування чи вимоги користувача.</p>
         </div>
         <div class="conn-spec">
           <div class="conn-spec-label" data-i18n="drone-stack.ssd">SSD</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.solidstate-drive-an-internal">Solid-State Drive — an internal high-speed electronic storage drive.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.solidstate-drive-an-internal">Твердотільний накопичувач — внутрішній швидкісний електронний носій даних.</p>
         </div>
         <div class="conn-spec">
           <div class="conn-spec-label">ELRS</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.with-elrs-the-stack">With ELRS, the stack provides an ultra-fast, highly reliable, long-range and lightweight control link between the drone and the remote controller.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.with-elrs-the-stack">З ELRS стек забезпечує надшвидкий, високонадійний, далекобійний і легкий канал керування між дроном і пультом.</p>
         </div>
         <div class="conn-spec">
           <div class="conn-spec-label">I2C</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.i2c-increases-flexibility-and">I2C increases flexibility and enables communication with external components such as compasses, GPS modules, LiDAR/sonar systems, weapons systems, etc.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.i2c-increases-flexibility-and">I2C підвищує гнучкість і дає змогу спілкуватися із зовнішніми компонентами — компасами, модулями GPS, системами LiDAR/сонарами, системами озброєння тощо.</p>
         </div>
       </div>
       </div>
@@ -562,9 +564,9 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
           <span class="ndaa-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v5.4c0 4.6 3.2 7.9 7.5 9.1 4.3-1.2 7.5-4.5 7.5-9.1V5.5L12 2.5Z"/><path d="M8.7 12.2l2.4 2.4 4.4-4.6"/></svg>
           </span>
-          <h2 class="ndaa-title" data-i18n="drone-stack.ndaa-compliant-2"><span class="accent">NDAA</span> Compliant</h2>
+          <h2 class="ndaa-title" data-i18n="drone-stack.ndaa-compliant-2">Відповідає <span class="accent">NDAA</span></h2>
         </div>
-        <p class="ndaa-body" data-i18n="drone-stack.a-us-standard-that">A US standard that sets a high bar — also within NATO. The stack is built on an NDAA-compliant European chipset. Although it is US law, NDAA compliance functions today as an international security standard — many partners and defence organisations in NATO countries, including Denmark, require it.</p>
+        <p class="ndaa-body" data-i18n="drone-stack.a-us-standard-that">Американський стандарт, що задає високу планку — зокрема й у НАТО. Стек побудовано на європейському чипсеті, що відповідає NDAA. Хоча це закон США, відповідність NDAA сьогодні працює як міжнародний стандарт безпеки — її вимагає багато партнерів та оборонних організацій у країнах НАТО, включно з Данією.</p>
       </div>
     </div>
   </section>
@@ -576,7 +578,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
   <section class="company-section">
     <div class="wrap reveal">
       <div class="section-eyebrow">/ 02 — ESC</div>
-      <h2 data-i18n="drone-stack.the-muscle-behind-the">The <span class="accent">muscle</span> behind the stack</h2>
+      <h2 data-i18n="drone-stack.the-muscle-behind-the"><span class="accent">М’язи</span> стека</h2>
 
       <div class="ds-conn-layout is-mirror">
         <div class="ds-conn-panel is-datasheet">
@@ -584,28 +586,28 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
           <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="ds-conn-caption" data-i18n="drone-stack.esc-pinout-overview">ESC · PINOUT OVERVIEW</div>
+          <div class="ds-conn-caption" data-i18n="drone-stack.esc-pinout-overview">ESC · ПРИЗНАЧЕННЯ ВИВОДІВ</div>
           <div class="ds-conn-figure">
-            <img src="/assets/ESC.jpeg" loading="lazy" alt="NAS ESC pinout diagram — 4-in-1 ESC with XT60 power, low-ESR capacitor, four motor outputs and FC signal connections labelled"  data-i18n-attrs="alt:drone-stack.nas-esc-pinout-diagram"/>
+            <img src="/assets/ESC.jpeg" loading="lazy" alt="Схема виводів ESC NAS — 4-в-1 ESC з живленням XT60, конденсатором з низьким ESR, чотирма виходами на двигуни та сигнальними підключеннями FC"  data-i18n-attrs="alt:drone-stack.nas-esc-pinout-diagram"/>
           </div>
         </div>
 
         <div class="ds-conn-specs">
           <div class="esc-lead-block">
             <span class="esc-lead-mark">[ FC + ESC ]</span>
-            <p class="esc-lead" data-i18n="drone-stack.combined-with-the-nas">Combined with the NAS Flight Controller (FC), this ESC completes the stack: the FC carries the sensing, link and logging; the ESC carries the current. Together they form a single stack with <span class="accent">one power path and one signal path</span> — fewer interfaces and known behaviour under load.</p>
+            <p class="esc-lead" data-i18n="drone-stack.combined-with-the-nas">У парі з політним контролером NAS (FC) цей ESC завершує стек: FC відповідає за датчики, зв’язок і журналювання; ESC — за струм. Разом вони утворюють єдиний стек з <span class="accent">одним силовим і одним сигнальним трактом</span> — менше інтерфейсів і відома поведінка під навантаженням.</p>
           </div>
           <div class="conn-spec">
-            <div class="conn-spec-label" data-i18n="drone-stack.agility">Agility</div>
-            <p class="conn-spec-desc" data-i18n="drone-stack.digital-motor-control-over">Digital motor control over DSHOT on all four outputs — checksummed throttle commands, no analogue calibration, no drift over time.</p>
+            <div class="conn-spec-label" data-i18n="drone-stack.agility">Маневреність</div>
+            <p class="conn-spec-desc" data-i18n="drone-stack.digital-motor-control-over">Цифрове керування двигунами через DSHOT на всіх чотирьох виходах — команди газу з контрольними сумами, без аналогового калібрування та дрейфу з часом.</p>
           </div>
           <div class="conn-spec">
-            <div class="conn-spec-label" data-i18n="drone-stack.power">Power</div>
-            <p class="conn-spec-desc" data-i18n="drone-stack.three-variants-and-maximum">Three variants — <span data-spec="ds.currents.0">65A</span>, <span data-spec="ds.currents.1">100A</span> and <span data-spec="ds.currents.2">200A</span> maximum continuous current — rated for sustained operation, not burst figures.</p>
+            <div class="conn-spec-label" data-i18n="drone-stack.power">Потужність</div>
+            <p class="conn-spec-desc" data-i18n="drone-stack.three-variants-and-maximum">Три варіанти — <span data-spec="ds.currents.0">65A</span>, <span data-spec="ds.currents.1">100A</span> і <span data-spec="ds.currents.2">200A</span> максимального тривалого струму — розраховані на тривалу роботу, а не пікові цифри.</p>
           </div>
           <div class="conn-spec">
-            <div class="conn-spec-label" data-i18n="drone-stack.flexibility">Flexibility</div>
-            <p class="conn-spec-desc" data-i18n="drone-stack.runs-on-both-and">Runs on both <span data-spec="ds.cellCounts.0">4S</span> and <span data-spec="ds.cellCounts.1">6S</span> batteries across a <span data-spec="ds.inputRange">12–26V</span> input range — one stack, no reconfiguration between packs.</p>
+            <div class="conn-spec-label" data-i18n="drone-stack.flexibility">Гнучкість</div>
+            <p class="conn-spec-desc" data-i18n="drone-stack.runs-on-both-and">Працює з батареями <span data-spec="ds.cellCounts.0">4S</span> і <span data-spec="ds.cellCounts.1">6S</span> у діапазоні входу <span data-spec="ds.inputRange">12–26V</span> — один стек, без переналаштування між пакетами.</p>
           </div>
         </div>
       </div>
@@ -617,7 +619,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow" data-i18n="drone-stack.03-field-test">/ 03 — FIELD TEST</div>
+      <div class="section-eyebrow" data-i18n="drone-stack.03-field-test">/ 03 — ПОЛЬОВІ ВИПРОБУВАННЯ</div>
       <div class="ds-inflight ds-fieldtest" id="ds-fieldtest">
         <video class="ds-ft-video" id="ds-ft-video"
                poster="/assets/dronestack-poster.jpg"
@@ -628,20 +630,20 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
         <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-        <span class="if-label ds-ft-label" data-i18n="drone-stack.field-test-kolibri-defence">FIELD TEST · KOLIBRI DEFENCE</span>
-        <button class="ds-ft-play" id="ds-ft-play" type="button" aria-label="Play field test video with sound" data-i18n-attrs="aria-label:drone-stack.play-field-test-video">
+        <span class="if-label ds-ft-label" data-i18n="drone-stack.field-test-kolibri-defence">ПОЛЬОВІ ВИПРОБУВАННЯ · KOLIBRI DEFENCE</span>
+        <button class="ds-ft-play" id="ds-ft-play" type="button" aria-label="Відтворити відео польових випробувань зі звуком" data-i18n-attrs="aria-label:drone-stack.play-field-test-video">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
         </button>
       </div>
 
       <figure class="ds-quote is-inline">
         <span class="ds-quote-mark" aria-hidden="true">&ldquo;</span>
-        <blockquote data-i18n="drone-stack.we-are-proud-to">We are proud to use NAS avionics on our elite FPV drone platforms. Easy-to-solder ESC motor pads, high power output, and a versatile flight controller are exactly what we have been looking for in the European market for a long time.</blockquote>
+        <blockquote data-i18n="drone-stack.we-are-proud-to">Ми пишаємося тим, що використовуємо авіоніку NAS на наших елітних FPV-платформах. Зручні для паяння моторні площадки ESC, висока вихідна потужність і універсальний політний контролер — саме те, що ми давно шукали на європейському ринку.</blockquote>
         <figcaption class="ds-quote-attr">
           <div class="ds-quote-divider" aria-hidden="true"></div>
-          <div class="ds-quote-name" data-i18n="drone-stack.henri-christensen">Henri Christensen</div>
+          <div class="ds-quote-name" data-i18n="drone-stack.henri-christensen">Генрі Крістенсен</div>
           <div class="ds-quote-role" data-i18n="drone-stack.ceo-kolibri-defence">CEO, Kolibri Defence</div>
-          <div class="ds-quote-sub" data-i18n="drone-stack.finnish-dualuse-fpv-drone">Finnish dual-use FPV drone design house and manufacturer.</div>
+          <div class="ds-quote-sub" data-i18n="drone-stack.finnish-dualuse-fpv-drone">Фінське конструкторське бюро та виробник FPV-дронів подвійного призначення.</div>
         </figcaption>
       </figure>
     </div>
@@ -656,7 +658,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Усі права захищені.</div>
   </div>
 </footer>
 

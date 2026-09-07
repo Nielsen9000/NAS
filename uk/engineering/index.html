@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Company — Nordic Advanced Systems</title>
-<meta name="description" content="Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion." />
+<title>Компанія — Nordic Advanced Systems</title>
+<meta name="description" content="Nordic Advanced Systems розробляє та виробляє силові установки для платформ БПЛА — створені для місій, де силова установка має функціонувати коректно й передбачувано від початку до завершення." />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -39,7 +40,7 @@ body{
   margin:0;
   background:var(--bg-base);
   color:var(--ink-0);
-  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;
   font-size:16px;
   line-height:1.7;
   overflow-x:hidden;
@@ -92,7 +93,7 @@ p{ margin:0; color:var(--ink-1); }
 .site-header .brand-logo img{ width:auto; height:52px; display:block; }
 .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
 .brand-wordmark{
-  font-family:"Space Grotesk",sans-serif;
+  font-family:"Inter",sans-serif;
   font-style:italic; font-weight:600; font-size:16px;
   letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
 }
@@ -290,23 +291,12 @@ p{ margin:0; color:var(--ink-1); }
 }
 
 /* Production & Quality — process diagram */
-.production-intro{
-  max-width:700px;
-  margin:0 auto 56px;
-  text-align:center;
-}
-.production-intro p{
-  color:var(--ink-1);
-  font-size:17px;
-  line-height:1.6;
-  margin:0;
-}
 .process-diagram{
   display:grid;
   grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
   gap:0;
   align-items:center;
-  margin:0 auto 56px;
+  margin:0 auto 96px;
   max-width:1200px;
 }
 .process-node{
@@ -384,70 +374,117 @@ p{ margin:0; color:var(--ink-1); }
   font-size:14px;
   opacity:0.7;
 }
-.production-facility-note{
-  max-width:800px;
-  margin:0 auto;
-  padding:40px 48px;
-  background:rgba(59,182,232,0.04);
-  border:1px solid rgba(59,182,232,0.15);
-  border-radius:8px;
+/* Production hero — full-bleed test rig with dark gradient overlay */
+.production-hero{
   position:relative;
-}
-.production-facility-note::before{
-  content:"";
-  position:absolute;
-  top:24px;
-  left:24px;
-  width:8px;
-  height:8px;
-  background:#ef5350;
-  border-radius:50%;
-  animation:process-pulse 2s ease-in-out infinite;
-}
-.facility-note-label{
-  font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:11px;
-  letter-spacing:0.22em;
-  color:#ef5350;
-  margin-bottom:16px;
-  margin-left:24px;
-  font-weight:500;
-}
-.facility-note-text{
-  color:var(--ink-1);
-  font-size:16px;
-  line-height:1.6;
-  margin:0;
-}
-.facility-note-text strong{
-  color:var(--ink-0);
-  font-weight:500;
-}
-
-/* Test rig photo + HUD overlay */
-.testrig-frame{
-  position:relative;
-  width:100%;
-  max-width:1200px;
-  margin:0 auto 56px;
-  aspect-ratio:21 / 9;
-  border:1px solid rgba(59,182,232,0.2);
+  min-height:85vh;
   overflow:hidden;
-  background:var(--bg-elev);
+  display:flex;
+  align-items:center;
+  isolation:isolate;
+  background:var(--bg-base);
+  padding:88px 0 60px;
 }
-.testrig-image{
+.production-hero-image{
+  position:absolute;
+  inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
-  filter:brightness(0.95) contrast(1.05);
+  object-position:center;
+  z-index:0;
 }
-.testrig-hud{
+.production-hero-overlay{
   position:absolute;
   inset:0;
-  pointer-events:none;
-  z-index:2;
+  z-index:1;
+  background:
+    linear-gradient(90deg,
+      rgba(8,32,42,0.95) 0%,
+      rgba(8,32,42,0.88) 30%,
+      rgba(8,32,42,0.6)  50%,
+      rgba(8,32,42,0.2)  75%,
+      rgba(8,32,42,0.4)  100%),
+    linear-gradient(180deg,
+      rgba(8,32,42,0.55) 0%,
+      transparent        25%,
+      transparent        70%,
+      rgba(8,32,42,0.7)  100%);
 }
+.production-hero-hud{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+}
+.production-hero-content{
+  position:relative;
+  z-index:3;
+  width:100%;
+}
+.production-hero-text{
+  max-width:640px;
+  text-align:left;
+}
+.production-hero-text .section-eyebrow{
+  margin-bottom:24px;
+  color:var(--accent);
+}
+.production-hero-headline{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  font-size:clamp(40px, 5.5vw, 80px);
+  font-weight:700;
+  letter-spacing:-0.025em;
+  line-height:1.0;
+  color:var(--ink-0);
+  margin:0 0 28px;
+}
+.production-hero-headline .accent{ color:var(--accent); }
+.production-hero-lead{
+  font-family:"Inter",sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink-1);
+  margin:0;
+  max-width:520px;
+}
+.production-hero-scroll{
+  position:absolute;
+  bottom:14px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  pointer-events:none;
+}
+.production-hero-scroll-text{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px;
+  letter-spacing:0.22em;
+  color:rgba(59,182,232,0.85);
+  text-transform:uppercase;
+  padding:5px 12px;
+  background:rgba(8,32,42,0.55);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  border:1px solid rgba(59,182,232,0.2);
+  border-radius:999px;
+}
+.production-hero-scroll-line{
+  width:1px;
+  height:40px;
+  background:linear-gradient(to bottom, var(--accent), transparent);
+  animation:scroll-pulse 2.5s ease-in-out infinite;
+}
+@keyframes scroll-pulse{
+  0%,100%{ opacity:0.3; transform:scaleY(0.6); transform-origin:top; }
+  50%    { opacity:1;   transform:scaleY(1);   transform-origin:top; }
+}
+
+/* HUD corner brackets — shared between hero overlay and any framed test rig */
 .testrig-corner{
   position:absolute;
   width:24px;
@@ -455,42 +492,56 @@ p{ margin:0; color:var(--ink-1); }
   border:1px solid var(--accent);
   opacity:0.85;
 }
-.testrig-corner-tl{ top:16px; left:16px; border-right:0; border-bottom:0; }
-.testrig-corner-tr{ top:16px; right:16px; border-left:0; border-bottom:0; }
-.testrig-corner-bl{ bottom:16px; left:16px; border-right:0; border-top:0; }
-.testrig-corner-br{ bottom:16px; right:16px; border-left:0; border-top:0; }
+.testrig-corner-tl{ top:24px; left:24px; border-right:0; border-bottom:0; }
+.testrig-corner-tr{ top:24px; right:24px; border-left:0; border-bottom:0; }
+.testrig-corner-bl{ bottom:24px; left:24px; border-right:0; border-top:0; }
+.testrig-corner-br{ bottom:24px; right:24px; border-left:0; border-top:0; }
+
+/* Documented caption — small dark plate anchored bottom-right of hero */
 .testrig-caption{
   position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
+  bottom:20px;
+  right:24px;
+  z-index:3;
   display:flex;
   align-items:center;
-  justify-content:flex-end;
-  gap:16px;
-  padding:12px 56px;
-  background:linear-gradient(to top,
-    rgba(8,32,42,0.85),
-    transparent);
-  z-index:3;
+  gap:10px;
+  padding:7px 12px;
+  background:rgba(8,32,42,0.6);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(59,182,232,0.2);
+  border-radius:4px;
+  opacity:0.9;
 }
 .testrig-caption-label{
   font-family:"JetBrains Mono",ui-monospace,monospace;
-  font-size:10px;
+  font-size:9px;
   letter-spacing:0.22em;
   color:var(--accent);
   text-transform:uppercase;
   font-weight:500;
-  padding:4px 10px;
-  border:1px solid rgba(59,182,232,0.4);
-  background:rgba(59,182,232,0.08);
+  padding:3px 8px;
+  border:1px solid rgba(59,182,232,0.35);
+  background:rgba(59,182,232,0.06);
 }
 .testrig-caption-text{
-  font-family:"Space Grotesk",sans-serif;
-  font-size:14px;
-  letter-spacing:0.05em;
-  color:var(--ink-0);
+  font-family:"Inter",sans-serif;
+  font-size:11.5px;
+  letter-spacing:0.04em;
+  color:rgba(245,247,250,0.85);
   font-weight:400;
+}
+
+/* Test protocol section — process diagram + facility note below the hero */
+.company-production-protocol .section-eyebrow{
+  margin-bottom:48px;
+}
+.company-production-protocol .process-diagram{
+  margin-bottom:96px;
+}
+@media (prefers-reduced-motion: reduce){
+  .production-hero-scroll-line{ animation:none; }
 }
 
 /* Location section — HUD coordinate display */
@@ -541,35 +592,21 @@ p{ margin:0; color:var(--ink-1); }
   position:relative;
   width:100%;
   height:100%;
-  background:var(--bg-elev);
+  background:
+    linear-gradient(rgba(59,182,232,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,182,232,0.06) 1px, transparent 1px),
+    radial-gradient(circle at center, rgba(59,182,232,0.04), transparent 70%),
+    var(--bg-elev);
+  background-size:32px 32px, 32px 32px, 100% 100%, 100% 100%;
   border:1px solid rgba(59,182,232,0.2);
   border-radius:4px;
   overflow:hidden;
-}
-.coord-map{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  filter:brightness(0.85) contrast(1.05) saturate(0.9);
-  z-index:0;
-}
-.coord-display::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at center, transparent 30%, rgba(8,32,42,0.45) 100%);
-  pointer-events:none;
-  z-index:1;
 }
 .coord-corner{
   position:absolute;
   width:16px;
   height:16px;
   border:1px solid var(--accent);
-  z-index:2;
 }
 .coord-corner-tl{ top:12px; left:12px; border-right:0; border-bottom:0; }
 .coord-corner-tr{ top:12px; right:12px; border-left:0; border-bottom:0; }
@@ -582,7 +619,6 @@ p{ margin:0; color:var(--ink-1); }
   transform:translate(-50%,-50%);
   width:80px;
   height:80px;
-  z-index:2;
 }
 .coord-cross-h{
   position:absolute;
@@ -623,12 +659,6 @@ p{ margin:0; color:var(--ink-1); }
   display:flex;
   flex-direction:column;
   gap:4px;
-  padding:6px 10px;
-  background:rgba(8,32,42,0.6);
-  border:1px solid rgba(59,182,232,0.2);
-  backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px);
-  z-index:2;
 }
 .coord-readout-label{
   font-size:9px;
@@ -713,7 +743,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .company-hero-headline .accent{ color:var(--accent); }
 .company-hero-lead{
-  font-family:"Space Grotesk",sans-serif;
+  font-family:"Inter",sans-serif;
   font-size:17px;
   line-height:1.6;
   color:var(--ink-1);
@@ -862,7 +892,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 
 /* -------------------------------------------------------------
-   Spec card grid (Section 4 — Design Philosophy)
+   Spec card grid (Section 3 — Design Philosophy)
    ------------------------------------------------------------- */
 .spec-card-grid{
   display:grid;
@@ -875,9 +905,8 @@ p{ margin:0; color:var(--ink-1); }
   background:linear-gradient(180deg, rgba(59,182,232,0.04) 0%, transparent 60%), var(--bg-elev);
   border:1px solid var(--line-dark);
   border-radius:var(--radius-md);
-  padding:28px 24px 32px;
+  padding:28px 24px 24px;
   display:flex; flex-direction:column; gap:14px;
-  min-height:220px;
   transition: border-color .3s ease, transform .3s var(--ease-smooth);
 }
 .spec-card:hover{
@@ -898,7 +927,19 @@ p{ margin:0; color:var(--ink-1); }
 }
 .spec-card .desc{
   color:var(--ink-2); font-size:14.5px;
-  line-height:1.6; margin-top:auto;
+  line-height:1.6;
+  margin:0;
+}
+.spec-card-spec{
+  margin-top:auto;
+  padding-top:14px;
+  border-top:1px solid rgba(59,182,232,0.18);
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10.5px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:500;
 }
 .spec-card-closing{
   color:var(--ink-2); font-size:16px;
@@ -979,21 +1020,207 @@ p{ margin:0; color:var(--ink-1); }
 }
 
 /* -------------------------------------------------------------
-   Product spec grid (Section 9)
+   NAS Series — split 2-column with image + spec items
    ------------------------------------------------------------- */
+.product-split{
+  display:grid;
+  grid-template-columns:45fr 55fr;
+  gap:64px;
+  align-items:stretch;
+}
+.product-media{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* Engine Profile spec card — replaces raw blueprint with branded HUD frame */
+.engine-profile-card{
+  position:relative;
+  background:var(--bg-base);
+  border:1px solid rgba(59,182,232,0.18);
+  font-family:"JetBrains Mono", ui-monospace, monospace;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  transition:border-color 400ms ease;
+}
+.engine-profile-card:hover{
+  border-color:rgba(59,182,232,0.32);
+}
+.ep-corner{
+  position:absolute;
+  width:14px; height:14px;
+  border:1px solid var(--accent);
+  z-index:3;
+  pointer-events:none;
+}
+.ep-corner-tl{ top:-1px; left:-1px; border-right:0; border-bottom:0; }
+.ep-corner-tr{ top:-1px; right:-1px; border-left:0; border-bottom:0; }
+.ep-corner-bl{ bottom:-1px; left:-1px; border-right:0; border-top:0; }
+.ep-corner-br{ bottom:-1px; right:-1px; border-left:0; border-top:0; }
+
+.ep-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 22px;
+  border-bottom:1px solid rgba(59,182,232,0.15);
+  font-size:10px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.ep-label{ color:var(--accent); font-weight:500; }
+.ep-id{ color:var(--ink-3); }
+
+.ep-visual{
+  position:relative;
+  padding:28px 22px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:240px;
+  overflow:hidden;
+}
+.ep-visual::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(to right, rgba(59,182,232,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59,182,232,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  pointer-events:none;
+  opacity:0.7;
+}
+.ep-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(59,182,232,0.02) 3px,
+    rgba(59,182,232,0.02) 4px
+  );
+  pointer-events:none;
+}
+.ep-engine{
+  position:relative;
+  z-index:1;
+  width:90%;
+  max-width:90%;
+  max-height:90%;
+  height:auto;
+  margin:auto;
+  object-fit:contain;
+  display:block;
+}
+.ep-tick-axes{
+  position:absolute;
+  inset:18px 14px;
+  pointer-events:none;
+  z-index:0;
+  border:1px dashed rgba(59,182,232,0.10);
+}
+
+.ep-specs{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  border-top:1px solid rgba(59,182,232,0.15);
+}
+.ep-spec{
+  padding:14px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  border-right:1px solid rgba(59,182,232,0.10);
+}
+.ep-spec:last-child{ border-right:0; }
+.ep-spec-label{
+  font-size:9px;
+  letter-spacing:0.22em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+  font-weight:500;
+}
+.ep-spec-value{
+  font-size:13px;
+  letter-spacing:0.05em;
+  color:var(--ink-0);
+  font-weight:500;
+}
+
+.ep-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 22px;
+  border-top:1px solid rgba(59,182,232,0.15);
+  font-size:10px;
+  letter-spacing:0.22em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+}
+.ep-status{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#6ee0a1;
+}
+.ep-status-dot{
+  width:6px; height:6px;
+  border-radius:50%;
+  background:#6ee0a1;
+  animation:ep-status-pulse 1.8s ease-in-out infinite;
+}
+@keyframes ep-status-pulse{
+  0%,100%{ opacity:1; transform:scale(1); }
+  50%   { opacity:0.4; transform:scale(0.85); }
+}
+@media (prefers-reduced-motion: reduce){
+  .ep-status-dot{ animation:none; }
+}
+.product-content{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+.product-content .section-eyebrow{
+  margin-bottom:18px;
+}
+.product-content h2{
+  font-size:clamp(22px, 2.1vw, 32px);
+  letter-spacing:-0.02em;
+  line-height:1.15;
+  margin:0 0 16px;
+  max-width:none;
+}
+.product-content h2 .accent{ color:var(--accent); }
+.product-lead{
+  color:var(--ink-1);
+  font-size:14.5px;
+  line-height:1.55;
+  margin:0 0 20px;
+  max-width:none;
+}
 .product-grid{
   display:grid;
-  grid-template-columns:repeat(3, 1fr);
+  grid-template-columns:repeat(2, 1fr);
   gap:1px;
-  margin:48px 0;
+  margin:0 0 14px;
   background:var(--line-dark);
   border:1px solid var(--line-dark);
 }
 .product-item{
   background:var(--bg-base);
-  padding:28px 24px;
-  display:flex; flex-direction:column; gap:8px;
-  min-height:130px;
+  padding:14px 16px;
+  display:flex; flex-direction:column; gap:4px;
+  min-height:0;
 }
 .product-item .num{
   font-family:"JetBrains Mono",ui-monospace,monospace;
@@ -1003,11 +1230,19 @@ p{ margin:0; color:var(--ink-1); }
 }
 .product-item .title{
   font-family:'Inter',system-ui,sans-serif;
-  font-size:18px; font-weight:600;
-  letter-spacing:-0.01em; line-height:1.3;
+  font-size:14px; font-weight:600;
+  letter-spacing:-0.01em; line-height:1.25;
   color:var(--ink-0);
 }
-.product-cta-row{ margin-top:8px; }
+.product-item .desc{
+  font-family:"Inter",sans-serif;
+  font-size:12.5px;
+  line-height:1.45;
+  color:var(--ink-2);
+  margin:1px 0 0;
+}
+.product-cta-row{ margin-top:4px; }
+.company-section.company-product{ padding:64px 0; }
 
 /* -------------------------------------------------------------
    Closing CTA (Section 10)
@@ -1078,10 +1313,10 @@ p{ margin:0; color:var(--ink-1); }
    ------------------------------------------------------------- */
 @media (max-width:1100px){
   .spec-card-grid{ grid-template-columns:repeat(2, 1fr); }
-  .product-grid{ grid-template-columns:repeat(2, 1fr); }
   .process-diagram{ grid-template-columns:1fr 1fr; gap:24px; }
   .process-connector{ display:none; }
   .company-hero-grid{ grid-template-columns:360px 1fr; gap:48px; }
+  .product-split{ grid-template-columns:1fr 1fr; gap:48px; }
 }
 @media (max-width:900px){
   :root{ --pad-x:24px; }
@@ -1106,14 +1341,20 @@ p{ margin:0; color:var(--ink-1); }
   .method-num{ padding-top:0; }
   .location-grid{ grid-template-columns:1fr; gap:48px; }
   .location-coordinates{ max-width:400px; margin:0 auto; }
-  .testrig-frame{ margin-bottom:60px; }
-  .testrig-corner{ width:16px; height:16px; }
-  .testrig-corner-tl{ top:8px; left:8px; }
-  .testrig-corner-tr{ top:8px; right:8px; }
-  .testrig-corner-bl{ bottom:8px; left:8px; }
-  .testrig-corner-br{ bottom:8px; right:8px; }
-  .testrig-caption{ padding:8px 16px; }
+  .production-hero{ min-height:75vh; align-items:flex-end; padding-bottom:80px; }
+  .production-hero-headline{ font-size:clamp(36px, 9vw, 56px); }
+  .production-hero-lead{ font-size:15px; }
+  .production-hero-scroll{ display:none; }
+  .testrig-corner{ width:18px; height:18px; }
+  .testrig-corner-tl{ top:14px; left:14px; }
+  .testrig-corner-tr{ top:14px; right:14px; }
+  .testrig-corner-bl{ bottom:14px; left:14px; }
+  .testrig-corner-br{ bottom:14px; right:14px; }
+  .testrig-caption{ right:16px; bottom:16px; padding:8px 12px; gap:8px; }
   .testrig-caption-text{ font-size:12px; }
+  .testrig-caption-label{ padding:3px 8px; font-size:9px; }
+  .product-split{ grid-template-columns:1fr; gap:40px; }
+  .product-content{ order:-1; }
   .footer-grid{ grid-template-columns:1fr; text-align:left; gap:14px; }
   .footer-mid,.footer-right{ text-align:left; }
   .brand-subline{ display:none; }
@@ -1129,6 +1370,55 @@ p{ margin:0; color:var(--ink-1); }
 }
 @media (prefers-reduced-motion: reduce){
   .doc-status-dot{ animation:none; }
+}
+
+/* Engineering closing CTA */
+.company-closing-cta{ padding:100px 0; text-align:center; }
+.closing-cta-content{ max-width:800px; margin:0 auto; }
+.closing-cta-statement{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(28px, 3.2vw, 44px);
+  font-weight:400;
+  font-style:italic;
+  line-height:1.3;
+  color:var(--ink-0);
+  letter-spacing:-0.01em;
+  margin:0 0 48px;
+}
+.closing-cta-statement .accent{ color:var(--accent); }
+.closing-cta-actions{
+  display:inline-flex;
+  gap:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.closing-cta-actions .btn-pill-accent,
+.closing-cta-actions .btn-pill-outline{
+  display:inline-flex;
+  align-items:center;
+  padding:14px 28px;
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:12px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  text-decoration:none;
+  border-radius:999px;
+  transition:background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.closing-cta-actions .btn-pill-accent{
+  background:var(--accent);
+  color:#001218;
+  border:1px solid var(--accent);
+}
+.closing-cta-actions .btn-pill-accent:hover{ background:transparent; color:var(--accent); }
+.closing-cta-actions .btn-pill-outline{
+  background:transparent;
+  color:var(--ink-0);
+  border:1px solid rgba(59,182,232,0.4);
+}
+.closing-cta-actions .btn-pill-outline:hover{ border-color:var(--accent); color:var(--accent); }
+@media (max-width: 600px){
+  .closing-cta-actions{ flex-direction:column; width:100%; }
 }
 
 /* Cursor follower */
@@ -1178,7 +1468,6 @@ p{ margin:0; color:var(--ink-1); }
   * { cursor: auto; }
 }
 
-
 /* ---------- Intelligence Solutions dropdown ---------- */
 .nav-dd{ position:relative; display:flex; align-items:center; }
 .nav-dd-trigger{ font-family:inherit; font-size:15px; font-weight:500; color:var(--ink-1); position:relative; padding:6px 0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:color .2s ease; }
@@ -1220,6 +1509,8 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
+<style>/* uk: the Latin brand wordmark keeps its identity face */
+.brand-wordmark{ font-family:"Space Grotesk",sans-serif; }</style>
 </head>
 <body>
 
@@ -1236,30 +1527,29 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+    <a class="brand" href="/uk/" aria-label="Nordic Advanced Systems — на головну" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
-      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
+    <nav class="nav" aria-label="Основна навігація" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/uk/#platforms" data-i18n="shared.platforms">Платформи</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Інтелектуальні рішення <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
-          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
-          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+          <a href="/uk/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">СТЕК FC</span></a> <a href="/uk/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Упорскування палива</span></a>
         </div>
       </div>
-      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
-      <a href="/nas" class="active">NAS</a>
-      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
-      <a href="/careers" data-i18n="shared.careers">Careers</a>
-      <a href="/contact" data-i18n="shared.contact">Contact</a>
+      <a href="/uk/engineering" class="active" data-i18n="shared.engineering">Інженерія</a>
+      <a href="/uk/nas">NAS</a>
+      <a href="/uk/conduct" data-i18n="shared.conduct">Кодекс</a>
+      <a href="/uk/careers" data-i18n="shared.careers">Кар’єра</a>
+      <a href="/uk/contact" data-i18n="shared.contact">Контакти</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="/uk/contact" data-i18n="shared.request-brief">Запросити бриф <span class="arrow" aria-hidden="true">→</span></a>
       <a class="lang-switch" id="lang-switch" href="/uk/" data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
     </div>
   </div>
@@ -1268,254 +1558,232 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 <main>
 
   <!-- =========================================
-       1. HERO
+       1. PRODUCTION HERO — full-bleed test rig
        ========================================= -->
-  <section class="company-hero">
-    <div class="wrap">
-      <div class="company-hero-grid">
+  <section class="production-hero">
+    <img src="../assets/tyr-test.jpg"
+         alt="Двигун NAS на випробувальному стенді з динамометром і витяжкою вихлопу"
+         class="production-hero-image"  data-i18n-attrs="alt:engineering.nas-engine-on-test"/>
 
-        <aside class="hero-doc-stack reveal" aria-hidden="true">
-          <div class="doc-stack-frame">
-            <div class="doc-stack-corner doc-stack-corner-tl"></div>
-            <div class="doc-stack-corner doc-stack-corner-tr"></div>
-            <div class="doc-stack-corner doc-stack-corner-bl"></div>
-            <div class="doc-stack-corner doc-stack-corner-br"></div>
+    <div class="production-hero-overlay" aria-hidden="true"></div>
 
-            <div class="doc-stack-header">
-              <span class="doc-stack-label">NAS · DOC PROFILE</span>
-              <span class="doc-stack-id">/ 01-2026</span>
-            </div>
-
-            <div class="doc-stack-body">
-              <div class="doc-row" data-i18n="nas.classification-internal-controlled">
-                <span class="doc-row-label">CLASSIFICATION</span>
-                <span class="doc-row-value">INTERNAL · CONTROLLED</span>
-              </div>
-              <div class="doc-row" data-i18n="nas.revision">
-                <span class="doc-row-label">REVISION</span>
-                <span class="doc-row-value">01 · 2026</span>
-              </div>
-              <div class="doc-row" data-i18n="nas.format-company-profile">
-                <span class="doc-row-label">FORMAT</span>
-                <span class="doc-row-value">COMPANY PROFILE</span>
-              </div>
-              <div class="doc-row" data-i18n="nas.jurisdiction-denmark-eu">
-                <span class="doc-row-label">JURISDICTION</span>
-                <span class="doc-row-value">DENMARK · EU</span>
-              </div>
-              <div class="doc-row doc-row-status" data-i18n="nas.status-active">
-                <span class="doc-row-label">STATUS</span>
-                <span class="doc-row-value">
-                  <span class="doc-status-dot"></span>
-                  ACTIVE
-                </span>
-              </div>
-            </div>
-
-            <div class="doc-stack-footer">
-              <span>NORDIC ADVANCED SYSTEMS APS</span>
-              <span>CVR · 45976645</span>
-            </div>
-          </div>
-        </aside>
-
-        <div class="company-hero-content">
-          <div class="section-eyebrow reveal" data-i18n="nas.nas-company-profile-2026">/ NAS · COMPANY PROFILE 2026</div>
-
-          <h1 class="company-hero-headline reveal" data-i18n="nas.built-on-operational-experience">
-            Built on <span class="accent">operational</span><br>
-            <span class="accent">experience</span>
-          </h1>
-
-          <p class="company-hero-lead reveal" data-i18n="nas.nordic-advanced-systems-develops">
-            Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion.
-          </p>
-        </div>
-
-      </div>
+    <div class="production-hero-hud" aria-hidden="true">
+      <div class="testrig-corner testrig-corner-tl"></div>
+      <div class="testrig-corner testrig-corner-tr"></div>
+      <div class="testrig-corner testrig-corner-bl"></div>
+      <div class="testrig-corner testrig-corner-br"></div>
     </div>
 
-    <div class="company-hero-scanlines" aria-hidden="true"></div>
-  </section>
-
-  <!-- =========================================
-       2. ABOUT NAS
-       ========================================= -->
-  <section class="company-section company-about">
-    <div class="wrap">
-
-      <div class="section-eyebrow reveal" data-i18n="nas.01-about">/ 01 — ABOUT</div>
-
-      <h2 class="section-headline reveal" data-i18n="nas.engines-built-for-actual">
-        Engines built for <span class="accent">actual operations</span>
-      </h2>
-
-      <div class="company-pullquote reveal">
-        <div class="pullquote-mark" aria-hidden="true">"</div>
-        <blockquote data-i18n="nas.predictable-mechanical-and-thermal">
-          Predictable mechanical and thermal behavior, ensuring overall platform performance is well understood in operational use.
-        </blockquote>
-        <div class="pullquote-attribution" data-i18n="nas.design-principle">— DESIGN PRINCIPLE</div>
-      </div>
-
-      <div class="company-body-grid reveal">
-        <p data-i18n="nas.nordic-advanced-systems-is">
-          Nordic Advanced Systems is a Danish company that develops and manufactures propulsion systems for UAV platforms. The engines are used in operations where propulsion must function correctly and predictably throughout the mission. The focus is on stable operation, consistent quality, and known behavior under load.
-        </p>
-        <p data-i18n="nas.in-many-uav-operations">
-          In many UAV operations, it is essential that the propulsion system behaves consistently from unit to unit and can be produced and delivered in series with known characteristics. NAS develops engines based on this premise.
+    <div class="wrap production-hero-content">
+      <div class="production-hero-text reveal">
+        <div class="section-eyebrow" data-i18n="engineering.production-quality">/ ВИРОБНИЦТВО ТА ЯКІСТЬ</div>
+        <h1 class="production-hero-headline" data-i18n="engineering.no-engine-ships-untested">
+          Жоден двигун<br> <span class="accent">не відвантажується без випробувань</span>
+        </h1>
+        <p class="production-hero-lead" data-i18n="engineering.production-is-structured-for">
+          Виробництво організоване для серійного складання в контрольованому середовищі з визначеними процесами та точками контролю — що забезпечує стабільний випуск і повторювану якість від поставки до поставки.
         </p>
       </div>
+    </div>
 
+    <div class="testrig-caption" data-i18n="engineering.documented-nas-engine-dynamometer">
+      <span class="testrig-caption-label">ЗАДОКУМЕНТОВАНО</span> <span class="testrig-caption-text">Двигун NAS · динамометричний стенд · Данія</span>
+    </div>
+
+    <div class="production-hero-scroll" aria-hidden="true" data-i18n="engineering.scroll">
+      <span class="production-hero-scroll-text">ГОРТАЙТЕ</span>
+      <span class="production-hero-scroll-line"></span>
     </div>
   </section>
 
   <!-- =========================================
-       3. HOW WE WORK
+       2. TEST PROTOCOL — process diagram + facility note
        ========================================= -->
-  <section class="company-section company-method">
-    <div class="wrap">
+  <section class="company-section company-production-protocol">
+    <div class="wrap reveal">
 
-      <div class="section-eyebrow reveal" data-i18n="nas.02-method">/ 02 — METHOD</div>
+      <div class="section-eyebrow" data-i18n="engineering.test-protocol">/ ПРОТОКОЛ ВИПРОБУВАНЬ</div>
 
-      <h2 class="section-headline reveal" data-i18n="nas.an-industrial-supplier-with">
-        An industrial supplier with <span class="accent">clear responsibility</span>
-      </h2>
-
-      <div class="method-statements">
-
-        <div class="method-statement reveal">
-          <div class="method-num">01</div>
-          <div class="method-content">
-            <h3 class="method-title" data-i18n="nas.established-processes">Established processes.</h3>
-            <p class="method-text" data-i18n="nas.nas-is-organized-as">NAS is organized as an industrial supplier with established processes and clear ownership of both design and delivery.</p>
-          </div>
+      <div class="process-diagram" aria-label="Процес контролю якості" data-i18n-attrs="aria-label:engineering.quality-process-flow">
+        <div class="process-node">
+          <div class="process-num">01</div>
+          <div class="process-label" data-i18n="engineering.coldrun-testing">ХОЛОДНИЙ<br>ПРОГІН</div>
+          <div class="process-desc" data-i18n="engineering.mechanical-verification-under-controlled">Механічна перевірка в контрольованих умовах</div>
         </div>
-
-        <div class="method-statement reveal">
-          <div class="method-num">02</div>
-          <div class="method-content">
-            <h3 class="method-title" data-i18n="nas.operational-background">Operational background.</h3>
-            <p class="method-text" data-i18n="nas.the-company-draws-on">The company draws on direct experience from operational military environments. This experience shapes our approach to function, testing, and accountability for what is delivered.</p>
-          </div>
+        <div class="process-connector" aria-hidden="true"></div>
+        <div class="process-node">
+          <div class="process-num">02</div>
+          <div class="process-label" data-i18n="engineering.hotrun-testing">ГАРЯЧИЙ<br>ПРОГІН</div>
+          <div class="process-desc" data-i18n="engineering.performance-validation-at-operational">Перевірка характеристик під експлуатаційним навантаженням</div>
         </div>
-
-        <div class="method-statement reveal">
-          <div class="method-num">03</div>
-          <div class="method-content">
-            <h3 class="method-title" data-i18n="nas.clear-decisionmaking">Clear decision-making.</h3>
-            <p class="method-text" data-i18n="nas.the-working-method-is">The working method is characterized by clear decision-making and clear ownership — from initial specification through to final delivery.</p>
-          </div>
+        <div class="process-connector" aria-hidden="true"></div>
+        <div class="process-node">
+          <div class="process-num">03</div>
+          <div class="process-label" data-i18n="engineering.visual-inspection">ВІЗУАЛЬНИЙ<br>КОНТРОЛЬ</div>
+          <div class="process-desc" data-i18n="engineering.final-review-before-unit">Фінальний огляд перед випуском виробу</div>
         </div>
-
+        <div class="process-connector" aria-hidden="true"></div>
+        <div class="process-node">
+          <div class="process-num">04</div>
+          <div class="process-label" data-i18n="engineering.unit-traceability">ПРОСТЕЖУВАНІСТЬ<br>ВИРОБІВ</div>
+          <div class="process-desc" data-i18n="engineering.documentation-provided-with-every">Документація надається з кожною поставкою</div>
+        </div>
       </div>
 
     </div>
   </section>
 
   <!-- =========================================
-       3. COLLABORATION FRAMEWORK
+       3. DESIGN PHILOSOPHY
        ========================================= -->
   <section class="company-section">
-    <div class="wrap two-col reveal">
-      <div>
-        <div class="section-eyebrow" data-i18n="nas.03-collaboration">/ 03 — COLLABORATION</div>
-        <h2 data-i18n="nas.clear-specifications-defined-frameworks">Clear specifications, <span class="accent">defined frameworks</span></h2>
+    <div class="wrap reveal">
+      <div class="section-eyebrow" data-i18n="engineering.02-design-philosophy">/ 02 — ФІЛОСОФІЯ ПРОЄКТУВАННЯ</div>
+      <h2 data-i18n="engineering.designed-for-real-operating">Спроєктовано для <span class="accent">реальних умов експлуатації</span></h2>
+      <p class="lead" data-i18n="engineering.the-engines-are-developed">
+        Двигуни розробляються на основі реальних умов експлуатації та відомих профілів навантаження.
+      </p>
+
+      <div class="spec-card-grid">
+        <div class="spec-card">
+          <div class="num">/ 01</div>
+          <div class="title" data-i18n="engineering.stable-rotational-speed">Стабільні оберти</div>
+          <div class="desc" data-i18n="engineering.throughout-the-mission-without">Впродовж усієї місії, без несподіваних провалів чи стрибків.</div>
+          <div class="spec-card-spec" data-i18n="engineering.rpm-under-load">Оберти під навантаженням</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 02</div>
+          <div class="title" data-i18n="engineering.controlled-vibration">Контрольована вібрація</div>
+          <div class="desc" data-i18n="engineering.during-operation-minimizing-structural">Під час роботи, з мінімальним структурним навантаженням на платформу.</div>
+          <div class="spec-card-spec" data-i18n="engineering.boxertwin-counterbalanced">Опозитний твін, урівноважений</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 03</div>
+          <div class="title" data-i18n="engineering.predictable-thermal-behavior">Передбачувана термічна поведінка</div>
+          <div class="desc" data-i18n="engineering.until-mission-completion-with">До завершення місії, з відомими межами та запасами.</div>
+          <div class="spec-card-spec" data-i18n="engineering.forcedair-cooled-mapped">Примусове повітряне охолодження, з мапуванням</div>
+        </div>
+        <div class="spec-card">
+          <div class="num">/ 04</div>
+          <div class="title" data-i18n="engineering.consistent-performance">Незмінні характеристики</div>
+          <div class="desc" data-i18n="engineering.across-series-production-unit">У серійному виробництві, від виробу до виробу.</div>
+          <div class="spec-card-spec" data-i18n="engineering.seriestested-unit-to-unit">Серійні випробування кожного виробу</div>
+        </div>
       </div>
-      <div class="body">
-        <p data-i18n="nas.nas-works-with-clear">NAS works with clear specifications and defined frameworks.</p>
-        <p data-i18n="nas.configurations-are-finalized-before">Configurations are finalized before production. Any changes are handled in a structured manner and through direct dialogue between technical counterparts.</p>
-        <p data-i18n="nas.deliveries-are-carried-out">Deliveries are carried out at the agreed pace and in the agreed form. If underlying conditions change, this is communicated early.</p>
-        <blockquote class="pull-quote" data-i18n="nas.when-underlying-conditions-change">
-          When underlying conditions change, this is communicated early.
-        </blockquote>
-      </div>
+
+      <p class="spec-card-closing" data-i18n="engineering.design-choices-are-made">
+        Проєктні рішення ухвалюються так, щоб забезпечити стабільну та передбачувану роботу впродовж усієї місії — на основі відомих профілів навантаження та умов експлуатації.
+      </p>
     </div>
   </section>
 
   <!-- =========================================
-       4. REGISTERED OFFICE
+       4. NAS SERIES INTRO — split 2-column with image placeholder
        ========================================= -->
-  <section class="company-section company-location">
+  <section class="company-section company-product" id="nas-series">
     <div class="wrap">
+      <div class="product-split reveal">
 
-      <div class="section-eyebrow reveal" data-i18n="nas.04-location">/ 04 — LOCATION</div>
+        <div class="product-media">
+          <div class="engine-profile-card" aria-label="Профільна картка двигуна NAS 2" data-i18n-attrs="aria-label:engineering.nas-2-engine-profile">
+            <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
+            <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
+            <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
+            <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
 
-      <h2 class="section-headline reveal" data-i18n="nas.colocated-with-uas-denmark">
-        Co-located with <span class="accent">UAS Denmark Test Center</span>
-      </h2>
+            <div class="ep-header">
+              <span class="ep-label">NAS · Engine Profile</span>
+              <span class="ep-id">/ 02-2026</span>
+            </div>
 
-      <div class="location-grid reveal">
+            <div class="ep-visual">
+              <div class="ep-tick-axes" aria-hidden="true"></div>
+              <img src="../assets/motor_blueprint_TRUE_alpha.png"
+                   alt="Двоциліндровий опозитний двигун NAS 2 — технічна схема"
+                   class="ep-engine"  data-i18n-attrs="alt:engineering.nas-2-dualcylinder-boxer"/>
+            </div>
 
-        <div class="location-info">
-          <div class="location-block">
-            <div class="location-label" data-i18n="nas.registered-office">REGISTERED OFFICE</div>
-            <div class="location-address">
-              Lufthavnvej 131, Beldringe<br>
-              5270 Odense N<br>
-              Denmark
+            <div class="ep-specs">
+              <div class="ep-spec" data-i18n="engineering.config-boxer-twin">
+                <span class="ep-spec-label">Конфігурація</span> <span class="ep-spec-value">Опозит · Твін</span>
+              </div>
+              <div class="ep-spec" data-i18n="engineering.cylinders">
+                <span class="ep-spec-label">Циліндри</span>
+                <span class="ep-spec-value">2</span>
+              </div>
+              <div class="ep-spec" data-i18n="engineering.drive-direct">
+                <span class="ep-spec-label">Привод</span> <span class="ep-spec-value">Прямий</span>
+              </div>
+            </div>
+
+            <div class="ep-footer" data-i18n="engineering.boxertwin-architecture-active">
+              <span>Опозитна архітектура твін</span> <span class="ep-status"> <span class="ep-status-dot" aria-hidden="true"></span> Активна </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-content">
+          <div class="section-eyebrow" data-i18n="engineering.03-product">/ 03 — ПРОДУКТ</div>
+          <h2 data-i18n="engineering.the-nas-series-purposebuilt">Серія <span class="accent">NAS</span> — спеціально створені<br>двигуни БПЛА для безперервної роботи</h2>
+          <p class="product-lead" data-i18n="engineering.nas-2c-and-nas">
+            NAS 2C і NAS 2E — це не модифіковані хобійні чи промислові двигуни. Це двигуни, спеціально створені для БПЛА та спроєктовані з нуля для:
+          </p>
+
+          <div class="product-grid">
+            <div class="product-item">
+              <div class="num">/ 01</div>
+              <div class="title" data-i18n="engineering.constant-high-load">Постійного високого навантаження</div>
+              <p class="desc" data-i18n="engineering.designed-for-sustained-operating">Розраховані на тривалі робочі навантаження, а не пікові режими.</p>
+            </div>
+            <div class="product-item">
+              <div class="num">/ 02</div>
+              <div class="title" data-i18n="engineering.direct-propeller-coupling">Прямого приводу повітряного гвинта</div>
+              <p class="desc" data-i18n="engineering.no-reduction-stage-fewer">Без редуктора — менше деталей, менші втрати в трансмісії.</p>
+            </div>
+            <div class="product-item">
+              <div class="num">/ 03</div>
+              <div class="title" data-i18n="engineering.long-endurance">Тривалої безперервної роботи</div>
+              <p class="desc" data-i18n="engineering.built-for-extended-missions">Створені для довгих місій, а не коротких ривків.</p>
+            </div>
+            <div class="product-item">
+              <div class="num">/ 04</div>
+              <div class="title" data-i18n="engineering.mechanical-and-thermal-stability">Механічної та термічної стабільності</div>
+              <p class="desc" data-i18n="engineering.predictable-behavior-across-the">Передбачувана поведінка в усьому робочому діапазоні.</p>
+            </div>
+            <div class="product-item">
+              <div class="num">/ 05</div>
+              <div class="title" data-i18n="engineering.precisionbalanced-crankshaft">Прецизійно збалансованого колінчастого вала</div>
+              <p class="desc" data-i18n="engineering.counterweighted-for-low-vibration">З противагами для низької вібрації під безперервним навантаженням.</p>
+            </div>
+            <div class="product-item">
+              <div class="num">/ 06</div>
+              <div class="title" data-i18n="engineering.highgrade-bearings">Підшипників високого класу</div>
+              <p class="desc" data-i18n="engineering.rated-for-continuous-cyclic">Розрахованих на безперервні циклічні навантаження — специфіковано під робочий цикл, а не приблизно.</p>
             </div>
           </div>
 
-          <p class="location-desc" data-i18n="nas.our-registered-office-is">
-            Our registered office is located at Hans Christian Andersen Airport in Odense, co-located with UAS Denmark Test Center — an unmanned systems technology test and development center, run as a collaboration between Hans Christian Andersen Airport, Odense Municipality, and the University of Southern Denmark.
-          </p>
-        </div>
-
-        <div class="location-coordinates">
-          <div class="coord-display">
-            <img class="coord-map"
-                 src="../assets/location.jpeg"
-                 alt="Test area map of Funen, Denmark — Odense and surrounding airspace zones"  data-i18n-attrs="alt:nas.test-area-map-of"/>
-            <div class="coord-corner coord-corner-tl"></div>
-            <div class="coord-corner coord-corner-tr"></div>
-            <div class="coord-corner coord-corner-bl"></div>
-            <div class="coord-corner coord-corner-br"></div>
-
-            <div class="coord-crosshair">
-              <div class="coord-cross-h"></div>
-              <div class="coord-cross-v"></div>
-              <div class="coord-cross-circle"></div>
-            </div>
-
-            <div class="coord-readout coord-readout-lat">
-              <div class="coord-readout-label" data-i18n="nas.lat">LAT</div>
-              <div class="coord-readout-value" data-i18n="nas.554732-n">55.4732° N</div>
-            </div>
-
-            <div class="coord-readout coord-readout-lng">
-              <div class="coord-readout-label" data-i18n="nas.lng">LNG</div>
-              <div class="coord-readout-value" data-i18n="nas.103308-e">10.3308° E</div>
-            </div>
-
-            <div class="coord-readout coord-readout-elev">
-              <div class="coord-readout-label" data-i18n="nas.elev">ELEV</div>
-              <div class="coord-readout-value" data-i18n="nas.17-m">17 M</div>
-            </div>
-
-            <div class="coord-readout coord-readout-status">
-              <div class="coord-status-dot"></div>
-              <div class="coord-readout-value" data-i18n="nas.registered">REGISTERED</div>
-            </div>
+          <div class="product-cta-row" data-i18n="engineering.view-full-nas-2">
+            <a class="cta-link" href="/uk/#platforms">Повні характеристики NAS 2 <span aria-hidden="true">→</span></a>
           </div>
         </div>
 
       </div>
-
     </div>
   </section>
 
   <!-- =========================================
        5. CLOSING CTA
        ========================================= -->
-  <section class="closing-cta">
-    <div class="wrap reveal">
-      <p class="statement" data-i18n="nas.predictable-function-clear-agreements">
-        Predictable function. Clear agreements. <span class="accent">Accountability through to mission completion.</span>
-      </p>
-      <a class="btn btn-primary" href="/contact" data-i18n="nas.speak-with-engineering">
-        Speak with engineering <span class="arrow" aria-hidden="true">→</span>
-      </a>
+  <section class="company-section company-closing-cta">
+    <div class="wrap">
+      <div class="closing-cta-content reveal">
+        <p class="closing-cta-statement" data-i18n="engineering.engineered-for-endurance-tested">
+          Створено для витривалості. <span class="accent">Випробувано для місії.</span>
+        </p>
+        <div class="closing-cta-actions" data-i18n="engineering.explore-nas-2-series">
+          <a href="/uk/#platforms" class="btn-pill-accent">Огляд серії NAS 2 →</a> <a href="/uk/contact" class="btn-pill-outline">Зв’язатися з інженерами</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1528,7 +1796,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Усі права захищені.</div>
   </div>
 </footer>
 
@@ -1583,6 +1851,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
   const animate = () => {
     curX = lerp(curX, mouseX, 0.35);
     curY = lerp(curY, mouseY, 0.35);
+    // Dot + cross snap to the exact pointer (no lag); only the ring trails.
     cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
     if (ring) ring.style.transform = `translate(-50%,-50%) translate3d(${curX - mouseX}px, ${curY - mouseY}px, 0)`;
     rafId = requestAnimationFrame(animate);
