@@ -5,7 +5,10 @@
 Al ukrainsk website-tekst ligger i `locales/uk.json` (390 strenge, oversat af
 Claude; **ikke** indfødt korrekturlæst endnu). Ret direkte i uk.json og kør
 `node brand/build_i18n.mjs --build-uk --strict`.
-Preview: Vercel-deployment af grenen `i18n-preview`.
+Preview (følger altid grenen `i18n-preview`):
+https://nas-git-i18n-preview-nielsen9000s-projects.vercel.app
+— ukrainsk under /uk/, engelsk på roden, sprogvælgeren EN · УКР skifter
+mellem dem på samme side.
 
 **VIGTIG STATUS-KORREKTION:** Copy-deck-formuleringerne er **IKKE godkendte** —
 `NAS_UA_COPYDECK_CP_DS.md` ligger stadig hos korrekturlæseren sammen med
