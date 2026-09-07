@@ -9,6 +9,11 @@
 //   false: noindex is dropped, and both language versions get reciprocal
 //          hreflang link tags at the next build. Flip THIS ONE LINE when
 //          management approves indexing, then rebuild.
+//
+//   INDEPENDENT OF THE PROOFREAD SIGN-OFF. The proofreader's sign-off flips
+//   UK_SWITCHER_LIVE and opens the /uk/ route; it does NOT touch this flag.
+//   Indexing is a separate management decision that has not been taken —
+//   UK_NOINDEX stays true regardless of sign-off until it is.
 export const UK_NOINDEX = true;
 
 // UK_SWITCHER_LIVE (default false)

@@ -61,8 +61,10 @@ export const NAS2_NUM = {
   rangeKm: numOf(NAS2.range),       // '1000'
 };
 
-// Figures that must never reappear anywhere — the site build fails if one does.
+// Figures and claims that must never reappear anywhere — the site build fails
+// if one does.
 export const FORBIDDEN = [
-  /\b60\s?A\b/,          // pre-August-2026 current rating (now 65A)
-  /NDAA[- ]CERTIFIED/i,  // NDAA is complied with, never certified (NAS-BRAND)
+  /\b60\s?A\b/,                    // pre-August-2026 current rating (now 65A)
+  /NDAA[- ]CERTIFIED/i,            // NDAA is complied with, never certified (NAS-BRAND)
+  /NDAA[- ]COMPLIANT\s+SILICON/i,  // retired Sept 2026 — the claim is "NDAA-compliant European chipset"
 ];
