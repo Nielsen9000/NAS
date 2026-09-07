@@ -45,7 +45,10 @@ Build: `node brand/build_rollup.mjs --variant=dronestack --print-rgb`
 
 ## Datasheets
 
-Send `NAS_DATASHEET_DRONESTACK_2026_CMYK.pdf` — PDF/X-3:2003, DeviceCMYK,
+All datasheet/company-profile deliverables live in `DATASHEETS/`, and every
+build below writes there directly.
+
+Send `DATASHEETS/NAS_DATASHEET_DRONESTACK_2026_CMYK.pdf` — PDF/X-3:2003, DeviceCMYK,
 FOGRA39 embedded as OutputIntent, text preserved as live vector.
 
 CMYK is right here because it is a **new document with no printed predecessor to
@@ -54,7 +57,7 @@ re-convert.*
 
 ### Ukrainian variant
 
-Send `NAS_DATASHEET_DRONESTACK_2026_UA_CMYK.pdf` — the same document in
+Send `DATASHEETS/NAS_DATASHEET_DRONESTACK_2026_UA_CMYK.pdf` — the same document in
 Ukrainian, same revision, document number `DS-2026-FC-UA`. Identical print
 route: PDF/X-3:2003, DeviceCMYK, FOGRA39 embedded, live vector text. Both
 Both variants use the same diagram artwork. They do NOT necessarily print it at
@@ -83,6 +86,25 @@ search index.
 Build: `node brand/build_datasheet_dronestack.mjs`             (English)
 Build: `node brand/build_datasheet_dronestack.mjs --lang=uk`   (Ukrainian)
 Build: `node brand/build_datasheet_dronestack.mjs --both`      (both, then compared side by side)
+
+### Ukrainian company profile + engine datasheet
+
+Send `DATASHEETS/NAS_COMPANY_PROFILE_2026_UA_CMYK.pdf` (doc `CP-2026-UA` Rev 01) and
+`DATASHEETS/NAS_DATASHEET_2C2E_2026_UA_CMYK.pdf` (doc `DS-2026-UA` Rev 01) — PDF/X-3:2003,
+DeviceCMYK, FOGRA39 embedded, live vector text. Same print instruction as the
+drone-stack sheet: *do not re-convert*.
+
+Built from the English source HTML in `.tmp_pdf/` (never from the published
+CMYK PDFs — the 2C/2E one has a defective text layer), with all Space Grotesk
+body copy set in Inter (no Cyrillic in Space Grotesk) and every CSS gradient
+flattened so the vector CMYK pass leaves zero RGB shadings. Ukrainian copy is
+1:1 from `NAS_UA_COPYDECK_CP_DS.md`; the DS drops the fuel-efficiency star row
+(rule breach in the source — EN/DA follow at their next REV). Proofreader notes:
+`REVIEW-NOTES-UA.md` — native review required before anything ships.
+
+Build: `node brand/build_cp_ds_ua.mjs`            (both docs, RGB + CMYK)
+Build: `node brand/build_cp_ds_ua.mjs --doc=cp`   (company profile only)
+Build: `node brand/build_cp_ds_ua.mjs --doc=ds`   (engine datasheet only)
 
 `--both` prints a variant comparison. It reports any difference in diagram size
 between the languages — expected, but never silent — and fails on the things
