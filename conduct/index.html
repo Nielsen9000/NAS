@@ -346,6 +346,20 @@ img{ display:block; max-width:100%; }
 .nav-dd-sub{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-3); }
 .nav-dd-menu a:hover .nav-dd-sub, .nav-dd-menu a.active .nav-dd-sub{ color:var(--accent); }
 @media (max-width:900px){ .nav-dd{ display:none; } }
+
+/* i18n:switcher-css */
+.lang-switch{ display:inline-flex; align-items:center; gap:7px; margin-left:16px;
+  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:0.14em; color:var(--ink-2); text-decoration:none; padding:6px 2px;
+  white-space:nowrap; transition:color .2s ease; }
+.lang-switch .ls-sep{ opacity:.5; }
+.lang-switch:hover{ color:var(--accent); }
+html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:var(--ink-0); }
+/* the switcher must never squeeze the nav into wrapping */
+.site-header .nav a, .site-header .nav-dd-trigger{ white-space:nowrap; }
+.site-header .header-cta{ flex-wrap:nowrap; }
+.site-header .header-cta .btn{ white-space:nowrap; }
+/* i18n:switcher-css-end */
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
@@ -365,30 +379,31 @@ img{ display:block; max-width:100%; }
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home">
+    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="/#platforms">Platforms</a>
+    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
-        <div class="nav-dd-menu" role="menu">
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
           <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
           <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
         </div>
       </div>
-      <a href="/engineering">Engineering</a>
+      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
       <a href="/nas">NAS</a>
-      <a href="/conduct" class="active">Conduct</a>
-      <a href="/careers">Careers</a>
-      <a href="/contact">Contact</a>
+      <a href="/conduct" class="active" data-i18n="shared.conduct">Conduct</a>
+      <a href="/careers" data-i18n="shared.careers">Careers</a>
+      <a href="/contact" data-i18n="shared.contact">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-switch" id="lang-switch" href="/uk/" hidden data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
     </div>
   </div>
 </header>
@@ -398,27 +413,27 @@ img{ display:block; max-width:100%; }
     <div class="wrap conduct-hero-inner">
       <div>
         <div class="conduct-eyebrow">Nordic Advanced Systems</div>
-        <h1>
+        <h1 data-i18n="conduct.code-of-conduct-and">
           Code of Conduct
           <span>And Compliance</span>
         </h1>
       </div>
       <div class="conduct-hero-meta">
         <div class="conduct-meta-item">
-          <div class="k">Issued by</div>
+          <div class="k" data-i18n="conduct.issued-by">Issued by</div>
           <div class="v">Nordic Advanced Systems ApS</div>
         </div>
         <div class="conduct-meta-item">
-          <div class="k">Registration</div>
+          <div class="k" data-i18n="shared.registration">Registration</div>
           <div class="v">CVR. 45976645</div>
         </div>
         <div class="conduct-meta-item">
-          <div class="k">Jurisdiction</div>
-          <div class="v">Danish law · EU regulations · International standards</div>
+          <div class="k" data-i18n="conduct.jurisdiction">Jurisdiction</div>
+          <div class="v" data-i18n="conduct.danish-law-eu-regulations">Danish law · EU regulations · International standards</div>
         </div>
         <div class="conduct-meta-item">
-          <div class="k">Sections</div>
-          <div class="v">10 principles</div>
+          <div class="k" data-i18n="conduct.sections">Sections</div>
+          <div class="v" data-i18n="conduct.10-principles">10 principles</div>
         </div>
       </div>
     </div>
@@ -426,19 +441,19 @@ img{ display:block; max-width:100%; }
 
   <div class="wrap conduct-body">
 
-    <nav class="conduct-toc" aria-label="Table of contents">
-      <div class="toc-label">Contents</div>
+    <nav class="conduct-toc" aria-label="Table of contents" data-i18n-attrs="aria-label:conduct.table-of-contents">
+      <div class="toc-label" data-i18n="conduct.contents">Contents</div>
       <ul class="toc-list">
-        <li><a href="#ethical">Ethical Business Conduct</a></li>
-        <li><a href="#quality">Quality & Continuous Improvement</a></li>
-        <li><a href="#data">Data Protection & Confidentiality</a></li>
-        <li><a href="#conflicts">Conflicts of Interest</a></li>
-        <li><a href="#workplace">Work Environment & Diversity</a></li>
-        <li><a href="#trade">International Trade Compliance</a></li>
-        <li><a href="#supply">Responsible Supply Chain</a></li>
-        <li><a href="#rights">Human Rights & Sustainability</a></li>
-        <li><a href="#financial">Financial Integrity</a></li>
-        <li><a href="#laws">Compliance with Laws</a></li>
+        <li data-i18n="conduct.ethical-business-conduct"><a href="#ethical">Ethical Business Conduct</a></li>
+        <li data-i18n="conduct.quality-continuous-improvement"><a href="#quality">Quality & Continuous Improvement</a></li>
+        <li data-i18n="conduct.data-protection-confidentiality"><a href="#data">Data Protection & Confidentiality</a></li>
+        <li data-i18n="conduct.conflicts-of-interest"><a href="#conflicts">Conflicts of Interest</a></li>
+        <li data-i18n="conduct.work-environment-diversity"><a href="#workplace">Work Environment & Diversity</a></li>
+        <li data-i18n="conduct.international-trade-compliance"><a href="#trade">International Trade Compliance</a></li>
+        <li data-i18n="conduct.responsible-supply-chain"><a href="#supply">Responsible Supply Chain</a></li>
+        <li data-i18n="conduct.human-rights-sustainability"><a href="#rights">Human Rights & Sustainability</a></li>
+        <li data-i18n="conduct.financial-integrity"><a href="#financial">Financial Integrity</a></li>
+        <li data-i18n="conduct.compliance-with-laws"><a href="#laws">Compliance with Laws</a></li>
       </ul>
     </nav>
 
@@ -446,62 +461,62 @@ img{ display:block; max-width:100%; }
 
       <div class="conduct-section" id="ethical">
         <div class="conduct-section-num">/ 01</div>
-        <h2>Ethical Business Conduct</h2>
-        <p>At NAS (Nordic Advanced Systems), we are committed to conducting business with integrity, transparency, and responsibility. We follow all applicable laws and internal policies to ensure that we operate according to the highest ethical standards. We do not tolerate any form of bribery, corruption, facilitation payments, or improper advantage.</p>
+        <h2 data-i18n="conduct.ethical-business-conduct-2">Ethical Business Conduct</h2>
+        <p data-i18n="conduct.at-nas-nordic-advanced">At NAS (Nordic Advanced Systems), we are committed to conducting business with integrity, transparency, and responsibility. We follow all applicable laws and internal policies to ensure that we operate according to the highest ethical standards. We do not tolerate any form of bribery, corruption, facilitation payments, or improper advantage.</p>
       </div>
 
       <div class="conduct-section" id="quality">
         <div class="conduct-section-num">/ 02</div>
-        <h2>Quality and Continuous Improvement</h2>
-        <p>We operate under a self-developed and certified Quality Management System (QMS), which ensures that our products and services meet the highest quality standards. The QMS is based on continuous improvement, audits, and strict quality control. This ensures that we consistently deliver reliable and high-performing solutions to our partners.</p>
+        <h2 data-i18n="conduct.quality-and-continuous-improvement">Quality and Continuous Improvement</h2>
+        <p data-i18n="conduct.we-operate-under-a">We operate under a self-developed and certified Quality Management System (QMS), which ensures that our products and services meet the highest quality standards. The QMS is based on continuous improvement, audits, and strict quality control. This ensures that we consistently deliver reliable and high-performing solutions to our partners.</p>
       </div>
 
       <div class="conduct-section" id="data">
         <div class="conduct-section-num">/ 03</div>
-        <h2>Data Protection and Confidentiality</h2>
-        <p>We handle all data with great care and in compliance with applicable data protection regulations, including GDPR. Confidentiality is a fundamental principle at NAS, and we ensure that information from partners, employees, and stakeholders is treated with the highest level of security and discretion.</p>
+        <h2 data-i18n="conduct.data-protection-and-confidentiality">Data Protection and Confidentiality</h2>
+        <p data-i18n="conduct.we-handle-all-data">We handle all data with great care and in compliance with applicable data protection regulations, including GDPR. Confidentiality is a fundamental principle at NAS, and we ensure that information from partners, employees, and stakeholders is treated with the highest level of security and discretion.</p>
       </div>
 
       <div class="conduct-section" id="conflicts">
         <div class="conduct-section-num">/ 04</div>
-        <h2>Conflicts of Interest</h2>
-        <p>Employees and representatives of NAS must avoid situations where personal interests conflict with company interests. Any potential conflict must be reported immediately so that an appropriate and transparent solution can be found.</p>
+        <h2 data-i18n="conduct.conflicts-of-interest-2">Conflicts of Interest</h2>
+        <p data-i18n="conduct.employees-and-representatives-of">Employees and representatives of NAS must avoid situations where personal interests conflict with company interests. Any potential conflict must be reported immediately so that an appropriate and transparent solution can be found.</p>
       </div>
 
       <div class="conduct-section" id="workplace">
         <div class="conduct-section-num">/ 05</div>
-        <h2>Work Environment, Diversity, and Respect</h2>
-        <p>NAS strives to create an inclusive, safe, and respectful workplace for all employees. Discrimination, harassment, or bullying are not tolerated. We promote equal opportunities regardless of nationality, gender, age, or background. As an international company, we value the diversity of our global team and ensure that all employees are onboarded and employed in accordance with Danish law and international labor standards.</p>
+        <h2 data-i18n="conduct.work-environment-diversity-and">Work Environment, Diversity, and Respect</h2>
+        <p data-i18n="conduct.nas-strives-to-create">NAS strives to create an inclusive, safe, and respectful workplace for all employees. Discrimination, harassment, or bullying are not tolerated. We promote equal opportunities regardless of nationality, gender, age, or background. As an international company, we value the diversity of our global team and ensure that all employees are onboarded and employed in accordance with Danish law and international labor standards.</p>
       </div>
 
       <div class="conduct-section" id="trade">
         <div class="conduct-section-num">/ 06</div>
-        <h2>International Trade Compliance</h2>
-        <p>NAS complies with all applicable international trade laws, customs requirements, and sanctions regimes. We ensure that all production and trade activities are carried out in alignment with EU and local regulations in the countries where we operate.</p>
+        <h2 data-i18n="conduct.international-trade-compliance-2">International Trade Compliance</h2>
+        <p data-i18n="conduct.nas-complies-with-all">NAS complies with all applicable international trade laws, customs requirements, and sanctions regimes. We ensure that all production and trade activities are carried out in alignment with EU and local regulations in the countries where we operate.</p>
       </div>
 
       <div class="conduct-section" id="supply">
         <div class="conduct-section-num">/ 07</div>
-        <h2>Responsible Supply Chain</h2>
-        <p>We expect our suppliers and partners to comply with the same ethical, legal, and quality standards as NAS. We conduct due diligence in our supply chain to prevent corruption, human rights violations, and environmental harm, and we work only with responsible and reliable partners.</p>
+        <h2 data-i18n="conduct.responsible-supply-chain-2">Responsible Supply Chain</h2>
+        <p data-i18n="conduct.we-expect-our-suppliers">We expect our suppliers and partners to comply with the same ethical, legal, and quality standards as NAS. We conduct due diligence in our supply chain to prevent corruption, human rights violations, and environmental harm, and we work only with responsible and reliable partners.</p>
       </div>
 
       <div class="conduct-section" id="rights">
         <div class="conduct-section-num">/ 08</div>
-        <h2>Human Rights and Sustainability</h2>
-        <p>NAS is committed to respecting internationally recognized human rights and labor standards, including the UN Guiding Principles on Business and Human Rights. We also seek to minimize our environmental footprint and continuously work towards sustainable solutions in both production and international trade.</p>
+        <h2 data-i18n="conduct.human-rights-and-sustainability">Human Rights and Sustainability</h2>
+        <p data-i18n="conduct.nas-is-committed-to">NAS is committed to respecting internationally recognized human rights and labor standards, including the UN Guiding Principles on Business and Human Rights. We also seek to minimize our environmental footprint and continuously work towards sustainable solutions in both production and international trade.</p>
       </div>
 
       <div class="conduct-section" id="financial">
         <div class="conduct-section-num">/ 09</div>
-        <h2>Financial Integrity</h2>
-        <p>NAS is committed to financial transparency and integrity. We comply with all applicable anti-money laundering (AML) and financial regulations, ensuring that our business activities and relationships are conducted with accountability and trustworthiness.</p>
+        <h2 data-i18n="conduct.financial-integrity-2">Financial Integrity</h2>
+        <p data-i18n="conduct.nas-is-committed-to-2">NAS is committed to financial transparency and integrity. We comply with all applicable anti-money laundering (AML) and financial regulations, ensuring that our business activities and relationships are conducted with accountability and trustworthiness.</p>
       </div>
 
       <div class="conduct-section" id="laws">
         <div class="conduct-section-num">/ 10</div>
-        <h2>Compliance with Laws and Regulations</h2>
-        <p>NAS complies with all relevant laws and regulations in the countries where we operate. This includes requirements for safety, health, and environmental protection. By adhering to both international and local standards, we ensure that our activities are fully aligned with responsible business practices.</p>
+        <h2 data-i18n="conduct.compliance-with-laws-and">Compliance with Laws and Regulations</h2>
+        <p data-i18n="conduct.nas-complies-with-all-2">NAS complies with all relevant laws and regulations in the countries where we operate. This includes requirements for safety, health, and environmental protection. By adhering to both international and local standards, we ensure that our activities are fully aligned with responsible business practices.</p>
       </div>
 
     </div>
@@ -515,7 +530,7 @@ img{ display:block; max-width:100%; }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
   </div>
 </footer>
 
@@ -609,5 +624,17 @@ img{ display:block; max-width:100%; }
 })();
 </script>
 
+<script>/* i18n:switcher-js */
+(function(){
+  var el = document.getElementById('lang-switch'); if (!el) return;
+  var p = location.pathname;
+  var isUk = p === '/uk' || p.indexOf('/uk/') === 0;
+  var target = isUk ? (p.replace(/^\/uk\/?/, '/') || '/') : ('/uk' + (p === '/' ? '/' : p));
+  el.setAttribute('href', target);
+  el.addEventListener('click', function(){
+    try { localStorage.setItem('nas-lang', isUk ? 'en' : 'uk'); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>

@@ -1653,6 +1653,20 @@ p{ margin:0; color:var(--ink-1); }
 .nav-dd-sub{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-3); }
 .nav-dd-menu a:hover .nav-dd-sub, .nav-dd-menu a.active .nav-dd-sub{ color:var(--accent); }
 @media (max-width:900px){ .nav-dd{ display:none; } }
+
+/* i18n:switcher-css */
+.lang-switch{ display:inline-flex; align-items:center; gap:7px; margin-left:16px;
+  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:0.14em; color:var(--ink-2); text-decoration:none; padding:6px 2px;
+  white-space:nowrap; transition:color .2s ease; }
+.lang-switch .ls-sep{ opacity:.5; }
+.lang-switch:hover{ color:var(--accent); }
+html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:var(--ink-0); }
+/* the switcher must never squeeze the nav into wrapping */
+.site-header .nav a, .site-header .nav-dd-trigger{ white-space:nowrap; }
+.site-header .header-cta{ flex-wrap:nowrap; }
+.site-header .header-cta .btn{ white-space:nowrap; }
+/* i18n:switcher-css-end */
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
@@ -1672,30 +1686,31 @@ p{ margin:0; color:var(--ink-1); }
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home">
+    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="/#platforms">Platforms</a>
+    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
-        <div class="nav-dd-menu" role="menu">
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
           <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
           <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
         </div>
       </div>
-      <a href="/engineering">Engineering</a>
+      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
       <a href="/nas">NAS</a>
-      <a href="/conduct">Conduct</a>
-      <a href="/careers" class="active">Careers</a>
-      <a href="/contact">Contact</a>
+      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
+      <a href="/careers" class="active" data-i18n="shared.careers">Careers</a>
+      <a href="/contact" data-i18n="shared.contact">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-switch" id="lang-switch" href="/uk/" hidden data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
     </div>
   </div>
 </header>
@@ -1806,20 +1821,20 @@ p{ margin:0; color:var(--ink-1); }
     <div class="testrig-corner testrig-corner-tr" aria-hidden="true"></div>
     <div class="testrig-corner testrig-corner-bl" aria-hidden="true"></div>
     <div class="testrig-corner testrig-corner-br" aria-hidden="true"></div>
-    <div class="careers-hero-crosshair" aria-hidden="true">+ CAREERS · NAS</div>
+    <div class="careers-hero-crosshair" aria-hidden="true" data-i18n="careers.careers-nas">+ CAREERS · NAS</div>
     <div class="careers-hero-telemetry" aria-hidden="true">
       <span>RPM · <b id="tlm-rpm">7,100</b></span>
-      <span>THRUST · <b id="tlm-thrust">51 N</b></span>
-      <span>TEMP · <b id="tlm-temp">49°C</b></span>
+      <span>THRUST · <b id="tlm-thrust" data-i18n="careers.51-n">51 N</b></span>
+      <span>TEMP · <b id="tlm-temp" data-i18n="careers.49c">49°C</b></span>
     </div>
     <div class="wrap">
       <div class="careers-hero-inner reveal">
-        <div class="section-eyebrow">/ CAREERS</div>
-        <h1 class="careers-hero-headline">
+        <div class="section-eyebrow" data-i18n="careers.careers">/ CAREERS</div>
+        <h1 class="careers-hero-headline" data-i18n="careers.build-the-engines-that">
           Build the engines<br>
           <span class="accent">that fly further.</span>
         </h1>
-        <p class="careers-hero-lead">NAS is growing. We design and build our engines in-house in Denmark — and we're always interested in the people who want to build them with us.</p>
+        <p class="careers-hero-lead" data-i18n="careers.nas-is-growing-we">NAS is growing. We design and build our engines in-house in Denmark — and we're always interested in the people who want to build them with us.</p>
       </div>
     </div>
   </section>
@@ -1829,18 +1844,18 @@ p{ margin:0; color:var(--ink-1); }
        ========================================= -->
   <section class="company-section careers-positions">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 02 — OPEN POSITIONS</div>
+      <div class="section-eyebrow" data-i18n="careers.02-open-positions">/ 02 — OPEN POSITIONS</div>
 
       <div class="positions-empty">
         <div class="ep-corner ep-corner-tl" aria-hidden="true"></div>
         <div class="ep-corner ep-corner-tr" aria-hidden="true"></div>
         <div class="ep-corner ep-corner-bl" aria-hidden="true"></div>
         <div class="ep-corner ep-corner-br" aria-hidden="true"></div>
-        <div class="positions-empty-status">Status · All positions filled</div>
-        <h2 class="positions-empty-title">No open roles<br><span class="accent">at the moment.</span></h2>
-        <p class="positions-empty-body">Every seat on the bench is taken right now — our latest openings have been filled. But we build in-house and we're growing, so this page rarely stays quiet for long.</p>
-        <p class="positions-empty-body">If you want to be first in line when it changes, send us your CV and a few lines about what you'd want to build. We read every one.</p>
-        <a class="positions-empty-cta" href="mailto:job@nordicadvancedsystems.com?subject=Open%20application%20%E2%80%94%20NAS">Send an open application <span class="arrow" aria-hidden="true">→</span></a>
+        <div class="positions-empty-status" data-i18n="careers.status-all-positions-filled">Status · All positions filled</div>
+        <h2 class="positions-empty-title" data-i18n="careers.no-open-roles-at">No open roles<br><span class="accent">at the moment.</span></h2>
+        <p class="positions-empty-body" data-i18n="careers.every-seat-on-the">Every seat on the bench is taken right now — our latest openings have been filled. But we build in-house and we're growing, so this page rarely stays quiet for long.</p>
+        <p class="positions-empty-body" data-i18n="careers.if-you-want-to">If you want to be first in line when it changes, send us your CV and a few lines about what you'd want to build. We read every one.</p>
+        <a class="positions-empty-cta" href="mailto:job@nordicadvancedsystems.com?subject=Open%20application%20%E2%80%94%20NAS" data-i18n="careers.send-an-open-application">Send an open application <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -1854,7 +1869,7 @@ p{ margin:0; color:var(--ink-1); }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
   </div>
 </footer>
 
@@ -1955,5 +1970,17 @@ p{ margin:0; color:var(--ink-1); }
 })();
 </script>
 
+<script>/* i18n:switcher-js */
+(function(){
+  var el = document.getElementById('lang-switch'); if (!el) return;
+  var p = location.pathname;
+  var isUk = p === '/uk' || p.indexOf('/uk/') === 0;
+  var target = isUk ? (p.replace(/^\/uk\/?/, '/') || '/') : ('/uk' + (p === '/' ? '/' : p));
+  el.setAttribute('href', target);
+  el.addEventListener('click', function(){
+    try { localStorage.setItem('nas-lang', isUk ? 'en' : 'uk'); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>

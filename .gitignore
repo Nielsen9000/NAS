@@ -60,3 +60,4 @@ brand/rollup-*.svg
 # brand/ per-build datasheet summaries — written by build_datasheet_dronestack.mjs
 # so --both can compare the two language variants. Regenerated every run.
 brand/.datasheet-report-*.json
+/uk/

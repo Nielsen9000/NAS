@@ -400,6 +400,20 @@ p{ margin:0; color:var(--ink-1); }
 .ds-quote.is-inline::after{ display:none; }
 .ds-quote.is-inline blockquote{ font-size:clamp(20px,2.2vw,28px); }
 @media (max-width:900px){ .ds-quote.is-inline{ padding:6px 6px 0; margin-top:32px; } }
+
+/* i18n:switcher-css */
+.lang-switch{ display:inline-flex; align-items:center; gap:7px; margin-left:16px;
+  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:0.14em; color:var(--ink-2); text-decoration:none; padding:6px 2px;
+  white-space:nowrap; transition:color .2s ease; }
+.lang-switch .ls-sep{ opacity:.5; }
+.lang-switch:hover{ color:var(--accent); }
+html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:var(--ink-0); }
+/* the switcher must never squeeze the nav into wrapping */
+.site-header .nav a, .site-header .nav-dd-trigger{ white-space:nowrap; }
+.site-header .header-cta{ flex-wrap:nowrap; }
+.site-header .header-cta .btn{ white-space:nowrap; }
+/* i18n:switcher-css-end */
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
@@ -416,30 +430,31 @@ p{ margin:0; color:var(--ink-1); }
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home">
+    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="/#platforms">Platforms</a>
+    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger active" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
-        <div class="nav-dd-menu" role="menu">
+        <button class="nav-dd-trigger active" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <div class="nav-dd-menu" role="menu" data-i18n="drone-stack.drone-stack-fc-stack">
           <a href="/intelligence/drone-stack/" role="menuitem" class="active"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
           <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
         </div>
       </div>
-      <a href="/engineering">Engineering</a>
+      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
       <a href="/nas">NAS</a>
-      <a href="/conduct">Conduct</a>
-      <a href="/careers">Careers</a>
-      <a href="/contact">Contact</a>
+      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
+      <a href="/careers" data-i18n="shared.careers">Careers</a>
+      <a href="/contact" data-i18n="shared.contact">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-switch" id="lang-switch" href="/uk/" hidden data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
     </div>
   </div>
 </header>
@@ -453,10 +468,10 @@ p{ margin:0; color:var(--ink-1); }
     <div class="ds-hero-overlay" aria-hidden="true"></div>
     <div class="wrap">
       <div class="ds-hero-inner reveal">
-        <div class="section-eyebrow">/ INTELLIGENT — DRONE STACK</div>
-        <h1 class="ds-hero-headline">The brain of<br><span class="accent">the aircraft</span></h1>
-        <p class="ds-hero-tagline">A flight controller engineered for continuous operation. Built exclusively from certified components, designed and manufactured in Europe.</p>
-        <div class="ds-badges">
+        <div class="section-eyebrow" data-i18n="drone-stack.intelligent-drone-stack">/ INTELLIGENT — DRONE STACK</div>
+        <h1 class="ds-hero-headline" data-i18n="drone-stack.the-brain-of-the">The brain of<br><span class="accent">the aircraft</span></h1>
+        <p class="ds-hero-tagline" data-i18n="drone-stack.a-flight-controller-engineered">A flight controller engineered for continuous operation. Built exclusively from certified components, designed and manufactured in Europe.</p>
+        <div class="ds-badges" data-i18n="drone-stack.ndaa-compliant">
           <span class="ds-badge">NDAA COMPLIANT</span>
         </div>
       </div>
@@ -483,10 +498,10 @@ p{ margin:0; color:var(--ink-1); }
     -->
 
     <div class="wrap ds-hero-rail">
-      <div class="ds-hero-specs" aria-hidden="true">
+      <div class="ds-hero-specs" aria-hidden="true" data-i18n="drone-stack.uart-gpio-elrs-i2c">
         <span><span data-spec="ds.uarts">6</span>× UART</span><span><span data-spec="ds.gpio">2</span>× GPIO</span><span>ELRS</span><span>I2C</span><span>NDAA-COMPLIANT SILICON</span>
       </div>
-      <a class="ds-scroll-cue" href="#connectivity">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
+      <a class="ds-scroll-cue" href="#connectivity" data-i18n="drone-stack.explore-the-stack">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
     </div>
   </section>
 
@@ -497,8 +512,8 @@ p{ margin:0; color:var(--ink-1); }
        ========================================= -->
   <section class="company-section" id="connectivity">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 01 — CONNECTIVITY</div>
-      <h2 class="ds-conn-intro">Flight Controller Pinout and <span class="accent">Connectivity</span> Overview.</h2>
+      <div class="section-eyebrow" data-i18n="drone-stack.01-connectivity">/ 01 — CONNECTIVITY</div>
+      <h2 class="ds-conn-intro" data-i18n="drone-stack.flight-controller-pinout-and">Flight Controller Pinout and <span class="accent">Connectivity</span> Overview.</h2>
 
       <div class="ds-conn-layout">
       <div class="ds-conn-panel is-datasheet">
@@ -506,32 +521,32 @@ p{ margin:0; color:var(--ink-1); }
         <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-        <div class="ds-conn-caption">FLIGHT CONTROLLER · PINOUT OVERVIEW</div>
+        <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller-pinout-overview">FLIGHT CONTROLLER · PINOUT OVERVIEW</div>
         <div class="ds-conn-figure">
-          <img src="/assets/fragment.png" loading="lazy" alt="NAS flight controller pinout diagram — top and bottom board views with UART, GPIO, ELRS, I2C, camera, ESC and power connections labelled" />
+          <img src="/assets/fragment.png" loading="lazy" alt="NAS flight controller pinout diagram — top and bottom board views with UART, GPIO, ELRS, I2C, camera, ESC and power connections labelled"  data-i18n-attrs="alt:drone-stack.nas-flight-controller-pinout"/>
         </div>
       </div>
 
       <div class="ds-conn-specs">
         <div class="conn-spec">
           <div class="conn-spec-label"><span data-spec="ds.uarts">6</span> × UART</div>
-          <p class="conn-spec-desc">Six UART (Universal Asynchronous Receiver/Transmitter) interfaces, providing extensive flexibility for external device connectivity.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.six-uart-universal-asynchronous">Six UART (Universal Asynchronous Receiver/Transmitter) interfaces, providing extensive flexibility for external device connectivity.</p>
         </div>
         <div class="conn-spec">
           <div class="conn-spec-label"><span data-spec="ds.gpio">2</span> × GPIO</div>
-          <p class="conn-spec-desc">Two GPIO (General-Purpose Input/Output) pins on the drone stack, configurable to the desired application or user requirements.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.two-gpio-generalpurpose-inputoutput">Two GPIO (General-Purpose Input/Output) pins on the drone stack, configurable to the desired application or user requirements.</p>
         </div>
         <div class="conn-spec">
-          <div class="conn-spec-label">SSD</div>
-          <p class="conn-spec-desc">Solid-State Drive — an internal high-speed electronic storage drive.</p>
+          <div class="conn-spec-label" data-i18n="drone-stack.ssd">SSD</div>
+          <p class="conn-spec-desc" data-i18n="drone-stack.solidstate-drive-an-internal">Solid-State Drive — an internal high-speed electronic storage drive.</p>
         </div>
         <div class="conn-spec">
           <div class="conn-spec-label">ELRS</div>
-          <p class="conn-spec-desc">With ELRS, the stack provides an ultra-fast, highly reliable, long-range and lightweight control link between the drone and the remote controller.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.with-elrs-the-stack">With ELRS, the stack provides an ultra-fast, highly reliable, long-range and lightweight control link between the drone and the remote controller.</p>
         </div>
         <div class="conn-spec">
           <div class="conn-spec-label">I2C</div>
-          <p class="conn-spec-desc">I2C increases flexibility and enables communication with external components such as compasses, GPS modules, LiDAR/sonar systems, weapons systems, etc.</p>
+          <p class="conn-spec-desc" data-i18n="drone-stack.i2c-increases-flexibility-and">I2C increases flexibility and enables communication with external components such as compasses, GPS modules, LiDAR/sonar systems, weapons systems, etc.</p>
         </div>
       </div>
       </div>
@@ -546,9 +561,9 @@ p{ margin:0; color:var(--ink-1); }
           <span class="ndaa-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v5.4c0 4.6 3.2 7.9 7.5 9.1 4.3-1.2 7.5-4.5 7.5-9.1V5.5L12 2.5Z"/><path d="M8.7 12.2l2.4 2.4 4.4-4.6"/></svg>
           </span>
-          <h2 class="ndaa-title"><span class="accent">NDAA</span> Compliant</h2>
+          <h2 class="ndaa-title" data-i18n="drone-stack.ndaa-compliant-2"><span class="accent">NDAA</span> Compliant</h2>
         </div>
-        <p class="ndaa-body">A US standard that sets a high bar — also within NATO. This equipment complies with the US National Defense Authorization Act, meaning it contains no components, chips or software from selected sanctioned Chinese manufacturers (such as Huawei, Hikvision or Dahua), ensuring a high level of cybersecurity. Although it is US law, NDAA compliance functions today as an international security standard — many partners and defence organisations in NATO countries, including Denmark, require it.</p>
+        <p class="ndaa-body" data-i18n="drone-stack.a-us-standard-that">A US standard that sets a high bar — also within NATO. This equipment complies with the US National Defense Authorization Act, meaning it contains no components, chips or software from selected sanctioned Chinese manufacturers (such as Huawei, Hikvision or Dahua), ensuring a high level of cybersecurity. Although it is US law, NDAA compliance functions today as an international security standard — many partners and defence organisations in NATO countries, including Denmark, require it.</p>
       </div>
     </div>
   </section>
@@ -560,7 +575,7 @@ p{ margin:0; color:var(--ink-1); }
   <section class="company-section">
     <div class="wrap reveal">
       <div class="section-eyebrow">/ 02 — ESC</div>
-      <h2>The <span class="accent">muscle</span> behind the stack</h2>
+      <h2 data-i18n="drone-stack.the-muscle-behind-the">The <span class="accent">muscle</span> behind the stack</h2>
 
       <div class="ds-conn-layout is-mirror">
         <div class="ds-conn-panel is-datasheet">
@@ -568,28 +583,28 @@ p{ margin:0; color:var(--ink-1); }
           <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
           <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="ds-conn-caption">ESC · PINOUT OVERVIEW</div>
+          <div class="ds-conn-caption" data-i18n="drone-stack.esc-pinout-overview">ESC · PINOUT OVERVIEW</div>
           <div class="ds-conn-figure">
-            <img src="/assets/ESC.jpeg" loading="lazy" alt="NAS ESC pinout diagram — 4-in-1 ESC with XT60 power, low-ESR capacitor, four motor outputs and FC signal connections labelled" />
+            <img src="/assets/ESC.jpeg" loading="lazy" alt="NAS ESC pinout diagram — 4-in-1 ESC with XT60 power, low-ESR capacitor, four motor outputs and FC signal connections labelled"  data-i18n-attrs="alt:drone-stack.nas-esc-pinout-diagram"/>
           </div>
         </div>
 
         <div class="ds-conn-specs">
           <div class="esc-lead-block">
             <span class="esc-lead-mark">[ FC + ESC ]</span>
-            <p class="esc-lead">Combined with the NAS Flight Controller (FC), this ESC completes the stack: the FC carries the sensing, link and logging; the ESC carries the current. Together they form a single stack with <span class="accent">one power path and one signal path</span> — fewer interfaces and known behaviour under load.</p>
+            <p class="esc-lead" data-i18n="drone-stack.combined-with-the-nas">Combined with the NAS Flight Controller (FC), this ESC completes the stack: the FC carries the sensing, link and logging; the ESC carries the current. Together they form a single stack with <span class="accent">one power path and one signal path</span> — fewer interfaces and known behaviour under load.</p>
           </div>
           <div class="conn-spec">
-            <div class="conn-spec-label">Agility</div>
-            <p class="conn-spec-desc">Digital motor control over DSHOT on all four outputs — checksummed throttle commands, no analogue calibration, no drift over time.</p>
+            <div class="conn-spec-label" data-i18n="drone-stack.agility">Agility</div>
+            <p class="conn-spec-desc" data-i18n="drone-stack.digital-motor-control-over">Digital motor control over DSHOT on all four outputs — checksummed throttle commands, no analogue calibration, no drift over time.</p>
           </div>
           <div class="conn-spec">
-            <div class="conn-spec-label">Power</div>
-            <p class="conn-spec-desc">Three variants — <span data-spec="ds.currents.0">65A</span>, <span data-spec="ds.currents.1">100A</span> and <span data-spec="ds.currents.2">200A</span> maximum continuous current — rated for sustained operation, not burst figures.</p>
+            <div class="conn-spec-label" data-i18n="drone-stack.power">Power</div>
+            <p class="conn-spec-desc" data-i18n="drone-stack.three-variants-and-maximum">Three variants — <span data-spec="ds.currents.0">65A</span>, <span data-spec="ds.currents.1">100A</span> and <span data-spec="ds.currents.2">200A</span> maximum continuous current — rated for sustained operation, not burst figures.</p>
           </div>
           <div class="conn-spec">
-            <div class="conn-spec-label">Flexibility</div>
-            <p class="conn-spec-desc">Runs on both <span data-spec="ds.cellCounts.0">4S</span> and <span data-spec="ds.cellCounts.1">6S</span> batteries across a <span data-spec="ds.inputRange">12–26V</span> input range — one stack, no reconfiguration between packs.</p>
+            <div class="conn-spec-label" data-i18n="drone-stack.flexibility">Flexibility</div>
+            <p class="conn-spec-desc" data-i18n="drone-stack.runs-on-both-and">Runs on both <span data-spec="ds.cellCounts.0">4S</span> and <span data-spec="ds.cellCounts.1">6S</span> batteries across a <span data-spec="ds.inputRange">12–26V</span> input range — one stack, no reconfiguration between packs.</p>
           </div>
         </div>
       </div>
@@ -601,7 +616,7 @@ p{ margin:0; color:var(--ink-1); }
        ========================================= -->
   <section class="company-section">
     <div class="wrap reveal">
-      <div class="section-eyebrow">/ 03 — FIELD TEST</div>
+      <div class="section-eyebrow" data-i18n="drone-stack.03-field-test">/ 03 — FIELD TEST</div>
       <div class="ds-inflight ds-fieldtest" id="ds-fieldtest">
         <video class="ds-ft-video" id="ds-ft-video"
                poster="/assets/dronestack-poster.jpg"
@@ -612,20 +627,20 @@ p{ margin:0; color:var(--ink-1); }
         <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-        <span class="if-label ds-ft-label">FIELD TEST · KOLIBRI DEFENCE</span>
-        <button class="ds-ft-play" id="ds-ft-play" type="button" aria-label="Play field test video with sound">
+        <span class="if-label ds-ft-label" data-i18n="drone-stack.field-test-kolibri-defence">FIELD TEST · KOLIBRI DEFENCE</span>
+        <button class="ds-ft-play" id="ds-ft-play" type="button" aria-label="Play field test video with sound" data-i18n-attrs="aria-label:drone-stack.play-field-test-video">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>
         </button>
       </div>
 
       <figure class="ds-quote is-inline">
         <span class="ds-quote-mark" aria-hidden="true">&ldquo;</span>
-        <blockquote>We are proud to use NAS avionics on our elite FPV drone platforms. Easy-to-solder ESC motor pads, high power output, and a versatile flight controller are exactly what we have been looking for in the European market for a long time.</blockquote>
+        <blockquote data-i18n="drone-stack.we-are-proud-to">We are proud to use NAS avionics on our elite FPV drone platforms. Easy-to-solder ESC motor pads, high power output, and a versatile flight controller are exactly what we have been looking for in the European market for a long time.</blockquote>
         <figcaption class="ds-quote-attr">
           <div class="ds-quote-divider" aria-hidden="true"></div>
-          <div class="ds-quote-name">Henri Christensen</div>
-          <div class="ds-quote-role">CEO, Kolibri Defence</div>
-          <div class="ds-quote-sub">Finnish dual-use FPV drone design house and manufacturer.</div>
+          <div class="ds-quote-name" data-i18n="drone-stack.henri-christensen">Henri Christensen</div>
+          <div class="ds-quote-role" data-i18n="drone-stack.ceo-kolibri-defence">CEO, Kolibri Defence</div>
+          <div class="ds-quote-sub" data-i18n="drone-stack.finnish-dualuse-fpv-drone">Finnish dual-use FPV drone design house and manufacturer.</div>
         </figcaption>
       </figure>
     </div>
@@ -640,7 +655,7 @@ p{ margin:0; color:var(--ink-1); }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
   </div>
 </footer>
 
@@ -721,5 +736,17 @@ p{ margin:0; color:var(--ink-1); }
 })();
 </script>
 
+<script>/* i18n:switcher-js */
+(function(){
+  var el = document.getElementById('lang-switch'); if (!el) return;
+  var p = location.pathname;
+  var isUk = p === '/uk' || p.indexOf('/uk/') === 0;
+  var target = isUk ? (p.replace(/^\/uk\/?/, '/') || '/') : ('/uk' + (p === '/' ? '/' : p));
+  el.setAttribute('href', target);
+  el.addEventListener('click', function(){
+    try { localStorage.setItem('nas-lang', isUk ? 'en' : 'uk'); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>

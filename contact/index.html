@@ -373,6 +373,20 @@ img{ display:block; max-width:100%; }
 .nav-dd-sub{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-3); }
 .nav-dd-menu a:hover .nav-dd-sub, .nav-dd-menu a.active .nav-dd-sub{ color:var(--accent); }
 @media (max-width:900px){ .nav-dd{ display:none; } }
+
+/* i18n:switcher-css */
+.lang-switch{ display:inline-flex; align-items:center; gap:7px; margin-left:16px;
+  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:0.14em; color:var(--ink-2); text-decoration:none; padding:6px 2px;
+  white-space:nowrap; transition:color .2s ease; }
+.lang-switch .ls-sep{ opacity:.5; }
+.lang-switch:hover{ color:var(--accent); }
+html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:var(--ink-0); }
+/* the switcher must never squeeze the nav into wrapping */
+.site-header .nav a, .site-header .nav-dd-trigger{ white-space:nowrap; }
+.site-header .header-cta{ flex-wrap:nowrap; }
+.site-header .header-cta .btn{ white-space:nowrap; }
+/* i18n:switcher-css-end */
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
@@ -392,30 +406,31 @@ img{ display:block; max-width:100%; }
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home">
+    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="/#platforms">Platforms</a>
+    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
-        <div class="nav-dd-menu" role="menu">
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
           <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
           <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
         </div>
       </div>
-      <a href="/engineering">Engineering</a>
+      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
       <a href="/nas">NAS</a>
-      <a href="/conduct">Conduct</a>
-      <a href="/careers">Careers</a>
-      <a href="/contact" class="active">Contact</a>
+      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
+      <a href="/careers" data-i18n="shared.careers">Careers</a>
+      <a href="/contact" class="active" data-i18n="shared.contact">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="lang-switch" id="lang-switch" href="/uk/" hidden data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
     </div>
   </div>
 </header>
@@ -425,26 +440,26 @@ img{ display:block; max-width:100%; }
     <div class="wrap contact-page-grid">
 
       <div class="contact-left reveal">
-        <div class="eyebrow">Contact</div>
-        <h1>
+        <div class="eyebrow" data-i18n="shared.contact">Contact</div>
+        <h1 data-i18n="contact.request-a-brief-lets">
           Request a brief
           <span>Let's talk mission requirements</span>
         </h1>
-        <p>
+        <p data-i18n="contact.for-specifications-integration-details">
           For specifications, integration details, and procurement inquiries. We work directly with operators, integrators, and programme offices.
         </p>
         <div class="contact-details">
           <div class="contact-detail">
-            <div class="k">Location</div>
+            <div class="k" data-i18n="contact.location">Location</div>
             <div class="v">Lufthavnvej 131, Beldringe, DK-5270 Odense N</div>
           </div>
           <div class="contact-detail">
-            <div class="k">Registration</div>
+            <div class="k" data-i18n="shared.registration">Registration</div>
             <div class="v">CVR. 45976645</div>
           </div>
           <div class="contact-detail">
-            <div class="k">Origin</div>
-            <div class="v">Danish · European · NDAA-compliant</div>
+            <div class="k" data-i18n="contact.origin">Origin</div>
+            <div class="v" data-i18n="contact.danish-european-ndaacompliant">Danish · European · NDAA-compliant</div>
           </div>
         </div>
       </div>
@@ -462,74 +477,74 @@ img{ display:block; max-width:100%; }
           <ol class="cf-progress">
             <li class="cf-step-node is-current" data-node="1">
               <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
-              <span class="cf-node-label">Enquiry</span>
+              <span class="cf-node-label" data-i18n="contact.enquiry">Enquiry</span>
             </li>
             <li class="cf-step-node" data-node="2">
               <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0113 0"/></svg></span>
-              <span class="cf-node-label">Contact</span>
+              <span class="cf-node-label" data-i18n="shared.contact">Contact</span>
             </li>
             <li class="cf-step-node" data-node="3">
               <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-              <span class="cf-node-label">Finish</span>
+              <span class="cf-node-label" data-i18n="contact.finish">Finish</span>
             </li>
           </ol>
 
           <!-- STEP 1 — Your enquiry -->
           <div class="cf-step is-active" data-step="1">
             <span class="cf-step-mark">[ 01 / 03 ]</span>
-            <h2 class="cf-step-title">Your enquiry</h2>
-            <p class="cf-step-sub">Tell us what this is about — we'll route it to the right people.</p>
+            <h2 class="cf-step-title" data-i18n="contact.your-enquiry">Your enquiry</h2>
+            <p class="cf-step-sub" data-i18n="contact.tell-us-what-this">Tell us what this is about — we'll route it to the right people.</p>
             <div class="cf-field">
-              <label class="cf-label" for="cf-type">Enquiry type</label>
+              <label class="cf-label" for="cf-type" data-i18n="contact.enquiry-type">Enquiry type</label>
               <select class="cf-select" id="cf-type" name="type">
-                <option value="" disabled selected>Select an enquiry type</option>
-                <option>NAS Engine 2C or 2E</option>
-                <option>Drone Stack</option>
-                <option>EFI system</option>
-                <option>Job</option>
-                <option>Partnership</option>
-                <option>Finance</option>
-                <option>Press</option>
-                <option>General</option>
+                <option value="" disabled selected data-i18n="contact.select-an-enquiry-type">Select an enquiry type</option>
+                <option data-i18n="contact.nas-engine-2c-or">NAS Engine 2C or 2E</option>
+                <option data-i18n="shared.drone-stack">Drone Stack</option>
+                <option data-i18n="contact.efi-system">EFI system</option>
+                <option data-i18n="contact.job">Job</option>
+                <option data-i18n="contact.partnership">Partnership</option>
+                <option data-i18n="contact.finance">Finance</option>
+                <option data-i18n="contact.press">Press</option>
+                <option data-i18n="contact.general">General</option>
               </select>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-message">Your enquiry</label>
-              <textarea class="cf-textarea" id="cf-message" name="message" placeholder="Please tell us as much as you can about your enquiry"></textarea>
+              <label class="cf-label" for="cf-message" data-i18n="contact.your-enquiry">Your enquiry</label>
+              <textarea class="cf-textarea" id="cf-message" name="message" placeholder="Please tell us as much as you can about your enquiry" data-i18n-attrs="placeholder:contact.please-tell-us-as"></textarea>
               <div class="cf-counter" id="cf-counter">0/500</div>
             </div>
             <div class="cf-actions end">
-              <button type="button" class="cf-btn cf-btn-primary" data-next>Continue <span class="arrow" aria-hidden="true">→</span></button>
+              <button type="button" class="cf-btn cf-btn-primary" data-next data-i18n="contact.continue">Continue <span class="arrow" aria-hidden="true">→</span></button>
             </div>
           </div>
 
           <!-- STEP 2 — Your contact details -->
           <div class="cf-step" data-step="2">
             <span class="cf-step-mark">[ 02 / 03 ]</span>
-            <h2 class="cf-step-title">Your contact details</h2>
-            <p class="cf-step-sub">So we can get back to you.</p>
+            <h2 class="cf-step-title" data-i18n="contact.your-contact-details">Your contact details</h2>
+            <p class="cf-step-sub" data-i18n="contact.so-we-can-get">So we can get back to you.</p>
             <div class="cf-row cols-2">
-              <div class="cf-field"><label class="cf-label" for="cf-first">First name</label><input class="cf-input" id="cf-first" name="firstName" type="text" autocomplete="given-name" /></div>
-              <div class="cf-field"><label class="cf-label" for="cf-last">Last name</label><input class="cf-input" id="cf-last" name="lastName" type="text" autocomplete="family-name" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-first" data-i18n="contact.first-name">First name</label><input class="cf-input" id="cf-first" name="firstName" type="text" autocomplete="given-name" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-last" data-i18n="contact.last-name">Last name</label><input class="cf-input" id="cf-last" name="lastName" type="text" autocomplete="family-name" /></div>
             </div>
             <div class="cf-row cols-2">
-              <div class="cf-field"><label class="cf-label" for="cf-email">Company email</label><input class="cf-input" id="cf-email" name="email" type="email" autocomplete="email" /><p class="cf-help">Providing a valid company email helps</p></div>
-              <div class="cf-field"><label class="cf-label" for="cf-company">Company name</label><input class="cf-input" id="cf-company" name="company" type="text" autocomplete="organization" /><p class="cf-help">Providing a valid company name helps</p></div>
+              <div class="cf-field"><label class="cf-label" for="cf-email" data-i18n="contact.company-email">Company email</label><input class="cf-input" id="cf-email" name="email" type="email" autocomplete="email" /><p class="cf-help" data-i18n="contact.providing-a-valid-company">Providing a valid company email helps</p></div>
+              <div class="cf-field"><label class="cf-label" for="cf-company" data-i18n="contact.company-name">Company name</label><input class="cf-input" id="cf-company" name="company" type="text" autocomplete="organization" /><p class="cf-help" data-i18n="contact.providing-a-valid-company-2">Providing a valid company name helps</p></div>
             </div>
             <div class="cf-row cols-3">
-              <div class="cf-field"><label class="cf-label" for="cf-prefix">Prefix</label><select class="cf-select" id="cf-prefix" name="prefix"><option value="" disabled selected>Code</option></select></div>
-              <div class="cf-field"><label class="cf-label" for="cf-phone">Phone number</label><input class="cf-input" id="cf-phone" name="phone" type="tel" autocomplete="tel" /></div>
-              <div class="cf-field"><label class="cf-label" for="cf-hours">Business hours</label><select class="cf-select" id="cf-hours" name="hours"><option value="" disabled selected>Best time</option><option>Anytime</option><option>Morning (08–12)</option><option>Afternoon (12–16)</option><option>Evening (16–20)</option></select></div>
+              <div class="cf-field"><label class="cf-label" for="cf-prefix" data-i18n="contact.prefix">Prefix</label><select class="cf-select" id="cf-prefix" name="prefix"><option value="" disabled selected data-i18n="contact.code">Code</option></select></div>
+              <div class="cf-field"><label class="cf-label" for="cf-phone" data-i18n="contact.phone-number">Phone number</label><input class="cf-input" id="cf-phone" name="phone" type="tel" autocomplete="tel" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-hours" data-i18n="contact.business-hours">Business hours</label><select class="cf-select" id="cf-hours" name="hours"><option value="" disabled selected data-i18n="contact.best-time">Best time</option><option data-i18n="contact.anytime">Anytime</option><option data-i18n="contact.morning-0812">Morning (08–12)</option><option data-i18n="contact.afternoon-1216">Afternoon (12–16)</option><option data-i18n="contact.evening-1620">Evening (16–20)</option></select></div>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-role">Job role</label>
-              <select class="cf-select" id="cf-role" name="role"><option value="" disabled selected>Select your role</option></select>
+              <label class="cf-label" for="cf-role" data-i18n="contact.job-role">Job role</label>
+              <select class="cf-select" id="cf-role" name="role"><option value="" disabled selected data-i18n="contact.select-your-role">Select your role</option></select>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-country">Country/Region</label>
-              <select class="cf-select" id="cf-country" name="country"><option value="" disabled selected>Select a country/region</option></select>
+              <label class="cf-label" for="cf-country" data-i18n="contact.countryregion">Country/Region</label>
+              <select class="cf-select" id="cf-country" name="country"><option value="" disabled selected data-i18n="contact.select-a-countryregion">Select a country/region</option></select>
             </div>
-            <label class="cf-consent" for="cf-consent">
+            <label class="cf-consent" for="cf-consent" data-i18n="contact.i-agree-to-receive">
               <input type="checkbox" id="cf-consent" name="consent" />
               <span class="cf-consent-text">I agree to receive relevant company updates, product information, technical news and other communications from Nordic Advanced Systems ApS by email, phone, messaging services and digital platforms, including LinkedIn and other social media channels.
                 <span class="muted">I understand that I can withdraw my consent at any time. Information about how Nordic Advanced Systems processes personal data is available in our GDPR Policy, accessible through our Code of Conduct.</span>
@@ -537,16 +552,16 @@ img{ display:block; max-width:100%; }
             </label>
             <p class="cf-error" id="cf-error" role="alert" hidden></p>
             <div class="cf-actions">
-              <button type="button" class="cf-btn cf-btn-ghost" data-back><span class="arrow-back" aria-hidden="true">←</span> Back</button>
-              <button type="submit" class="cf-btn cf-btn-primary" id="cf-submit">Submit enquiry <span class="arrow" aria-hidden="true">→</span></button>
+              <button type="button" class="cf-btn cf-btn-ghost" data-back data-i18n="contact.back"><span class="arrow-back" aria-hidden="true">←</span> Back</button>
+              <button type="submit" class="cf-btn cf-btn-primary" id="cf-submit" data-i18n="contact.submit-enquiry">Submit enquiry <span class="arrow" aria-hidden="true">→</span></button>
             </div>
           </div>
 
           <!-- STEP 3 — Finish -->
           <div class="cf-step cf-finish" data-step="3">
             <div class="cf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-            <h3>Thank you — your enquiry has been received.</h3>
-            <p>Our team will get back to you as soon as possible. All inquiries are handled with discretion and confidentiality.</p>
+            <h3 data-i18n="contact.thank-you-your-enquiry">Thank you — your enquiry has been received.</h3>
+            <p data-i18n="contact.our-team-will-get">Our team will get back to you as soon as possible. All inquiries are handled with discretion and confidentiality.</p>
           </div>
         </form>
       </div>
@@ -562,7 +577,7 @@ img{ display:block; max-width:100%; }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
   </div>
 </footer>
 
@@ -781,5 +796,17 @@ img{ display:block; max-width:100%; }
 })();
 </script>
 
+<script>/* i18n:switcher-js */
+(function(){
+  var el = document.getElementById('lang-switch'); if (!el) return;
+  var p = location.pathname;
+  var isUk = p === '/uk' || p.indexOf('/uk/') === 0;
+  var target = isUk ? (p.replace(/^\/uk\/?/, '/') || '/') : ('/uk' + (p === '/' ? '/' : p));
+  el.setAttribute('href', target);
+  el.addEventListener('click', function(){
+    try { localStorage.setItem('nas-lang', isUk ? 'en' : 'uk'); } catch (e) {}
+  });
+})();
+</script>
 </body>
 </html>
