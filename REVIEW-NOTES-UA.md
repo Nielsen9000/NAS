@@ -174,3 +174,25 @@ marginer er strammet i UA-varianterne (EN/DA-masterne er urørte):
    КОНТРОЛЬОВАНИЙ ДОКУМЕНТ); «All rights reserved» → «УСІ ПРАВА ЗАХИЩЕНІ».
 5. CMYK-eksport: PDF/X-3, DeviceCMYK, FOGRA39L Coated embedded, levende
    vektortekst, 0 shadings tilbage.
+
+---
+
+## ADDENDUM (8. september 2026) — seks nye sprog + ny sprogvælger
+
+Tre ting ændrer sig for /uk/ i samme ombæring; de kræver korrekturlæserens blik:
+
+1. **Ny footer-linje på alle sprogversioner:** «Англійська версія є автентичною.»
+   (EN: "English is the authoritative version.") Oversættelsen er Claudes og er
+   IKKE korrekturlæst — bekræft eller ret formuleringen (alternativ overvejet:
+   «Офіційною версією є англійська»). Rettes i LANG_META i brand/build_i18n.mjs
+   (uk.authoritative), ikke i uk.json.
+2. **Sprogvælgeren er bygget om** (otte sprogversioner): lukket viser den kun
+   aktiv sprogkode + chevron («УКР ⌄»), åben viser sprogene på deres eget sprog.
+   BESLUTNING FASTHOLDT: /uk/ står ikke i vælgeren på andre sprogs sider — den
+   nås kun via direkte link (flaget UK_IN_SWITCHER i locales/config.mjs, default
+   false). På /uk/-siderne selv vises «Українська» som aktivt sprog. Knappens
+   aria-label på uk: «Вибрати мову» — også Claudes oversættelse, bekræft.
+3. **Formular-fix:** rolle- og landelisten indsendte tidligere den OVERSATTE
+   tekst som værdi. Nu er værdien altid engelsk; ukrainsk vises kun som label.
+   Ingen handling nødvendig, men adfærden i punktet "formularens indsendte
+   værdier forbliver engelske" passer først NU for dropdown-listerne.
