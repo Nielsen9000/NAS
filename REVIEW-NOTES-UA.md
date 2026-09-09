@@ -204,7 +204,7 @@ Tre ting ændrer sig for /uk/ i samme ombæring; de kræver korrekturlæserens b
 Websidens drone-stack-side er skrevet om til to varianter (DS-2026-FC65 /
 DS-2026-FC100). 44 nøgler i `locales/uk.json` er nye eller omskrevet
 (hele `drone-stack.*`-navnerummet: to produktsektioner, spec-rækker,
-"Запросити технічний опис"-knappen, REV 02-noten og den nye meta.description).
+"Запросити технічний опис"-knappen, de fulde F722 FC-rækker og den nye meta.description).
 Formuleringerne spejler DS-2026-FC65/100-UA-databladet, men er IKKE indfødt
 korrekturlæst. Ret direkte i uk.json og kør
 `node brand/build_i18n.mjs --build uk --strict`.
