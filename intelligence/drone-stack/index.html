@@ -416,6 +416,24 @@ p{ margin:0; color:var(--ink-1); }
 /* connectors-and-pads line, shared by both boards (datasheet undersection) */
 .ds-connline{ margin:18px 0 0; padding-top:14px; border-top:1px dashed rgba(59,182,232,0.3); font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-2); line-height:1.9; }
 .ds-cta-row{ margin-top:44px; }
+/* SELECT — two jump cards answering "which stack?" before the spec sections */
+.ds-choose{ grid-template-columns:repeat(2,1fr); max-width:1100px; }
+.ds-choose .vcard{ display:block; }
+/* board cutouts as the card body — a product card, not a mini spec table */
+.ds-choose .vcard-boards{ position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:20px; margin:28px 0 8px; min-height:200px; }
+.ds-choose .vcard-boards img{ max-height:200px; width:auto; max-width:46%; filter:drop-shadow(0 14px 26px rgba(0,0,0,0.5)); transition:transform .35s var(--ease-smooth); }
+.ds-choose .vcard:hover .vcard-boards img{ transform:translateY(-4px); }
+.vcard-go{ position:relative; z-index:1; display:inline-flex; align-items:center; gap:8px; margin-top:22px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); }
+.vcard-go .arrow{ transition:transform .3s var(--ease-spring); }
+.vcard:hover .vcard-go .arrow{ transform:translateY(3px); }
+/* one storyline row per board before its spec table */
+.ds-benefits{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px 44px; margin:0 0 56px; }
+@media (max-width:900px){ .ds-choose{ grid-template-columns:1fr; } .ds-benefits{ grid-template-columns:1fr; gap:22px; } }
+/* HUD callouts anchored on the board figures (desktop only, as in the hero).
+   The tag gets a dark chip so it stays readable over bright gold pads. */
+.ds-conn-figure .ds-cal{ z-index:4; }
+.ds-conn-figure .ds-cal-line{ width:44px; }
+.ds-conn-figure .ds-cal-tag{ font-size:10px; padding:4px 9px; background:rgba(8,32,42,0.88); border:1px solid rgba(59,182,232,0.4); text-shadow:none; }
 /* board cutouts lie directly on the page — no white datasheet plate; a faint
    cyan glow + drop shadow lift the alpha PNGs off the marine background */
 .ds-conn-panel.is-cutout{ background:none; border:0; box-shadow:none; }
@@ -461,6 +479,8 @@ p{ margin:0; color:var(--ink-1); }
 @media (min-width:901px){ .site-header .header-cta{ display:flex; align-items:center; flex-wrap:nowrap; } }
 .site-header .header-cta .btn{ white-space:nowrap; }
 /* i18n:switcher-css-end */
+
+
 
 
 
@@ -551,7 +571,52 @@ p{ margin:0; color:var(--ink-1); }
       <div class="ds-hero-specs" aria-hidden="true" data-i18n="drone-stack.drone-stack-drone-stack">
         <span>DRONE STACK <span data-spec="ds65.currentTight">65A</span></span><span>DRONE STACK <span data-spec="ds100.currentTight">100A</span></span><span>NDAA-COMPLIANT EUROPEAN CHIPSET</span>
       </div>
-      <a class="ds-scroll-cue" href="#stack-65" data-i18n="drone-stack.explore-the-stack">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
+      <a class="ds-scroll-cue" href="#choose" data-i18n="drone-stack.explore-the-stack">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+
+  <!-- =========================================
+       SELECT — two variants, two platform classes: jump cards that answer
+       "which stack?" before either spec section starts.
+       ========================================= -->
+  <section class="company-section" id="choose">
+    <div class="wrap reveal">
+      <div class="section-eyebrow" data-i18n="drone-stack.select-drone-stack">/ SELECT — DRONE STACK</div>
+      <h2 data-i18n="drone-stack.two-variants-two-platform">Two variants — <span class="accent">two platform classes</span></h2>
+      <div class="ds-variants ds-choose">
+        <a class="vcard" href="#stack-65">
+          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+          <div class="vcard-head">
+            <span class="vcard-flag"><span data-spec="ds65.cellCounts.0">4S</span> / <span data-spec="ds65.cellCounts.1">6S</span></span>
+            <div class="vcard-name" data-i18n="drone-stack.drone-stack">Drone Stack <span data-spec="ds65.currentTight">65A</span></div>
+            <div class="vcard-class">FC + 4-IN-1 ESC</div>
+          </div>
+          <div class="vcard-boards" aria-hidden="true">
+            <img src="/assets/fcf405v2_alpha.png" alt="" loading="lazy" />
+            <img src="/assets/esc65av2_alpha.png" alt="" loading="lazy" />
+          </div>
+          <span class="vcard-go" data-i18n="drone-stack.view-the-stack">View the <span data-spec="ds65.currentTight">65A</span> stack <span class="arrow" aria-hidden="true">↓</span></span>
+        </a>
+        <a class="vcard" href="#stack-100">
+          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+          <div class="vcard-head">
+            <span class="vcard-flag" data-i18n="drone-stack.heavylift"><span data-spec="ds100.cellCounts.0">6S</span> / <span data-spec="ds100.cellCounts.1">8S</span> heavy-lift</span>
+            <div class="vcard-name" data-i18n="drone-stack.drone-stack-2">Drone Stack <span data-spec="ds100.currentTight">100A</span></div>
+            <div class="vcard-class">4-IN-1 ESC</div>
+          </div>
+          <div class="vcard-boards" aria-hidden="true">
+            <img src="/assets/fcf722v2_alpha.png" alt="" loading="lazy" />
+            <img src="/assets/esc100av2_alpha.png" alt="" loading="lazy" />
+          </div>
+          <span class="vcard-go" data-i18n="drone-stack.view-the-stack-2">View the <span data-spec="ds100.currentTight">100A</span> stack <span class="arrow" aria-hidden="true">↓</span></span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -570,6 +635,21 @@ p{ margin:0; color:var(--ink-1); }
         <span class="ds-band-caption">Continuous current · <span data-spec="ds65.burst">70 A</span> burst (<span data-spec="dsb.burstWindow">5 s</span>)</span>
       </div>
 
+      <div class="ds-benefits">
+        <div class="conn-spec">
+          <div class="conn-spec-label" data-i18n="drone-stack.agility">Agility</div>
+          <p class="conn-spec-desc" data-i18n="drone-stack.digital-motor-control-over">Digital motor control over DSHOT on all four outputs — checksummed throttle commands, no analogue calibration, no drift over time.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label" data-i18n="drone-stack.link">Link</div>
+          <p class="conn-spec-desc" data-i18n="drone-stack.with-elrs-the-stack">With ELRS, the stack provides an ultra-fast, highly reliable, long-range and lightweight control link between the drone and the remote controller.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label" data-i18n="drone-stack.flexibility">Flexibility</div>
+          <p class="conn-spec-desc" data-i18n="drone-stack.runs-on-both-and">Runs on both <span data-spec="ds65.cellCounts.0">4S</span> and <span data-spec="ds65.cellCounts.1">6S</span> batteries across a <span data-spec="ds65.inputRange">12.0–26 V</span> input range — one stack, no reconfiguration between packs.</p>
+        </div>
+      </div>
+
       <div class="ds-conn-layout">
         <div class="ds-conn-panel is-cutout">
           <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
@@ -579,6 +659,8 @@ p{ margin:0; color:var(--ink-1); }
           <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller">FLIGHT CONTROLLER · <span data-spec="ds65.fcMcu">STM32F405</span></div>
           <div class="ds-conn-figure">
             <img src="/assets/fcf405v2_alpha.png" loading="lazy" alt="Flight controller board of the NAS Drone Stack 65A"  data-i18n-attrs="alt:drone-stack.flight-controller-board-of"/>
+            <div class="ds-cal" style="left:48%; top:42%;" aria-hidden="true"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">STM32F405</span></span></div>
+            <div class="ds-cal" style="left:76%; top:30%;" aria-hidden="true" data-i18n="drone-stack.usbc"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">USB-C</span></span></div>
           </div>
         </div>
 
@@ -607,6 +689,9 @@ p{ margin:0; color:var(--ink-1); }
           <div class="ds-conn-caption">4-IN-1 ESC · <span data-spec="ds65.currentTight">65A</span></div>
           <div class="ds-conn-figure">
             <img src="/assets/esc65av2_alpha.png" loading="lazy" alt="4-in-1 ESC board of the NAS Drone Stack 65A"  data-i18n-attrs="alt:drone-stack.4in1-esc-board-of"/>
+            <div class="ds-cal" style="left:52%; top:13%;" aria-hidden="true" data-i18n="drone-stack.battery-pads"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">Battery pads</span></span></div>
+            <div class="ds-cal" style="left:82%; top:48%;" aria-hidden="true" data-i18n="drone-stack.motor-pads"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">Motor pads <span data-spec="dsb.motorPadsGrid">3×4</span></span></span></div>
+            <div class="ds-cal" style="left:60%; top:89%;" aria-hidden="true" data-i18n="drone-stack.control-connector-pins"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">Control connector · <span data-spec="dsb.escConnectorPins">8</span> pins</span></span></div>
           </div>
         </div>
 
@@ -646,6 +731,21 @@ p{ margin:0; color:var(--ink-1); }
         <span class="ds-band-caption">Continuous current · <span data-spec="ds100.burst">105 A</span> burst (<span data-spec="dsb.burstWindow">5 s</span>)</span>
       </div>
 
+      <div class="ds-benefits">
+        <div class="conn-spec">
+          <div class="conn-spec-label" data-i18n="drone-stack.heavylift-2">Heavy-lift</div>
+          <p class="conn-spec-desc" data-i18n="drone-stack.built-for-heavylift-platforms">Built for <span data-spec="ds100.cellCounts.0">6S</span> / <span data-spec="ds100.cellCounts.1">8S</span> heavy-lift platforms in continuous operation, across an <span data-spec="ds100.inputRange">18.0–35 V</span> input range.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label" data-i18n="drone-stack.telemetry-benefit">Telemetry</div>
+          <p class="conn-spec-desc" data-i18n="drone-stack.bidirectional-dshot-and-uart">Bidirectional DSHOT and UART KISS telemetry return live motor data to the flight controller.</p>
+        </div>
+        <div class="conn-spec">
+          <div class="conn-spec-label" data-i18n="drone-stack.open-firmware">Open firmware</div>
+          <p class="conn-spec-desc" data-i18n="drone-stack.the-esc-runs-opensource">The ESC runs <span data-spec="dsb.escFirmware">AM32</span> — open-source firmware with bidirectional DSHOT support.</p>
+        </div>
+      </div>
+
       <div class="ds-conn-layout is-mirror">
         <div class="ds-conn-panel is-cutout">
           <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
@@ -655,6 +755,9 @@ p{ margin:0; color:var(--ink-1); }
           <div class="ds-conn-caption">4-IN-1 ESC · <span data-spec="ds100.currentTight">100A</span></div>
           <div class="ds-conn-figure">
             <img src="/assets/esc100av2_alpha.png" loading="lazy" alt="4-in-1 ESC board of the NAS Drone Stack 100A"  data-i18n-attrs="alt:drone-stack.4in1-esc-board-of-2"/>
+            <div class="ds-cal" style="left:50%; top:11%;" aria-hidden="true" data-i18n="drone-stack.battery-pads"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">Battery pads</span></span></div>
+            <div class="ds-cal" style="left:84%; top:46%;" aria-hidden="true" data-i18n="drone-stack.motor-pads"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">Motor pads <span data-spec="dsb.motorPadsGrid">3×4</span></span></span></div>
+            <div class="ds-cal" style="left:56%; top:91%;" aria-hidden="true" data-i18n="drone-stack.control-connector-pins"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">Control connector · <span data-spec="dsb.escConnectorPins">8</span> pins</span></span></div>
           </div>
         </div>
 
@@ -682,6 +785,8 @@ p{ margin:0; color:var(--ink-1); }
           <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller-3">FLIGHT CONTROLLER · <span data-spec="ds100.fcMcu">STM32F722</span></div>
           <div class="ds-conn-figure">
             <img src="/assets/fcf722v2_alpha.png" loading="lazy" alt="Flight controller board of the NAS Drone Stack 100A"  data-i18n-attrs="alt:drone-stack.flight-controller-board-of-2"/>
+            <div class="ds-cal" style="left:46%; top:44%;" aria-hidden="true" data-i18n="drone-stack.stm32f722"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">STM32F722</span></span></div>
+            <div class="ds-cal" style="left:76%; top:32%;" aria-hidden="true" data-i18n="drone-stack.usbc"><span class="ds-cal-pt"></span><span class="ds-cal-row"><span class="ds-cal-line"></span><span class="ds-cal-tag">USB-C</span></span></div>
           </div>
         </div>
 
@@ -880,6 +985,8 @@ p{ margin:0; color:var(--ink-1); }
   });
 })();
 </script>
+
+
 
 
 
