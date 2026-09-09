@@ -16,14 +16,14 @@ everywhere; a change only in fi.json creates inconsistency.
 
 ## HELD BACK from this review (sentinels in fi.json)
 
-- **`@hold` (43 keys): the whole drone-stack page + five NDAA keys**
-  (`home.meta.description`, `home.nas-2-series-ndaacompliant`,
-  `contact.danish-european-ndaacompliant`, `efi.nas-iems-is-developed`,
-  `efi.ndaacompliant-architecture`). The ENGLISH source is being rewritten
-  (the 65A/100A stack split; final NDAA wording not locked). These render in
-  English on /fi/ and the build reports them loudly. Do not translate yet.
-  The locked NDAA sentence, when it comes: "NDAA-yhteensopiva eurooppalainen
-  piirisarja" — never "sertifioitu".
+- **`@hold`: FRIGIVET 9. september 2026.** Den engelske drone-stack-side er
+  skrevet om til 65A/100A-opdelingen, og NDAA-formuleringen er låst
+  (»NDAA-yhteensopiva eurooppalainen piirisarja« — aldrig en oversættelse af "certified").
+  Alle tidligere @hold-nøgler samt de nye strenge fra omskrivningen
+  (hele `drone-stack.*`-navnerummet + de fem NDAA-nøgler) er nu oversat
+  af Claude og INDGÅR I KORREKTUREN — de er IKKE indfødt korrekturlæst.
+  Terminologi: NAS_TERMINOLOGI_6SPROG.md.
+
 - **`@en` (40 keys): the entire Code of Conduct page** — kept in English by
   decision (ten legal/compliance sections). The page carries the note
   "This section is available in English only." Please do NOT translate it.

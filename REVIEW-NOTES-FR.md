@@ -22,14 +22,14 @@ garanti-mønsteret under Kvalitetskontrol).
 
 ## HOLDES TILBAGE FRA KORREKTUREN (sentinels i fr.json)
 
-- **`@hold` (43 nøgler): hele drone-stack-siden + fem NDAA-nøgler**
-  (`home.meta.description`, `home.nas-2-series-ndaacompliant`,
-  `contact.danish-european-ndaacompliant`, `efi.nas-iems-is-developed`,
-  `efi.ndaacompliant-architecture`). EN-kilden skrives om (65A/100A;
-  NDAA-formulering ikke låst). Vises på engelsk på /fr/, rapporteres højt af
-  builden. Den låste NDAA-sætning er »Chipset européen conforme à la NDAA« —
-  aldrig »certifié«. FÆLDEN fra terminologiliste §1 gælder her: continuous
-  current = »courant permanent«, ALDRIG »courant continu« (= jævnstrøm).
+- **`@hold`: FRIGIVET 9. september 2026.** Den engelske drone-stack-side er
+  skrevet om til 65A/100A-opdelingen, og NDAA-formuleringen er låst
+  (»Chipset européen conforme à la NDAA« — aldrig en oversættelse af "certified").
+  Alle tidligere @hold-nøgler samt de nye strenge fra omskrivningen
+  (hele `drone-stack.*`-navnerummet + de fem NDAA-nøgler) er nu oversat
+  af Claude og INDGÅR I KORREKTUREN — de er IKKE indfødt korrekturlæst.
+  Terminologi: NAS_TERMINOLOGI_6SPROG.md.
+
 - **`@en` (40 nøgler): hele Code of Conduct-siden** — engelsk ved beslutning.
   Siden viser noten "This section is available in English only."
 

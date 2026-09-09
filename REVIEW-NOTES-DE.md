@@ -7,15 +7,14 @@ Ret direkte i de.json og kør `node brand/build_i18n.mjs --build de --strict`.
 
 ## HOLDES TILBAGE FRA KORREKTUREN (sentinels i de.json)
 
-- **`@hold` (44 nøgler): hele drone-stack-siden + fem NDAA-nøgler**
-  (`home.meta.description`, `home.nas-2-series-ndaacompliant`,
-  `contact.danish-european-ndaacompliant`, `efi.nas-iems-is-developed`,
-  `efi.ndaacompliant-architecture`). Den engelske kilde skrives om
-  (65A/100A-opdelingen; endelig NDAA-formulering ikke låst). Disse strenge
-  VISES PÅ ENGELSK på /de/, og builden rapporterer dem højt ved hver kørsel.
-  Når EN-omskrivningen lander, oversættes de og sentinelerne erstattes.
-  Den låste NDAA-sætning er »NDAA-konformer europäischer Chipsatz« —
-  aldrig »zertifiziert«.
+- **`@hold`: FRIGIVET 9. september 2026.** Den engelske drone-stack-side er
+  skrevet om til 65A/100A-opdelingen, og NDAA-formuleringen er låst
+  (»NDAA-konformer europäischer Chipsatz« — aldrig en oversættelse af "certified").
+  Alle tidligere @hold-nøgler samt de nye strenge fra omskrivningen
+  (hele `drone-stack.*`-navnerummet + de fem NDAA-nøgler) er nu oversat
+  af Claude og INDGÅR I KORREKTUREN — de er IKKE indfødt korrekturlæst.
+  Terminologi: NAS_TERMINOLOGI_6SPROG.md.
+
 - **`@en` (40 nøgler): hele Code of Conduct-siden** — engelsk ved beslutning
   (ti juridiske afsnit). Siden viser noten "This section is available in
   English only." Skal IKKE oversættes.

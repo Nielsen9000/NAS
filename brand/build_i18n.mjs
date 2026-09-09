@@ -74,7 +74,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
-import { DRONE_STACK, NAS2, NAS2_NUM } from './specs.mjs';
+import { DRONE_STACK_BASE, DRONE_STACK_FC_BASE, DRONE_STACK_65, DRONE_STACK_100, NAS2, NAS2_NUM } from './specs.mjs';
 import { LANGS, UK_IN_SWITCHER } from '../locales/config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -277,7 +277,7 @@ function coreRange(src, node) {
 }
 
 // {spec:...} placeholders keep figures out of the locale files.
-const SPEC_ROOTS = { ds: DRONE_STACK, nas2: NAS2, nas2num: { ...NAS2_NUM, rangeKmComma: Number(NAS2_NUM.rangeKm).toLocaleString('en-US') } };
+const SPEC_ROOTS = { dsb: DRONE_STACK_BASE, dsfc: DRONE_STACK_FC_BASE, ds65: DRONE_STACK_65, ds100: DRONE_STACK_100, nas2: NAS2, nas2num: { ...NAS2_NUM, rangeKmComma: Number(NAS2_NUM.rangeKm).toLocaleString('en-US') } };
 function specValue(p) {
   let v = SPEC_ROOTS;
   for (const seg of p.split('.')) { v = v?.[seg]; if (v === undefined) throw new Error(`unknown spec path ${p}`); }

@@ -415,6 +415,7 @@ img{ display:block; max-width:100%; }
 /* i18n:switcher-css-end */
 
 
+
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
@@ -527,7 +528,8 @@ img{ display:block; max-width:100%; }
               <select class="cf-select" id="cf-type" name="type">
                 <option value="" disabled selected data-i18n="contact.select-an-enquiry-type">Select an enquiry type</option>
                 <option data-i18n="contact.nas-engine-2c-or">NAS Engine 2C or 2E</option>
-                <option data-i18n="shared.drone-stack">Drone Stack</option>
+                <option value="Drone Stack 65A" data-i18n-skip>Drone Stack 65A</option>
+                <option value="Drone Stack 100A" data-i18n-skip>Drone Stack 100A</option>
                 <option data-i18n="contact.efi-system">EFI system</option>
                 <option data-i18n="contact.job">Job</option>
                 <option data-i18n="contact.partnership">Partnership</option>
@@ -689,6 +691,23 @@ img{ display:block; max-width:100%; }
   fill('#cf-country', COUNTRIES, COUNTRIES_L10N);
   // dedupe prefixes while preserving order
   fill('#cf-prefix', PREFIXES.filter((v, i) => PREFIXES.indexOf(v) === i));
+
+  /* ---- enquiry-type prefill (?type=…) — the product pages' Request buttons
+     land here on step 1 with the enquiry type preselected. The values are the
+     English <option> payload strings, so the prefill is language-independent
+     and the backend still sees an English payload. ---- */
+  (function(){
+    const PREFILL = {
+      'drone-stack-65a': 'Drone Stack 65A',
+      'drone-stack-100a': 'Drone Stack 100A',
+    };
+    let slug = null;
+    try { slug = new URLSearchParams(location.search).get('type'); } catch (e) {}
+    const value = slug && PREFILL[slug.toLowerCase()];
+    if (!value) return;
+    const sel = form.querySelector('#cf-type');
+    if (sel && [...sel.options].some(o => o.value === value)) sel.value = value;
+  })();
 
   /* ---- character counter ---- */
   const msg = form.querySelector('#cf-message');
@@ -863,6 +882,7 @@ img{ display:block; max-width:100%; }
   });
 })();
 </script>
+
 
 
 </body>

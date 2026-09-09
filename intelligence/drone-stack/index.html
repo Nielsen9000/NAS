@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Drone Stack — Intelligent Solutions — Nordic Advanced Systems</title>
-<meta name="description" data-spec-tpl="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: {ds.currents.0}, {ds.currents.1} and {ds.currents.2}." content="NAS Drone Stack — the FPV flight controller stack at the core of NAS UAV platforms. Three variants: 65A, 100A and 200A." />
+<meta name="description" data-spec-tpl="NAS Drone Stack — two variants for two platform classes: the Drone Stack {ds65.currentTight} (FC + 4-in-1 ESC) and the Drone Stack {ds100.currentTight} (4-in-1 ESC). NDAA-compliant European chipset." content="NAS Drone Stack — two variants for two platform classes: the Drone Stack 65A (FC + 4-in-1 ESC) and the Drone Stack 100A (4-in-1 ESC). NDAA-compliant European chipset." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -171,7 +171,11 @@ p{ margin:0; color:var(--ink-1); }
   position:relative; min-height:84vh; display:flex; align-items:center;
   padding:150px 0 120px; overflow:hidden;
   background-color:var(--bg-base);
-  background-image:url('/assets/hero-drone.png');
+  /* Hero backdrop swapped 9 Sept 2026 (Higgsfield, brand palette): the page now
+     tells the electronics story, so the FPV-drone photo gave way to a macro
+     circuit-bokeh plate. Alternatives kept in assets/: hero-circuit-city.jpg
+     (bolder "circuit as night city") and the original hero-drone.png. */
+  background-image:url('/assets/hero-circuit.jpg');
   background-size:cover; background-position:center right; background-repeat:no-repeat;
 }
 /* two-layer fade: bottom into the page base, left into marine so the copy stays legible */
@@ -401,6 +405,23 @@ p{ margin:0; color:var(--ink-1); }
 .ds-quote.is-inline blockquote{ font-size:clamp(20px,2.2vw,28px); }
 @media (max-width:900px){ .ds-quote.is-inline{ padding:6px 6px 0; margin-top:32px; } }
 
+/* ---- Variant sections (65A / 100A): stat band, per-board spec rows, CTA ---- */
+.ds-band{ display:flex; flex-direction:column; gap:8px; margin:0 0 48px; }
+.ds-band-value{ font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:clamp(54px,7vw,92px); font-weight:700; letter-spacing:-0.03em; line-height:0.95; color:var(--accent); }
+.ds-band-caption{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:12px; font-weight:500; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-2); }
+.ds-board-specs{ display:flex; flex-direction:column; gap:0; }
+.ds-board-specs .esc-lead-mark{ margin-bottom:10px; }
+.ds-board-specs .vcard-spec .v{ text-align:right; }
+.ds-conn-layout + .ds-conn-layout{ margin-top:56px; }
+/* connectors-and-pads line, shared by both boards (datasheet undersection) */
+.ds-connline{ margin:18px 0 0; padding-top:14px; border-top:1px dashed rgba(59,182,232,0.3); font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-2); line-height:1.9; }
+.ds-cta-row{ margin-top:44px; }
+/* board cutouts lie directly on the page — no white datasheet plate; a faint
+   cyan glow + drop shadow lift the alpha PNGs off the marine background */
+.ds-conn-panel.is-cutout{ background:none; border:0; box-shadow:none; }
+.ds-conn-panel.is-cutout .ds-conn-figure{ position:relative; }
+.ds-conn-panel.is-cutout .ds-conn-figure::before{ content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:78%; height:78%; border-radius:50%; background:radial-gradient(circle, rgba(59,182,232,0.18) 0%, rgba(59,182,232,0.07) 48%, transparent 72%); filter:blur(6px); pointer-events:none; }
+.ds-conn-panel.is-cutout .ds-conn-figure img{ position:relative; filter:drop-shadow(0 26px 44px rgba(0,0,0,0.55)); }
 /* i18n:switcher-css */
 .lang-switch{ position:relative; display:inline-flex; align-items:center; margin-left:16px; }
 .ls-btn{ display:inline-flex; align-items:center; gap:7px; background:none; border:0;
@@ -440,6 +461,8 @@ p{ margin:0; color:var(--ink-1); }
 @media (min-width:901px){ .site-header .header-cta{ display:flex; align-items:center; flex-wrap:nowrap; } }
 .site-header .header-cta .btn{ white-space:nowrap; }
 /* i18n:switcher-css-end */
+
+
 
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
@@ -497,7 +520,7 @@ p{ margin:0; color:var(--ink-1); }
       <div class="ds-hero-inner reveal">
         <div class="section-eyebrow" data-i18n="drone-stack.intelligent-drone-stack">/ INTELLIGENT — DRONE STACK</div>
         <h1 class="ds-hero-headline" data-i18n="drone-stack.the-brain-of-the">The brain of<br><span class="accent">the aircraft</span></h1>
-        <p class="ds-hero-tagline" data-i18n="drone-stack.a-flight-controller-engineered">A flight controller engineered for continuous operation, built on an NDAA-compliant European chipset.</p>
+        <p class="ds-hero-tagline" data-i18n="drone-stack.two-variants-for-two">Two variants for two platform classes — the <span data-spec="ds65.currentTight">65A</span> stack for <span data-spec="ds65.cellCounts.0">4S</span> / <span data-spec="ds65.cellCounts.1">6S</span> platforms, the <span data-spec="ds100.currentTight">100A</span> stack for <span data-spec="ds100.cellCounts.0">6S</span> / <span data-spec="ds100.cellCounts.1">8S</span> heavy-lift platforms. Two different boards, each with its own voltage range and flight controller.</p>
         <div class="ds-badges" data-i18n="drone-stack.ndaa-compliant">
           <span class="ds-badge">NDAA-COMPLIANT EUROPEAN CHIPSET</span>
         </div>
@@ -525,60 +548,163 @@ p{ margin:0; color:var(--ink-1); }
     -->
 
     <div class="wrap ds-hero-rail">
-      <div class="ds-hero-specs" aria-hidden="true" data-i18n="drone-stack.uart-gpio-elrs-i2c">
-        <span><span data-spec="ds.uarts">6</span>× UART</span><span><span data-spec="ds.gpio">2</span>× GPIO</span><span>ELRS</span><span>I2C</span><span>NDAA-COMPLIANT EUROPEAN CHIPSET</span>
+      <div class="ds-hero-specs" aria-hidden="true" data-i18n="drone-stack.drone-stack-drone-stack">
+        <span>DRONE STACK <span data-spec="ds65.currentTight">65A</span></span><span>DRONE STACK <span data-spec="ds100.currentTight">100A</span></span><span>NDAA-COMPLIANT EUROPEAN CHIPSET</span>
       </div>
-      <a class="ds-scroll-cue" href="#connectivity" data-i18n="drone-stack.explore-the-stack">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
+      <a class="ds-scroll-cue" href="#stack-65" data-i18n="drone-stack.explore-the-stack">Explore the stack <span class="ds-scroll-arrow" aria-hidden="true">↓</span></a>
     </div>
   </section>
 
   <!-- =========================================
-       01 — CONNECTIVITY: FC pinout + specs (+ NDAA compliance below)
-       (Variants 65A/100A/200A and the board-macro Detail grid are parked until
-        their specs / photos are ready — CSS retained, will return.)
+       01 — DRONE STACK 65A: FC + 4-in-1 ESC (DS-2026-FC65)
+       Per-board spec rows beside the board they describe, as in the datasheet.
        ========================================= -->
-  <section class="company-section" id="connectivity">
+  <section class="company-section" id="stack-65">
     <div class="wrap reveal">
-      <div class="section-eyebrow" data-i18n="drone-stack.01-connectivity">/ 01 — CONNECTIVITY</div>
-      <h2 class="ds-conn-intro" data-i18n="drone-stack.flight-controller-pinout-and">Flight Controller Pinout and <span class="accent">Connectivity</span> Overview.</h2>
+      <div class="section-eyebrow" data-i18n="drone-stack.01-drone-stack">/ 01 — DRONE STACK <span data-spec="ds65.currentTight">65A</span></div>
+      <h2 data-i18n="drone-stack.nas-drone-stack-fc">NAS Drone Stack <span data-spec="ds65.currentTight">65A</span> — <span class="accent">FC + 4-in-1 ESC</span></h2>
+      <p class="lead" data-i18n="drone-stack.flight-controller-and-esc">Flight controller and ESC engineered for continuous operation. The NAS Drone Stack <span data-spec="ds65.currentTight">65A</span> pairs a flight controller with a 4-in-1 electronic speed controller on a single stack: the FC carries the sensing, link and logging; the ESC carries the current.</p>
+
+      <div class="ds-band" data-i18n="drone-stack.continuous-current-burst">
+        <span class="ds-band-value"><span data-spec="ds65.current">65 A</span></span>
+        <span class="ds-band-caption">Continuous current · <span data-spec="ds65.burst">70 A</span> burst (<span data-spec="dsb.burstWindow">5 s</span>)</span>
+      </div>
 
       <div class="ds-conn-layout">
-      <div class="ds-conn-panel is-datasheet">
-        <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-        <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-        <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller-pinout-overview">FLIGHT CONTROLLER · PINOUT OVERVIEW</div>
-        <div class="ds-conn-figure">
-          <img src="/assets/fragment.png" loading="lazy" alt="NAS flight controller pinout diagram — top and bottom board views with UART, GPIO, ELRS, I2C, camera, ESC and power connections labelled"  data-i18n-attrs="alt:drone-stack.nas-flight-controller-pinout"/>
+        <div class="ds-conn-panel is-cutout">
+          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+          <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller">FLIGHT CONTROLLER · <span data-spec="ds65.fcMcu">STM32F405</span></div>
+          <div class="ds-conn-figure">
+            <img src="/assets/fcf405v2_alpha.png" loading="lazy" alt="Flight controller board of the NAS Drone Stack 65A"  data-i18n-attrs="alt:drone-stack.flight-controller-board-of"/>
+          </div>
+        </div>
+
+        <div class="ds-conn-specs ds-board-specs">
+          <span class="esc-lead-mark" data-i18n="drone-stack.flight-controller-2">[ FLIGHT CONTROLLER ]</span>
+          <div class="vcard-spec" data-i18n="drone-stack.flight-controller-mcu"><span class="k">Flight controller MCU</span><span class="v"><span data-spec="ds65.fcMcu">STM32F405</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.imu-axis"><span class="k">IMU</span><span class="v"><span data-spec="dsfc.imu">ICM-42688-P / IIM-42652</span>, <span data-spec="dsfc.imuAxes">6</span>-axis</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.blackbox-integrated-spi-flash"><span class="k">Blackbox</span><span class="v"><span data-spec="dsfc.blackbox">128 Mbit</span> integrated SPI flash</span></div>
+          <div class="vcard-spec"><span class="k">UART</span><span class="v"><span data-spec="dsfc.uarts">6</span>×</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.gpio-configurable"><span class="k">GPIO</span><span class="v"><span data-spec="ds65.gpio">2</span>× configurable</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.protocols"><span class="k">Protocols</span><span class="v"><span data-spec="ds65.protocols">ELRS · I2C · SBUS / IBUS / CRSF</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.camera-dual-and-up"><span class="k">Camera</span><span class="v">Dual, <span data-spec="ds65.cameraRails.0">5 V</span> and <span data-spec="ds65.cameraRails.1">12 V</span> up to <span data-spec="ds65.railMax">2 A</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.power-rails-selectable-up"><span class="k">Power rails</span><span class="v"><span data-spec="ds65.rails">5 V / 12 V</span> selectable, up to <span data-spec="ds65.railMax">2 A</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.barometer"><span class="k">Barometer</span><span class="v"><span data-spec="dsfc.barometer">BMP280 / DPS310</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.software-support"><span class="k">Software support</span><span class="v"><span data-spec="ds65.fcSoftware">Betaflight & ArduPilot</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.fc-dimensions-weight"><span class="k">FC dimensions / weight</span><span class="v"><span data-spec="dsfc.fcDims">40 × 49.5 mm</span> · <span data-spec="ds65.fcWeight">12 g</span></span></div>
         </div>
       </div>
 
-      <div class="ds-conn-specs">
-        <div class="conn-spec">
-          <div class="conn-spec-label"><span data-spec="ds.uarts">6</span> × UART</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.six-uart-universal-asynchronous">Six UART (Universal Asynchronous Receiver/Transmitter) interfaces, providing extensive flexibility for external device connectivity.</p>
+      <div class="ds-conn-layout is-mirror">
+        <div class="ds-conn-panel is-cutout">
+          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+          <div class="ds-conn-caption">4-IN-1 ESC · <span data-spec="ds65.currentTight">65A</span></div>
+          <div class="ds-conn-figure">
+            <img src="/assets/esc65av2_alpha.png" loading="lazy" alt="4-in-1 ESC board of the NAS Drone Stack 65A"  data-i18n-attrs="alt:drone-stack.4in1-esc-board-of"/>
+          </div>
         </div>
-        <div class="conn-spec">
-          <div class="conn-spec-label"><span data-spec="ds.gpio">2</span> × GPIO</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.two-gpio-generalpurpose-inputoutput">Two GPIO (General-Purpose Input/Output) pins on the drone stack, configurable to the desired application or user requirements.</p>
+
+        <div class="ds-conn-specs ds-board-specs">
+          <span class="esc-lead-mark">[ 4-IN-1 ESC ]</span>
+          <div class="vcard-spec" data-i18n="drone-stack.continuous-current"><span class="k">Continuous current</span><span class="v"><span data-spec="ds65.current">65 A</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.burst-current"><span class="k">Burst current</span><span class="v"><span data-spec="ds65.burst">70 A</span> (<span data-spec="dsb.burstWindow">5 s</span>)</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.input-voltage"><span class="k">Input voltage</span><span class="v"><span data-spec="ds65.cellCounts.0">4S</span> / <span data-spec="ds65.cellCounts.1">6S</span> · <span data-spec="ds65.inputRange">12.0–26 V</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.esc-mcu-firmware"><span class="k">ESC MCU</span><span class="v"><span data-spec="dsb.escMcu">STM32F051</span>, <span data-spec="dsb.escFirmware">AM32</span> firmware</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.motor-output-dshot-channels"><span class="k">Motor output</span><span class="v">DSHOT, <span data-spec="dsb.motorChannels">4</span> channels, bidirectional</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.current-sensor-analog-output"><span class="k">Current sensor</span><span class="v">Analog output</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.esc-dimensions"><span class="k">ESC dimensions</span><span class="v"><span data-spec="ds65.escDims">46.5 × 52.5 mm</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.esc-weight"><span class="k">ESC weight</span><span class="v"><span data-spec="ds65.escWeight">24 g</span></span></div>
+          <p class="ds-connline" data-i18n="drone-stack.esc-control-connector-pins">ESC control connector <span data-spec="dsb.escConnectorPins">8</span> pins / pads · battery output connector <span data-spec="dsb.battOutPins">4</span> pins · motor pads <span data-spec="dsb.motorPadsGrid">3×4</span> on both sides · battery pads on both sides · thru-hole capacitor pads.</p>
         </div>
-        <div class="conn-spec">
-          <div class="conn-spec-label" data-i18n="drone-stack.ssd">SSD</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.solidstate-drive-an-internal">Solid-State Drive — an internal high-speed electronic storage drive.</p>
-        </div>
-        <div class="conn-spec">
-          <div class="conn-spec-label">ELRS</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.with-elrs-the-stack">With ELRS, the stack provides an ultra-fast, highly reliable, long-range and lightweight control link between the drone and the remote controller.</p>
-        </div>
-        <div class="conn-spec">
-          <div class="conn-spec-label">I2C</div>
-          <p class="conn-spec-desc" data-i18n="drone-stack.i2c-increases-flexibility-and">I2C increases flexibility and enables communication with external components such as compasses, GPS modules, LiDAR/sonar systems, weapons systems, etc.</p>
-        </div>
-      </div>
       </div>
 
-      <!-- NDAA compliance — sits under the connectivity content, pays off the hero badge -->
+      <div class="ds-cta-row" data-i18n="drone-stack.request-datasheet">
+        <a class="btn btn-pill-accent" href="/contact/?type=drone-stack-65a#contact-form">Request datasheet <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       02 — DRONE STACK 100A: 4-in-1 ESC (DS-2026-FC100)
+       Flight controller shown dimmed — its specifications are issued at
+       Rev 02 and must not appear (or be inferred from the image) before then.
+       ========================================= -->
+  <section class="company-section" id="stack-100">
+    <div class="wrap reveal">
+      <div class="section-eyebrow" data-i18n="drone-stack.02-drone-stack">/ 02 — DRONE STACK <span data-spec="ds100.currentTight">100A</span></div>
+      <h2 data-i18n="drone-stack.nas-drone-stack-4in1">NAS Drone Stack <span data-spec="ds100.currentTight">100A</span> — <span class="accent">4-in-1 ESC</span></h2>
+      <p class="lead" data-i18n="drone-stack.highcurrent-esc-engineered-for">High-current ESC engineered for heavy-lift platforms in continuous operation. The NAS Drone Stack <span data-spec="ds100.currentTight">100A</span> is a 4-in-1 electronic speed controller built for <span data-spec="ds100.cellCounts.0">6S</span> / <span data-spec="ds100.cellCounts.1">8S</span> platforms — <span data-spec="dsb.escMcu">STM32F051</span> with <span data-spec="dsb.escFirmware">AM32</span> firmware, bidirectional DSHOT motor output and UART KISS telemetry.</p>
+
+      <div class="ds-band" data-i18n="drone-stack.continuous-current-burst-2">
+        <span class="ds-band-value"><span data-spec="ds100.current">100 A</span></span>
+        <span class="ds-band-caption">Continuous current · <span data-spec="ds100.burst">105 A</span> burst (<span data-spec="dsb.burstWindow">5 s</span>)</span>
+      </div>
+
+      <div class="ds-conn-layout is-mirror">
+        <div class="ds-conn-panel is-cutout">
+          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+          <div class="ds-conn-caption">4-IN-1 ESC · <span data-spec="ds100.currentTight">100A</span></div>
+          <div class="ds-conn-figure">
+            <img src="/assets/esc100av2_alpha.png" loading="lazy" alt="4-in-1 ESC board of the NAS Drone Stack 100A"  data-i18n-attrs="alt:drone-stack.4in1-esc-board-of-2"/>
+          </div>
+        </div>
+
+        <div class="ds-conn-specs ds-board-specs">
+          <span class="esc-lead-mark">[ 4-IN-1 ESC ]</span>
+          <div class="vcard-spec" data-i18n="drone-stack.continuous-current-2"><span class="k">Continuous current</span><span class="v"><span data-spec="ds100.current">100 A</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.burst-current-2"><span class="k">Burst current</span><span class="v"><span data-spec="ds100.burst">105 A</span> (<span data-spec="dsb.burstWindow">5 s</span>)</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.input-voltage-2"><span class="k">Input voltage</span><span class="v"><span data-spec="ds100.cellCounts.0">6S</span> / <span data-spec="ds100.cellCounts.1">8S</span> · <span data-spec="ds100.inputRange">18.0–35 V</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.esc-mcu-firmware"><span class="k">ESC MCU</span><span class="v"><span data-spec="dsb.escMcu">STM32F051</span>, <span data-spec="dsb.escFirmware">AM32</span> firmware</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.motor-output-dshot-channels"><span class="k">Motor output</span><span class="v">DSHOT, <span data-spec="dsb.motorChannels">4</span> channels, bidirectional</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.telemetry"><span class="k">Telemetry</span><span class="v"><span data-spec="ds100.telemetry">DSHOT, UART KISS</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.current-sensor-analog-output"><span class="k">Current sensor</span><span class="v">Analog output</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.dimensions"><span class="k">Dimensions</span><span class="v"><span data-spec="ds100.dims">59 × 63 mm</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.weight"><span class="k">Weight</span><span class="v"><span data-spec="ds100.weight">36 g</span></span></div>
+          <p class="ds-connline" data-i18n="drone-stack.esc-control-connector-pins">ESC control connector <span data-spec="dsb.escConnectorPins">8</span> pins / pads · battery output connector <span data-spec="dsb.battOutPins">4</span> pins · motor pads <span data-spec="dsb.motorPadsGrid">3×4</span> on both sides · battery pads on both sides · thru-hole capacitor pads.</p>
+        </div>
+      </div>
+
+      <div class="ds-conn-layout">
+        <div class="ds-conn-panel is-cutout">
+          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
+          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
+          <div class="ds-conn-caption" data-i18n="drone-stack.flight-controller-3">FLIGHT CONTROLLER · <span data-spec="ds100.fcMcu">STM32F722</span></div>
+          <div class="ds-conn-figure">
+            <img src="/assets/fcf722v2_alpha.png" loading="lazy" alt="Flight controller board of the NAS Drone Stack 100A"  data-i18n-attrs="alt:drone-stack.flight-controller-board-of-2"/>
+          </div>
+        </div>
+
+        <div class="ds-conn-specs ds-board-specs">
+          <span class="esc-lead-mark" data-i18n="drone-stack.flight-controller-2">[ FLIGHT CONTROLLER ]</span>
+          <div class="vcard-spec" data-i18n="drone-stack.flight-controller-mcu-2"><span class="k">Flight controller MCU</span><span class="v"><span data-spec="ds100.fcMcu">STM32F722</span> · <span data-spec="ds100.fcCore">Arm Cortex-M7</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.imu-axis"><span class="k">IMU</span><span class="v"><span data-spec="dsfc.imu">ICM-42688-P / IIM-42652</span>, <span data-spec="dsfc.imuAxes">6</span>-axis</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.barometer"><span class="k">Barometer</span><span class="v"><span data-spec="dsfc.barometer">BMP280 / DPS310</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.blackbox-integrated-spi-flash"><span class="k">Blackbox</span><span class="v"><span data-spec="dsfc.blackbox">128 Mbit</span> integrated SPI flash</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.io-uart-servo"><span class="k">I/O</span><span class="v"><span data-spec="dsfc.uarts">6</span>× UART · <span data-spec="dsfc.servos">2</span>× servo</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.protocols-2"><span class="k">Protocols</span><span class="v"><span data-spec="ds100.protocols">ELRS · SBUS / IBUS / CRSF</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.software-support-2"><span class="k">Software support</span><span class="v"><span data-spec="ds100.fcSoftware">Betaflight</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.video-dual-cam-osd"><span class="k">Video</span><span class="v">Dual cam · <span data-spec="ds100.fcVideoLink">DJI Air Unit</span> · <span data-spec="dsfc.osd">AT7456E</span> OSD</span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.power-system"><span class="k">Power system</span><span class="v"><span data-spec="ds100.fcPower">60 V / 3 A</span></span></div>
+          <div class="vcard-spec" data-i18n="drone-stack.fc-dimensions-weight-2"><span class="k">FC dimensions / weight</span><span class="v"><span data-spec="dsfc.fcDims">40 × 49.5 mm</span> · <span data-spec="ds100.fcWeight">14 g</span></span></div>
+        </div>
+      </div>
+
+      <div class="ds-cta-row" data-i18n="drone-stack.request-datasheet-2">
+        <a class="btn btn-pill-accent" href="/contact/?type=drone-stack-100a#contact-form">Request datasheet <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+
+      <!-- NDAA compliance — pays off the hero badge; applies to both variants -->
       <div class="ndaa-box">
         <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
         <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
@@ -591,49 +717,6 @@ p{ margin:0; color:var(--ink-1); }
           <h2 class="ndaa-title" data-i18n="drone-stack.ndaa-compliant-2"><span class="accent">NDAA</span> Compliant</h2>
         </div>
         <p class="ndaa-body" data-i18n="drone-stack.a-us-standard-that">A US standard that sets a high bar — also within NATO. The stack is built on an NDAA-compliant European chipset. Although it is US law, NDAA compliance functions today as an international security standard — many partners and defence organisations in NATO countries, including Denmark, require it.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================================
-       02 — ESC: the muscle (FC pairs with the ESC)
-       (former "04 — DETAIL" board-macro grid removed until photos are ready — will return)
-       ========================================= -->
-  <section class="company-section">
-    <div class="wrap reveal">
-      <div class="section-eyebrow">/ 02 — ESC</div>
-      <h2 data-i18n="drone-stack.the-muscle-behind-the">The <span class="accent">muscle</span> behind the stack</h2>
-
-      <div class="ds-conn-layout is-mirror">
-        <div class="ds-conn-panel is-datasheet">
-          <div class="hud-corner hud-corner-tl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-tr" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-bl" aria-hidden="true"></div>
-          <div class="hud-corner hud-corner-br" aria-hidden="true"></div>
-          <div class="ds-conn-caption" data-i18n="drone-stack.esc-pinout-overview">ESC · PINOUT OVERVIEW</div>
-          <div class="ds-conn-figure">
-            <img src="/assets/ESC.jpeg" loading="lazy" alt="NAS ESC pinout diagram — 4-in-1 ESC with XT60 power, low-ESR capacitor, four motor outputs and FC signal connections labelled"  data-i18n-attrs="alt:drone-stack.nas-esc-pinout-diagram"/>
-          </div>
-        </div>
-
-        <div class="ds-conn-specs">
-          <div class="esc-lead-block">
-            <span class="esc-lead-mark">[ FC + ESC ]</span>
-            <p class="esc-lead" data-i18n="drone-stack.combined-with-the-nas">Combined with the NAS Flight Controller (FC), this ESC completes the stack: the FC carries the sensing, link and logging; the ESC carries the current. Together they form a single stack with <span class="accent">one power path and one signal path</span> — fewer interfaces and known behaviour under load.</p>
-          </div>
-          <div class="conn-spec">
-            <div class="conn-spec-label" data-i18n="drone-stack.agility">Agility</div>
-            <p class="conn-spec-desc" data-i18n="drone-stack.digital-motor-control-over">Digital motor control over DSHOT on all four outputs — checksummed throttle commands, no analogue calibration, no drift over time.</p>
-          </div>
-          <div class="conn-spec">
-            <div class="conn-spec-label" data-i18n="drone-stack.power">Power</div>
-            <p class="conn-spec-desc" data-i18n="drone-stack.three-variants-and-maximum">Three variants — <span data-spec="ds.currents.0">65A</span>, <span data-spec="ds.currents.1">100A</span> and <span data-spec="ds.currents.2">200A</span> maximum continuous current — rated for sustained operation, not burst figures.</p>
-          </div>
-          <div class="conn-spec">
-            <div class="conn-spec-label" data-i18n="drone-stack.flexibility">Flexibility</div>
-            <p class="conn-spec-desc" data-i18n="drone-stack.runs-on-both-and">Runs on both <span data-spec="ds.cellCounts.0">4S</span> and <span data-spec="ds.cellCounts.1">6S</span> batteries across a <span data-spec="ds.inputRange">12–26V</span> input range — one stack, no reconfiguration between packs.</p>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -797,6 +880,8 @@ p{ margin:0; color:var(--ink-1); }
   });
 })();
 </script>
+
+
 
 </body>
 </html>

@@ -27,7 +27,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { DRONE_STACK, NAS2, NAS2_NUM, FORBIDDEN } from './specs.mjs';
+import { DRONE_STACK_BASE, DRONE_STACK_FC_BASE, DRONE_STACK_65, DRONE_STACK_100, NAS2, NAS2_NUM, FORBIDDEN } from './specs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
@@ -45,7 +45,10 @@ const PAGES = [
 ];
 
 const ROOTS = {
-  ds: DRONE_STACK,
+  dsb: DRONE_STACK_BASE,      // shared between the two ESCs
+  dsfc: DRONE_STACK_FC_BASE,  // shared by both flight controllers
+  ds65: DRONE_STACK_65,
+  ds100: DRONE_STACK_100,
   nas2: NAS2,
   nas2num: {
     ...NAS2_NUM,
