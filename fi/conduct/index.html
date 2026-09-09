@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Code of Conduct — Nordic Advanced Systems</title>
+<meta name="description" content="Nordic Advanced Systems Code of Conduct and Compliance. Ethical business conduct, quality management, data protection, and responsible operations." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-base:#08202a;
+  --bg-elev:#0d2a31;
+  --bg-float:#113740;
+  --bg-mid:#1a4651;
+  --ink-0:#f3f7f8;
+  --ink-1:#d9e3e5;
+  --ink-2:rgba(243,247,248,0.62);
+  --ink-3:rgba(243,247,248,0.38);
+  --line-dark:rgba(148,205,221,0.14);
+  --accent:#3bb6e8;
+  --accent-ink:#072a37;
+  --maxw:1400px;
+  --pad-x:100px;
+  --radius-lg:20px;
+  --radius-md:14px;
+  --radius-pill:999px;
+  --ease-spring:cubic-bezier(0.22,1.12,0.34,1);
+  --ease-smooth:cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; scroll-padding-top:88px; }
+body{
+  margin:0;
+  background:var(--bg-base);
+  color:var(--ink-0);
+  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+}
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+img{ display:block; max-width:100%; }
+.wrap{ max-width:var(--maxw); margin-inline:auto; padding-inline:var(--pad-x); width:100%; }
+
+.stage-bg{
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(1100px 700px at 85% -10%,rgba(59,182,232,0.08),transparent 60%),
+    radial-gradient(900px 620px at -10% 20%,rgba(14,70,85,0.55),transparent 65%),
+    var(--bg-base);
+  pointer-events:none;
+}
+
+/* Header */
+.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(8,32,42,0.85);
+  border-bottom:1px solid var(--line-dark);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.header-inner{
+  max-width:none;
+  padding-inline:36px;
+  display:flex; align-items:center;
+  justify-content:space-between;
+  gap:32px;
+  padding-block:14px;
+}
+.brand{ display:flex; align-items:center; gap:14px; }
+.site-header .brand-logo{ width:auto; height:auto; background:none; border:0; border-radius:0; }
+.site-header .brand-logo img{ width:auto; height:52px; display:block; }
+.brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+.brand-wordmark{
+  font-family:"Space Grotesk",sans-serif;
+  font-style:italic; font-weight:600; font-size:16px;
+  letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
+}
+.brand-subline{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; letter-spacing:0.15em;
+  text-transform:uppercase; color:var(--ink-3); margin-top:4px;
+}
+.nav{ display:flex; align-items:center; gap:32px; margin-left:auto; }
+.nav a{
+  font-size:15px; color:var(--ink-1); font-weight:500;
+  position:relative; padding:6px 0; transition:color .2s ease;
+}
+.nav a::after{
+  content:""; position:absolute; left:0; right:0; bottom:-2px;
+  height:1px; background:var(--accent);
+  transform:scaleX(0); transform-origin:left;
+  transition:transform .3s var(--ease-spring);
+}
+.nav a:hover{ color:var(--accent); }
+.nav a:hover::after{ transform:scaleX(1); }
+.nav a.active{ color:var(--accent); }
+.nav a.active::after{ transform:scaleX(1); }
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:10px 18px; border-radius:var(--radius-pill);
+  font-weight:600; font-size:13px; cursor:pointer;
+  transition:transform .25s var(--ease-spring), background-color .25s ease;
+  border:1px solid transparent;
+}
+.btn-pill-accent{
+  background:var(--accent); color:var(--accent-ink);
+  box-shadow:0 6px 18px -10px rgba(59,182,232,0.45);
+}
+.btn-pill-accent:hover{ background:#55c3ea; }
+.btn .arrow{ transition:transform .3s var(--ease-spring); }
+.btn:hover .arrow{ transform:translateX(3px); }
+
+/* Hero */
+.conduct-hero{
+  min-height:100vh;
+  padding:140px 0 80px;
+  border-bottom:1px solid var(--line-dark);
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.conduct-hero-inner{
+  display:grid;
+  grid-template-columns:1fr 420px;
+  gap:80px;
+  align-items:center;
+  width:100%;
+}
+.conduct-eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:11px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:28px;
+  display:flex; align-items:center; gap:12px;
+}
+.conduct-eyebrow::before{
+  content:""; display:block;
+  width:40px; height:1px; background:var(--accent);
+}
+.conduct-hero h1{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(40px,5vw,68px);
+  font-weight:600; letter-spacing:-0.03em;
+  line-height:1.04; margin:0 0 0 0;
+  color:var(--ink-0);
+}
+.conduct-hero h1 span{
+  color:var(--accent);
+  font-size:0.82em;
+  display:block;
+}
+.conduct-hero-meta{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding-bottom:6px;
+}
+.conduct-meta-item{
+  display:flex; flex-direction:column; gap:4px;
+  padding-bottom:20px;
+  border-bottom:1px solid var(--line-dark);
+}
+.conduct-meta-item:last-child{ border-bottom:0; padding-bottom:0; }
+.conduct-meta-item .k{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--ink-3);
+  margin-bottom:4px;
+}
+.conduct-meta-item .v{
+  color:var(--ink-1); font-size:14px; font-weight:500;
+}
+
+/* TOC sidebar + content layout */
+.conduct-body{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:80px;
+  padding:80px 0 120px;
+  align-items:start;
+}
+.conduct-toc{
+  position:sticky;
+  top:108px;
+}
+.toc-label{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--ink-3);
+  margin-bottom:20px;
+}
+.toc-list{
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-direction:column; gap:2px;
+}
+.toc-list a{
+  display:flex; align-items:center; gap:10px;
+  font-size:13px; color:var(--ink-3);
+  padding:7px 0;
+  border-left:1px solid var(--line-dark);
+  padding-left:14px;
+  transition:color .2s ease, border-color .2s ease;
+  line-height:1.4;
+}
+.toc-list a:hover{ color:var(--ink-1); border-left-color:var(--accent); }
+.toc-list a.active{ color:var(--accent); border-left-color:var(--accent); }
+
+/* Sections */
+.conduct-sections{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+}
+.conduct-section{
+  padding:52px 0;
+  border-bottom:1px solid var(--line-dark);
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 600ms var(--ease-smooth), transform 600ms var(--ease-smooth);
+}
+.conduct-section:first-child{ padding-top:0; }
+.conduct-section.in{ opacity:1; transform:translateY(0); }
+.conduct-section-num{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:10px; letter-spacing:0.28em;
+  text-transform:uppercase; color:var(--ink-3);
+  margin-bottom:16px;
+}
+.conduct-section h2{
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:clamp(20px,2vw,26px);
+  font-weight:600; letter-spacing:-0.02em;
+  line-height:1.15; margin:0 0 20px;
+  color:var(--ink-0);
+}
+.conduct-section p{
+  color:var(--ink-2);
+  font-size:16px;
+  line-height:1.8;
+  max-width:680px;
+  margin:0;
+}
+
+/* Footer */
+.site-footer{
+  background:var(--bg-base); border-top:1px solid var(--line-dark);
+  padding:40px 0; color:var(--ink-2); font-size:13px;
+}
+.footer-grid{
+  display:grid; grid-template-columns:1fr 1fr 1fr;
+  align-items:center; gap:24px;
+}
+.footer-brand{ display:flex; align-items:center; gap:10px; color:var(--ink-1); }
+.footer-brand .brand-logo-sm{
+  width:28px; height:28px; border-radius:6px;
+  background:var(--bg-elev); border:1px solid var(--line-dark);
+  display:grid; place-items:center; overflow:hidden;
+}
+.footer-brand .brand-logo-sm img{ width:70%; height:70%; object-fit:contain; }
+.footer-brand span{ font-style:italic; letter-spacing:0.2em; text-transform:uppercase; font-size:11px; font-weight:600; }
+.footer-mid{ text-align:center; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.12em; color:var(--ink-3); text-transform:uppercase; }
+.footer-right{ text-align:right; font-family:"JetBrains Mono",monospace; font-size:11px; letter-spacing:0.18em; color:var(--ink-3); text-transform:uppercase; }
+
+@media (max-width:900px){
+  :root{ --pad-x:24px; }
+  .header-inner{ padding-inline:20px; }
+  .conduct-hero-inner{ grid-template-columns:1fr; gap:48px; }
+  .conduct-body{ grid-template-columns:1fr; gap:40px; }
+  .conduct-toc{ display:none; }
+  .nav{ display:none; }
+  .footer-grid{ grid-template-columns:1fr; gap:14px; }
+  .footer-mid,.footer-right{ text-align:left; }
+}
+
+/* Cursor follower */
+* { cursor: none; }
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+.cursor-ring {
+  position: absolute;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(59,182,232,0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 300ms var(--ease-spring),
+              height 300ms var(--ease-spring),
+              border-color 300ms ease,
+              opacity 300ms ease;
+}
+.cursor-dot {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.cursor-cross span {
+  position: absolute;
+  background: rgba(59,182,232,0.5);
+  transform: translate(-50%, -50%);
+}
+.cursor-cross span:nth-child(1) { width: 10px; height: 1px; top: 0; left: 0; }
+.cursor-cross span:nth-child(2) { width: 1px; height: 10px; top: 0; left: 0; }
+.cursor.is-hovering .cursor-ring {
+  width: 52px; height: 52px;
+  border-color: rgba(59,182,232,0.9);
+}
+.cursor.is-hidden { opacity: 0; }
+@media (hover: none) {
+  * { cursor: auto; }
+  .cursor { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor { display: none; }
+  * { cursor: auto; }
+}
+
+/* ---------- Intelligence Solutions dropdown ---------- */
+.nav-dd{ position:relative; display:flex; align-items:center; }
+.nav-dd-trigger{ font-family:inherit; font-size:15px; font-weight:500; color:var(--ink-1); position:relative; padding:6px 0; cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:color .2s ease; }
+.nav-dd-trigger::after{ content:""; position:absolute; left:0; right:18px; bottom:-2px; height:1px; background:var(--accent); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease-spring); }
+.nav-dd:hover .nav-dd-trigger, .nav-dd:focus-within .nav-dd-trigger, .nav-dd-trigger.active{ color:var(--accent); }
+.nav-dd:hover .nav-dd-trigger::after, .nav-dd:focus-within .nav-dd-trigger::after, .nav-dd-trigger.active::after{ transform:scaleX(1); }
+.nav-dd-caret{ width:6px; height:6px; margin-top:-3px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg); opacity:.65; transition:transform .3s var(--ease-spring), opacity .2s ease; }
+.nav-dd:hover .nav-dd-caret, .nav-dd:focus-within .nav-dd-caret{ transform:rotate(-135deg); margin-top:2px; opacity:1; }
+.nav-dd-menu{ position:absolute; top:calc(100% + 16px); left:50%; transform:translateX(-50%) translateY(-8px); min-width:230px; padding:8px; background:rgba(8,32,42,0.94); border:1px solid var(--line-dark); border-radius:var(--radius-sm,10px); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); display:flex; flex-direction:column; gap:2px; opacity:0; visibility:hidden; pointer-events:none; transition:opacity .25s ease, transform .3s var(--ease-spring), visibility .25s; z-index:130; }
+.nav-dd-menu::before{ content:""; position:absolute; top:-16px; left:0; right:0; height:16px; }
+.nav-dd-menu::after{ content:""; position:absolute; top:-5px; left:50%; width:9px; height:9px; transform:translateX(-50%) rotate(45deg); background:rgba(8,32,42,0.94); border-left:1px solid var(--line-dark); border-top:1px solid var(--line-dark); }
+.nav-dd:hover .nav-dd-menu, .nav-dd:focus-within .nav-dd-menu{ opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0); }
+.nav-dd-menu a{ position:relative; display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:7px; color:var(--ink-1); font-size:14px; font-weight:500; transition:background .2s ease, color .2s ease; }
+.nav-dd-menu a::after{ display:none; }
+.nav-dd-menu a::before{ content:""; flex:none; width:6px; height:6px; border:1px solid var(--accent); transform:rotate(45deg); opacity:.55; transition:opacity .2s ease, background .2s ease; }
+.nav-dd-menu a:hover{ background:var(--accent-dim,rgba(59,182,232,0.18)); color:var(--accent); }
+.nav-dd-menu a:hover::before{ opacity:1; background:var(--accent); }
+.nav-dd-menu a.active{ color:var(--accent); }
+.nav-dd-menu a.active::before{ opacity:1; background:var(--accent); }
+.nav-dd-label{ flex:1; letter-spacing:0.01em; }
+.nav-dd-sub{ font-family:"JetBrains Mono",ui-monospace,monospace; font-size:9px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-3); }
+.nav-dd-menu a:hover .nav-dd-sub, .nav-dd-menu a.active .nav-dd-sub{ color:var(--accent); }
+@media (max-width:900px){ .nav-dd{ display:none; } }
+
+/* i18n:switcher-css */
+.lang-switch{ position:relative; display:inline-flex; align-items:center; margin-left:16px; }
+.ls-btn{ display:inline-flex; align-items:center; gap:7px; background:none; border:0;
+  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:0.14em; color:var(--ink-2); padding:6px 2px; cursor:pointer;
+  white-space:nowrap; transition:color .2s ease; }
+.ls-btn:hover, .ls-btn:focus-visible, .lang-switch.open .ls-btn{ color:var(--accent); }
+.ls-caret{ width:6px; height:6px; margin-top:-3px; border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor; transform:rotate(45deg); opacity:.65;
+  transition:transform .3s var(--ease-spring), opacity .2s ease; }
+.lang-switch.open .ls-caret{ transform:rotate(-135deg); margin-top:2px; opacity:1; }
+.ls-menu{ position:absolute; top:calc(100% + 14px); right:-2px; min-width:172px; margin:0;
+  padding:8px; list-style:none; background:rgba(8,32,42,0.94); border:1px solid var(--line-dark);
+  border-radius:var(--radius-sm,10px); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); display:flex; flex-direction:column; gap:2px; z-index:130; }
+.ls-menu[hidden]{ display:none; }
+.ls-menu a{ display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:7px;
+  color:var(--ink-1); font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap;
+  transition:background .2s ease, color .2s ease; }
+.ls-menu a::before{ content:""; flex:none; width:6px; height:6px; border:1px solid var(--accent);
+  transform:rotate(45deg); opacity:.55; transition:opacity .2s ease, background .2s ease; }
+.ls-menu a:hover{ background:rgba(59,182,232,0.18); color:var(--accent); }
+.ls-menu a:hover::before{ opacity:1; background:var(--accent); }
+.ls-menu a.active{ color:var(--accent); }
+.ls-menu a.active::before{ opacity:1; background:var(--accent); }
+/* desktop only — mobile-nav.js renders the same links as a plain list in the menu */
+@media (max-width:900px){ .lang-switch{ display:none; } }
+/* footer note on generated language pages (rule is inert on EN pages) */
+.footer-authoritative{ padding:14px 0 0; font-size:11px; letter-spacing:0.04em; color:var(--ink-3); }
+/* the switcher must never squeeze the nav into wrapping */
+.site-header .nav a, .site-header .nav-dd-trigger{ white-space:nowrap; }
+/* display:flex included: only the front page declared it locally — on the
+   other pages a visible switcher would otherwise stack UNDER the CTA
+   button and grow the header by a full row. Desktop-scoped: at ≤900px
+   mobile-nav.css hides .header-cta entirely, and an unscoped display:flex
+   would override that and push the hamburger off-screen. */
+@media (min-width:901px){ .site-header .header-cta{ display:flex; align-items:center; flex-wrap:nowrap; } }
+.site-header .header-cta .btn{ white-space:nowrap; }
+/* i18n:switcher-css-end */
+
+
+</style>
+  <link rel="stylesheet" href="/assets/mobile-nav.css">
+  <script src="/assets/mobile-nav.js" defer></script>
+<style>/* i18n: conduct stays English in every language */
+.conduct-en-note{ display:inline-block; margin:18px 0 0; padding:9px 14px;
+  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px;
+  letter-spacing:0.08em; color:var(--ink-2); border:1px solid var(--line-dark);
+  border-left:2px solid var(--accent); }</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor-ring"></div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-cross">
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<div class="stage-bg"></div>
+
+<header class="site-header" id="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/fi/" aria-label="Nordic Advanced Systems — etusivu" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+      <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
+      <span class="brand-text">
+        <span class="brand-wordmark">Nordic Advanced Systems</span>
+        <span class="brand-subline">Built on integrity</span>
+      </span>
+    </a>
+    <nav class="nav" aria-label="Ensisijainen navigaatio" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/fi/#platforms" data-i18n="shared.platforms">Alustat</a>
+      <div class="nav-dd">
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Älykkäät ratkaisut <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
+          <a href="/fi/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a> <a href="/fi/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Polttoaineen ruiskutus</span></a>
+        </div>
+      </div>
+      <a href="/fi/engineering" data-i18n="shared.engineering">Suunnittelu</a>
+      <a href="/fi/nas">NAS</a>
+      <a href="/fi/conduct" class="active" data-i18n="shared.conduct">Toimintaperiaatteet</a>
+      <a href="/fi/careers" data-i18n="shared.careers">Ura</a>
+      <a href="/fi/contact" data-i18n="shared.contact">Yhteystiedot</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-pill-accent" href="/fi/contact" data-i18n="shared.request-brief">Pyydä aineisto <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Valitse kieli"><span class="ls-code">FI</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/conduct/">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/conduct/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/conduct/" class="active" aria-current="true">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/conduct/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/conduct/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/conduct/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/conduct/">Italiano</a></li></ul></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="conduct-hero">
+    <div class="wrap conduct-hero-inner">
+      <div>
+        <div class="conduct-eyebrow">Nordic Advanced Systems</div>
+        <h1 data-i18n="conduct.code-of-conduct-and">
+          Code of Conduct <span>And Compliance</span>
+        </h1>
+        <p class="conduct-en-note" lang="en">This section is available in English only.</p>
+      </div>
+      <div class="conduct-hero-meta">
+        <div class="conduct-meta-item">
+          <div class="k" data-i18n="conduct.issued-by">Issued by</div>
+          <div class="v">Nordic Advanced Systems ApS</div>
+        </div>
+        <div class="conduct-meta-item">
+          <div class="k" data-i18n="shared.registration">Rekisteröinti</div>
+          <div class="v">CVR. 45976645</div>
+        </div>
+        <div class="conduct-meta-item">
+          <div class="k" data-i18n="conduct.jurisdiction">Jurisdiction</div>
+          <div class="v" data-i18n="conduct.danish-law-eu-regulations">Danish law · EU regulations · International standards</div>
+        </div>
+        <div class="conduct-meta-item">
+          <div class="k" data-i18n="conduct.sections">Sections</div>
+          <div class="v" data-i18n="conduct.10-principles">10 principles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap conduct-body">
+
+    <nav class="conduct-toc" aria-label="Table of contents" data-i18n-attrs="aria-label:conduct.table-of-contents">
+      <div class="toc-label" data-i18n="conduct.contents">Contents</div>
+      <ul class="toc-list">
+        <li data-i18n="conduct.ethical-business-conduct"><a href="#ethical">Ethical Business Conduct</a></li>
+        <li data-i18n="conduct.quality-continuous-improvement"><a href="#quality">Quality & Continuous Improvement</a></li>
+        <li data-i18n="conduct.data-protection-confidentiality"><a href="#data">Data Protection & Confidentiality</a></li>
+        <li data-i18n="conduct.conflicts-of-interest"><a href="#conflicts">Conflicts of Interest</a></li>
+        <li data-i18n="conduct.work-environment-diversity"><a href="#workplace">Work Environment & Diversity</a></li>
+        <li data-i18n="conduct.international-trade-compliance"><a href="#trade">International Trade Compliance</a></li>
+        <li data-i18n="conduct.responsible-supply-chain"><a href="#supply">Responsible Supply Chain</a></li>
+        <li data-i18n="conduct.human-rights-sustainability"><a href="#rights">Human Rights & Sustainability</a></li>
+        <li data-i18n="conduct.financial-integrity"><a href="#financial">Financial Integrity</a></li>
+        <li data-i18n="conduct.compliance-with-laws"><a href="#laws">Compliance with Laws</a></li>
+      </ul>
+    </nav>
+
+    <div class="conduct-sections">
+
+      <div class="conduct-section" id="ethical">
+        <div class="conduct-section-num">/ 01</div>
+        <h2 data-i18n="conduct.ethical-business-conduct-2">Ethical Business Conduct</h2>
+        <p data-i18n="conduct.at-nas-nordic-advanced">At NAS (Nordic Advanced Systems), we are committed to conducting business with integrity, transparency, and responsibility. We follow all applicable laws and internal policies to ensure that we operate according to the highest ethical standards. We do not tolerate any form of bribery, corruption, facilitation payments, or improper advantage.</p>
+      </div>
+
+      <div class="conduct-section" id="quality">
+        <div class="conduct-section-num">/ 02</div>
+        <h2 data-i18n="conduct.quality-and-continuous-improvement">Quality and Continuous Improvement</h2>
+        <p data-i18n="conduct.we-operate-under-a">We operate under a self-developed and certified Quality Management System (QMS), which ensures that our products and services meet the highest quality standards. The QMS is based on continuous improvement, audits, and strict quality control. This ensures that we consistently deliver reliable and high-performing solutions to our partners.</p>
+      </div>
+
+      <div class="conduct-section" id="data">
+        <div class="conduct-section-num">/ 03</div>
+        <h2 data-i18n="conduct.data-protection-and-confidentiality">Data Protection and Confidentiality</h2>
+        <p data-i18n="conduct.we-handle-all-data">We handle all data with great care and in compliance with applicable data protection regulations, including GDPR. Confidentiality is a fundamental principle at NAS, and we ensure that information from partners, employees, and stakeholders is treated with the highest level of security and discretion.</p>
+      </div>
+
+      <div class="conduct-section" id="conflicts">
+        <div class="conduct-section-num">/ 04</div>
+        <h2 data-i18n="conduct.conflicts-of-interest-2">Conflicts of Interest</h2>
+        <p data-i18n="conduct.employees-and-representatives-of">Employees and representatives of NAS must avoid situations where personal interests conflict with company interests. Any potential conflict must be reported immediately so that an appropriate and transparent solution can be found.</p>
+      </div>
+
+      <div class="conduct-section" id="workplace">
+        <div class="conduct-section-num">/ 05</div>
+        <h2 data-i18n="conduct.work-environment-diversity-and">Work Environment, Diversity, and Respect</h2>
+        <p data-i18n="conduct.nas-strives-to-create">NAS strives to create an inclusive, safe, and respectful workplace for all employees. Discrimination, harassment, or bullying are not tolerated. We promote equal opportunities regardless of nationality, gender, age, or background. As an international company, we value the diversity of our global team and ensure that all employees are onboarded and employed in accordance with Danish law and international labor standards.</p>
+      </div>
+
+      <div class="conduct-section" id="trade">
+        <div class="conduct-section-num">/ 06</div>
+        <h2 data-i18n="conduct.international-trade-compliance-2">International Trade Compliance</h2>
+        <p data-i18n="conduct.nas-complies-with-all">NAS complies with all applicable international trade laws, customs requirements, and sanctions regimes. We ensure that all production and trade activities are carried out in alignment with EU and local regulations in the countries where we operate.</p>
+      </div>
+
+      <div class="conduct-section" id="supply">
+        <div class="conduct-section-num">/ 07</div>
+        <h2 data-i18n="conduct.responsible-supply-chain-2">Responsible Supply Chain</h2>
+        <p data-i18n="conduct.we-expect-our-suppliers">We expect our suppliers and partners to comply with the same ethical, legal, and quality standards as NAS. We conduct due diligence in our supply chain to prevent corruption, human rights violations, and environmental harm, and we work only with responsible and reliable partners.</p>
+      </div>
+
+      <div class="conduct-section" id="rights">
+        <div class="conduct-section-num">/ 08</div>
+        <h2 data-i18n="conduct.human-rights-and-sustainability">Human Rights and Sustainability</h2>
+        <p data-i18n="conduct.nas-is-committed-to">NAS is committed to respecting internationally recognized human rights and labor standards, including the UN Guiding Principles on Business and Human Rights. We also seek to minimize our environmental footprint and continuously work towards sustainable solutions in both production and international trade.</p>
+      </div>
+
+      <div class="conduct-section" id="financial">
+        <div class="conduct-section-num">/ 09</div>
+        <h2 data-i18n="conduct.financial-integrity-2">Financial Integrity</h2>
+        <p data-i18n="conduct.nas-is-committed-to-2">NAS is committed to financial transparency and integrity. We comply with all applicable anti-money laundering (AML) and financial regulations, ensuring that our business activities and relationships are conducted with accountability and trustworthiness.</p>
+      </div>
+
+      <div class="conduct-section" id="laws">
+        <div class="conduct-section-num">/ 10</div>
+        <h2 data-i18n="conduct.compliance-with-laws-and">Compliance with Laws and Regulations</h2>
+        <p data-i18n="conduct.nas-complies-with-all-2">NAS complies with all relevant laws and regulations in the countries where we operate. This includes requirements for safety, health, and environmental protection. By adhering to both international and local standards, we ensure that our activities are fully aligned with responsible business practices.</p>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <span class="brand-logo-sm"><img src="/assets/logo.png" alt="" /></span>
+      <span>Nordic Advanced Systems ApS</span>
+    </div>
+    <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Kaikki oikeudet pidätetään.</div>
+  </div>
+  <div class="wrap footer-authoritative">Englanninkielinen versio on virallinen.</div>
+</footer>
+
+<script>
+(function(){
+  // Reveal sections on scroll
+  const sections = document.querySelectorAll('.conduct-section');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    sections.forEach(el => io.observe(el));
+  } else {
+    sections.forEach(el => el.classList.add('in'));
+  }
+
+  // Active TOC link on scroll
+  const tocLinks = document.querySelectorAll('.toc-list a');
+  const sectionEls = document.querySelectorAll('.conduct-section');
+
+  if (tocLinks.length && 'IntersectionObserver' in window){
+    const tocObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          const id = entry.target.id;
+          tocLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin:'-20% 0px -70% 0px' });
+    sectionEls.forEach(el => tocObs.observe(el));
+  }
+
+  // Magnetic nav
+  const magnetics = document.querySelectorAll('.nav a, .header-cta .btn');
+  magnetics.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const dx = e.clientX - (rect.left + rect.width / 2);
+      const dy = e.clientY - (rect.top + rect.height / 2);
+      const strength = el.closest('.nav') ? 0.3 : 0.45;
+      el.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+      el.style.transition = 'transform 0.15s cubic-bezier(0.16,1,0.3,1)';
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transition = 'transform 0.5s cubic-bezier(0.16,1,0.3,1)';
+      el.style.transform = 'translate(0px,0px)';
+    });
+  });
+})();
+</script>
+
+<script>
+/* Cursor follower */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(hover: none)').matches) return;
+  const cursor = document.getElementById('cursor');
+  if (!cursor) return;
+  let mouseX = 0, mouseY = 0;
+  let curX = 0, curY = 0;
+  let rafId = null;
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ring = cursor.querySelector('.cursor-ring');
+  const animate = () => {
+    curX = lerp(curX, mouseX, 0.35);
+    curY = lerp(curY, mouseY, 0.35);
+    // Dot + cross snap to the exact pointer (no lag); only the ring trails.
+    cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    if (ring) ring.style.transform = `translate(-50%,-50%) translate3d(${curX - mouseX}px, ${curY - mouseY}px, 0)`;
+    rafId = requestAnimationFrame(animate);
+  };
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.classList.remove('is-hidden');
+    if (!rafId) rafId = requestAnimationFrame(animate);
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => cursor.classList.add('is-hidden'));
+  document.addEventListener('mouseenter', () => cursor.classList.remove('is-hidden'));
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('is-hovering'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('is-hovering'));
+  });
+})();
+</script>
+
+<script>/* i18n:switcher-js */
+(function(){
+  var root = document.getElementById('lang-switch'); if (!root) return;
+  var btn = root.querySelector('.ls-btn'), menu = root.querySelector('.ls-menu');
+  if (!btn || !menu) return;
+  function setOpen(o){
+    root.classList.toggle('open', o);
+    btn.setAttribute('aria-expanded', o ? 'true' : 'false');
+    menu.hidden = !o;
+  }
+  btn.addEventListener('click', function(){
+    var open = menu.hidden; setOpen(open);
+    if (open) { var a = menu.querySelector('a.active') || menu.querySelector('a'); if (a) a.focus(); }
+  });
+  document.addEventListener('click', function(e){ if (!root.contains(e.target)) setOpen(false); });
+  root.addEventListener('focusout', function(){
+    setTimeout(function(){ if (!root.contains(document.activeElement)) setOpen(false); }, 0);
+  });
+  root.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') { setOpen(false); btn.focus(); return; }
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    if (menu.hidden) setOpen(true);
+    var links = [].slice.call(menu.querySelectorAll('a'));
+    var i = links.indexOf(document.activeElement);
+    if (i === -1) i = e.key === 'ArrowDown' ? -1 : 0;
+    links[(i + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length].focus();
+  });
+  menu.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if (!a) return;
+    try { localStorage.setItem('nas-lang', a.getAttribute('lang') === 'en' ? 'en' : (a.getAttribute('lang') || 'en').slice(0,2)); } catch (err) {}
+  });
+})();
+</script>
+
+
+</body>
+</html>

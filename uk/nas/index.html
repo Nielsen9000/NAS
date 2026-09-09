@@ -1205,18 +1205,45 @@ p{ margin:0; color:var(--ink-1); }
 @media (max-width:900px){ .nav-dd{ display:none; } }
 
 /* i18n:switcher-css */
-.lang-switch{ display:inline-flex; align-items:center; gap:7px; margin-left:16px;
+.lang-switch{ position:relative; display:inline-flex; align-items:center; margin-left:16px; }
+.ls-btn{ display:inline-flex; align-items:center; gap:7px; background:none; border:0;
   font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px; font-weight:500;
-  letter-spacing:0.14em; color:var(--ink-2); text-decoration:none; padding:6px 2px;
+  letter-spacing:0.14em; color:var(--ink-2); padding:6px 2px; cursor:pointer;
   white-space:nowrap; transition:color .2s ease; }
-.lang-switch .ls-sep{ opacity:.5; }
-.lang-switch:hover{ color:var(--accent); }
-html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:var(--ink-0); }
+.ls-btn:hover, .ls-btn:focus-visible, .lang-switch.open .ls-btn{ color:var(--accent); }
+.ls-caret{ width:6px; height:6px; margin-top:-3px; border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor; transform:rotate(45deg); opacity:.65;
+  transition:transform .3s var(--ease-spring), opacity .2s ease; }
+.lang-switch.open .ls-caret{ transform:rotate(-135deg); margin-top:2px; opacity:1; }
+.ls-menu{ position:absolute; top:calc(100% + 14px); right:-2px; min-width:172px; margin:0;
+  padding:8px; list-style:none; background:rgba(8,32,42,0.94); border:1px solid var(--line-dark);
+  border-radius:var(--radius-sm,10px); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); display:flex; flex-direction:column; gap:2px; z-index:130; }
+.ls-menu[hidden]{ display:none; }
+.ls-menu a{ display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:7px;
+  color:var(--ink-1); font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap;
+  transition:background .2s ease, color .2s ease; }
+.ls-menu a::before{ content:""; flex:none; width:6px; height:6px; border:1px solid var(--accent);
+  transform:rotate(45deg); opacity:.55; transition:opacity .2s ease, background .2s ease; }
+.ls-menu a:hover{ background:rgba(59,182,232,0.18); color:var(--accent); }
+.ls-menu a:hover::before{ opacity:1; background:var(--accent); }
+.ls-menu a.active{ color:var(--accent); }
+.ls-menu a.active::before{ opacity:1; background:var(--accent); }
+/* desktop only — mobile-nav.js renders the same links as a plain list in the menu */
+@media (max-width:900px){ .lang-switch{ display:none; } }
+/* footer note on generated language pages (rule is inert on EN pages) */
+.footer-authoritative{ padding:14px 0 0; font-size:11px; letter-spacing:0.04em; color:var(--ink-3); }
 /* the switcher must never squeeze the nav into wrapping */
 .site-header .nav a, .site-header .nav-dd-trigger{ white-space:nowrap; }
-.site-header .header-cta{ flex-wrap:nowrap; }
+/* display:flex included: only the front page declared it locally — on the
+   other pages a visible switcher would otherwise stack UNDER the CTA
+   button and grow the header by a full row. Desktop-scoped: at ≤900px
+   mobile-nav.css hides .header-cta entirely, and an unscoped display:flex
+   would override that and push the hamburger off-screen. */
+@media (min-width:901px){ .site-header .header-cta{ display:flex; align-items:center; flex-wrap:nowrap; } }
 .site-header .header-cta .btn{ white-space:nowrap; }
 /* i18n:switcher-css-end */
+
 
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
@@ -1262,7 +1289,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
     </nav>
     <div class="header-cta">
       <a class="btn btn-pill-accent" href="/uk/contact" data-i18n="shared.request-brief">Запросити бриф <span class="arrow" aria-hidden="true">→</span></a>
-      <a class="lang-switch" id="lang-switch" href="/uk/" data-i18n-skip><span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>
+      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Вибрати мову"><span class="ls-code">УКР</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/nas/">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/nas/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/nas/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/nas/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/nas/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/nas/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/nas/">Italiano</a></li><li role="none"><a role="menuitem" lang="uk" hreflang="uk" href="/uk/nas/" class="active" aria-current="true">Українська</a></li></ul></div>
     </div>
   </div>
 </header>
@@ -1524,6 +1551,7 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
     <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Усі права захищені.</div>
   </div>
+  <div class="wrap footer-authoritative">Англійська версія є автентичною.</div>
 </footer>
 
 <script>
@@ -1598,15 +1626,39 @@ html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:
 
 <script>/* i18n:switcher-js */
 (function(){
-  var el = document.getElementById('lang-switch'); if (!el) return;
-  var p = location.pathname;
-  var isUk = p === '/uk' || p.indexOf('/uk/') === 0;
-  var target = isUk ? (p.replace(/^\/uk\/?/, '/') || '/') : ('/uk' + (p === '/' ? '/' : p));
-  el.setAttribute('href', target);
-  el.addEventListener('click', function(){
-    try { localStorage.setItem('nas-lang', isUk ? 'en' : 'uk'); } catch (e) {}
+  var root = document.getElementById('lang-switch'); if (!root) return;
+  var btn = root.querySelector('.ls-btn'), menu = root.querySelector('.ls-menu');
+  if (!btn || !menu) return;
+  function setOpen(o){
+    root.classList.toggle('open', o);
+    btn.setAttribute('aria-expanded', o ? 'true' : 'false');
+    menu.hidden = !o;
+  }
+  btn.addEventListener('click', function(){
+    var open = menu.hidden; setOpen(open);
+    if (open) { var a = menu.querySelector('a.active') || menu.querySelector('a'); if (a) a.focus(); }
+  });
+  document.addEventListener('click', function(e){ if (!root.contains(e.target)) setOpen(false); });
+  root.addEventListener('focusout', function(){
+    setTimeout(function(){ if (!root.contains(document.activeElement)) setOpen(false); }, 0);
+  });
+  root.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') { setOpen(false); btn.focus(); return; }
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    if (menu.hidden) setOpen(true);
+    var links = [].slice.call(menu.querySelectorAll('a'));
+    var i = links.indexOf(document.activeElement);
+    if (i === -1) i = e.key === 'ArrowDown' ? -1 : 0;
+    links[(i + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length].focus();
+  });
+  menu.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if (!a) return;
+    try { localStorage.setItem('nas-lang', a.getAttribute('lang') === 'en' ? 'en' : (a.getAttribute('lang') || 'en').slice(0,2)); } catch (err) {}
   });
 })();
 </script>
+
+
 </body>
 </html>
