@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Company — Nordic Advanced Systems</title>
-<meta name="description" content="Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion." />
+<title>Компанія — Nordic Advanced Systems</title>
+<meta name="description" content="Nordic Advanced Systems розробляє та виробляє силові установки для платформ БПЛА — створені для місій, де силова установка має функціонувати коректно й передбачувано від початку до завершення." />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -39,7 +40,7 @@ body{
   margin:0;
   background:var(--bg-base);
   color:var(--ink-0);
-  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;
   font-size:16px;
   line-height:1.7;
   overflow-x:hidden;
@@ -92,7 +93,7 @@ p{ margin:0; color:var(--ink-1); }
 .site-header .brand-logo img{ width:auto; height:52px; display:block; }
 .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
 .brand-wordmark{
-  font-family:"Space Grotesk",sans-serif;
+  font-family:"Inter",sans-serif;
   font-style:italic; font-weight:600; font-size:16px;
   letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
 }
@@ -486,7 +487,7 @@ p{ margin:0; color:var(--ink-1); }
   background:rgba(59,182,232,0.08);
 }
 .testrig-caption-text{
-  font-family:"Space Grotesk",sans-serif;
+  font-family:"Inter",sans-serif;
   font-size:14px;
   letter-spacing:0.05em;
   color:var(--ink-0);
@@ -713,7 +714,7 @@ p{ margin:0; color:var(--ink-1); }
 }
 .company-hero-headline .accent{ color:var(--accent); }
 .company-hero-lead{
-  font-family:"Space Grotesk",sans-serif;
+  font-family:"Inter",sans-serif;
   font-size:17px;
   line-height:1.6;
   color:var(--ink-1);
@@ -1247,6 +1248,8 @@ p{ margin:0; color:var(--ink-1); }
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
+<style>/* uk: the Latin brand wordmark keeps its identity face */
+.brand-wordmark{ font-family:"Space Grotesk",sans-serif; }</style>
 </head>
 <body>
 
@@ -1263,31 +1266,30 @@ p{ margin:0; color:var(--ink-1); }
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+    <a class="brand" href="/uk/" aria-label="Nordic Advanced Systems — на головну" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
-      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
+    <nav class="nav" aria-label="Основна навігація" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/uk/#platforms" data-i18n="shared.platforms">Платформи</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Інтелектуальні рішення <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
-          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
-          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+          <a href="/uk/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">СТЕК FC</span></a> <a href="/uk/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Упорскування палива</span></a>
         </div>
       </div>
-      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
-      <a href="/nas" class="active">NAS</a>
-      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
-      <a href="/careers" data-i18n="shared.careers">Careers</a>
-      <a href="/contact" data-i18n="shared.contact">Contact</a>
+      <a href="/uk/engineering" data-i18n="shared.engineering">Інженерія</a>
+      <a href="/uk/nas" class="active">NAS</a>
+      <a href="/uk/conduct" data-i18n="shared.conduct">Кодекс</a>
+      <a href="/uk/careers" data-i18n="shared.careers">Кар’єра</a>
+      <a href="/uk/contact" data-i18n="shared.contact">Контакти</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
-      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Select language"><span class="ls-code">EN</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/nas/" class="active" aria-current="true">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/nas/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/nas/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/nas/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/nas/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/nas/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/nas/">Italiano</a></li></ul></div>
+      <a class="btn btn-pill-accent" href="/uk/contact" data-i18n="shared.request-brief">Запросити бриф <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Вибрати мову"><span class="ls-code">УКР</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/nas/">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/nas/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/nas/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/nas/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/nas/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/nas/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/nas/">Italiano</a></li><li role="none"><a role="menuitem" lang="uk" hreflang="uk" href="/uk/nas/" class="active" aria-current="true">Українська</a></li></ul></div>
     </div>
   </div>
 </header>
@@ -1315,27 +1317,20 @@ p{ margin:0; color:var(--ink-1); }
 
             <div class="doc-stack-body">
               <div class="doc-row" data-i18n="nas.classification-internal-controlled">
-                <span class="doc-row-label">CLASSIFICATION</span>
-                <span class="doc-row-value">INTERNAL · CONTROLLED</span>
+                <span class="doc-row-label">КЛАСИФІКАЦІЯ</span> <span class="doc-row-value">ВНУТРІШНІЙ · КОНТРОЛЬОВАНИЙ</span>
               </div>
               <div class="doc-row" data-i18n="nas.revision">
-                <span class="doc-row-label">REVISION</span>
+                <span class="doc-row-label">РЕДАКЦІЯ</span>
                 <span class="doc-row-value">01 · 2026</span>
               </div>
               <div class="doc-row" data-i18n="nas.format-company-profile">
-                <span class="doc-row-label">FORMAT</span>
-                <span class="doc-row-value">COMPANY PROFILE</span>
+                <span class="doc-row-label">ФОРМАТ</span> <span class="doc-row-value">ПРОФІЛЬ КОМПАНІЇ</span>
               </div>
               <div class="doc-row" data-i18n="nas.jurisdiction-denmark-eu">
-                <span class="doc-row-label">JURISDICTION</span>
-                <span class="doc-row-value">DENMARK · EU</span>
+                <span class="doc-row-label">ЮРИСДИКЦІЯ</span> <span class="doc-row-value">ДАНІЯ · ЄС</span>
               </div>
               <div class="doc-row doc-row-status" data-i18n="nas.status-active">
-                <span class="doc-row-label">STATUS</span>
-                <span class="doc-row-value">
-                  <span class="doc-status-dot"></span>
-                  ACTIVE
-                </span>
+                <span class="doc-row-label">СТАТУС</span> <span class="doc-row-value"> <span class="doc-status-dot"></span> АКТИВНИЙ </span>
               </div>
             </div>
 
@@ -1347,15 +1342,14 @@ p{ margin:0; color:var(--ink-1); }
         </aside>
 
         <div class="company-hero-content">
-          <div class="section-eyebrow reveal" data-i18n="nas.nas-company-profile-2026">/ NAS · COMPANY PROFILE 2026</div>
+          <div class="section-eyebrow reveal" data-i18n="nas.nas-company-profile-2026">/ NAS · ПРОФІЛЬ КОМПАНІЇ 2026</div>
 
           <h1 class="company-hero-headline reveal" data-i18n="nas.built-on-operational-experience">
-            Built on <span class="accent">operational</span><br>
-            <span class="accent">experience</span>
+            Побудовано на <span class="accent">операційному</span><br> <span class="accent">досвіді</span>
           </h1>
 
           <p class="company-hero-lead reveal" data-i18n="nas.nordic-advanced-systems-develops">
-            Nordic Advanced Systems develops and manufactures propulsion systems for UAV platforms — engineered for missions where propulsion must function correctly and predictably from start to completion.
+            Nordic Advanced Systems розробляє та виробляє силові установки для платформ БПЛА — створені для місій, де силова установка має функціонувати коректно й передбачувано від початку до завершення.
           </p>
         </div>
 
@@ -1371,26 +1365,26 @@ p{ margin:0; color:var(--ink-1); }
   <section class="company-section company-about">
     <div class="wrap">
 
-      <div class="section-eyebrow reveal" data-i18n="nas.01-about">/ 01 — ABOUT</div>
+      <div class="section-eyebrow reveal" data-i18n="nas.01-about">/ 01 — ПРО КОМПАНІЮ</div>
 
       <h2 class="section-headline reveal" data-i18n="nas.engines-built-for-actual">
-        Engines built for <span class="accent">actual operations</span>
+        Двигуни, створені для <span class="accent">реальних операцій</span>
       </h2>
 
       <div class="company-pullquote reveal">
         <div class="pullquote-mark" aria-hidden="true">"</div>
         <blockquote data-i18n="nas.predictable-mechanical-and-thermal">
-          Predictable mechanical and thermal behavior, ensuring overall platform performance is well understood in operational use.
+          Передбачувана механічна й термічна поведінка, завдяки якій загальні характеристики платформи добре зрозумілі в експлуатації.
         </blockquote>
-        <div class="pullquote-attribution" data-i18n="nas.design-principle">— DESIGN PRINCIPLE</div>
+        <div class="pullquote-attribution" data-i18n="nas.design-principle">— ПРИНЦИП ПРОЄКТУВАННЯ</div>
       </div>
 
       <div class="company-body-grid reveal">
         <p data-i18n="nas.nordic-advanced-systems-is">
-          Nordic Advanced Systems is a Danish company that develops and manufactures propulsion systems for UAV platforms. The engines are used in operations where propulsion must function correctly and predictably throughout the mission. The focus is on stable operation, consistent quality, and known behavior under load.
+          Nordic Advanced Systems — данська компанія, що розробляє та виробляє силові установки для платформ БПЛА. Двигуни використовуються в операціях, де силова установка має функціонувати коректно й передбачувано впродовж усієї місії. У фокусі — стабільна робота, незмінна якість і відома поведінка під навантаженням.
         </p>
         <p data-i18n="nas.in-many-uav-operations">
-          In many UAV operations, it is essential that the propulsion system behaves consistently from unit to unit and can be produced and delivered in series with known characteristics. NAS develops engines based on this premise.
+          У багатьох операціях БПЛА критично, щоб силова установка поводилася однаково від виробу до виробу та могла вироблятися й постачатися серійно з відомими характеристиками. NAS розробляє двигуни саме з цієї передумови.
         </p>
       </div>
 
@@ -1403,10 +1397,10 @@ p{ margin:0; color:var(--ink-1); }
   <section class="company-section company-method">
     <div class="wrap">
 
-      <div class="section-eyebrow reveal" data-i18n="nas.02-method">/ 02 — METHOD</div>
+      <div class="section-eyebrow reveal" data-i18n="nas.02-method">/ 02 — МЕТОД</div>
 
       <h2 class="section-headline reveal" data-i18n="nas.an-industrial-supplier-with">
-        An industrial supplier with <span class="accent">clear responsibility</span>
+        Промисловий постачальник із <span class="accent">чіткою відповідальністю</span>
       </h2>
 
       <div class="method-statements">
@@ -1414,24 +1408,24 @@ p{ margin:0; color:var(--ink-1); }
         <div class="method-statement reveal">
           <div class="method-num">01</div>
           <div class="method-content">
-            <h3 class="method-title" data-i18n="nas.established-processes">Established processes.</h3>
-            <p class="method-text" data-i18n="nas.nas-is-organized-as">NAS is organized as an industrial supplier with established processes and clear ownership of both design and delivery.</p>
+            <h3 class="method-title" data-i18n="nas.established-processes">Усталені процеси.</h3>
+            <p class="method-text" data-i18n="nas.nas-is-organized-as">NAS організована як промисловий постачальник з усталеними процесами та чіткою відповідальністю як за проєктування, так і за постачання.</p>
           </div>
         </div>
 
         <div class="method-statement reveal">
           <div class="method-num">02</div>
           <div class="method-content">
-            <h3 class="method-title" data-i18n="nas.operational-background">Operational background.</h3>
-            <p class="method-text" data-i18n="nas.the-company-draws-on">The company draws on direct experience from operational military environments. This experience shapes our approach to function, testing, and accountability for what is delivered.</p>
+            <h3 class="method-title" data-i18n="nas.operational-background">Операційний бекграунд.</h3>
+            <p class="method-text" data-i18n="nas.the-company-draws-on">Компанія спирається на безпосередній досвід операційних військових середовищ. Цей досвід формує наш підхід до функціональності, тестування та відповідальності за те, що постачається.</p>
           </div>
         </div>
 
         <div class="method-statement reveal">
           <div class="method-num">03</div>
           <div class="method-content">
-            <h3 class="method-title" data-i18n="nas.clear-decisionmaking">Clear decision-making.</h3>
-            <p class="method-text" data-i18n="nas.the-working-method-is">The working method is characterized by clear decision-making and clear ownership — from initial specification through to final delivery.</p>
+            <h3 class="method-title" data-i18n="nas.clear-decisionmaking">Чітке ухвалення рішень.</h3>
+            <p class="method-text" data-i18n="nas.the-working-method-is">Робочий метод характеризується чітким ухваленням рішень і чіткою відповідальністю — від первинної специфікації до фінального постачання.</p>
           </div>
         </div>
 
@@ -1446,15 +1440,15 @@ p{ margin:0; color:var(--ink-1); }
   <section class="company-section">
     <div class="wrap two-col reveal">
       <div>
-        <div class="section-eyebrow" data-i18n="nas.03-collaboration">/ 03 — COLLABORATION</div>
-        <h2 data-i18n="nas.clear-specifications-defined-frameworks">Clear specifications, <span class="accent">defined frameworks</span></h2>
+        <div class="section-eyebrow" data-i18n="nas.03-collaboration">/ 03 — СПІВПРАЦЯ</div>
+        <h2 data-i18n="nas.clear-specifications-defined-frameworks">Чіткі специфікації, <span class="accent">визначені рамки</span></h2>
       </div>
       <div class="body">
-        <p data-i18n="nas.nas-works-with-clear">NAS works with clear specifications and defined frameworks.</p>
-        <p data-i18n="nas.configurations-are-finalized-before">Configurations are finalized before production. Any changes are handled in a structured manner and through direct dialogue between technical counterparts.</p>
-        <p data-i18n="nas.deliveries-are-carried-out">Deliveries are carried out at the agreed pace and in the agreed form. If underlying conditions change, this is communicated early.</p>
+        <p data-i18n="nas.nas-works-with-clear">NAS працює з чіткими специфікаціями та визначеними рамками.</p>
+        <p data-i18n="nas.configurations-are-finalized-before">Конфігурації фіналізуються до початку виробництва. Будь-які зміни опрацьовуються структуровано, через прямий діалог між технічними контрагентами.</p>
+        <p data-i18n="nas.deliveries-are-carried-out">Постачання здійснюються в узгодженому темпі та в узгодженій формі. Якщо базові умови змінюються, про це повідомляється завчасно.</p>
         <blockquote class="pull-quote" data-i18n="nas.when-underlying-conditions-change">
-          When underlying conditions change, this is communicated early.
+          Коли базові умови змінюються, про це повідомляється завчасно.
         </blockquote>
       </div>
     </div>
@@ -1466,17 +1460,17 @@ p{ margin:0; color:var(--ink-1); }
   <section class="company-section company-location">
     <div class="wrap">
 
-      <div class="section-eyebrow reveal" data-i18n="nas.04-location">/ 04 — LOCATION</div>
+      <div class="section-eyebrow reveal" data-i18n="nas.04-location">/ 04 — РОЗТАШУВАННЯ</div>
 
       <h2 class="section-headline reveal" data-i18n="nas.colocated-with-uas-denmark">
-        Co-located with <span class="accent">UAS Denmark Test Center</span>
+        Поруч із <span class="accent">UAS Denmark Test Center</span>
       </h2>
 
       <div class="location-grid reveal">
 
         <div class="location-info">
           <div class="location-block">
-            <div class="location-label" data-i18n="nas.registered-office">REGISTERED OFFICE</div>
+            <div class="location-label" data-i18n="nas.registered-office">ЗАРЕЄСТРОВАНИЙ ОФІС</div>
             <div class="location-address">
               Lufthavnvej 131, Beldringe<br>
               5270 Odense N<br>
@@ -1485,7 +1479,7 @@ p{ margin:0; color:var(--ink-1); }
           </div>
 
           <p class="location-desc" data-i18n="nas.our-registered-office-is">
-            Our registered office is located at Hans Christian Andersen Airport in Odense, co-located with UAS Denmark Test Center — an unmanned systems technology test and development center, run as a collaboration between Hans Christian Andersen Airport, Odense Municipality, and the University of Southern Denmark.
+            Наш зареєстрований офіс розташований в аеропорту Ганса Крістіана Андерсена в Оденсе, поруч із UAS Denmark Test Center — центром випробувань і розвитку технологій безпілотних систем, що працює як співпраця аеропорту Ганса Крістіана Андерсена, муніципалітету Оденсе та Університету Південної Данії.
           </p>
         </div>
 
@@ -1493,7 +1487,7 @@ p{ margin:0; color:var(--ink-1); }
           <div class="coord-display">
             <img class="coord-map"
                  src="../assets/location.jpeg"
-                 alt="Test area map of Funen, Denmark — Odense and surrounding airspace zones"  data-i18n-attrs="alt:nas.test-area-map-of"/>
+                 alt="Мапа випробувальної зони острова Фюн, Данія — Оденсе та навколишні зони повітряного простору"  data-i18n-attrs="alt:nas.test-area-map-of"/>
             <div class="coord-corner coord-corner-tl"></div>
             <div class="coord-corner coord-corner-tr"></div>
             <div class="coord-corner coord-corner-bl"></div>
@@ -1522,7 +1516,7 @@ p{ margin:0; color:var(--ink-1); }
 
             <div class="coord-readout coord-readout-status">
               <div class="coord-status-dot"></div>
-              <div class="coord-readout-value" data-i18n="nas.registered">REGISTERED</div>
+              <div class="coord-readout-value" data-i18n="nas.registered">ЗАРЕЄСТРОВАНО</div>
             </div>
           </div>
         </div>
@@ -1538,10 +1532,10 @@ p{ margin:0; color:var(--ink-1); }
   <section class="closing-cta">
     <div class="wrap reveal">
       <p class="statement" data-i18n="nas.predictable-function-clear-agreements">
-        Predictable function. Clear agreements. <span class="accent">Accountability through to mission completion.</span>
+        Передбачувана функція. Чіткі домовленості. <span class="accent">Відповідальність до завершення місії.</span>
       </p>
-      <a class="btn btn-primary" href="/contact" data-i18n="nas.speak-with-engineering">
-        Speak with engineering <span class="arrow" aria-hidden="true">→</span>
+      <a class="btn btn-primary" href="/uk/contact" data-i18n="nas.speak-with-engineering">
+        Зв’язатися з інженерами <span class="arrow" aria-hidden="true">→</span>
       </a>
     </div>
   </section>
@@ -1555,8 +1549,9 @@ p{ margin:0; color:var(--ink-1); }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Усі права захищені.</div>
   </div>
+  <div class="wrap footer-authoritative">Англійська версія є автентичною.</div>
 </footer>
 
 <script>

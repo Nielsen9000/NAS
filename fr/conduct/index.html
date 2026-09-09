@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Code of Conduct — Nordic Advanced Systems</title>
 <meta name="description" content="Nordic Advanced Systems Code of Conduct and Compliance. Ethical business conduct, quality management, data protection, and responsible operations." />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -391,6 +392,11 @@ img{ display:block; max-width:100%; }
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
+<style>/* i18n: conduct stays English in every language */
+.conduct-en-note{ display:inline-block; margin:18px 0 0; padding:9px 14px;
+  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px;
+  letter-spacing:0.08em; color:var(--ink-2); border:1px solid var(--line-dark);
+  border-left:2px solid var(--accent); }</style>
 </head>
 <body>
 
@@ -407,31 +413,30 @@ img{ display:block; max-width:100%; }
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+    <a class="brand" href="/fr/" aria-label="Nordic Advanced Systems — Accueil" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
-      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
+    <nav class="nav" aria-label="Navigation principale" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/fr/#platforms" data-i18n="shared.platforms">Plateformes</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Solutions intelligentes <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
-          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
-          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+          <a href="/fr/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a> <a href="/fr/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Injection de carburant</span></a>
         </div>
       </div>
-      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
-      <a href="/nas">NAS</a>
-      <a href="/conduct" class="active" data-i18n="shared.conduct">Conduct</a>
-      <a href="/careers" data-i18n="shared.careers">Careers</a>
-      <a href="/contact" data-i18n="shared.contact">Contact</a>
+      <a href="/fr/engineering" data-i18n="shared.engineering">Ingénierie</a>
+      <a href="/fr/nas">NAS</a>
+      <a href="/fr/conduct" class="active" data-i18n="shared.conduct">Code de conduite</a>
+      <a href="/fr/careers" data-i18n="shared.careers">Carrières</a>
+      <a href="/fr/contact" data-i18n="shared.contact">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
-      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Select language"><span class="ls-code">EN</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/conduct/" class="active" aria-current="true">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/conduct/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/conduct/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/conduct/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/conduct/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/conduct/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/conduct/">Italiano</a></li></ul></div>
+      <a class="btn btn-pill-accent" href="/fr/contact" data-i18n="shared.request-brief">Demander le dossier <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Choisir la langue"><span class="ls-code">FR</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/conduct/">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/conduct/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/conduct/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/conduct/" class="active" aria-current="true">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/conduct/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/conduct/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/conduct/">Italiano</a></li></ul></div>
     </div>
   </div>
 </header>
@@ -442,9 +447,9 @@ img{ display:block; max-width:100%; }
       <div>
         <div class="conduct-eyebrow">Nordic Advanced Systems</div>
         <h1 data-i18n="conduct.code-of-conduct-and">
-          Code of Conduct
-          <span>And Compliance</span>
+          Code of Conduct <span>And Compliance</span>
         </h1>
+        <p class="conduct-en-note" lang="en">This section is available in English only.</p>
       </div>
       <div class="conduct-hero-meta">
         <div class="conduct-meta-item">
@@ -452,7 +457,7 @@ img{ display:block; max-width:100%; }
           <div class="v">Nordic Advanced Systems ApS</div>
         </div>
         <div class="conduct-meta-item">
-          <div class="k" data-i18n="shared.registration">Registration</div>
+          <div class="k" data-i18n="shared.registration">Immatriculation</div>
           <div class="v">CVR. 45976645</div>
         </div>
         <div class="conduct-meta-item">
@@ -558,8 +563,9 @@ img{ display:block; max-width:100%; }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Tous droits réservés.</div>
   </div>
+  <div class="wrap footer-authoritative">La version anglaise fait foi.</div>
 </footer>
 
 <script>

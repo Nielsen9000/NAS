@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script>try{if(sessionStorage.getItem('nas-loader-seen'))document.documentElement.classList.add('loader-seen');}catch(e){}</script>
 <title>Nordic Advanced Systems — NAS 2 Series</title>
-<meta name="description" data-spec-tpl="Long-endurance dual-cylinder boxer engines for platforms requiring over {nas2.range} range. Engineered for altitude shifts and harsh weather. NDAA-compliant European chipset." content="Long-endurance dual-cylinder boxer engines for platforms requiring over 1000 km range. Engineered for altitude shifts and harsh weather. NDAA-compliant European chipset." />
+<meta name="description" data-spec-tpl="Zweizylinder-Boxermotoren mit langer Einsatzdauer für Plattformen mit über {nas2.range} Reichweite. Entwickelt für Höhenwechsel und raues Wetter. NDAA-konformer europäischer Chipsatz." content="Zweizylinder-Boxermotoren mit langer Einsatzdauer für Plattformen mit über 1000 km Reichweite. Entwickelt für Höhenwechsel und raues Wetter. NDAA-konformer europäischer Chipsatz." />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -2261,7 +2262,7 @@ p{ margin:0; color:var(--ink-1); }
     <div class="loader-bar-wrap">
       <div class="loader-bar" id="loader-bar"></div>
     </div>
-    <div class="loader-status" id="loader-status" data-i18n="home.initialising">INITIALISING</div>
+    <div class="loader-status" id="loader-status" data-i18n="home.initialising">INITIALISIERUNG</div>
   </div>
 </div>
 
@@ -2282,31 +2283,30 @@ p{ margin:0; color:var(--ink-1); }
      ========================================= -->
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+    <a class="brand" href="/de/" aria-label="Nordic Advanced Systems — Startseite" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
-      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
+    <nav class="nav" aria-label="Hauptnavigation" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/de/#platforms" data-i18n="shared.platforms">Plattformen</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligente Lösungen <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
-          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
-          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+          <a href="/de/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC-STACK</span></a> <a href="/de/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Kraftstoffeinspritzung</span></a>
         </div>
       </div>
-      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
-      <a href="/nas">NAS</a>
-      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
-      <a href="/careers" data-i18n="shared.careers">Careers</a>
-      <a href="/contact" data-i18n="shared.contact">Contact</a>
+      <a href="/de/engineering" data-i18n="shared.engineering">Engineering</a>
+      <a href="/de/nas">NAS</a>
+      <a href="/de/conduct" data-i18n="shared.conduct">Verhaltenskodex</a>
+      <a href="/de/careers" data-i18n="shared.careers">Karriere</a>
+      <a href="/de/contact" data-i18n="shared.contact">Kontakt</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
-      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Select language"><span class="ls-code">EN</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/" class="active" aria-current="true">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/">Italiano</a></li></ul></div>
+      <a class="btn btn-pill-accent" href="/de/contact" data-i18n="shared.request-brief">Unterlagen anfordern <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sprache wählen"><span class="ls-code">DE</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/" class="active" aria-current="true">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/">Italiano</a></li></ul></div>
     </div>
   </div>
 </header>
@@ -2372,27 +2372,15 @@ p{ margin:0; color:var(--ink-1); }
   <div class="wrap hero-grid">
 
     <div class="hero-left reveal">
-      <div class="hero-eyebrow eyebrow" data-i18n="home.nas-2-series-ndaacompliant">NAS 2 Series · NDAA-compliant European chipset</div>
-      <h1 class="hero-heading" aria-label="Engineered for endurance Built on integrity" data-i18n-attrs="aria-label:home.engineered-for-endurance-built-2" data-i18n="home.engineered-for-endurance-built">
-        <span class="word-line" aria-hidden="true">
-          <span class="word">Engineered</span>
-          <span class="word">for</span>
-          <span class="word">endurance</span>
-        </span>
-        <span class="word-line line-2" aria-hidden="true">
-          <span class="word muted">Built</span>
-          <span class="word muted">on</span>
-          <span class="word muted">integrity</span>
-        </span>
+      <div class="hero-eyebrow eyebrow" data-i18n="home.nas-2-series-ndaacompliant">NAS 2 Serie · NDAA-konformer europäischer Chipsatz</div>
+      <h1 class="hero-heading" aria-label="Entwickelt für Ausdauer Built on integrity" data-i18n-attrs="aria-label:home.engineered-for-endurance-built-2" data-i18n="home.engineered-for-endurance-built">
+        <span class="word-line" aria-hidden="true"> <span class="word">Entwickelt</span> <span class="word">für</span> <span class="word">Ausdauer</span> </span> <span class="word-line line-2" aria-hidden="true"> <span class="word muted">Built</span> <span class="word muted">on</span> <span class="word muted">integrity</span> </span>
       </h1>
       <p class="hero-sub" data-i18n="home.longendurance-dualcylinder-boxer-engines">
-        Long-endurance dual-cylinder boxer engines for platforms requiring over <span data-spec="nas2.range">1000 km</span> range. Engineered for altitude shifts and harsh weather.
+        Zweizylinder-Boxermotoren mit hoher Einsatzdauer für Plattformen mit einer Reichweite von über <span data-spec="nas2.range">1000 km</span>. Entwickelt für Höhenwechsel und raues Wetter.
       </p>
       <div class="hero-ctas" data-i18n="home.explore-nas-2-series">
-        <a class="btn btn-primary" href="#platforms">
-          Explore NAS 2 Series <span class="arrow" aria-hidden="true">→</span>
-        </a>
-        <a class="btn btn-ghost" href="/contact">Speak with engineering</a>
+        <a class="btn btn-primary" href="#platforms"> NAS 2-Serie entdecken <span class="arrow" aria-hidden="true">→</span> </a> <a class="btn btn-ghost" href="/de/contact">Mit dem Engineering-Team sprechen</a>
       </div>
     </div>
   </div>
@@ -2413,38 +2401,37 @@ p{ margin:0; color:var(--ink-1); }
 
   <div class="wrap">
     <div class="reveal">
-      <div class="section-eyebrow" data-i18n="home.02-intelligent-solutions">/ 02 — INTELLIGENT SOLUTIONS</div>
-      <h2 class="intel-teaser-headline" id="intel-teaser-title" data-i18n="home.intelligent-solutions-for-professional">Intelligent solutions for <span class="accent">professional UAV platforms.</span></h2>
-      <p class="intel-teaser-sub" data-i18n="home.proprietary-propulsion-avionics-and">Proprietary propulsion, avionics and engine management — engineered in Europe.</p>
+      <div class="section-eyebrow" data-i18n="home.02-intelligent-solutions">/ 02 — INTELLIGENTE LÖSUNGEN</div>
+      <h2 class="intel-teaser-headline" id="intel-teaser-title" data-i18n="home.intelligent-solutions-for-professional">Intelligente Lösungen für <span class="accent">professionelle UAV-Plattformen.</span></h2>
+      <p class="intel-teaser-sub" data-i18n="home.proprietary-propulsion-avionics-and">Proprietäre Antriebssysteme, Avionik und Motormanagement — entwickelt in Europa.</p>
 
       <div class="intel-hints">
-        <a class="intel-hint" href="/intelligence/drone-stack/">
+        <a class="intel-hint" href="/de/intelligence/drone-stack/">
           <span class="intel-hint-corner tl" aria-hidden="true"></span>
           <span class="intel-hint-corner tr" aria-hidden="true"></span>
           <span class="intel-hint-corner bl" aria-hidden="true"></span>
           <span class="intel-hint-corner br" aria-hidden="true"></span>
-          <span class="intel-hint-tag" data-i18n="home.01-avionics">[ 01 ] — Avionics</span>
+          <span class="intel-hint-tag" data-i18n="home.01-avionics">[ 01 ] — Avionik</span>
           <div class="intel-hint-title" data-i18n="shared.drone-stack">Drone Stack</div>
-          <p class="intel-hint-desc" data-i18n="home.fc-esc-flight-stack">FC + ESC flight stack</p>
-          <span class="intel-hint-go" data-i18n="home.explore">Explore <span class="arrow" aria-hidden="true">→</span></span>
+          <p class="intel-hint-desc" data-i18n="home.fc-esc-flight-stack">Flight Stack aus FC + ESC</p>
+          <span class="intel-hint-go" data-i18n="home.explore">Entdecken <span class="arrow" aria-hidden="true">→</span></span>
         </a>
 
-        <a class="intel-hint" href="/intelligence/efi/">
+        <a class="intel-hint" href="/de/intelligence/efi/">
           <span class="intel-hint-corner tl" aria-hidden="true"></span>
           <span class="intel-hint-corner tr" aria-hidden="true"></span>
           <span class="intel-hint-corner bl" aria-hidden="true"></span>
           <span class="intel-hint-corner br" aria-hidden="true"></span>
-          <span class="intel-hint-tag" data-i18n="home.02-engine-management">[ 02 ] — Engine management</span>
+          <span class="intel-hint-tag" data-i18n="home.02-engine-management">[ 02 ] — Motormanagement</span>
           <div class="intel-hint-title">EFI / IEMS</div>
-          <p class="intel-hint-desc" data-i18n="home.integrated-engine-management">Integrated engine management</p>
-          <span class="intel-hint-go" data-i18n="home.explore">Explore <span class="arrow" aria-hidden="true">→</span></span>
+          <p class="intel-hint-desc" data-i18n="home.integrated-engine-management">Integriertes Motormanagement</p>
+          <span class="intel-hint-go" data-i18n="home.explore">Entdecken <span class="arrow" aria-hidden="true">→</span></span>
         </a>
       </div>
 
       <p class="intel-proof" data-i18n="home.exactly-what-we-have">
         <span class="intel-proof-mark" aria-hidden="true">//</span>
-        <span class="intel-proof-quote">&ldquo;Exactly what we have been looking for in the <span class="accent">European market</span>.&rdquo;</span>
-        <span class="intel-proof-attr">— Kolibri Defence, Finland</span>
+        <span class="intel-proof-quote">„Genau das, wonach wir auf dem <span class="accent">europäischen Markt</span> gesucht haben.“</span> <span class="intel-proof-attr">— Kolibri Defence, Finnland</span>
       </p>
     </div>
   </div>
@@ -2472,7 +2459,7 @@ p{ margin:0; color:var(--ink-1); }
             <span>SCAN · 100%</span>
           </div>
         </div>
-        <img class="flight-image" src="./assets/engine-hero-static.png" alt="NAS 2 series engine mounted with carbon fiber propeller" data-i18n-attrs="alt:home.nas-2-series-engine">
+        <img class="flight-image" src="./assets/engine-hero-static.png" alt="Motor der NAS 2-Serie mit montiertem Kohlefaser-Propeller" data-i18n-attrs="alt:home.nas-2-series-engine">
         <div class="flight-reticle flight-reticle-1" aria-hidden="true">
           <div class="flight-reticle-line"></div>
           <span class="flight-reticle-label" data-i18n="home.boxer-cc">BOXER · <span data-spec="nas2num.cc">340</span>CC</span>
@@ -2484,67 +2471,66 @@ p{ margin:0; color:var(--ink-1); }
       </div>
       <dl class="flight-envelope">
         <div class="flight-envelope-item">
-          <dt data-i18n="home.configuration">Configuration</dt>
-          <dd data-i18n="home.boxer-twin-2stroke">Boxer twin · 2-stroke</dd>
+          <dt data-i18n="home.configuration">Konfiguration</dt>
+          <dd data-i18n="home.boxer-twin-2stroke">Boxer-Twin · Zweitakt</dd>
         </div>
         <div class="flight-envelope-item">
-          <dt data-i18n="home.cooling">Cooling</dt>
-          <dd data-i18n="home.forced-air">Forced air</dd>
+          <dt data-i18n="home.cooling">Kühlung</dt>
+          <dd data-i18n="home.forced-air">Gebläseluft</dd>
         </div>
         <div class="flight-envelope-item">
-          <dt data-i18n="home.ignition">Ignition</dt>
-          <dd data-i18n="home.dualspark-cdi">Dual-spark CDI</dd>
+          <dt data-i18n="home.ignition">Zündung</dt>
+          <dd data-i18n="home.dualspark-cdi">Doppelfunken-CDI</dd>
         </div>
         <div class="flight-envelope-item">
-          <dt data-i18n="home.fuel">Fuel</dt>
+          <dt data-i18n="home.fuel">Kraftstoff</dt>
           <dd data-i18n="home.avgas-mogas">AVGAS / MOGAS</dd>
         </div>
       </dl>
     </div>
     <div class="flight-content">
-      <div class="section-eyebrow" data-i18n="home.03-built-for-flight">/ 03 — BUILT FOR FLIGHT</div>
+      <div class="section-eyebrow" data-i18n="home.03-built-for-flight">/ 03 — GEBAUT FÜR DEN FLUG</div>
       <h2 class="flight-heading" data-i18n="home.missionready-mounted-tested-proven">
-        Mission-ready
-        <span class="muted">Mounted, tested, proven</span>
+        Einsatzbereit <span class="muted">Montiert, getestet, bewährt</span>
       </h2>
       <p class="flight-sub" data-i18n="home.the-nas-2-series">
-        The NAS 2 series integrates seamlessly with fixed-wing UAV platforms. Boxer-cylinder architecture and rear-mounted output shaft enable efficient propeller integration with minimal vibration.
+        Die NAS 2-Serie integriert sich nahtlos in Starrflügler-UAV-Plattformen. Die Boxer-Zylinderarchitektur und die heckseitig montierte Abtriebswelle ermöglichen eine effiziente Propellerintegration mit minimaler Vibration.
       </p>
       <ul class="flight-capabilities">
         <li class="flight-capability">
           <span class="flight-capability-marker" aria-hidden="true">›</span>
           <div>
-            <h4 data-i18n="home.boxertwin-architecture">Boxer-twin architecture</h4>
-            <p data-i18n="home.opposed-cylinders-cancel-primary">Opposed cylinders cancel primary vibration, extending airframe and payload service life.</p>
+            <h4 data-i18n="home.boxertwin-architecture">Boxer-Twin-Architektur</h4>
+            <p data-i18n="home.opposed-cylinders-cancel-primary">Gegenüberliegende Zylinder heben die primäre Vibration auf und verlängern die Lebensdauer von Zelle und Nutzlast.</p>
           </div>
         </li>
         <li class="flight-capability">
           <span class="flight-capability-marker" aria-hidden="true">›</span>
           <div>
-            <h4 data-i18n="home.rearmounted-output-shaft">Rear-mounted output shaft</h4>
-            <p data-i18n="home.direct-propeller-drive-without">Direct propeller drive without a reduction stage — fewer parts, less drivetrain loss.</p>
+            <h4 data-i18n="home.rearmounted-output-shaft">Heckseitig montierte Abtriebswelle</h4>
+            <p data-i18n="home.direct-propeller-drive-without">Direkter Propellerantrieb ohne Untersetzungsstufe — weniger Teile, geringere Verluste im Antriebsstrang.</p>
           </div>
         </li>
         <li class="flight-capability">
           <span class="flight-capability-marker" aria-hidden="true">›</span>
           <div>
-            <h4 data-i18n="home.standard-firewall-pattern">Standard firewall pattern</h4>
-            <p data-i18n="home.dropin-mounting-interface-for">Drop-in mounting interface for fixed-wing platforms in the <span data-spec="nas2.mtowClass">25–50 kg</span> MTOW class.</p>
+            <h4 data-i18n="home.standard-firewall-pattern">Standard-Brandschott-Lochbild</h4>
+            <p data-i18n="home.dropin-mounting-interface-for">Direkt einbaufertige Montageschnittstelle für Starrflügler-Plattformen der MTOW-Klasse <span data-spec="nas2.mtowClass">25–50 kg</span>.</p>
           </div>
         </li>
       </ul>
       <div class="flight-stats">
         <div class="flight-stat">
           <div class="value"><span class="count" data-spec-target="nas2num.hp" data-target="35" data-suffix="">0</span><span class="unit">hp</span></div>
-          <div class="label" data-i18n="home.power-output">Power output</div>
+          <div class="label" data-i18n="home.power-output">Ausgangsleistung</div>
         </div>
         <div class="flight-stat">
           <div class="value"><span class="count" data-spec-target="nas2num.cc" data-target="340" data-suffix="">0</span><span class="unit">cm³</span></div>
-          <div class="label" data-i18n="home.displacement">Displacement</div>
+          <div class="label" data-i18n="home.displacement">Hubraum</div>
         </div>
         <div class="flight-stat">
           <div class="value"><span class="count" data-spec-target="nas2num.kg" data-target="9" data-suffix="">0</span><span class="unit">kg</span></div>
-          <div class="label" data-i18n="home.dry-weight">Dry weight</div>
+          <div class="label" data-i18n="home.dry-weight">Trockengewicht</div>
         </div>
       </div>
     </div>
@@ -2560,29 +2546,29 @@ p{ margin:0; color:var(--ink-1); }
   <div class="wrap">
     <div class="anatomy-grid">
       <div class="anatomy-content reveal">
-        <div class="section-eyebrow" data-i18n="home.04-anatomy">/ 04 — ANATOMY</div>
-        <h2 class="anatomy-heading" data-i18n="home.inside-the-nas-2">Inside the NAS&nbsp;2.</h2>
+        <div class="section-eyebrow" data-i18n="home.04-anatomy">/ 04 — ANATOMIE</div>
+        <h2 class="anatomy-heading" data-i18n="home.inside-the-nas-2">Im Inneren der NAS&nbsp;2.</h2>
         <div class="anatomy-body">
-          <p data-i18n="home.two-cylinders-one-purposebuilt">Two cylinders. One purpose-built crankshaft. Every component specified, tested, and traceable to a serial number.</p>
-          <p data-i18n="home.the-nas-2-is">The NAS 2 is engineered from the ground up for continuous operation — not adapted from a hobby or industrial platform. Each part is selected for predictable mechanical and thermal behavior under sustained load.</p>
-          <p class="anatomy-coda" data-i18n="home.nothing-here-is-incidental">Nothing here is incidental.</p>
+          <p data-i18n="home.two-cylinders-one-purposebuilt">Zwei Zylinder. Eine zweckgebaute Kurbelwelle. Jede Komponente spezifiziert, getestet und über eine Seriennummer rückverfolgbar.</p>
+          <p data-i18n="home.the-nas-2-is">Die NAS 2 ist von Grund auf für den Dauerbetrieb konstruiert — nicht von einer Hobby- oder Industrieplattform abgeleitet. Jedes Teil ist für vorhersagbares mechanisches und thermisches Verhalten unter anhaltender Last ausgewählt.</p>
+          <p class="anatomy-coda" data-i18n="home.nothing-here-is-incidental">Nichts hier ist zufällig.</p>
         </div>
-        <dl class="anatomy-specs" aria-label="NAS 2 — engineering specifications" data-i18n-attrs="aria-label:home.nas-2-engineering-specifications">
+        <dl class="anatomy-specs" aria-label="NAS 2 — technische Spezifikationen" data-i18n-attrs="aria-label:home.nas-2-engineering-specifications">
           <div>
-            <dt class="spec-label" data-i18n="home.configuration">Configuration</dt>
-            <dd class="spec-value" data-i18n="home.2cyl-2stroke-boxer">2-cyl<span class="accent">·</span>2-stroke boxer</dd>
+            <dt class="spec-label" data-i18n="home.configuration">Konfiguration</dt>
+            <dd class="spec-value" data-i18n="home.2cyl-2stroke-boxer">Zweizylinder<span class="accent">·</span>Zweitakt-Boxer</dd>
           </div>
           <div>
-            <dt class="spec-label" data-i18n="home.cooling">Cooling</dt>
-            <dd class="spec-value" data-i18n="home.aircooled">Air-cooled</dd>
+            <dt class="spec-label" data-i18n="home.cooling">Kühlung</dt>
+            <dd class="spec-value" data-i18n="home.aircooled">Luftgekühlt</dd>
           </div>
           <div>
-            <dt class="spec-label" data-i18n="home.fuel">Fuel</dt>
-            <dd class="spec-value" data-i18n="home.unleaded-premix">Unleaded<span class="accent">·</span><span data-spec="nas2.premix">1:50</span> premix</dd>
+            <dt class="spec-label" data-i18n="home.fuel">Kraftstoff</dt>
+            <dd class="spec-value" data-i18n="home.unleaded-premix">Bleifrei<span class="accent">·</span>Gemisch <span data-spec="nas2.premix">1:50</span></dd>
           </div>
           <div>
             <dt class="spec-label" data-i18n="home.starter">Starter</dt>
-            <dd class="spec-value" data-i18n="home.electric-gear-reduction">Electric<span class="accent">·</span>gear reduction</dd>
+            <dd class="spec-value" data-i18n="home.electric-gear-reduction">Elektrisch<span class="accent">·</span>Getriebeuntersetzung</dd>
           </div>
         </dl>
       </div>
@@ -2590,7 +2576,7 @@ p{ margin:0; color:var(--ink-1); }
         <div class="anatomy-frame">
           <div class="anatomy-grid-bg" aria-hidden="true"></div>
           <div class="anatomy-glow" aria-hidden="true"></div>
-          <img class="anatomy-img" src="./assets/motor.png" alt="NAS 2 dual-cylinder boxer engine — assembled three-quarter view showing crankshaft gear, twin cylinders and integrated ignition / fuel system." loading="lazy" decoding="async"  data-i18n-attrs="alt:home.nas-2-dualcylinder-boxer"/>
+          <img class="anatomy-img" src="./assets/motor.png" alt="NAS 2 Zweizylinder-Boxermotor — montierte Dreiviertelansicht mit Kurbelwellenzahnrad, zwei Zylindern und integriertem Zünd- und Kraftstoffsystem." loading="lazy" decoding="async"  data-i18n-attrs="alt:home.nas-2-dualcylinder-boxer"/>
 
           <svg class="anatomy-leaders" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
             <line x1="22" y1="10" x2="49" y2="24" />
@@ -2604,12 +2590,12 @@ p{ margin:0; color:var(--ink-1); }
           <span class="anatomy-marker anatomy-marker-3" aria-hidden="true"></span>
           <span class="anatomy-marker anatomy-marker-4" aria-hidden="true"></span>
 
-          <div class="anatomy-tag anatomy-tag-1" data-i18n="home.crankshaft">/ CRANKSHAFT</div>
-          <div class="anatomy-tag anatomy-tag-2" data-i18n="home.twincylinder-boxer">/ TWIN-CYLINDER BOXER</div>
-          <div class="anatomy-tag anatomy-tag-3" data-i18n="home.dualspark-ignition">/ DUAL-SPARK IGNITION</div>
-          <div class="anatomy-tag anatomy-tag-4" data-i18n="home.fuel-system">/ FUEL SYSTEM</div>
+          <div class="anatomy-tag anatomy-tag-1" data-i18n="home.crankshaft">/ KURBELWELLE</div>
+          <div class="anatomy-tag anatomy-tag-2" data-i18n="home.twincylinder-boxer">/ ZWEIZYLINDER-BOXER</div>
+          <div class="anatomy-tag anatomy-tag-3" data-i18n="home.dualspark-ignition">/ DOPPELFUNKENZÜNDUNG</div>
+          <div class="anatomy-tag anatomy-tag-4" data-i18n="home.fuel-system">/ KRAFTSTOFFSYSTEM</div>
 
-          <div class="anatomy-label" data-i18n="home.nas-2-anatomy">/ NAS 2 · ANATOMY</div>
+          <div class="anatomy-label" data-i18n="home.nas-2-anatomy">/ NAS 2 · ANATOMIE</div>
         </div>
       </div>
     </div>
@@ -2625,13 +2611,12 @@ p{ margin:0; color:var(--ink-1); }
   <div class="wrap">
     <div class="platforms-head">
       <div class="platforms-head-inner reveal">
-        <div class="section-eyebrow" data-i18n="home.05-platforms">/ 05 — PLATFORMS</div>
+        <div class="section-eyebrow" data-i18n="home.05-platforms">/ 05 — PLATTFORMEN</div>
         <h2 data-i18n="home.the-nas-2-series-2">
-          The NAS 2 Series
-          <span class="muted">Long-endurance by design</span>
+          Die NAS 2-Serie <span class="muted">Auf Einsatzdauer ausgelegt</span>
         </h2>
         <p data-i18n="home.two-dualcylinder-2stroke-boxer">
-          Two dual-cylinder, 2-stroke boxer engine models engineered for continuous operation above <span data-spec="nas2.range">1000 km</span> — built to hold performance through altitude shifts and harsh weather.
+          Zwei Modelle von Zweizylinder-Zweitakt-Boxermotoren, konstruiert für den Dauerbetrieb oberhalb von <span data-spec="nas2.range">1000 km</span> — gebaut, um die Leistung bei Höhenwechseln und rauem Wetter zu halten.
         </p>
       </div>
     </div>
@@ -2641,29 +2626,29 @@ p{ margin:0; color:var(--ink-1); }
 
         <!-- LEFT HALF — NAS 2C -->
         <div class="compare-col">
-          <span class="chip-eyebrow" data-i18n="home.01-carburetted">01 · Carburetted</span>
+          <span class="chip-eyebrow" data-i18n="home.01-carburetted">01 · Vergaser</span>
           <div class="model-name">NAS 2C<sup>™</sup></div>
-          <p class="model-sub" data-i18n="home.dualcylinder-2stroke-boxer-engine">Dual-cylinder, 2-stroke boxer engine with carburettor. Proven simplicity for reliable continuous operation.</p>
+          <p class="model-sub" data-i18n="home.dualcylinder-2stroke-boxer-engine">Zweizylinder-Zweitakt-Boxermotor mit Vergaser. Bewährte Einfachheit für zuverlässigen Dauerbetrieb.</p>
           <div class="mini-specs">
             <div class="cell">
-              <div class="k" data-i18n="home.fuel-system-2">FUEL SYSTEM</div>
-              <div class="v" data-i18n="home.carburettor">Carburettor</div>
+              <div class="k" data-i18n="home.fuel-system-2">KRAFTSTOFFSYSTEM</div>
+              <div class="v" data-i18n="home.carburettor">Vergaser</div>
             </div>
             <div class="cell">
-              <div class="k" data-i18n="home.altitude">ALTITUDE</div>
-              <div class="v" data-i18n="home.manual-tuning">Manual tuning</div>
+              <div class="k" data-i18n="home.altitude">HÖHE</div>
+              <div class="v" data-i18n="home.manual-tuning">Manuelle Abstimmung</div>
             </div>
             <div class="cell">
-              <div class="k" data-i18n="home.ignition-2">IGNITION</div>
-              <div class="v" data-i18n="home.dual-cdi-coils">Dual CDI coils</div>
+              <div class="k" data-i18n="home.ignition-2">ZÜNDUNG</div>
+              <div class="v" data-i18n="home.dual-cdi-coils">Zwei CDI-Spulen</div>
             </div>
             <div class="cell">
-              <div class="k" data-i18n="home.telemetry">TELEMETRY</div>
-              <div class="v" data-i18n="home.none">None</div>
+              <div class="k" data-i18n="home.telemetry">TELEMETRIE</div>
+              <div class="v" data-i18n="home.none">Keine</div>
             </div>
           </div>
-          <a href="/contact" class="card-cta" data-i18n="home.request-nas-2c-datasheet">
-            Request NAS 2C datasheet
+          <a href="/de/contact" class="card-cta" data-i18n="home.request-nas-2c-datasheet">
+            Datenblatt NAS 2C anfordern
             <span class="card-cta-arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -2672,29 +2657,29 @@ p{ margin:0; color:var(--ink-1); }
 
         <!-- RIGHT HALF — NAS 2E -->
         <div class="compare-col">
-          <span class="chip-eyebrow" data-i18n="home.02-efi-barometric-ecu">02 · EFI · Barometric ECU</span>
+          <span class="chip-eyebrow" data-i18n="home.02-efi-barometric-ecu">02 · EFI · Barometrische ECU</span>
           <div class="model-name">NAS 2E<sup>™</sup></div>
-          <p class="model-sub" data-i18n="home.electronic-fuel-injection-with">Electronic fuel injection with altitude-independent ignition adjustment via barometric-compensated ECU.</p>
+          <p class="model-sub" data-i18n="home.electronic-fuel-injection-with">Elektronische Kraftstoffeinspritzung mit höhenunabhängiger Zündungsanpassung über eine barometrisch kompensierte ECU.</p>
           <div class="mini-specs">
             <div class="cell">
-              <div class="k" data-i18n="home.fuel-system-2">FUEL SYSTEM</div>
-              <div class="v" data-i18n="home.efi-sensors">EFI + sensors</div>
+              <div class="k" data-i18n="home.fuel-system-2">KRAFTSTOFFSYSTEM</div>
+              <div class="v" data-i18n="home.efi-sensors">EFI + Sensoren</div>
             </div>
             <div class="cell">
-              <div class="k" data-i18n="home.altitude">ALTITUDE</div>
-              <div class="v" data-i18n="home.auto-barometric">Auto · Barometric</div>
+              <div class="k" data-i18n="home.altitude">HÖHE</div>
+              <div class="v" data-i18n="home.auto-barometric">Auto · Barometrisch</div>
             </div>
             <div class="cell">
-              <div class="k" data-i18n="home.ignition-2">IGNITION</div>
-              <div class="v" data-i18n="home.ecutuned-curve">ECU-tuned curve</div>
+              <div class="k" data-i18n="home.ignition-2">ZÜNDUNG</div>
+              <div class="v" data-i18n="home.ecutuned-curve">ECU-abgestimmte Kennlinie</div>
             </div>
             <div class="cell">
-              <div class="k" data-i18n="home.telemetry">TELEMETRY</div>
-              <div class="v" data-i18n="home.live-canuart">Live CAN/UART</div>
+              <div class="k" data-i18n="home.telemetry">TELEMETRIE</div>
+              <div class="v" data-i18n="home.live-canuart">Live über CAN/UART</div>
             </div>
           </div>
-          <a href="/contact" class="card-cta" data-i18n="home.request-nas-2e-datasheet">
-            Request NAS 2E datasheet
+          <a href="/de/contact" class="card-cta" data-i18n="home.request-nas-2e-datasheet">
+            Datenblatt NAS 2E anfordern
             <span class="card-cta-arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -2714,8 +2699,9 @@ p{ margin:0; color:var(--ink-1); }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Alle Rechte vorbehalten.</div>
   </div>
+  <div class="wrap footer-authoritative">Maßgeblich ist die englische Fassung.</div>
 </footer>
 
 <!-- =========================================

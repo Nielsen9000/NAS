@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="uk">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Contact — Nordic Advanced Systems</title>
-<meta name="description" content="Request technical documentation, specifications, and procurement inquiries for the NAS 2 Series." />
+<title>Контакти — Nordic Advanced Systems</title>
+<meta name="description" content="Запити технічної документації, характеристик і закупівель для серії NAS 2." />
+<meta name="robots" content="noindex" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,7 +37,7 @@ body{
   margin:0;
   background:var(--bg-base);
   color:var(--ink-0);
-  font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  font-family:"Inter",ui-sans-serif,system-ui,sans-serif;
   font-size:16px;
   line-height:1.7;
   overflow-x:hidden;
@@ -84,7 +85,7 @@ img{ display:block; max-width:100%; }
 .site-header .brand-logo img{ width:auto; height:52px; }
 .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
 .brand-wordmark{
-  font-family:"Space Grotesk",sans-serif;
+  font-family:"Inter",sans-serif;
   font-style:italic; font-weight:600; font-size:16px;
   letter-spacing:0.22em; text-transform:uppercase; color:#ffffff;
 }
@@ -222,7 +223,7 @@ img{ display:block; max-width:100%; }
 /* fields */
 .cf-field{ margin-bottom:16px; }
 .cf-label{ display:block; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10px; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-2); margin-bottom:7px; }
-.cf-input, .cf-select, .cf-textarea{ width:100%; background:var(--bg-base); border:1px solid var(--line-dark); border-radius:10px; color:var(--ink-0); font-family:"Space Grotesk",ui-sans-serif,system-ui,sans-serif; font-size:15px; padding:12px 14px; transition:border-color .2s ease, box-shadow .2s ease; }
+.cf-input, .cf-select, .cf-textarea{ width:100%; background:var(--bg-base); border:1px solid var(--line-dark); border-radius:10px; color:var(--ink-0); font-family:"Inter",ui-sans-serif,system-ui,sans-serif; font-size:15px; padding:12px 14px; transition:border-color .2s ease, box-shadow .2s ease; }
 .cf-input::placeholder, .cf-textarea::placeholder{ color:var(--ink-3); }
 .cf-select{ appearance:none; -webkit-appearance:none; cursor:pointer; padding-right:38px; color-scheme:dark; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%233bb6e8' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; }
 /* native options popup — force readable dark rows (was rendering invisible on the dark theme) */
@@ -419,6 +420,8 @@ img{ display:block; max-width:100%; }
 </style>
   <link rel="stylesheet" href="/assets/mobile-nav.css">
   <script src="/assets/mobile-nav.js" defer></script>
+<style>/* uk: the Latin brand wordmark keeps its identity face */
+.brand-wordmark{ font-family:"Space Grotesk",sans-serif; }</style>
 </head>
 <body>
 
@@ -435,31 +438,30 @@ img{ display:block; max-width:100%; }
 
 <header class="site-header" id="site-header">
   <div class="wrap header-inner">
-    <a class="brand" href="/" aria-label="Nordic Advanced Systems home" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
+    <a class="brand" href="/uk/" aria-label="Nordic Advanced Systems — на головну" data-i18n-attrs="aria-label:shared.nordic-advanced-systems-home">
       <span class="brand-logo"><img src="/assets/logo.png" alt="" /></span>
       <span class="brand-text">
         <span class="brand-wordmark">Nordic Advanced Systems</span>
         <span class="brand-subline">Built on integrity</span>
       </span>
     </a>
-    <nav class="nav" aria-label="Primary" data-i18n-attrs="aria-label:shared.primary">
-      <a href="/#platforms" data-i18n="shared.platforms">Platforms</a>
+    <nav class="nav" aria-label="Основна навігація" data-i18n-attrs="aria-label:shared.primary">
+      <a href="/uk/#platforms" data-i18n="shared.platforms">Платформи</a>
       <div class="nav-dd">
-        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Intelligent Solutions <span class="nav-dd-caret" aria-hidden="true"></span></button>
+        <button class="nav-dd-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-i18n="shared.intelligent-solutions">Інтелектуальні рішення <span class="nav-dd-caret" aria-hidden="true"></span></button>
         <div class="nav-dd-menu" role="menu" data-i18n="shared.drone-stack-fc-stack">
-          <a href="/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">FC STACK</span></a>
-          <a href="/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Fuel Injection</span></a>
+          <a href="/uk/intelligence/drone-stack/" role="menuitem"><span class="nav-dd-label">Drone Stack</span><span class="nav-dd-sub">СТЕК FC</span></a> <a href="/uk/intelligence/efi/" role="menuitem"><span class="nav-dd-label">EFI</span><span class="nav-dd-sub">Упорскування палива</span></a>
         </div>
       </div>
-      <a href="/engineering" data-i18n="shared.engineering">Engineering</a>
-      <a href="/nas">NAS</a>
-      <a href="/conduct" data-i18n="shared.conduct">Conduct</a>
-      <a href="/careers" data-i18n="shared.careers">Careers</a>
-      <a href="/contact" class="active" data-i18n="shared.contact">Contact</a>
+      <a href="/uk/engineering" data-i18n="shared.engineering">Інженерія</a>
+      <a href="/uk/nas">NAS</a>
+      <a href="/uk/conduct" data-i18n="shared.conduct">Кодекс</a>
+      <a href="/uk/careers" data-i18n="shared.careers">Кар’єра</a>
+      <a href="/uk/contact" class="active" data-i18n="shared.contact">Контакти</a>
     </nav>
     <div class="header-cta">
-      <a class="btn btn-pill-accent" href="/contact" data-i18n="shared.request-brief">Request brief <span class="arrow" aria-hidden="true">→</span></a>
-      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Select language"><span class="ls-code">EN</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/contact/" class="active" aria-current="true">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/contact/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/contact/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/contact/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/contact/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/contact/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/contact/">Italiano</a></li></ul></div>
+      <a class="btn btn-pill-accent" href="/uk/contact" data-i18n="shared.request-brief">Запросити бриф <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="lang-switch" id="lang-switch" data-i18n-skip><button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Вибрати мову"><span class="ls-code">УКР</span><span class="ls-caret" aria-hidden="true"></span></button><ul class="ls-menu" role="menu" hidden><li role="none"><a role="menuitem" lang="en" hreflang="en" href="/contact/">English</a></li><li role="none"><a role="menuitem" lang="de" hreflang="de" href="/de/contact/">Deutsch</a></li><li role="none"><a role="menuitem" lang="fi" hreflang="fi" href="/fi/contact/">Suomi</a></li><li role="none"><a role="menuitem" lang="fr" hreflang="fr" href="/fr/contact/">Français</a></li><li role="none"><a role="menuitem" lang="es-ES" hreflang="es-ES" href="/es/contact/">Español</a></li><li role="none"><a role="menuitem" lang="pt-PT" hreflang="pt-PT" href="/pt/contact/">Português</a></li><li role="none"><a role="menuitem" lang="it" hreflang="it" href="/it/contact/">Italiano</a></li><li role="none"><a role="menuitem" lang="uk" hreflang="uk" href="/uk/contact/" class="active" aria-current="true">Українська</a></li></ul></div>
     </div>
   </div>
 </header>
@@ -469,26 +471,25 @@ img{ display:block; max-width:100%; }
     <div class="wrap contact-page-grid">
 
       <div class="contact-left reveal">
-        <div class="eyebrow" data-i18n="shared.contact">Contact</div>
+        <div class="eyebrow" data-i18n="shared.contact">Контакти</div>
         <h1 data-i18n="contact.request-a-brief-lets">
-          Request a brief
-          <span>Let's talk mission requirements</span>
+          Запросіть бриф <span>Поговорімо про вимоги місії</span>
         </h1>
         <p data-i18n="contact.for-specifications-integration-details">
-          For specifications, integration details, and procurement inquiries. We work directly with operators, integrators, and programme offices.
+          Для характеристик, деталей інтеграції та закупівельних запитів. Ми працюємо безпосередньо з операторами, інтеграторами та програмними офісами.
         </p>
         <div class="contact-details">
           <div class="contact-detail">
-            <div class="k" data-i18n="contact.location">Location</div>
+            <div class="k" data-i18n="contact.location">Розташування</div>
             <div class="v">Lufthavnvej 131, Beldringe, DK-5270 Odense N</div>
           </div>
           <div class="contact-detail">
-            <div class="k" data-i18n="shared.registration">Registration</div>
+            <div class="k" data-i18n="shared.registration">Реєстрація</div>
             <div class="v">CVR. 45976645</div>
           </div>
           <div class="contact-detail">
-            <div class="k" data-i18n="contact.origin">Origin</div>
-            <div class="v" data-i18n="contact.danish-european-ndaacompliant">Danish · European · NDAA-compliant chipset</div>
+            <div class="k" data-i18n="contact.origin">Походження</div>
+            <div class="v" data-i18n="contact.danish-european-ndaacompliant">Данське · Європейське · Чипсет, що відповідає NDAA</div>
           </div>
         </div>
       </div>
@@ -506,92 +507,90 @@ img{ display:block; max-width:100%; }
           <ol class="cf-progress">
             <li class="cf-step-node is-current" data-node="1">
               <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
-              <span class="cf-node-label" data-i18n="contact.enquiry">Enquiry</span>
+              <span class="cf-node-label" data-i18n="contact.enquiry">Запит</span>
             </li>
             <li class="cf-step-node" data-node="2">
               <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20a6.5 6.5 0 0113 0"/></svg></span>
-              <span class="cf-node-label" data-i18n="shared.contact">Contact</span>
+              <span class="cf-node-label" data-i18n="shared.contact">Контакти</span>
             </li>
             <li class="cf-step-node" data-node="3">
               <span class="cf-node-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-              <span class="cf-node-label" data-i18n="contact.finish">Finish</span>
+              <span class="cf-node-label" data-i18n="contact.finish">Готово</span>
             </li>
           </ol>
 
           <!-- STEP 1 — Your enquiry -->
           <div class="cf-step is-active" data-step="1">
             <span class="cf-step-mark">[ 01 / 03 ]</span>
-            <h2 class="cf-step-title" data-i18n="contact.your-enquiry">Your enquiry</h2>
-            <p class="cf-step-sub" data-i18n="contact.tell-us-what-this">Tell us what this is about — we'll route it to the right people.</p>
+            <h2 class="cf-step-title" data-i18n="contact.your-enquiry">Ваш запит</h2>
+            <p class="cf-step-sub" data-i18n="contact.tell-us-what-this">Розкажіть, про що йдеться — ми скеруємо запит потрібним людям.</p>
             <div class="cf-field">
-              <label class="cf-label" for="cf-type" data-i18n="contact.enquiry-type">Enquiry type</label>
+              <label class="cf-label" for="cf-type" data-i18n="contact.enquiry-type">Тип запиту</label>
               <select class="cf-select" id="cf-type" name="type">
-                <option value="" disabled selected data-i18n="contact.select-an-enquiry-type">Select an enquiry type</option>
-                <option data-i18n="contact.nas-engine-2c-or">NAS Engine 2C or 2E</option>
+                <option value="" disabled selected data-i18n="contact.select-an-enquiry-type">Оберіть тип запиту</option>
+                <option data-i18n="contact.nas-engine-2c-or" value="NAS Engine 2C or 2E">Двигун NAS 2C або 2E</option>
                 <option value="Drone Stack 65A" data-i18n-skip>Drone Stack 65A</option>
                 <option value="Drone Stack 100A" data-i18n-skip>Drone Stack 100A</option>
-                <option data-i18n="contact.efi-system">EFI system</option>
-                <option data-i18n="contact.job">Job</option>
-                <option data-i18n="contact.partnership">Partnership</option>
-                <option data-i18n="contact.finance">Finance</option>
-                <option data-i18n="contact.press">Press</option>
-                <option data-i18n="contact.general">General</option>
+                <option data-i18n="contact.efi-system" value="EFI system">Система EFI</option>
+                <option data-i18n="contact.job" value="Job">Робота</option>
+                <option data-i18n="contact.partnership" value="Partnership">Партнерство</option>
+                <option data-i18n="contact.finance" value="Finance">Фінанси</option>
+                <option data-i18n="contact.press" value="Press">Преса</option>
+                <option data-i18n="contact.general" value="General">Загальне</option>
               </select>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-message" data-i18n="contact.your-enquiry">Your enquiry</label>
-              <textarea class="cf-textarea" id="cf-message" name="message" placeholder="Please tell us as much as you can about your enquiry" data-i18n-attrs="placeholder:contact.please-tell-us-as"></textarea>
+              <label class="cf-label" for="cf-message" data-i18n="contact.your-enquiry">Ваш запит</label>
+              <textarea class="cf-textarea" id="cf-message" name="message" placeholder="Розкажіть, будь ласка, якомога докладніше про ваш запит" data-i18n-attrs="placeholder:contact.please-tell-us-as"></textarea>
               <div class="cf-counter" id="cf-counter">0/500</div>
             </div>
             <div class="cf-actions end">
-              <button type="button" class="cf-btn cf-btn-primary" data-next data-i18n="contact.continue">Continue <span class="arrow" aria-hidden="true">→</span></button>
+              <button type="button" class="cf-btn cf-btn-primary" data-next data-i18n="contact.continue">Продовжити <span class="arrow" aria-hidden="true">→</span></button>
             </div>
           </div>
 
           <!-- STEP 2 — Your contact details -->
           <div class="cf-step" data-step="2">
             <span class="cf-step-mark">[ 02 / 03 ]</span>
-            <h2 class="cf-step-title" data-i18n="contact.your-contact-details">Your contact details</h2>
-            <p class="cf-step-sub" data-i18n="contact.so-we-can-get">So we can get back to you.</p>
+            <h2 class="cf-step-title" data-i18n="contact.your-contact-details">Ваші контактні дані</h2>
+            <p class="cf-step-sub" data-i18n="contact.so-we-can-get">Щоб ми могли з вами зв’язатися.</p>
             <div class="cf-row cols-2">
-              <div class="cf-field"><label class="cf-label" for="cf-first" data-i18n="contact.first-name">First name</label><input class="cf-input" id="cf-first" name="firstName" type="text" autocomplete="given-name" /></div>
-              <div class="cf-field"><label class="cf-label" for="cf-last" data-i18n="contact.last-name">Last name</label><input class="cf-input" id="cf-last" name="lastName" type="text" autocomplete="family-name" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-first" data-i18n="contact.first-name">Ім’я</label><input class="cf-input" id="cf-first" name="firstName" type="text" autocomplete="given-name" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-last" data-i18n="contact.last-name">Прізвище</label><input class="cf-input" id="cf-last" name="lastName" type="text" autocomplete="family-name" /></div>
             </div>
             <div class="cf-row cols-2">
-              <div class="cf-field"><label class="cf-label" for="cf-email" data-i18n="contact.company-email">Company email</label><input class="cf-input" id="cf-email" name="email" type="email" autocomplete="email" /><p class="cf-help" data-i18n="contact.providing-a-valid-company">Providing a valid company email helps</p></div>
-              <div class="cf-field"><label class="cf-label" for="cf-company" data-i18n="contact.company-name">Company name</label><input class="cf-input" id="cf-company" name="company" type="text" autocomplete="organization" /><p class="cf-help" data-i18n="contact.providing-a-valid-company-2">Providing a valid company name helps</p></div>
+              <div class="cf-field"><label class="cf-label" for="cf-email" data-i18n="contact.company-email">Корпоративна пошта</label><input class="cf-input" id="cf-email" name="email" type="email" autocomplete="email" /><p class="cf-help" data-i18n="contact.providing-a-valid-company">Дійсна корпоративна пошта пришвидшує обробку</p></div>
+              <div class="cf-field"><label class="cf-label" for="cf-company" data-i18n="contact.company-name">Назва компанії</label><input class="cf-input" id="cf-company" name="company" type="text" autocomplete="organization" /><p class="cf-help" data-i18n="contact.providing-a-valid-company-2">Дійсна назва компанії пришвидшує обробку</p></div>
             </div>
             <div class="cf-row cols-3">
-              <div class="cf-field"><label class="cf-label" for="cf-prefix" data-i18n="contact.prefix">Prefix</label><select class="cf-select" id="cf-prefix" name="prefix"><option value="" disabled selected data-i18n="contact.code">Code</option></select></div>
-              <div class="cf-field"><label class="cf-label" for="cf-phone" data-i18n="contact.phone-number">Phone number</label><input class="cf-input" id="cf-phone" name="phone" type="tel" autocomplete="tel" /></div>
-              <div class="cf-field"><label class="cf-label" for="cf-hours" data-i18n="contact.business-hours">Business hours</label><select class="cf-select" id="cf-hours" name="hours"><option value="" disabled selected data-i18n="contact.best-time">Best time</option><option data-i18n="contact.anytime">Anytime</option><option data-i18n="contact.morning-0812">Morning (08–12)</option><option data-i18n="contact.afternoon-1216">Afternoon (12–16)</option><option data-i18n="contact.evening-1620">Evening (16–20)</option></select></div>
+              <div class="cf-field"><label class="cf-label" for="cf-prefix" data-i18n="contact.prefix">Код</label><select class="cf-select" id="cf-prefix" name="prefix"><option value="" disabled selected data-i18n="contact.code">Код</option></select></div>
+              <div class="cf-field"><label class="cf-label" for="cf-phone" data-i18n="contact.phone-number">Номер телефону</label><input class="cf-input" id="cf-phone" name="phone" type="tel" autocomplete="tel" /></div>
+              <div class="cf-field"><label class="cf-label" for="cf-hours" data-i18n="contact.business-hours">Робочі години</label><select class="cf-select" id="cf-hours" name="hours"><option value="" disabled selected data-i18n="contact.best-time">Зручний час</option><option data-i18n="contact.anytime" value="Anytime">Будь-коли</option><option data-i18n="contact.morning-0812" value="Morning (08–12)">Ранок (08–12)</option><option data-i18n="contact.afternoon-1216" value="Afternoon (12–16)">День (12–16)</option><option data-i18n="contact.evening-1620" value="Evening (16–20)">Вечір (16–20)</option></select></div>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-role" data-i18n="contact.job-role">Job role</label>
-              <select class="cf-select" id="cf-role" name="role"><option value="" disabled selected data-i18n="contact.select-your-role">Select your role</option></select>
+              <label class="cf-label" for="cf-role" data-i18n="contact.job-role">Посада</label>
+              <select class="cf-select" id="cf-role" name="role"><option value="" disabled selected data-i18n="contact.select-your-role">Оберіть вашу посаду</option></select>
             </div>
             <div class="cf-field">
-              <label class="cf-label" for="cf-country" data-i18n="contact.countryregion">Country/Region</label>
-              <select class="cf-select" id="cf-country" name="country"><option value="" disabled selected data-i18n="contact.select-a-countryregion">Select a country/region</option></select>
+              <label class="cf-label" for="cf-country" data-i18n="contact.countryregion">Країна/регіон</label>
+              <select class="cf-select" id="cf-country" name="country"><option value="" disabled selected data-i18n="contact.select-a-countryregion">Оберіть країну/регіон</option></select>
             </div>
             <label class="cf-consent" for="cf-consent" data-i18n="contact.i-agree-to-receive">
               <input type="checkbox" id="cf-consent" name="consent" />
-              <span class="cf-consent-text">I agree to receive relevant company updates, product information, technical news and other communications from Nordic Advanced Systems ApS by email, phone, messaging services and digital platforms, including LinkedIn and other social media channels.
-                <span class="muted">I understand that I can withdraw my consent at any time. Information about how Nordic Advanced Systems processes personal data is available in our GDPR Policy, accessible through our Code of Conduct.</span>
-              </span>
+              <span class="cf-consent-text">Я погоджуюся отримувати релевантні новини компанії, інформацію про продукти, технічні новини та інші повідомлення від Nordic Advanced Systems ApS електронною поштою, телефоном, через месенджери та цифрові платформи, включно з LinkedIn та іншими соціальними мережами. <span class="muted">Я розумію, що можу відкликати згоду в будь-який момент. Інформація про те, як Nordic Advanced Systems обробляє персональні дані, доступна в нашій Політиці GDPR, розміщеній у Кодексі поведінки.</span> </span>
             </label>
             <p class="cf-error" id="cf-error" role="alert" hidden></p>
             <div class="cf-actions">
-              <button type="button" class="cf-btn cf-btn-ghost" data-back data-i18n="contact.back"><span class="arrow-back" aria-hidden="true">←</span> Back</button>
-              <button type="submit" class="cf-btn cf-btn-primary" id="cf-submit" data-i18n="contact.submit-enquiry">Submit enquiry <span class="arrow" aria-hidden="true">→</span></button>
+              <button type="button" class="cf-btn cf-btn-ghost" data-back data-i18n="contact.back"><span class="arrow-back" aria-hidden="true">←</span> Назад</button>
+              <button type="submit" class="cf-btn cf-btn-primary" id="cf-submit" data-i18n="contact.submit-enquiry">Надіслати запит <span class="arrow" aria-hidden="true">→</span></button>
             </div>
           </div>
 
           <!-- STEP 3 — Finish -->
           <div class="cf-step cf-finish" data-step="3">
             <div class="cf-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-            <h3 data-i18n="contact.thank-you-your-enquiry">Thank you — your enquiry has been received.</h3>
-            <p data-i18n="contact.our-team-will-get">Our team will get back to you as soon as possible. All inquiries are handled with discretion and confidentiality.</p>
+            <h3 data-i18n="contact.thank-you-your-enquiry">Дякуємо — ваш запит отримано.</h3>
+            <p data-i18n="contact.our-team-will-get">Наша команда зв’яжеться з вами якнайшвидше. Усі запити опрацьовуються з обачністю та конфіденційністю.</p>
           </div>
         </form>
       </div>
@@ -607,8 +606,9 @@ img{ display:block; max-width:100%; }
       <span>Nordic Advanced Systems ApS</span>
     </div>
     <div class="footer-mid">Lufthavnvej 131, Beldringe, DK-5270 Odense N · CVR. 45976645</div>
-    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 All rights reserved.</div>
+    <div class="footer-right" data-i18n="shared.2026-all-rights-reserved">© 2026 Усі права захищені.</div>
   </div>
+  <div class="wrap footer-authoritative">Англійська версія є автентичною.</div>
 </footer>
 
 <script>
@@ -678,8 +678,8 @@ img{ display:block; max-width:100%; }
   // i18n: language builds replace the two nulls below with translated label
   // arrays (same order). The submitted VALUE is always the English entry —
   // the backend sees a language-independent payload.
-  let ROLES_L10N = null;
-  let COUNTRIES_L10N = null;
+  let ROLES_L10N = ['CEO','CFO','CIO','COO','CPO / директор із закупівель','CTO','Комерційний менеджер / директор','Комплаєнс / митниця','Менеджер з експорту','Керівник цифрової трансформації','Керівник ланцюга постачання','Директор / керівник відділу закупівель','Менеджер з імпорту','Координатор логістики','Менеджер / директор з логістики','Менеджер / директор з маркетингу','Операційний директор','Преса','Менеджер із закупівель','Продакт-менеджер','Менеджер відділу закупівель','Менеджер / директор з продажів','Торговий представник','Менеджер із сорсингу','Студент','Менеджер ланцюга постачання','Інше'];
+  let COUNTRIES_L10N = ['Албанія','Алжир','Андорра','Ангола','Антигуа і Барбуда','Аргентина','Вірменія','Австралія','Австрія','Азербайджан','Багамські Острови','Бахрейн','Бангладеш','Барбадос','Бельгія','Беліз','Бенін','Бутан','Болівія','Боснія і Герцеговина','Ботсвана','Бразилія','Бруней','Болгарія','Буркіна-Фасо','Бурунді','Кабо-Верде','Камбоджа','Камерун','Канада','Чад','Чилі','Китай','Колумбія','Комори','Конго (Республіка)','Коста-Рика','Кот-д’Івуар','Хорватія','Кіпр','Чехія','Данія','Джибуті','Домініка','Домініканська Республіка','Еквадор','Єгипет','Сальвадор','Екваторіальна Гвінея','Еритрея','Естонія','Есватіні','Ефіопія','Фіджі','Фінляндія','Франція','Габон','Гамбія','Грузія','Німеччина','Гана','Греція','Гренада','Гватемала','Гвінея','Гвінея-Бісау','Гаяна','Гаїті','Гондурас','Угорщина','Ісландія','Індія','Індонезія','Ірак','Ірландія','Ізраїль','Італія','Ямайка','Японія','Йорданія','Казахстан','Кенія','Кірибаті','Косово','Кувейт','Киргизстан','Лаос','Латвія','Ліван','Лесото','Ліберія','Ліхтенштейн','Литва','Люксембург','Мадагаскар','Малаві','Малайзія','Мальдіви','Мальта','Маршаллові Острови','Мавританія','Маврикій','Мексика','Мікронезія','Молдова','Монако','Монголія','Чорногорія','Марокко','Мозамбік','Намібія','Науру','Непал','Нідерланди','Нова Зеландія','Нігер','Нігерія','Північна Македонія','Норвегія','Оман','Пакистан','Палау','Палестина','Панама','Папуа-Нова Гвінея','Парагвай','Перу','Філіппіни','Польща','Португалія','Катар','Румунія','Руанда','Сент-Кіттс і Невіс','Сент-Люсія','Сент-Вінсент і Гренадини','Самоа','Сан-Марино','Сан-Томе і Принсіпі','Саудівська Аравія','Сенегал','Сербія','Сейшельські Острови','Сьєрра-Леоне','Сінгапур','Словаччина','Словенія','Соломонові Острови','Південна Африка','Південна Корея','Іспанія','Шрі-Ланка','Суринам','Швеція','Швейцарія','Тайвань','Таджикистан','Танзанія','Таїланд','Тимор-Лешті','Того','Тонга','Тринідад і Тобаго','Туніс','Туреччина','Туркменістан','Тувалу','Уганда','Україна','Об’єднані Арабські Емірати','Велика Британія','Сполучені Штати','Уругвай','Узбекистан','Вануату','Ватикан','В’єтнам','Замбія'];
   function fill(id, values, labels){
     const sel = form.querySelector(id);
     if (!sel) return;
@@ -789,7 +789,7 @@ img{ display:block; max-width:100%; }
 
     const original = submitBtn.innerHTML;
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span class="cf-spin" aria-hidden="true"></span> Sending…';
+    submitBtn.innerHTML = '<span class="cf-spin" aria-hidden="true"></span> Надсилання…';
 
     try {
       const res = await fetch('/api/contact', {
@@ -801,10 +801,10 @@ img{ display:block; max-width:100%; }
       if (res.ok && data.success) {
         goTo(3);
       } else {
-        showError(data.error || 'Something went wrong. Please try again.');
+        showError(data.error || 'Щось пішло не так. Спробуйте, будь ласка, ще раз.');
       }
     } catch (err) {
-      showError('Network error — please check your connection and try again.');
+      showError('Помилка мережі — перевірте з’єднання та спробуйте ще раз.');
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = original;
