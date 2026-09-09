@@ -106,6 +106,14 @@ body.has-menu-open .header-cta{ visibility:hidden; }
 }
 .mobile-nav .mobile-cta:hover{ color:var(--accent-ink,#08202a); background:#5cc4ed; }
 
+/* ---- Languages: plain list at the foot of the menu (built by
+   mobile-nav.js from the stamped #lang-switch — no nested dropdown).
+   Smaller than the nav links: it is a utility, not a destination. */
+.mobile-nav .mobile-lang{ margin-top:20px; gap:12px; }
+.mobile-nav .mobile-lang a{ font-size:17px; font-weight:500; color:var(--ink-1,#c7d3d9); }
+.mobile-nav .mobile-lang a.is-current{ color:var(--accent,#3bb6e8); }
+.mobile-nav .mobile-lang a.is-current::after{ content:" ·"; }
+
 /* ---- Mobile header sizing ----------------------------------------
    Without these the wordmark wraps to three lines and "Request brief"
    wraps inside its own pill, pushing the bar to 98px on a 844px screen.

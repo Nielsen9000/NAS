@@ -88,6 +88,37 @@
     menuNav.appendChild(c);
   }
 
+  // ---- languages: the desktop switcher's links, as a PLAIN list -------
+  // (no dropdown inside a dropdown). Same source of truth: the stamped
+  // #lang-switch menu; hidden switcher (no language launched) renders
+  // nothing here either.
+  var ls = document.getElementById('lang-switch');
+  if (ls && !ls.hasAttribute('hidden')) {
+    var lsBtn = ls.querySelector('.ls-btn');
+    var group = document.createElement('div');
+    group.className = 'mobile-nav-group mobile-lang';
+    var label = document.createElement('span');
+    label.className = 'mobile-nav-label';
+    label.textContent = (lsBtn && lsBtn.getAttribute('aria-label')) || 'Language';
+    group.appendChild(label);
+    Array.prototype.forEach.call(ls.querySelectorAll('.ls-menu a'), function (item) {
+      var a = document.createElement('a');
+      a.href = item.getAttribute('href');
+      a.textContent = item.textContent.trim();
+      if (item.getAttribute('lang')) a.setAttribute('lang', item.getAttribute('lang'));
+      if (item.getAttribute('hreflang')) a.setAttribute('hreflang', item.getAttribute('hreflang'));
+      if (item.classList.contains('active')) {
+        a.classList.add('is-current');
+        a.setAttribute('aria-current', 'true');
+      }
+      a.addEventListener('click', function () {
+        try { localStorage.setItem('nas-lang', (item.getAttribute('lang') || 'en').slice(0, 2)); } catch (e) {}
+      });
+      group.appendChild(a);
+    });
+    if (group.children.length > 1) menuNav.appendChild(group);
+  }
+
   // ---- overlay + toggle ----------------------------------------------
   var menu = document.createElement('div');
   menu.className = 'mobile-menu';

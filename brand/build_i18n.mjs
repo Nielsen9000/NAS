@@ -1,23 +1,45 @@
-// i18n infrastructure for nordicadvancedsystems.com — structure only, no
-// Ukrainian copy lives here. English is the source language and stays at the
-// site root; Ukrainian ("uk", the ISO code — not "ua") is generated under /uk/.
+// i18n infrastructure for nordicadvancedsystems.com. English is the source
+// language and stays at the site root; every other language is generated
+// under its own prefix: /de/ /fi/ /fr/ /es/ /pt/ /it/ /uk/ (ISO codes; the
+// routes are the bare codes, while <html lang> carries the regional form for
+// the European variants: es-ES, pt-PT).
 //
 //   node brand/build_i18n.mjs --mark        one-time/idempotent codemod: stamp the
 //                                           language switcher into every EN page,
 //                                           add data-i18n markers to every
 //                                           translatable element, then extract
 //   node brand/build_i18n.mjs --extract     re-extract locales/en.json from the
-//                                           marked pages and sync locales/uk.json
-//                                           (existing translations preserved)
-//   node brand/build_i18n.mjs --build-uk    generate uk/<page>/index.html
-//         --pseudo     pseudo-localise (Cyrillic lookalikes + ~15% length) —
+//                                           marked pages and sync every
+//                                           locales/<lang>.json (existing
+//                                           translations preserved)
+//   node brand/build_i18n.mjs --build <langs|all>   generate <lang>/<page>/index.html
+//         --pseudo     pseudo-localise (lookalike glyphs + ~15% length) —
 //                      for layout testing, never for deployment
-//         --strict     a missing uk translation FAILS the build instead of
+//         --strict     a missing translation FAILS the build instead of
 //                      falling back to English. Production gate: no en fallback
-//                      in production — better no /uk/ page than a half one.
-//   node brand/build_i18n.mjs --check-layout  pseudo-build + Playwright: nav,
+//                      in production — better no /<lang>/ page than a half one.
+//                      Keys deliberately NOT translated are exempt via
+//                      sentinels (see HOLD-BACK SENTINELS below).
+//         --preview    bake ALL configured languages into the switcher list
+//                      regardless of their `live` flag (i18n-preview branch
+//                      and screenshots only — production stamps live langs).
+//   node brand/build_i18n.mjs --check-layout [langs|all] [--real]
+//                                           pseudo-build + Playwright: nav,
 //                                           buttons and pages must hold with
-//                                           15% longer text, desktop and mobile
+//                                           15% longer text, desktop and mobile.
+//                                           --real measures the actual copy in
+//                                           the locale files instead.
+//   (--build-uk is kept as an alias for --build uk.)
+//
+// HOLD-BACK SENTINELS in the locale files — a value that is exactly:
+//   "@hold"  the key is deliberately untranslated because the ENGLISH source
+//            is awaiting a rewrite (the 65A/100A drone-stack split and the
+//            final NDAA wording). The build ships the current English text,
+//            counts these loudly in its output, and --strict does not fail on
+//            them — but they never silently disappear into an en fallback.
+//   "@en"    the key stays English BY DECISION (the Code of Conduct's ten
+//            legal sections: a mistranslated compliance sentence is a claim,
+//            not a typo). Reported separately from @hold.
 //
 // WHAT GOES IN THE LOCALE FILES — and what does not. Spec figures never do:
 // they live in brand/specs.mjs and are stamped by brand/build_site_specs.mjs,
@@ -33,33 +55,87 @@
 // address stay Latin, and the decorative HUD/REC telemetry strings stay
 // English exactly as the print material keeps them.
 //
-// FONTS. Space Grotesk has no Cyrillic, so /uk/ pages swap every Space Grotesk
-// stack for Inter and drop Space Grotesk from the font request entirely. The
-// Google css2 endpoint already serves Inter's cyrillic and cyrillic-ext
-// subsets as separate files behind unicode-range, so an English visitor never
-// downloads a Cyrillic byte and a Ukrainian visitor gets them on demand.
+// FONTS. Space Grotesk has no Cyrillic, so /uk/ pages swap every Space
+// Grotesk stack for Inter (whose cyrillic subsets css2 serves on demand
+// behind unicode-range). The six Latin languages keep Space Grotesk: its
+// latin + latin-ext subsets cover ä ö ü ß, ã õ ç, à è é ì ò ù, ñ, ¿ ¡ and
+// æ ø å — verified at runtime by --check-layout via document.fonts.check.
 //
-// ROUTING. /uk/<same path>/ for every page; internal links inside /uk/ pages
-// are rewritten to stay inside /uk/. The switcher (EN · УКР, text only, no
-// flags) swaps the prefix on the CURRENT path — never the front page — and
-// remembers the choice in localStorage. There is deliberately NO automatic
-// redirect from IP or Accept-Language.
+// ROUTING. /<lang>/<same path>/ for every page; internal links inside a
+// language tree are rewritten to stay inside it. The switcher (text only, no
+// flags — closed it shows just the active code plus a chevron, open it lists
+// every offered language in its OWN name) swaps the prefix on the CURRENT
+// path; if a page has no counterpart in the target language the link goes to
+// the nearest existing parent, never blindly to the front page. The choice
+// is remembered in localStorage. There is deliberately NO automatic redirect
+// from IP or Accept-Language.
 
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
 import { DRONE_STACK, NAS2, NAS2_NUM } from './specs.mjs';
-import { UK_NOINDEX, UK_SWITCHER_LIVE } from '../locales/config.mjs';
+import { LANGS, UK_IN_SWITCHER } from '../locales/config.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const localesDir = path.join(repoRoot, 'locales');
-const ARGS = new Set(process.argv.slice(2));
-const MODE = ['--mark', '--extract', '--build-uk', '--check-layout'].find(m => ARGS.has(m));
-if (!MODE) throw new Error('mode required: --mark | --extract | --build-uk [--pseudo|--strict] | --check-layout');
+const RAW_ARGS = process.argv.slice(2);
+const ARGS = new Set(RAW_ARGS);
+const MODE = ['--mark', '--extract', '--build-uk', '--build', '--check-layout'].find(m => ARGS.has(m));
+if (!MODE) throw new Error('mode required: --mark | --extract | --build <langs|all> [--pseudo|--strict] | --check-layout [langs|all] [--real]');
 let PSEUDO = ARGS.has('--pseudo');
 const STRICT = ARGS.has('--strict');
+const PREVIEW = ARGS.has('--preview');
+
+// ---------------------------------------------------------------------------
+// language metadata. `code` is what the closed switcher shows; `native` is
+// the open list entry (people look for their own word — "Deutsch", never
+// "German"); `selectLabel` is the button's aria-label; `authoritative` is the
+// locked footer line from NAS_TERMINOLOGI_6SPROG.md §7 (uk's is Claude's
+// translation, flagged for native review in REVIEW-NOTES-UA.md).
+// ---------------------------------------------------------------------------
+const LANG_META = {
+  en: { htmlLang: 'en',    native: 'English',    code: 'EN',  selectLabel: 'Select language' },
+  de: { htmlLang: 'de',    native: 'Deutsch',    code: 'DE',  selectLabel: 'Sprache wählen',
+        authoritative: 'Maßgeblich ist die englische Fassung.' },
+  fi: { htmlLang: 'fi',    native: 'Suomi',      code: 'FI',  selectLabel: 'Valitse kieli',
+        authoritative: 'Englanninkielinen versio on virallinen.' },
+  fr: { htmlLang: 'fr',    native: 'Français',   code: 'FR',  selectLabel: 'Choisir la langue',
+        authoritative: 'La version anglaise fait foi.' },
+  es: { htmlLang: 'es-ES', native: 'Español',    code: 'ES',  selectLabel: 'Seleccionar idioma',
+        authoritative: 'La versión en inglés es la versión auténtica.' },
+  pt: { htmlLang: 'pt-PT', native: 'Português',  code: 'PT',  selectLabel: 'Selecionar idioma',
+        authoritative: 'A versão em inglês é a versão autêntica.' },
+  it: { htmlLang: 'it',    native: 'Italiano',   code: 'IT',  selectLabel: 'Seleziona la lingua',
+        authoritative: 'Fa fede la versione inglese.' },
+  uk: { htmlLang: 'uk',    native: 'Українська', code: 'УКР', selectLabel: 'Вибрати мову',
+        authoritative: 'Англійська версія є автентичною.', cyrillic: true },
+};
+// Open-list order (decision): English, Deutsch, Suomi, Français, Español,
+// Português, Italiano. uk joins the end only via UK_IN_SWITCHER.
+const SWITCHER_ORDER = ['de', 'fi', 'fr', 'es', 'pt', 'it', 'uk'];
+const BUILD_LANGS = Object.keys(LANGS);
+// The Code of Conduct page stays English in every language version.
+const EN_ONLY_NOTE = 'This section is available in English only.';
+
+// Which languages a page's switcher OFFERS: English always; a build with
+// --preview offers everything configured; production offers `live` languages
+// only — and uk additionally requires UK_IN_SWITCHER (being live deploys the
+// route, it does not put uk in the list; that is a separate decision).
+// `self` (the language of the page being generated) is always included so a
+// visitor who reached a preview by direct link can see where they are.
+function offeredLangs(self) {
+  const out = ['en'];
+  for (const l of SWITCHER_ORDER) {
+    // uk is gated by UK_IN_SWITCHER in EVERY mode, --preview included — the
+    // decision is that /uk/ is reached by direct link only.
+    const gate = l !== 'uk' || UK_IN_SWITCHER;
+    const offered = gate && (PREVIEW || LANGS[l]?.live);
+    if (offered || l === self) out.push(l);
+  }
+  return out;
+}
 
 const PAGES = [
   { rel: 'index.html',                          key: 'home' },
@@ -227,51 +303,139 @@ const JS_STRINGS = {
 const JS_ARRAYS = { contact: ['ROLES', 'COUNTRIES'] };
 
 // ---------------------------------------------------------------------------
-// language switcher — stamped into every EN page, inherited by the uk build
+// language switcher — stamped into every EN page, re-stamped per language
+// build with that language active. Closed state: just the active code plus a
+// chevron ("EN ⌄") — no more width than the old EN · УКР pair. Open state: a
+// list of the offered languages, each written in its OWN language, active one
+// marked. Text only, no flags. All hrefs are BAKED per page at build time
+// (same page in the target language; nearest existing parent if the page has
+// no counterpart there — never blindly the front page), so navigation works
+// without JavaScript; the script only handles open/close, keyboard and the
+// localStorage memory. Mobile (≤900px): mobile-nav.js renders the same links
+// as a plain list inside the menu — no dropdown inside a dropdown.
 // ---------------------------------------------------------------------------
-const SWITCHER_HTML = (hidden) =>
-  `<a class="lang-switch" id="lang-switch" href="/uk/"${hidden ? ' hidden' : ''} data-i18n-skip>` +
-  `<span class="ls-en">EN</span><span class="ls-sep">·</span><span class="ls-uk">УКР</span></a>`;
+const routeOf = (rel) => rel === 'index.html' ? '' : path.posix.dirname(rel.replace(/\\/g, '/'));
+const LANG_ROUTES = new Set(PAGES.map(p => routeOf(p.rel)));
+
+// Same page in the target language; walk up to the nearest parent that
+// exists there. ('' — the front page — is the root every route descends from.)
+function targetHref(lang, route) {
+  let segs = route ? route.split('/') : [];
+  while (segs.length && !LANG_ROUTES.has(segs.join('/'))) segs.pop();
+  const base = segs.length ? segs.join('/') + '/' : '';
+  return (lang === 'en' ? '/' : `/${lang}/`) + base;
+}
+
+function switcherHtml(rel, active, hidden) {
+  const route = routeOf(rel);
+  const items = offeredLangs(active).map(l => {
+    const m = LANG_META[l];
+    const cur = l === active;
+    return `<li role="none"><a role="menuitem" lang="${m.htmlLang}" hreflang="${m.htmlLang}" ` +
+      `href="${targetHref(l, route)}"${cur ? ' class="active" aria-current="true"' : ''}>${m.native}</a></li>`;
+  }).join('');
+  return `<div class="lang-switch" id="lang-switch"${hidden ? ' hidden' : ''} data-i18n-skip>` +
+    `<button class="ls-btn" type="button" aria-haspopup="true" aria-expanded="false" ` +
+    `aria-label="${LANG_META[active].selectLabel}">` +
+    `<span class="ls-code">${LANG_META[active].code}</span><span class="ls-caret" aria-hidden="true"></span></button>` +
+    `<ul class="ls-menu" role="menu" hidden>${items}</ul>` +
+    `</div>`;
+}
+const SWITCHER_RE = /<div class="lang-switch" id="lang-switch"[\s\S]*?<\/ul><\/div>/;
+const OLD_SWITCHER_RE = /<a class="lang-switch" id="lang-switch"[^>]*>[\s\S]*?<\/a>/;
+
 const SWITCHER_CSS = `
 /* i18n:switcher-css */
-.lang-switch{ display:inline-flex; align-items:center; gap:7px; margin-left:16px;
+.lang-switch{ position:relative; display:inline-flex; align-items:center; margin-left:16px; }
+.ls-btn{ display:inline-flex; align-items:center; gap:7px; background:none; border:0;
   font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px; font-weight:500;
-  letter-spacing:0.14em; color:var(--ink-2); text-decoration:none; padding:6px 2px;
+  letter-spacing:0.14em; color:var(--ink-2); padding:6px 2px; cursor:pointer;
   white-space:nowrap; transition:color .2s ease; }
-.lang-switch .ls-sep{ opacity:.5; }
-.lang-switch:hover{ color:var(--accent); }
-html[lang="en"] .lang-switch .ls-en, html[lang="uk"] .lang-switch .ls-uk{ color:var(--ink-0); }
+.ls-btn:hover, .ls-btn:focus-visible, .lang-switch.open .ls-btn{ color:var(--accent); }
+.ls-caret{ width:6px; height:6px; margin-top:-3px; border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor; transform:rotate(45deg); opacity:.65;
+  transition:transform .3s var(--ease-spring), opacity .2s ease; }
+.lang-switch.open .ls-caret{ transform:rotate(-135deg); margin-top:2px; opacity:1; }
+.ls-menu{ position:absolute; top:calc(100% + 14px); right:-2px; min-width:172px; margin:0;
+  padding:8px; list-style:none; background:rgba(8,32,42,0.94); border:1px solid var(--line-dark);
+  border-radius:var(--radius-sm,10px); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 24px 60px -20px rgba(0,0,0,0.6); display:flex; flex-direction:column; gap:2px; z-index:130; }
+.ls-menu[hidden]{ display:none; }
+.ls-menu a{ display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:7px;
+  color:var(--ink-1); font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap;
+  transition:background .2s ease, color .2s ease; }
+.ls-menu a::before{ content:""; flex:none; width:6px; height:6px; border:1px solid var(--accent);
+  transform:rotate(45deg); opacity:.55; transition:opacity .2s ease, background .2s ease; }
+.ls-menu a:hover{ background:rgba(59,182,232,0.18); color:var(--accent); }
+.ls-menu a:hover::before{ opacity:1; background:var(--accent); }
+.ls-menu a.active{ color:var(--accent); }
+.ls-menu a.active::before{ opacity:1; background:var(--accent); }
+/* desktop only — mobile-nav.js renders the same links as a plain list in the menu */
+@media (max-width:900px){ .lang-switch{ display:none; } }
+/* footer note on generated language pages (rule is inert on EN pages) */
+.footer-authoritative{ padding:14px 0 0; font-size:11px; letter-spacing:0.04em; color:var(--ink-3); }
 /* the switcher must never squeeze the nav into wrapping */
 .site-header .nav a, .site-header .nav-dd-trigger{ white-space:nowrap; }
-.site-header .header-cta{ flex-wrap:nowrap; }
+/* display:flex included: only the front page declared it locally — on the
+   other pages a visible switcher would otherwise stack UNDER the CTA
+   button and grow the header by a full row. Desktop-scoped: at ≤900px
+   mobile-nav.css hides .header-cta entirely, and an unscoped display:flex
+   would override that and push the hamburger off-screen. */
+@media (min-width:901px){ .site-header .header-cta{ display:flex; align-items:center; flex-wrap:nowrap; } }
 .site-header .header-cta .btn{ white-space:nowrap; }
 /* i18n:switcher-css-end */
 `;
-// No automatic redirect anywhere — the stored preference only styles/serves
-// the switcher itself; navigation happens exclusively on the visitor's click.
+// No automatic redirect anywhere — the stored preference is a memory, not a
+// router; navigation happens exclusively on the visitor's click, and every
+// href is baked into the markup (the menu works with JS disabled too, it
+// just can't fold shut).
 const SWITCHER_JS = `<script>/* i18n:switcher-js */
 (function(){
-  var el = document.getElementById('lang-switch'); if (!el) return;
-  var p = location.pathname;
-  var isUk = p === '/uk' || p.indexOf('/uk/') === 0;
-  var target = isUk ? (p.replace(/^\\/uk\\/?/, '/') || '/') : ('/uk' + (p === '/' ? '/' : p));
-  el.setAttribute('href', target);
-  el.addEventListener('click', function(){
-    try { localStorage.setItem('nas-lang', isUk ? 'en' : 'uk'); } catch (e) {}
+  var root = document.getElementById('lang-switch'); if (!root) return;
+  var btn = root.querySelector('.ls-btn'), menu = root.querySelector('.ls-menu');
+  if (!btn || !menu) return;
+  function setOpen(o){
+    root.classList.toggle('open', o);
+    btn.setAttribute('aria-expanded', o ? 'true' : 'false');
+    menu.hidden = !o;
+  }
+  btn.addEventListener('click', function(){
+    var open = menu.hidden; setOpen(open);
+    if (open) { var a = menu.querySelector('a.active') || menu.querySelector('a'); if (a) a.focus(); }
+  });
+  document.addEventListener('click', function(e){ if (!root.contains(e.target)) setOpen(false); });
+  root.addEventListener('focusout', function(){
+    setTimeout(function(){ if (!root.contains(document.activeElement)) setOpen(false); }, 0);
+  });
+  root.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') { setOpen(false); btn.focus(); return; }
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    e.preventDefault();
+    if (menu.hidden) setOpen(true);
+    var links = [].slice.call(menu.querySelectorAll('a'));
+    var i = links.indexOf(document.activeElement);
+    if (i === -1) i = e.key === 'ArrowDown' ? -1 : 0;
+    links[(i + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length].focus();
+  });
+  menu.addEventListener('click', function(e){
+    var a = e.target.closest('a'); if (!a) return;
+    try { localStorage.setItem('nas-lang', a.getAttribute('lang') === 'en' ? 'en' : (a.getAttribute('lang') || 'en').slice(0,2)); } catch (err) {}
   });
 })();
 </script>
 `;
 
 function stampSwitcher(src, rel) {
-  if (!src.includes('id="lang-switch"')) {
+  // Whether the (hidden-capable) switcher shows on EN pages: any language
+  // actually offered beyond English. Generated language pages always show it.
+  const hidden = offeredLangs('en').length <= 1;
+  const html = switcherHtml(rel, 'en', hidden);
+  if (OLD_SWITCHER_RE.test(src)) src = src.replace(OLD_SWITCHER_RE, html);           // migrate the old EN · УКР anchor
+  else if (SWITCHER_RE.test(src)) src = src.replace(SWITCHER_RE, html);              // idempotent re-stamp
+  else {
     const anchor = /(<div class="header-cta">\s*<a class="btn btn-pill-accent" href="\/contact">[\s\S]*?<\/a>)/;
     if (!anchor.test(src)) throw new Error(`${rel}: header-cta anchor not found for switcher stamp`);
-    src = src.replace(anchor, `$1\n      ${SWITCHER_HTML(!UK_SWITCHER_LIVE)}`);
-  } else {
-    // keep the hidden attribute in sync with the config flag
-    src = src.replace(/(<a class="lang-switch" id="lang-switch" href="\/uk\/")( hidden)?/,
-      `$1${UK_SWITCHER_LIVE ? '' : ' hidden'}`);
+    src = src.replace(anchor, `$1\n      ${html}`);
   }
   // Re-stamping REPLACES the existing block so a CSS change in this file
   // actually reaches pages that were stamped by an earlier version.
@@ -281,7 +445,10 @@ function stampSwitcher(src, rel) {
   else if (src.includes('i18n:switcher-css'))
     src = src.replace(/\/\* i18n:switcher-css \*\/[\s\S]*?(?=<\/style>)/, SWITCHER_CSS.trimStart());
   else src = src.replace('\n</style>', '\n' + SWITCHER_CSS + '</style>');
-  if (!src.includes('i18n:switcher-js')) src = src.replace('</body>', SWITCHER_JS + '</body>');
+  // the JS block is replaced wholesale too (it changed shape over versions)
+  if (src.includes('i18n:switcher-js'))
+    src = src.replace(/<script>\/\* i18n:switcher-js \*\/[\s\S]*?<\/script>\n?/, SWITCHER_JS);
+  else src = src.replace('</body>', SWITCHER_JS + '</body>');
   return src;
 }
 
@@ -448,24 +615,29 @@ function extract(sources) {
 async function writeLocales(en) {
   await fs.mkdir(localesDir, { recursive: true });
   await fs.writeFile(path.join(localesDir, 'en.json'), JSON.stringify(en, null, 2) + '\n', 'utf8');
-  // uk: same keys, existing translations preserved, values default ""
-  let uk = {};
-  try { uk = JSON.parse(await fs.readFile(path.join(localesDir, 'uk.json'), 'utf8')); } catch {}
-  const synced = {};
-  let kept = 0, added = 0, orphaned = 0;
-  for (const [ns, entries] of Object.entries(en)) {
-    synced[ns] = {};
-    for (const [k, v] of Object.entries(entries)) {
-      const prev = uk[ns]?.[k];
-      if (prev !== undefined && prev !== '' && !(Array.isArray(prev) && prev.length === 0)) { synced[ns][k] = prev; kept++; }
-      else { synced[ns][k] = Array.isArray(v) ? [] : ''; added++; }
+  // every language: same keys, existing translations (and @hold/@en
+  // sentinels) preserved, new keys default ""
+  const stats = {};
+  for (const lang of BUILD_LANGS) {
+    let prev = {};
+    try { prev = JSON.parse(await fs.readFile(path.join(localesDir, `${lang}.json`), 'utf8')); } catch {}
+    const synced = {};
+    let kept = 0, added = 0, orphaned = 0;
+    for (const [ns, entries] of Object.entries(en)) {
+      synced[ns] = {};
+      for (const [k, v] of Object.entries(entries)) {
+        const p = prev[ns]?.[k];
+        if (p !== undefined && p !== '' && !(Array.isArray(p) && p.length === 0)) { synced[ns][k] = p; kept++; }
+        else { synced[ns][k] = Array.isArray(v) ? [] : ''; added++; }
+      }
     }
+    for (const [ns, entries] of Object.entries(prev))
+      for (const k of Object.keys(entries || {}))
+        if (en[ns]?.[k] === undefined) orphaned++;
+    await fs.writeFile(path.join(localesDir, `${lang}.json`), JSON.stringify(synced, null, 2) + '\n', 'utf8');
+    stats[lang] = { kept, added, orphaned };
   }
-  for (const [ns, entries] of Object.entries(uk))
-    for (const k of Object.keys(entries || {}))
-      if (en[ns]?.[k] === undefined) orphaned++;
-  await fs.writeFile(path.join(localesDir, 'uk.json'), JSON.stringify(synced, null, 2) + '\n', 'utf8');
-  return { kept, added, orphaned };
+  return stats;
 }
 
 // ---------------------------------------------------------------------------
@@ -503,30 +675,43 @@ function report(en) {
 // ---------------------------------------------------------------------------
 // BUILD-UK
 // ---------------------------------------------------------------------------
-const pseudoChar = { a: 'а', c: 'с', e: 'е', i: 'і', o: 'о', p: 'р', x: 'х', y: 'у', A: 'А', B: 'В', C: 'С', E: 'Е', H: 'Н', I: 'І', K: 'К', M: 'М', O: 'О', P: 'Р', T: 'Т', X: 'Х' };
-function pseudo(s) {
-  // Cyrillic lookalikes exercise the Inter cyrillic subset; the suffix adds
-  // ~15–18% length so the layout test measures real expansion, not hope.
+const pseudoCyr = { a: 'а', c: 'с', e: 'е', i: 'і', o: 'о', p: 'р', x: 'х', y: 'у', A: 'А', B: 'В', C: 'С', E: 'Е', H: 'Н', I: 'І', K: 'К', M: 'М', O: 'О', P: 'Р', T: 'Т', X: 'Х' };
+const pseudoLat = { a: 'ä', c: 'ç', e: 'é', i: 'ì', n: 'ñ', o: 'õ', u: 'ü', y: 'ý', A: 'Ä', C: 'Ç', E: 'É', I: 'Ì', N: 'Ñ', O: 'Õ', U: 'Ü' };
+function pseudo(s, lang) {
+  // Lookalike glyphs exercise the font subset the language actually uses
+  // (Cyrillic → Inter's cyrillic files, Latin diacritics → Space Grotesk's
+  // latin-ext); the suffix adds ~15–18% length so the layout test measures
+  // real expansion, not hope.
+  const cyr = LANG_META[lang]?.cyrillic;
+  const map = cyr ? pseudoCyr : pseudoLat;
   const parts = String(s).split(/(<[^>]*>|\{spec:[^}]+\}|&[a-z]+;)/);
   let visible = 0;
   const swapped = parts.map((part, i) => {
     if (i % 2 === 1) return part;
     visible += part.length;
-    return part.replace(/[a-zA-Z]/g, (ch) => pseudoChar[ch] || ch);
+    return part.replace(/[a-zA-Z]/g, (ch) => map[ch] || ch);
   }).join('');
-  const pad = 'ѐйїщ'.repeat(20).repeat(1); // kept for the char set
-  // Distribute the expansion as short words: real Ukrainian is ~15% longer
-  // but breaks at spaces - one giant unbreakable token would only prove the
-  // absence of 80-character words, which no language has.
+  const pad = (cyr ? 'ѐйїщ' : 'ößàù').repeat(20); // the stress char set
+  // Distribute the expansion as short words: real translations are ~15%
+  // longer but break at spaces - one giant unbreakable token would only
+  // prove the absence of 80-character words, which no language has.
   const need = Math.max(1, Math.ceil(visible * 0.16));
   const chunks = [];
   for (let left = need; left > 0; left -= 6) chunks.push(pad.repeat(2).slice(0, Math.min(6, left)));
   return swapped + ' ' + chunks.join(' ');
 }
 
-function ukValue(uk, en, key, missing) {
-  const u = enLookup(uk, key);
+// Sentinels: "@hold" (awaiting the English rewrite) and "@en" (English by
+// decision). Both resolve to the English source, both are exempt from
+// --strict, and both are counted LOUDLY so the fallback is never invisible.
+const isHold = (v) => v === '@hold';
+const isEnByDecision = (v) => v === '@en';
+const isSentinel = (v) => isHold(v) || isEnByDecision(v);
+
+function trValue(tr, en, key, missing, held) {
+  const u = enLookup(tr, key);
   const e = enLookup(en, key);
+  if (isSentinel(u)) { held.push({ key, kind: isHold(u) ? '@hold' : '@en' }); return e; }
   if (u !== undefined && u !== '' && !(Array.isArray(u) && u.length === 0)) return u;
   missing.push(key);
   return e;                                                          // en fallback (dev only)
@@ -534,24 +719,46 @@ function ukValue(uk, en, key, missing) {
 
 // A translation must carry the exact same markup skeleton and the exact same
 // spec placeholders as its English source — only the words between them may
-// differ. And no token may mix Cyrillic with Latin/digits: А В Е О Р С Т Х are
-// indistinguishable from their Latin twins on the page (same rule as the
-// datasheet builds).
-function validateTranslations(en, uk) {
+// differ. Numbers are never translated and never reformatted: every numeric
+// token in the English source must appear byte-identically in the
+// translation (no comma/point conversion, no thousands separators). And for
+// Cyrillic languages no token may mix Cyrillic with Latin/digits: А В Е О Р
+// С Т Х are indistinguishable from their Latin twins on the page (same rule
+// as the datasheet builds).
+function validateTranslations(en, tr, lang) {
   const problems = [];
   const skeleton = (s) => (String(s).match(/<[^>]+>|\{spec:[^}]+\}/g) || []).join('|');
   const CYRRE = /[Ѐ-ӿ]/, LATRE = /[A-Za-z]/;
+  const cyr = LANG_META[lang]?.cyrillic;
+  // Standalone figures only: "46.5", "49" in "49°C". Digits fused into a
+  // word ("2-stroke", "4-in-1", "F405") may legitimately become words in a
+  // translation ("Zweitakt", "kaksitahtinen") and are not spec figures.
+  // The rule is one-directional: every figure in the EN source must appear
+  // BYTE-IDENTICALLY in the translation (no comma/point conversion, no
+  // thousands separators, no dropped figures); the translation's own digit
+  // usage around words ("2 цил.") is its business.
+  const stripMarkup = (s) => String(s).replace(/<[^>]+>|\{spec:[^}]+\}/g, ' ');
+  const numTokens = (s) => (stripMarkup(s)
+    .match(/(?<![\p{L}\d-])\d+(?:[.,]\d+)*(?![\p{L}\d-])/gu) || []).sort();
+  const countIn = (hay, needle) => hay.split(needle).length - 1;
   for (const [ns, entries] of Object.entries(en)) {
     for (const [k, v] of Object.entries(entries)) {
-      const u = uk[ns]?.[k];
-      if (u === undefined || u === '' || (Array.isArray(u) && u.length === 0)) continue;
+      const u = tr[ns]?.[k];
+      if (u === undefined || u === '' || (Array.isArray(u) && u.length === 0) || isSentinel(u)) continue;
       if (Array.isArray(v)) {
         if (!Array.isArray(u) || u.length !== v.length)
           problems.push(`${ns}.${k}: array length ${Array.isArray(u) ? u.length : '?'} vs ${v.length}`);
       } else if (skeleton(u) !== skeleton(v)) {
-        problems.push(`${ns}.${k}: markup/placeholder skeleton differs\n      en: ${skeleton(v) || '(none)'}\n      uk: ${skeleton(u) || '(none)'}`);
+        problems.push(`${ns}.${k}: markup/placeholder skeleton differs\n      en: ${skeleton(v) || '(none)'}\n      ${lang}: ${skeleton(u) || '(none)'}`);
       }
-      for (const str of Array.isArray(u) ? u : [u]) {
+      if (!Array.isArray(v) && !Array.isArray(u)) {
+        const hay = stripMarkup(u);
+        const lost = numTokens(v).filter(t => countIn(hay, t) < 1);
+        if (lost.length)
+          problems.push(`${ns}.${k}: figure(s) from the EN source missing byte-identically in the translation ` +
+            `(numbers are never translated/reformatted): ${[...new Set(lost)].join(' ')}`);
+      }
+      if (cyr) for (const str of Array.isArray(u) ? u : [u]) {
         for (const tok of String(str).replace(/<[^>]+>|\{spec:[^}]+\}|&[a-z]+;/g, ' ').split(/[^\p{L}\p{N}]+/u)) {
           if (tok && CYRRE.test(tok) && (LATRE.test(tok) || /\d/.test(tok)))
             problems.push(`${ns}.${k}: mixed-script token "${tok}"`);
@@ -561,33 +768,42 @@ function validateTranslations(en, uk) {
   }
   if (problems.length) {
     problems.forEach(m => console.log('  · ' + m));
-    throw new Error(`${problems.length} translation validation problem(s) in locales/uk.json`);
+    throw new Error(`${problems.length} translation validation problem(s) in locales/${lang}.json`);
   }
 }
 
-async function buildUk(sources) {
-  const en = JSON.parse(await fs.readFile(path.join(localesDir, 'en.json'), 'utf8'));
-  const uk = JSON.parse(await fs.readFile(path.join(localesDir, 'uk.json'), 'utf8'));
-  validateTranslations(en, uk);
-  // a sitemap must never carry /uk/ while UK_NOINDEX is on
+// a sitemap must never carry a /<lang>/ URL while that language is noindex
+async function guardSitemaps() {
   for (const sm of ['sitemap.xml', 'sitemap.txt']) {
     try {
       const s = await fs.readFile(path.join(repoRoot, sm), 'utf8');
-      if (UK_NOINDEX && /\/uk\//.test(s)) throw new Error(`${sm} lists /uk/ URLs while UK_NOINDEX is true`);
+      for (const lang of BUILD_LANGS)
+        if (LANGS[lang].noindex && new RegExp(`/${lang}/`).test(s))
+          throw new Error(`${sm} lists /${lang}/ URLs while ${lang} is noindex`);
     } catch (e) { if (e.code !== 'ENOENT') throw e; }
   }
-  console.log(`\nBuilding /uk/ — noindex: ${UK_NOINDEX} · mode: ${PSEUDO ? 'PSEUDO-LOCALISED (layout test only)' : STRICT ? 'strict (no fallback)' : 'dev (en fallback allowed)'}`);
-  const allMissing = [];
+}
+
+async function buildLang(sources, lang) {
+  const meta = LANG_META[lang];
+  if (!meta || lang === 'en') throw new Error(`unknown language ${lang}`);
+  const en = JSON.parse(await fs.readFile(path.join(localesDir, 'en.json'), 'utf8'));
+  const tr = JSON.parse(await fs.readFile(path.join(localesDir, `${lang}.json`), 'utf8'));
+  validateTranslations(en, tr, lang);
+  await guardSitemaps();
+  const noindex = LANGS[lang].noindex;
+  console.log(`\nBuilding /${lang}/ — noindex: ${noindex} · mode: ${PSEUDO ? 'PSEUDO-LOCALISED (layout test only)' : STRICT ? 'strict (no fallback)' : 'dev (en fallback allowed)'}`);
+  const allMissing = [], allHeld = [];
   for (const p of PAGES) {
     let src = sources.get(p.rel);
     if (!src.includes('<meta name="description"')) throw new Error(`${p.rel}: no meta description — robots/noindex injection has no anchor`);
-    const missing = [];
+    const missing = [], held = [];
     const T = (key) => {
-      let v = ukValue(uk, en, key, missing);
-      return PSEUDO ? (Array.isArray(v) ? v.map(pseudo) : pseudo(v)) : v;
+      let v = trValue(tr, en, key, missing, held);
+      return PSEUDO ? (Array.isArray(v) ? v.map(s => pseudo(s, lang)) : pseudo(v, lang)) : v;
     };
     // 1. lang + head
-    src = src.replace('<html lang="en">', '<html lang="uk">');
+    src = src.replace('<html lang="en">', `<html lang="${meta.htmlLang}">`);
     src = src.replace(/<title>[^<]*<\/title>/, () => `<title>${T(`${p.key}.meta.title`)}</title>`);
     src = src.replace(/<meta name="description"([^>]*?)\/?>/, (tag, attrs) => {
       const desc = String(T(`${p.key}.meta.description`));
@@ -596,10 +812,16 @@ async function buildUk(sources) {
       if (/data-spec-tpl=/.test(out)) out = out.replace(/data-spec-tpl="[^"]*"/, `data-spec-tpl="${desc.replace(/\{spec:/g, '{')}"`);
       return out;
     });
-    const robots = UK_NOINDEX
+    // hreflang is COUPLED to the noindex flag: while a language is noindex it
+    // emits no hreflang anywhere and appears in no sitemap; when management
+    // opens indexing, both switch on together.
+    const route = routeOf(p.rel);
+    const alt = (l) => `<link rel="alternate" hreflang="${l === 'en' ? 'en' : LANG_META[l].htmlLang}" ` +
+      `href="https://www.nordicadvancedsystems.com${targetHref(l, route)}" />`;
+    const indexableLangs = BUILD_LANGS.filter(l => !LANGS[l].noindex);
+    const robots = noindex
       ? '<meta name="robots" content="noindex" />'
-      : `<link rel="alternate" hreflang="en" href="https://www.nordicadvancedsystems.com${p.rel === 'index.html' ? '/' : '/' + path.dirname(p.rel)}" />\n` +
-        `<link rel="alternate" hreflang="uk" href="https://www.nordicadvancedsystems.com/uk${p.rel === 'index.html' ? '/' : '/' + path.dirname(p.rel)}" />`;
+      : ['en', ...indexableLangs].map(alt).join('\n');
     src = src.replace(/(<meta name="description"[^>]*>)/, `$1\n${robots}`);
     // 2. marked elements + attrs (bottom-up)
     const root = parseHtml(src, p.rel);
@@ -636,50 +858,99 @@ async function buildUk(sources) {
     }
     for (const arr of JS_ARRAYS[p.key] || []) {
       const v = T(`${p.key}.js.${arr}`);
-      src = src.replace(new RegExp(`const ${arr} = \\[[^\\]]*\\];`),
-        `const ${arr} = [${v.map(x => `'${String(x).replace(/'/g, "\\'")}'`).join(',')}];`);
+      // The ENGLISH array stays in place — it feeds the submitted <option>
+      // values, which are language-independent. Only the *_L10N display
+      // labels are replaced.
+      const anchor = `let ${arr}_L10N = null;`;
+      if (!src.includes(anchor)) throw new Error(`${p.rel}: L10N anchor not found: ${anchor}`);
+      src = src.replace(anchor,
+        `let ${arr}_L10N = [${v.map(x => `'${String(x).replace(/'/g, "\\'")}'`).join(',')}];`);
     }
-    // 4. fonts — Space Grotesk has no Cyrillic, so every BODY stack swaps to
-    // Inter (whose cyrillic/cyrillic-ext subsets css2 serves as separate
-    // unicode-range files — an English visitor never downloads a Cyrillic
-    // byte). ONE exemption: the brand wordmark. It is identity typography in
-    // pure Latin ("Nordic Advanced Systems", never translated), and NAS-BRAND
-    // only mandates the swap for body copy — reflowing the logo lock-up into
-    // Inter grew the header 17px. Space Grotesk therefore stays in the font
-    // request, carrying nothing but the wordmark.
-    src = src.replaceAll('"Space Grotesk", ', '"Inter", ').replaceAll("'Space Grotesk', ", "'Inter', ").replaceAll('"Space Grotesk",', '"Inter",');
-    src = src.replace('</head>',
-      '<style>/* uk: the Latin brand wordmark keeps its identity face */\n' +
-      '.brand-wordmark{ font-family:"Space Grotesk",sans-serif; }</style>\n</head>');
-    const sgCount = (src.match(/Space[+ ]Grotesk/g) || []).length;
-    if (sgCount !== 2)                                   // font link + wordmark rule
-      throw new Error(`${p.rel}: expected exactly 2 Space Grotesk references (font link + wordmark rule), found ${sgCount}`);
-    // 5. internal links → stay inside /uk/
+    // 4. fonts — Space Grotesk has no Cyrillic, so on Cyrillic builds (uk)
+    // every BODY stack swaps to Inter (whose cyrillic/cyrillic-ext subsets
+    // css2 serves as separate unicode-range files — an English visitor never
+    // downloads a Cyrillic byte). ONE exemption: the brand wordmark. It is
+    // identity typography in pure Latin ("Nordic Advanced Systems", never
+    // translated), and NAS-BRAND only mandates the swap for body copy —
+    // reflowing the logo lock-up into Inter grew the header 17px. The six
+    // Latin languages keep Space Grotesk untouched: its latin + latin-ext
+    // subsets cover every diacritic they need (verified by --check-layout).
+    if (meta.cyrillic) {
+      src = src.replaceAll('"Space Grotesk", ', '"Inter", ').replaceAll("'Space Grotesk', ", "'Inter', ").replaceAll('"Space Grotesk",', '"Inter",');
+      src = src.replace('</head>',
+        '<style>/* uk: the Latin brand wordmark keeps its identity face */\n' +
+        '.brand-wordmark{ font-family:"Space Grotesk",sans-serif; }</style>\n</head>');
+      const sgCount = (src.match(/Space[+ ]Grotesk/g) || []).length;
+      if (sgCount !== 2)                                 // font link + wordmark rule
+        throw new Error(`${p.rel}: expected exactly 2 Space Grotesk references (font link + wordmark rule), found ${sgCount}`);
+    }
+    // 5. internal links → stay inside /<lang>/
     src = src.replace(/href="\/([^"]*)"/g, (m0, rest) => {
       const first = rest.split(/[/#?]/)[0];
-      if (rest.startsWith('uk/') || rest.startsWith('assets/') || rest.startsWith('api/') || rest.startsWith('c/') || /\.\w+$/.test(first)) return m0;
+      if (BUILD_LANGS.some(l => rest === l || rest.startsWith(l + '/')) ||
+          rest.startsWith('assets/') || rest.startsWith('api/') || rest.startsWith('c/') || /\.\w+$/.test(first)) return m0;
       if (!ROUTE_FIRST_SEGMENTS.has(first)) return m0;
-      return `href="/uk/${rest}"`;
+      return `href="/${lang}/${rest}"`;
     });
-    // switcher is always visible on uk pages
-    src = src.replace('id="lang-switch" href="/uk/" hidden', 'id="lang-switch" href="/uk/"');
-    const outPath = path.join(repoRoot, 'uk', p.rel);
+    // 6. switcher — re-stamped with THIS language active and always visible
+    // (a generated page only exists on builds where its language exists).
+    // Runs after the link rewrite on purpose: the switcher's baked hrefs are
+    // cross-language by design and must not be prefixed.
+    if (!SWITCHER_RE.test(src)) throw new Error(`${p.rel}: stamped switcher not found — run --mark first`);
+    src = src.replace(SWITCHER_RE, switcherHtml(p.rel, lang, false));
+    // 7. footer — the locked line "English is the authoritative version."
+    // (NAS_TERMINOLOGI_6SPROG.md §7) on every generated language page.
+    if (!src.includes('</footer>')) throw new Error(`${p.rel}: no </footer> — authoritative-version line has no anchor`);
+    src = src.replace('</footer>',
+      `  <div class="wrap footer-authoritative">${meta.authoritative}</div>\n</footer>`);
+    // 8. Code of Conduct stays English in the six new languages (ten legal
+    // sections — a mistranslated compliance sentence is a claim, not a
+    // typo; uk translated it before this decision and keeps its
+    // translation). The note only appears when the page's content is
+    // actually held on English via @en sentinels.
+    if (p.key === 'conduct' && held.some(h => h.kind === '@en')) {
+      const h1End = src.indexOf('</h1>');
+      if (h1End === -1) throw new Error(`${p.rel}: no </h1> — EN-only note has no anchor`);
+      src = src.slice(0, h1End + 5) +
+        `\n        <p class="conduct-en-note" lang="en">${EN_ONLY_NOTE}</p>` +
+        src.slice(h1End + 5);
+      src = src.replace('</head>',
+        '<style>/* i18n: conduct stays English in every language */\n' +
+        '.conduct-en-note{ display:inline-block; margin:18px 0 0; padding:9px 14px;\n' +
+        '  font-family:"JetBrains Mono", ui-monospace, monospace; font-size:11.5px;\n' +
+        '  letter-spacing:0.08em; color:var(--ink-2); border:1px solid var(--line-dark);\n' +
+        '  border-left:2px solid var(--accent); }</style>\n</head>');
+    }
+    const outPath = path.join(repoRoot, lang, p.rel);
     await fs.mkdir(path.dirname(outPath), { recursive: true });
     await fs.writeFile(outPath, src, 'utf8');
     allMissing.push(...missing);
-    console.log(`  uk/${p.rel.padEnd(38)} ${edits.length} replacement(s), ${missing.length} missing uk string(s)${missing.length && !STRICT ? ' → en fallback' : ''}`);
+    allHeld.push(...held);
+    const holdN = held.filter(h => h.kind === '@hold').length;
+    const enN = held.filter(h => h.kind === '@en').length;
+    console.log(`  ${lang}/${p.rel.padEnd(38)} ${edits.length} replacement(s), ${missing.length} missing` +
+      `${missing.length && !STRICT ? ' → en fallback' : ''}` +
+      `${holdN ? `, ${holdN} HELD @hold → English shown (awaiting EN rewrite)` : ''}` +
+      `${enN ? `, ${enN} English by decision (@en)` : ''}`);
   }
+  const totalHold = allHeld.filter(h => h.kind === '@hold').length;
+  if (totalHold)
+    console.log(`  ⚑ ${totalHold} string(s) across /${lang}/ are @hold — they SHIP IN ENGLISH until the ` +
+      '65A/100A drone-stack rewrite and the final NDAA wording land in the EN source.');
   if (allMissing.length && STRICT)
-    throw new Error(`--strict: ${allMissing.length} uk string(s) missing. No English fallback in production — ` +
-      'better no /uk/ page than a half-translated one.');
+    throw new Error(`--strict: ${allMissing.length} ${lang} string(s) missing. No English fallback in production — ` +
+      `better no /${lang}/ page than a half-translated one.`);
   if (allMissing.length && !PSEUDO)
     console.log(`  ${allMissing.length} string(s) fell back to English — fine during development, blocked by --strict for production.`);
 }
 
 // ---------------------------------------------------------------------------
-// CHECK-LAYOUT — pseudo-build, then measure nav/buttons/pages under +15% text
+// CHECK-LAYOUT — pseudo-build (or --real), then measure nav/buttons/pages
+// under the longer text; plus a font-subset probe: Space Grotesk must cover
+// every special character the six Latin languages can produce.
 // ---------------------------------------------------------------------------
-async function checkLayout() {
+const FONT_PROBE_CHARS = 'æøå äöüß ãõç àèéìòù ñ ¿¡';
+async function checkLayout(langs) {
   const { chromium } = await import('../.screenshots/node_modules/playwright/index.mjs');
   const server = spawn(process.execPath, ['serve.mjs'], { cwd: repoRoot, stdio: 'ignore' });
   await new Promise(r => setTimeout(r, 1500));
@@ -692,12 +963,15 @@ async function checkLayout() {
       await page.addInitScript(() => { try { sessionStorage.setItem('nas-loader-seen', '1'); } catch (e) {} });
       for (const p of PAGES) {
         const route = p.rel === 'index.html' ? '' : path.dirname(p.rel) + '/';
-        for (const lang of ['', 'uk/']) {
+        for (const lang of ['', ...langs.map(l => l + '/')]) {
           await page.goto(`http://localhost:3000/${lang}${route}`, { waitUntil: 'domcontentloaded', timeout: 30000 });
           await page.waitForTimeout(500);
           const r = await page.evaluate(() => {
+            // the switcher's open list must hold its text too — unfold it for
+            // the measurement pass (offsetParent is null while [hidden])
+            document.querySelectorAll('.lang-switch:not([hidden]) .ls-menu').forEach(m => { m.hidden = false; });
             const out = { overflowX: document.documentElement.scrollWidth - document.documentElement.clientWidth, items: [] };
-            document.querySelectorAll('.site-header .nav a, .site-header .nav-dd-trigger, .header-cta .btn, .lang-switch:not([hidden]), .btn').forEach(el => {
+            document.querySelectorAll('.site-header .nav a, .site-header .nav-dd-trigger, .header-cta .btn, .lang-switch:not([hidden]) .ls-btn, .lang-switch:not([hidden]) .ls-menu a, .btn').forEach(el => {
               const cs = getComputedStyle(el);
               if (cs.display === 'none' || !el.offsetParent) return;
               // +3px: the nav caret is a 6px square rotated 45deg - its corner pokes
@@ -740,13 +1014,37 @@ async function checkLayout() {
       }
       await page.close();
     }
+    // ---- font-subset probe: the loaded Space Grotesk (or, on Cyrillic
+    // builds, Inter) must actually carry every special character the site's
+    // languages can produce — a missing glyph falls back silently otherwise.
+    {
+      const page = await (await browser.newContext({ viewport: { width: 1280, height: 800 } })).newPage();
+      for (const lang of langs) {
+        await page.goto(`http://localhost:3000/${lang}/`, { waitUntil: 'load', timeout: 30000 });
+        const face = LANG_META[lang]?.cyrillic ? 'Inter' : 'Space Grotesk';
+        const probe = LANG_META[lang]?.cyrillic ? 'ЄїҐібВ' : FONT_PROBE_CHARS;
+        const missing = await page.evaluate(async ([face, probe]) => {
+          await document.fonts.ready;
+          // fonts.load first: css2 splits faces into unicode-range subset
+          // files and the browser only fetches the ones the page's own text
+          // needs — a glyph in an unfetched subset is covered, not missing.
+          await document.fonts.load(`16px "${face}"`, probe);
+          return [...probe].filter(ch => ch !== ' ' && !document.fonts.check(`16px "${face}"`, ch));
+        }, [face, probe]);
+        if (missing.length)
+          problems.push(`/${lang}/: ${face} subset is missing glyph(s): ${missing.join(' ')}`);
+        else
+          console.log(`  /${lang}/: ${face} covers "${probe}"`);
+      }
+      await page.close();
+    }
   } finally {
     await browser.close();
     server.kill();
   }
-  console.log(`\nLayout under pseudo-localised (+~15%) text — ${problems.length === 0 ? 'nav, buttons and pages all hold, desktop and mobile' : problems.length + ' PROBLEM(S):'}`);
+  console.log(`\nLayout under ${PSEUDO ? 'pseudo-localised (+~15%)' : 'the real translated'} text — ${problems.length === 0 ? 'nav, buttons and pages all hold, desktop and mobile' : problems.length + ' PROBLEM(S):'}`);
   problems.forEach(m => console.log('  · ' + m));
-  if (problems.length) throw new Error('Layout check failed under +15% text.');
+  if (problems.length) throw new Error(`Layout check failed (${langs.join(', ')}).`);
 }
 const pageHeaderRef = new Map();
 
@@ -758,18 +1056,33 @@ async function main() {
   const bodyText = (src) => {
     const noRaw = src.replace(/<script[\s\S]*?<\/script>/gi, ' ').replace(/<style[\s\S]*?<\/style>/gi, ' ');
     const body = noRaw.match(/<body[^>]*>([\s\S]*)<\/body>/);
-    return decode(stripTags(body ? body[1] : noRaw))
-      .replace(/\s*EN\s*·\s*УКР\s*/g, ' ')          // the switcher itself, scrubbed on both sides
+    return decode(stripTags(body ? body[1] : noRaw)
+      .replace(/\s*EN\s*·\s*УКР\s*/g, ' '))         // the pre-2026-09 switcher anchor, scrubbed
       .replace(/\s+/g, ' ').trim();
   };
+  // the switcher's own text (EN + native language names) is stamp-owned, not
+  // page content — cut the whole element before comparing visible text
+  const scrubSwitcher = (src) => src.replace(OLD_SWITCHER_RE, ' ').replace(SWITCHER_RE, ' ');
+
+  // languages named on the command line (after the mode flag): codes or "all"
+  const langArgs = RAW_ARGS.filter(a => !a.startsWith('--'));
+  const pickLangs = (fallback) => {
+    if (langArgs.includes('all') || (!langArgs.length && fallback === 'all')) return BUILD_LANGS;
+    const picked = langArgs.filter(a => BUILD_LANGS.includes(a));
+    const unknown = langArgs.filter(a => a !== 'all' && !BUILD_LANGS.includes(a));
+    if (unknown.length) throw new Error(`unknown language(s): ${unknown.join(', ')} (configured: ${BUILD_LANGS.join(', ')})`);
+    if (!picked.length) throw new Error(`no language given — pass codes (${BUILD_LANGS.join(' ')}) or "all"`);
+    return picked;
+  };
+
   if (MODE === '--mark') {
     const before = new Map();
-    for (const p of PAGES) before.set(p.rel, bodyText(sources.get(p.rel)));
+    for (const p of PAGES) before.set(p.rel, bodyText(scrubSwitcher(sources.get(p.rel))));
     markPages(sources);
     // The codemod may only ADD inert attributes and the (hidden) switcher —
     // the visible text of every page must be byte-identical afterwards.
     for (const p of PAGES) {
-      const after = bodyText(sources.get(p.rel));
+      const after = bodyText(scrubSwitcher(sources.get(p.rel)));
       const prev = before.get(p.rel);
       if (after !== prev) {
         const i = [...after].findIndex((c, idx) => c !== prev[idx]);
@@ -777,24 +1090,29 @@ async function main() {
       }
     }
     for (const p of PAGES) await fs.writeFile(path.join(repoRoot, p.rel), sources.get(p.rel), 'utf8');
-    console.log('Markers stamped into the English pages (inert data-i18n attributes + hidden switcher).');
+    console.log('Markers stamped into the English pages (inert data-i18n attributes + switcher).');
     const en = extract(sources);
     const sync = await writeLocales(en);
-    console.log(`locales/en.json written · uk.json synced (${sync.kept} kept, ${sync.added} empty, ${sync.orphaned} orphaned)`);
+    for (const [l, s] of Object.entries(sync))
+      console.log(`  ${l}.json synced (${s.kept} kept, ${s.added} empty, ${s.orphaned} orphaned)`);
     report(en);
   } else if (MODE === '--extract') {
     const en = extract(sources);
     const sync = await writeLocales(en);
-    console.log(`locales/en.json written · uk.json synced (${sync.kept} kept, ${sync.added} empty, ${sync.orphaned} orphaned)`);
+    console.log('locales/en.json written');
+    for (const [l, s] of Object.entries(sync))
+      console.log(`  ${l}.json synced (${s.kept} kept, ${s.added} empty, ${s.orphaned} orphaned)`);
     report(en);
-  } else if (MODE === '--build-uk') {
-    await buildUk(sources);
+  } else if (MODE === '--build-uk' || MODE === '--build') {
+    const langs = MODE === '--build-uk' ? ['uk'] : pickLangs();
+    for (const lang of langs) await buildLang(sources, lang);
   } else if (MODE === '--check-layout') {
     // default: pseudo-localised stress test; --real measures the actual
-    // Ukrainian copy currently in locales/uk.json instead.
+    // translated copy currently in the locale files instead.
     PSEUDO = !ARGS.has('--real');
-    await buildUk(sources);
-    await checkLayout();
+    const langs = pickLangs('all');
+    for (const lang of langs) await buildLang(sources, lang);
+    await checkLayout(langs);
   }
 }
 await main();
