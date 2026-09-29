@@ -892,6 +892,15 @@ async function buildLang(sources, lang) {
       if (!ROUTE_FIRST_SEGMENTS.has(first)) return m0;
       return `href="/${lang}/${rest}"`;
     });
+    // 5b. asset refs → absolute. A generated page lives one or two levels down
+    // (/de/, /de/intelligence/drone-stack/), so any RELATIVE asset ref
+    // ("assets/…", "./assets/…", "../assets/…") that resolves fine at the EN
+    // root breaks under the language prefix. Force every asset/media ref to the
+    // site-absolute "/assets/…" so it resolves at any depth. The site keeps its
+    // media under /assets only, so this is total; /assets/ paths are untouched.
+    src = src.replace(/\b(src|href|poster)="(?:\.\.?\/)*assets\//g, '$1="/assets/');
+    src = src.replace(/\bsrcset="((?:\.\.?\/)*assets\/[^"]*)"/g,
+      (_m, list) => `srcset="${list.replace(/(?:^|,\s*)(?:\.\.?\/)*assets\//g, (s) => s.replace(/(?:\.\.?\/)*assets\//, '/assets/'))}"`);
     // 6. switcher — re-stamped with THIS language active and always visible
     // (a generated page only exists on builds where its language exists).
     // Runs after the link rewrite on purpose: the switcher's baked hrefs are
