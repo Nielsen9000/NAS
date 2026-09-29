@@ -416,6 +416,52 @@ p{ margin:0; color:var(--ink-1); }
 /* connectors-and-pads line, shared by both boards (datasheet undersection) */
 .ds-connline{ margin:18px 0 0; padding-top:14px; border-top:1px dashed rgba(59,182,232,0.3); font-family:"JetBrains Mono",ui-monospace,monospace; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-2); line-height:1.9; }
 .ds-cta-row{ margin-top:44px; }
+
+/* Floating datasheet CTA — slides in from the right edge while a spec section is
+   in view, pinned bottom-right, and tracks the variant you're reading (65A/100A).
+   Slides away when you leave the spec sections, so it's persistent but not permanent. */
+.ds-float-cta{
+  position:fixed; right:24px; bottom:24px; z-index:90;
+  display:inline-flex; align-items:center; gap:4px;
+  padding:8px 8px 8px 22px; border-radius:var(--radius-pill);
+  background:var(--accent); color:var(--accent-ink);
+  box-shadow:0 16px 38px -12px rgba(59,182,232,0.6), 0 0 0 1px rgba(59,182,232,0.25), 0 0 0 0 rgba(59,182,232,0);
+  transform:translateX(calc(100% + 40px)); opacity:0; pointer-events:none;
+  transition:transform .55s var(--ease-spring), opacity .35s ease, background-color .25s ease;
+}
+.ds-float-cta.in{ transform:translateX(0); opacity:1; pointer-events:auto; }
+.ds-float-cta:hover{ background:#55c3ea; }
+.ds-float-cta-link{
+  display:inline-flex; align-items:center; gap:10px; color:inherit;
+  font-family:'Inter',system-ui,sans-serif; font-weight:600; font-size:14px; line-height:1;
+  padding:6px 0;
+}
+.ds-float-cta-link .arrow{ transition:transform .3s var(--ease-spring); }
+.ds-float-cta:hover .ds-float-cta-link .arrow{ transform:translateX(3px); }
+.ds-float-cta-close{
+  display:inline-flex; align-items:center; justify-content:center; flex:none;
+  width:28px; height:28px; border-radius:50%; color:var(--accent-ink); opacity:.55;
+  transition:opacity .2s ease, background-color .2s ease;
+}
+.ds-float-cta-close:hover{ opacity:1; background:rgba(7,42,55,0.16); }
+.ds-float-cta-link:focus-visible, .ds-float-cta-close:focus-visible{ outline:2px solid #fff; outline-offset:3px; }
+/* one-time attention pulse when the pill first appears */
+@keyframes ds-cta-pulse{
+  0%   { box-shadow:0 16px 38px -12px rgba(59,182,232,0.6), 0 0 0 1px rgba(59,182,232,0.25), 0 0 0 0 rgba(59,182,232,0.55); }
+  70%  { box-shadow:0 16px 38px -12px rgba(59,182,232,0.6), 0 0 0 1px rgba(59,182,232,0.25), 0 0 0 16px rgba(59,182,232,0); }
+  100% { box-shadow:0 16px 38px -12px rgba(59,182,232,0.6), 0 0 0 1px rgba(59,182,232,0.25), 0 0 0 0 rgba(59,182,232,0); }
+}
+.ds-float-cta.pulse-once{ animation:ds-cta-pulse 1.5s var(--ease-smooth) .3s 1; }
+@media (max-width:600px){
+  .ds-float-cta{ right:12px; left:12px; bottom:12px; justify-content:space-between; padding:8px 8px 8px 20px;
+    transform:translateY(calc(100% + 24px)); }
+  .ds-float-cta.in{ transform:translateY(0); }
+  .ds-float-cta-link{ font-size:13px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .ds-float-cta{ transition:opacity .2s ease; transform:none; }
+  .ds-float-cta.pulse-once{ animation:none; }
+}
 /* SELECT — two jump cards answering "which stack?" before the spec sections */
 .ds-choose{ grid-template-columns:repeat(2,1fr); max-width:1100px; }
 .ds-choose .vcard{ display:block; }
@@ -710,7 +756,7 @@ p{ margin:0; color:var(--ink-1); }
       </div>
 
       <div class="ds-cta-row" data-i18n="drone-stack.request-datasheet">
-        <a class="btn btn-pill-accent" href="/contact/?type=drone-stack-65a#contact-form">Request datasheet <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-pill-accent" href="/contact/?type=drone-stack-65a#contact-form">Request pricing &amp; datasheet <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -806,7 +852,7 @@ p{ margin:0; color:var(--ink-1); }
       </div>
 
       <div class="ds-cta-row" data-i18n="drone-stack.request-datasheet-2">
-        <a class="btn btn-pill-accent" href="/contact/?type=drone-stack-100a#contact-form">Request datasheet <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn-pill-accent" href="/contact/?type=drone-stack-100a#contact-form">Request pricing &amp; datasheet <span class="arrow" aria-hidden="true">→</span></a>
       </div>
 
       <!-- NDAA compliance — pays off the hero badge; applies to both variants -->
@@ -862,6 +908,14 @@ p{ margin:0; color:var(--ink-1); }
   </section>
 
 </main>
+
+<!-- Floating datasheet CTA — appears while a spec section is in view; link href set by JS to the active variant -->
+<div class="ds-float-cta" id="ds-float-cta" aria-hidden="true">
+  <a class="ds-float-cta-link" href="/contact/?type=drone-stack-65a#contact-form" tabindex="-1">Request pricing &amp; datasheet <span class="arrow" aria-hidden="true">→</span></a>
+  <button class="ds-float-cta-close" type="button" aria-label="Dismiss" tabindex="-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  </button>
+</div>
 
 <footer class="site-footer">
   <div class="wrap footer-grid">
@@ -989,6 +1043,68 @@ p{ margin:0; color:var(--ink-1); }
 
 
 
+
+<script>
+/* Floating datasheet CTA — visible while a variant spec section is in view,
+   its link tracking whichever variant (65A/100A) is most in view. */
+(function(){
+  var pill = document.getElementById('ds-float-cta');
+  if (!pill) return;
+  var link = pill.querySelector('.ds-float-cta-link');
+  var closeBtn = pill.querySelector('.ds-float-cta-close');
+  var DISMISS_KEY = 'nas-ds-cta-dismissed';
+
+  var dismissed = false;
+  try { dismissed = sessionStorage.getItem(DISMISS_KEY) === '1'; } catch (e) {}
+  if (dismissed) return;
+
+  var sections = [
+    { el: document.getElementById('stack-65'),  href: '/contact/?type=drone-stack-65a#contact-form' },
+    { el: document.getElementById('stack-100'), href: '/contact/?type=drone-stack-100a#contact-form' }
+  ].filter(function(s){ return s.el; });
+  if (!sections.length || !('IntersectionObserver' in window)) return;
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pulsed = false;
+  var ratios = new WeakMap();
+
+  function show(href){
+    if (link && href && link.getAttribute('href') !== href) link.setAttribute('href', href);
+    pill.classList.add('in');
+    pill.setAttribute('aria-hidden', 'false');
+    if (link) link.removeAttribute('tabindex');
+    if (closeBtn) closeBtn.removeAttribute('tabindex');
+    if (!pulsed && !reduceMotion){ pulsed = true; pill.classList.add('pulse-once'); }
+  }
+  function hide(){
+    pill.classList.remove('in');
+    pill.setAttribute('aria-hidden', 'true');
+    if (link) link.setAttribute('tabindex', '-1');
+    if (closeBtn) closeBtn.setAttribute('tabindex', '-1');
+  }
+  function update(){
+    var best = null, bestR = 0;
+    sections.forEach(function(s){
+      var r = ratios.get(s.el) || 0;
+      if (r > bestR) { bestR = r; best = s; }
+    });
+    if (best && bestR > 0.04) show(best.href); else hide();
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ ratios.set(e.target, e.isIntersecting ? e.intersectionRatio : 0); });
+    update();
+  }, { threshold: [0, 0.04, 0.2, 0.4, 0.6, 0.8, 1] });
+  sections.forEach(function(s){ io.observe(s.el); });
+
+  if (closeBtn){
+    closeBtn.addEventListener('click', function(){
+      try { sessionStorage.setItem(DISMISS_KEY, '1'); } catch (e) {}
+      hide();
+      io.disconnect();
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
