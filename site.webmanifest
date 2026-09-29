@@ -1,0 +1,10 @@
+{
+  "name": "Nordic Advanced Systems",
+  "short_name": "NAS",
+  "icons": [
+    { "src": "/assets/nas-mark-cyan.png", "sizes": "any", "type": "image/png" }
+  ],
+  "theme_color": "#08202a",
+  "background_color": "#08202a",
+  "display": "browser"
+}
