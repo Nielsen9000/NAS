@@ -1058,9 +1058,12 @@ p{ margin:0; color:var(--ink-1); }
   try { dismissed = sessionStorage.getItem(DISMISS_KEY) === '1'; } catch (e) {}
   if (dismissed) return;
 
+  // Keep the contact link inside the current language tree ('' on EN, '/de' etc.
+  // on a generated language page) so the pill never jumps out of its /<lang>/.
+  var langPrefix = location.pathname.split('/intelligence/')[0];
   var sections = [
-    { el: document.getElementById('stack-65'),  href: '/contact/?type=drone-stack-65a#contact-form' },
-    { el: document.getElementById('stack-100'), href: '/contact/?type=drone-stack-100a#contact-form' }
+    { el: document.getElementById('stack-65'),  href: langPrefix + '/contact/?type=drone-stack-65a#contact-form' },
+    { el: document.getElementById('stack-100'), href: langPrefix + '/contact/?type=drone-stack-100a#contact-form' }
   ].filter(function(s){ return s.el; });
   if (!sections.length || !('IntersectionObserver' in window)) return;
 
